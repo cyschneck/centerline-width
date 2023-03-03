@@ -44,27 +44,29 @@ def plotRiver(river_df,
 			save_plot_name):
 	# Plot river based on right/left bank coordinates
 	fig = plt.figure(figsize=(12,12), dpi=100)
+
+	
 	x = []
 	y = []
 	for i in right_bank_expanded: 
 		x.append(i[1])
 		y.append(i[0])
-	plt.scatter(x, y, c="orange", label="Right Bank Extrapolation")
+	plt.scatter(x, y, c="orange", s=1, label="Right Bank Extrapolation")
 	x = []
 	y = []
 	for i in left_bank_expanded: 
 		x.append(i[1])
 		y.append(i[0])
-	plt.scatter(x, y, c="dodgerblue", label="Left Bank Extrapolation")
-	
-	plt.title("River Coordinates")
-	plt.scatter(x=river_df['llon'], y=river_df['llat'], s=3, c="black")
-	#plt.plot(river_df['llon'], river_df['llat'], c="dodgerblue", label="Left Bank")
-	plt.scatter(x=river_df['rlon'], y=river_df['rlat'], s=3, c="black")
-	#plt.plot(river_df['rlon'], river_df['rlat'], c="orange", label="Right Bank")
+	plt.scatter(x, y, c="dodgerblue", s=1, label="Left Bank Extrapolation")
 
-	plt.plot(right_bank_nearest_neighbor_x, right_bank_nearest_neighbor_y, c="red", linewidth=0.5, label="Right Bank Nearest Neighbor")
-	plt.plot(left_bank_nearest_neighbor_x, left_bank_nearest_neighbor_y, c="green", linewidth=0.5, label="Left Bank Nearest Neighbor")
+	plt.scatter(x=river_df['llon'], y=river_df['llat'], s=0.5, c="black")
+	plt.scatter(x=river_df['rlon'], y=river_df['rlat'], s=0.5, c="black")
+
+
+	plt.plot(right_bank_nearest_neighbor_x, right_bank_nearest_neighbor_y, c="red", linewidth=0.5, label="Right -> Left Bank Nearest Neighbor")
+	plt.plot(left_bank_nearest_neighbor_x, left_bank_nearest_neighbor_y, c="green", linewidth=0.5, label="Left -> Right Bank Nearest Neighbor")
+
+	plt.title("River Coordinates")
 	plt.xlabel("Longitude")
 	plt.ylabel("Latitude")
 	plt.legend()
@@ -75,7 +77,8 @@ def plotRiver(river_df,
 if __name__ == "__main__":
 	#convertColumnsToCSV("data/river_coords.txt")
 	df = pd.read_csv("data/river_coords.csv")
-	df = df.head(310)
+	#df = df.head(310)
+	#df = df.loc[100:510]
 
 	# Lines between points on graph
 	latitude_points = []
@@ -90,24 +93,10 @@ if __name__ == "__main__":
 		if not math.isnan(row.llat) and not math.isnan(row.llon):
 			left_bank_pairs.append([row.llat, row.llon])
 
-	# Sort pair of lists
-	## Sort in order by KNN
-	def euclidian_distance(a,b):
-		return np.linalg.norm(a-b)
-	right_bank_pairs.sort(key=lambda x: x[1])
-	right_bank_pairs = np.array(right_bank_pairs)
-	right_bank_pairs = sorted(right_bank_pairs, key = lambda point: euclidian_distance(point,right_bank_pairs[0]))
-	right_bank_pairs = [list(x) for x in right_bank_pairs]
-	left_bank_pairs.sort(key=lambda x: x[1])
-	left_bank_pairs = np.array(left_bank_pairs)
-	left_bank_pairs = list(sorted(left_bank_pairs, key = lambda point: euclidian_distance(point,left_bank_pairs[0])))
-	left_bank_pairs = [list(x) for x in left_bank_pairs]
-
 	# Add points between existing points to increase closest neighbors
 	def expand_list(lst, expand_n):
 		bank_expanded = []
 		for i in range(len(lst)):
-			#right_bank_expanded.append(right_bank_point)
 			bank_expanded.append(lst[i])
 			if i+1 < len(lst):
 				x_expand = np.linspace(lst[i][0], lst[i+1][0], expand_n)
@@ -116,13 +105,13 @@ if __name__ == "__main__":
 					bank_expanded.append([x_expand[j],y_expand[j]])
 				bank_expanded.append(lst[i+1])
 		return bank_expanded
-	expanded = 10
-	right_bank_expanded = expand_list(right_bank_pairs, expanded)
-	left_bank_expanded =  expand_list(left_bank_pairs, expanded)
+
+	additional_points_between_each_pair = 10
+	right_bank_expanded = expand_list(right_bank_pairs, additional_points_between_each_pair)
+	left_bank_expanded =  expand_list(left_bank_pairs, additional_points_between_each_pair)
 
 	# Search for closest value in list of lists (KNN)
 	from scipy import spatial
-
 	# Closest neighbors to the right bank
 	plot_every_n = 100
 	right_bank_nearest_neighbor_x = []
