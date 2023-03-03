@@ -49,13 +49,16 @@ def plotRiver(river_df,
 
 	# Plot Voronoi Polygons
 	from scipy.spatial import Voronoi, voronoi_plot_2d
+	from shapely.geometry import LineString, MultiPolygon, MultiPoint, Point
+	from shapely.ops import polygonize,unary_union
 	all_banks_points = right_bank_expanded + left_bank_expanded
 	all_banks_points = np.array(all_banks_points)
 
 	vor = Voronoi(all_banks_points)
 	vor_vertices = vor.vertices # Voronoi vertices
 	vor_regions = vor.regions  # Voronoi regions: each sub-list contains coordiantes for the regions
-	voronoi_plot_2d(vor, show_points=True, point_size=1, ax=ax)
+	plt.scatter(vor_vertices[:,1],vor_vertices[:,0], c="red", s=1, label="Voronoi Vertices")
+	#voronoi_plot_2d(vor, show_points=True, point_size=1, ax=ax)
 
 	# Plot colored extrapolations between known points
 	x = []
@@ -63,13 +66,13 @@ def plotRiver(river_df,
 	for i in right_bank_expanded: 
 		x.append(i[1])
 		y.append(i[0])
-	plt.scatter(x, y, c="red", s=5, label="Right Bank Extrapolation")
+	plt.scatter(x, y, c="dodgerblue", s=5, label="Right Bank Extrapolation")
 	x = []
 	y = []
 	for i in left_bank_expanded: 
 		x.append(i[1])
 		y.append(i[0])
-	plt.scatter(x, y, c="green", s=5, label="Left Bank Extrapolation")
+	plt.scatter(x, y, c="orange", s=5, label="Left Bank Extrapolation")
 
 	plt.title("River Coordinates")
 	plt.xlabel("Longitude")
@@ -82,7 +85,7 @@ def plotRiver(river_df,
 if __name__ == "__main__":
 	#convertColumnsToCSV("data/river_coords.txt")
 	df = pd.read_csv("data/river_coords.csv")
-	#df = df.head(310)
+	#df = df.head(100)
 	#df = df.loc[100:510]
 
 	# Lines between points on graph
@@ -114,7 +117,6 @@ if __name__ == "__main__":
 	additional_points_between_each_pair = 0
 	right_bank_expanded = expand_list(right_bank_pairs, additional_points_between_each_pair)
 	left_bank_expanded =  expand_list(left_bank_pairs, additional_points_between_each_pair)
-
 
 	# Plot river banks
 	plotRiver(df, latitude_points, longitude_points,
