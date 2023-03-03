@@ -1,11 +1,14 @@
 # Find the center point and width between lat/long points along river bank
 import math
 import csv
+import itertools
 
 import matplotlib.pyplot as plt
+from matplotlib.patches import Polygon as mat_poly
 import numpy as np
 import pandas as pd
 from scipy.spatial import Voronoi, voronoi_plot_2d
+from shapely.geometry import Point, Polygon
 
 ########################################################################
 
@@ -44,20 +47,38 @@ def expand_list(lst, expand_n):
 	expand_n += 2 # Add two points, to account for the start/end point
 	bank_expanded = []
 	for i in range(len(lst)):
-		bank_expanded.append(lst[i])
 		if i+1 < len(lst):
 			x_expand = np.linspace(lst[i][0], lst[i+1][0], expand_n)
 			y_expand = np.linspace(lst[i][1], lst[i+1][1], expand_n)
 			for j in range(len(x_expand)):
 				bank_expanded.append([x_expand[j],y_expand[j]])
 			bank_expanded.append(lst[i+1])
+		else: 
+			bank_expanded.append(lst[i])
 	return bank_expanded
+
+def generatePolygon(left_bank_lst, right_bank_list):
+	# Return a shapely polygon based on the position of the river bank points
+	circular_list_of_banks = left_bank_expanded + right_bank_expanded[::-1] + [left_bank_expanded[0]]
+
+	bank_points_swapped = []
+	for i, bank_point in enumerate(circular_list_of_banks):
+		bank_points_swapped.append([bank_point[1], bank_point[0]]) # Swap the x and y to graph with longitude on the y-axis
+
+	river_polygon = Polygon(bank_points_swapped)
+
+	if not river_polygon.is_valid:
+		print("Invalid Polygon needs to be corrected")
+		exit()
+
+	return river_polygon
 
 ########################################################################
 
 def plotRiver(river_df, 
 			latitude_extrapolation, longitude_extrapolation,
 			right_bank_expanded, left_bank_expanded,
+			river_bank_polygon,
 			save_plot_name):
 
 	# Plot river based on right/left bank coordinates
@@ -74,22 +95,27 @@ def plotRiver(river_df,
 	vor = Voronoi(all_banks_points)
 	vor_vertices = vor.vertices # Voronoi vertices
 	vor_regions = vor.regions  # Voronoi regions: each sub-list contains coordiantes for the regions
-	plt.scatter(vor_vertices[:,1],vor_vertices[:,0], c="red", s=1, label="Voronoi Vertices")
+	#plt.scatter(vor_vertices[:,1],vor_vertices[:,0], c="red", s=1, label="Voronoi Vertices")
 	#voronoi_plot_2d(vor, show_points=True, point_size=1, ax=ax)
 
+	# Plot River as a Polygon
+	plt.plot(*river_bank_polygon.exterior.xy, c="silver")
+	#ax.add_patch(mat_poly(right_bank_expanded+left_bank_expanded, closed=True, facecolor='red'))
+
 	# Plot colored extrapolations between known points
+	scatter_plot_size = 3
 	x = []
 	y = []
 	for i in right_bank_expanded: 
 		x.append(i[1])
 		y.append(i[0])
-	plt.scatter(x, y, c="dodgerblue", s=5, label="Right Bank Extrapolation")
+	plt.scatter(x, y, c="dodgerblue", s=scatter_plot_size, label="Right Bank Extrapolation")
 	x = []
 	y = []
 	for i in left_bank_expanded: 
 		x.append(i[1])
 		y.append(i[0])
-	plt.scatter(x, y, c="orange", s=5, label="Left Bank Extrapolation")
+	plt.scatter(x, y, c="orange", s=scatter_plot_size, label="Left Bank Extrapolation")
 
 	plt.title("River Coordinates")
 	plt.xlabel("Longitude")
@@ -102,7 +128,7 @@ def plotRiver(river_df,
 if __name__ == "__main__":
 	#convertColumnsToCSV("data/river_coords.txt")
 	df = pd.read_csv("data/river_coords.csv")
-	#df = df.head(100)
+	#df = df.head(3)
 	#df = df.loc[100:510]
 
 	# Lines between points on graph
@@ -118,11 +144,16 @@ if __name__ == "__main__":
 		if not math.isnan(row.llat) and not math.isnan(row.llon):
 			left_bank_pairs.append([row.llat, row.llon])
 
-	additional_points_between_each_pair = 3 # User defined
+	# Add points between existing bank points
+	additional_points_between_each_pair = 0 # User defined: 0 only uses the original points
 	right_bank_expanded = expand_list(right_bank_pairs, additional_points_between_each_pair)
 	left_bank_expanded =  expand_list(left_bank_pairs, additional_points_between_each_pair)
+
+	# Set up a polygon based on the left and right bank
+	river_polygon = generatePolygon(left_bank_expanded, right_bank_expanded)
 
 	# Plot river banks
 	plotRiver(df, latitude_points, longitude_points,
 			right_bank_expanded, left_bank_expanded,
+			river_polygon,
 			 "data/river_coords.png")
