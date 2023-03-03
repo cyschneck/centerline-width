@@ -1,10 +1,13 @@
 # Find the center point and width between lat/long points along river bank
-# Modified from R - CMGO code functionality
 import math
+import csv
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import csv
+from scipy.spatial import Voronoi, voronoi_plot_2d
+
+########################################################################
 
 def convertColumnsToCSV(text_file):
 	# Convert txt file to a comma seperated version of the file to use in pandas
@@ -36,10 +39,27 @@ def convertColumnsToCSV(text_file):
 
 ########################################################################
 
+def expand_list(lst, expand_n):
+	# Add points between existing points to increase closest neighbors
+	expand_n += 2 # Add two points, to account for the start/end point
+	bank_expanded = []
+	for i in range(len(lst)):
+		bank_expanded.append(lst[i])
+		if i+1 < len(lst):
+			x_expand = np.linspace(lst[i][0], lst[i+1][0], expand_n)
+			y_expand = np.linspace(lst[i][1], lst[i+1][1], expand_n)
+			for j in range(len(x_expand)):
+				bank_expanded.append([x_expand[j],y_expand[j]])
+			bank_expanded.append(lst[i+1])
+	return bank_expanded
+
+########################################################################
+
 def plotRiver(river_df, 
 			latitude_extrapolation, longitude_extrapolation,
 			right_bank_expanded, left_bank_expanded,
 			save_plot_name):
+
 	# Plot river based on right/left bank coordinates
 	fig = plt.figure(figsize=(15,15))
 	ax = fig.add_subplot(111)
@@ -48,9 +68,6 @@ def plotRiver(river_df,
 	#plt.scatter(x=river_df['rlon'], y=river_df['rlat'], s=0.5, c="darkgrey")
 
 	# Plot Voronoi Polygons
-	from scipy.spatial import Voronoi, voronoi_plot_2d
-	from shapely.geometry import LineString, MultiPolygon, MultiPoint, Point
-	from shapely.ops import polygonize,unary_union
 	all_banks_points = right_bank_expanded + left_bank_expanded
 	all_banks_points = np.array(all_banks_points)
 
@@ -101,20 +118,7 @@ if __name__ == "__main__":
 		if not math.isnan(row.llat) and not math.isnan(row.llon):
 			left_bank_pairs.append([row.llat, row.llon])
 
-	# Add points between existing points to increase closest neighbors
-	def expand_list(lst, expand_n):
-		bank_expanded = []
-		for i in range(len(lst)):
-			bank_expanded.append(lst[i])
-			if i+1 < len(lst):
-				x_expand = np.linspace(lst[i][0], lst[i+1][0], expand_n)
-				y_expand = np.linspace(lst[i][1], lst[i+1][1], expand_n)
-				for j in range(len(x_expand)):
-					bank_expanded.append([x_expand[j],y_expand[j]])
-				bank_expanded.append(lst[i+1])
-		return bank_expanded
-
-	additional_points_between_each_pair = 0
+	additional_points_between_each_pair = 3 # User defined
 	right_bank_expanded = expand_list(right_bank_pairs, additional_points_between_each_pair)
 	left_bank_expanded =  expand_list(left_bank_pairs, additional_points_between_each_pair)
 
