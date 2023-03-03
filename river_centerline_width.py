@@ -37,34 +37,39 @@ def convertColumnsToCSV(text_file):
 ########################################################################
 
 def plotRiver(river_df, 
-			latitude_extrapolation, longitude_extrapolation, 
-			right_bank_nearest_neighbor_x, right_bank_nearest_neighbor_y,
-			left_bank_nearest_neighbor_x, left_bank_nearest_neighbor_y,
+			latitude_extrapolation, longitude_extrapolation,
 			right_bank_expanded, left_bank_expanded,
 			save_plot_name):
 	# Plot river based on right/left bank coordinates
-	fig = plt.figure(figsize=(12,12), dpi=100)
+	fig = plt.figure(figsize=(15,15))
+	ax = fig.add_subplot(111)
 
-	
+	#plt.scatter(x=river_df['llon'], y=river_df['llat'], s=0.5, c="darkgrey")
+	#plt.scatter(x=river_df['rlon'], y=river_df['rlat'], s=0.5, c="darkgrey")
+
+	# Plot Voronoi Polygons
+	from scipy.spatial import Voronoi, voronoi_plot_2d
+	all_banks_points = right_bank_expanded + left_bank_expanded
+	all_banks_points = np.array(all_banks_points)
+
+	vor = Voronoi(all_banks_points)
+	vor_vertices = vor.vertices # Voronoi vertices
+	vor_regions = vor.regions  # Voronoi regions: each sub-list contains coordiantes for the regions
+	voronoi_plot_2d(vor, show_points=True, point_size=1, ax=ax)
+
+	# Plot colored extrapolations between known points
 	x = []
 	y = []
 	for i in right_bank_expanded: 
 		x.append(i[1])
 		y.append(i[0])
-	plt.scatter(x, y, c="orange", s=1, label="Right Bank Extrapolation")
+	plt.scatter(x, y, c="red", s=5, label="Right Bank Extrapolation")
 	x = []
 	y = []
 	for i in left_bank_expanded: 
 		x.append(i[1])
 		y.append(i[0])
-	plt.scatter(x, y, c="dodgerblue", s=1, label="Left Bank Extrapolation")
-
-	plt.scatter(x=river_df['llon'], y=river_df['llat'], s=0.5, c="black")
-	plt.scatter(x=river_df['rlon'], y=river_df['rlat'], s=0.5, c="black")
-
-
-	plt.plot(right_bank_nearest_neighbor_x, right_bank_nearest_neighbor_y, c="red", linewidth=0.5, label="Right -> Left Bank Nearest Neighbor")
-	plt.plot(left_bank_nearest_neighbor_x, left_bank_nearest_neighbor_y, c="green", linewidth=0.5, label="Left -> Right Bank Nearest Neighbor")
+	plt.scatter(x, y, c="green", s=5, label="Left Bank Extrapolation")
 
 	plt.title("River Coordinates")
 	plt.xlabel("Longitude")
@@ -106,40 +111,12 @@ if __name__ == "__main__":
 				bank_expanded.append(lst[i+1])
 		return bank_expanded
 
-	additional_points_between_each_pair = 10
+	additional_points_between_each_pair = 0
 	right_bank_expanded = expand_list(right_bank_pairs, additional_points_between_each_pair)
 	left_bank_expanded =  expand_list(left_bank_pairs, additional_points_between_each_pair)
 
-	# Search for closest value in list of lists (KNN)
-	from scipy import spatial
-	# Closest neighbors to the right bank
-	plot_every_n = 100
-	right_bank_nearest_neighbor_x = []
-	right_bank_nearest_neighbor_y = [] # closest left pair
-	tree = spatial.KDTree(np.array(left_bank_expanded))
-	for right_pair in right_bank_pairs[::plot_every_n]:
-		distances, index = tree.query(right_pair)
-		closest_left_pair = list(tree.data[index])
-		right_bank_nearest_neighbor_x.append(right_pair[1])
-		right_bank_nearest_neighbor_x.append(closest_left_pair[1])
-		right_bank_nearest_neighbor_y.append(right_pair[0])
-		right_bank_nearest_neighbor_y.append(closest_left_pair[0])
-
-	#Closest neighbors to the left bank
-	left_bank_nearest_neighbor_x = []
-	left_bank_nearest_neighbor_y = [] # closest right pair
-	tree = spatial.KDTree(np.array(right_bank_expanded))
-	for left_pair in left_bank_pairs[::plot_every_n]:
-		distances, index = tree.query(left_pair)
-		closest_right_pair = list(tree.data[index])
-		left_bank_nearest_neighbor_x.append(left_pair[1])
-		left_bank_nearest_neighbor_x.append(closest_right_pair[1])
-		left_bank_nearest_neighbor_y.append(left_pair[0])
-		left_bank_nearest_neighbor_y.append(closest_right_pair[0])
 
 	# Plot river banks
 	plotRiver(df, latitude_points, longitude_points,
-			right_bank_nearest_neighbor_x, right_bank_nearest_neighbor_y,
-			left_bank_nearest_neighbor_x, left_bank_nearest_neighbor_y,
 			right_bank_expanded, left_bank_expanded,
 			 "data/river_coords.png")
