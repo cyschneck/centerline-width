@@ -83,6 +83,17 @@ def generateVoronoi(left_bank_lst, right_bank_lst):
 	#vor_regions = vor.regions  # Voronoi regions: each sub-list contains coordiantes for the regions
 	return river_voronoi
 
+def voronoiVerticesWithinPolygon(bank_polygon, bank_voronoi):
+	# Return two lists of points that are contained within the polygon
+	x_points_within = []
+	y_points_within = []
+	#TODO: improve run time by removing values that are exceptionally large/small
+	for vertex_point in bank_voronoi.vertices:
+		if bank_polygon.contains(Point([vertex_point[1], vertex_point[0]])):
+			x_points_within.append(vertex_point[1])
+			y_points_within.append(vertex_point[0])
+	return x_points_within, y_points_within
+
 ########################################################################
 
 def plotRiver(river_df, 
@@ -99,7 +110,8 @@ def plotRiver(river_df,
 	#plt.scatter(x=river_df['rlon'], y=river_df['rlat'], s=0.5, c="darkgrey")
 
 	# Plot Voronoi Polygons
-	plt.scatter(river_bank_voronoi.vertices[:,1], river_bank_voronoi.vertices[:,0], c="red", s=1, label="Voronoi Vertices")
+	vertices_x, vertices_y = voronoiVerticesWithinPolygon(river_bank_polygon, river_bank_voronoi)
+	plt.scatter(vertices_x, vertices_y, c="red", s=1, label="Voronoi Vertices (Within River)")
 	#voronoi_plot_2d(river_bank_voronoi, show_points=True, point_size=1, ax=ax) #TODO
 
 	# Plot River as a Polygon
@@ -121,9 +133,9 @@ def plotRiver(river_df,
 		y.append(i[0])
 	plt.scatter(x, y, c="orange", s=scatter_plot_size, label="Left Bank Extrapolation")
 
-	plt.title("River Coordinates")
-	plt.xlabel("Longitude (")
-	plt.ylabel("Latitude")
+	plt.title("River Coordinates: Area = {0}".format(river_bank_polygon.area*111139))
+	plt.xlabel("Longitude (°)")
+	plt.ylabel("Latitude (°)")
 	plt.legend()
 	plt.show()
 	fig.savefig(save_plot_name)
@@ -158,7 +170,7 @@ if __name__ == "__main__":
 
 	# Set up Vornoi based on the left and right bank
 	voronoi_river = generateVoronoi(left_bank_expanded, right_bank_expanded)
-	
+
 	# Plot river banks
 	plotRiver(df, latitude_points, longitude_points,
 			right_bank_expanded, left_bank_expanded,
