@@ -57,9 +57,9 @@ def expand_list(lst, expand_n):
 			bank_expanded.append(lst[i])
 	return bank_expanded
 
-def generatePolygon(left_bank_lst, right_bank_list):
+def generatePolygon(left_bank_lst, right_bank_lst):
 	# Return a shapely polygon based on the position of the river bank points
-	circular_list_of_banks = left_bank_expanded + right_bank_expanded[::-1] + [left_bank_expanded[0]]
+	circular_list_of_banks = left_bank_lst + right_bank_lst[::-1] + [left_bank_lst[0]]
 
 	bank_points_swapped = []
 	for i, bank_point in enumerate(circular_list_of_banks):
@@ -73,12 +73,22 @@ def generatePolygon(left_bank_lst, right_bank_list):
 
 	return river_polygon
 
+def generateVoronoi(left_bank_lst, right_bank_lst):
+	# Generate a Voronoi shape based on the left/right bank points
+	all_banks_points = left_bank_lst + right_bank_lst
+	all_banks_points = np.array(all_banks_points)
+
+	river_voronoi = Voronoi(all_banks_points)
+	#vor_vertices = vor.vertices # Voronoi vertices
+	#vor_regions = vor.regions  # Voronoi regions: each sub-list contains coordiantes for the regions
+	return river_voronoi
+
 ########################################################################
 
 def plotRiver(river_df, 
 			latitude_extrapolation, longitude_extrapolation,
 			right_bank_expanded, left_bank_expanded,
-			river_bank_polygon,
+			river_bank_polygon, river_bank_voronoi,
 			save_plot_name):
 
 	# Plot river based on right/left bank coordinates
@@ -89,14 +99,8 @@ def plotRiver(river_df,
 	#plt.scatter(x=river_df['rlon'], y=river_df['rlat'], s=0.5, c="darkgrey")
 
 	# Plot Voronoi Polygons
-	all_banks_points = right_bank_expanded + left_bank_expanded
-	all_banks_points = np.array(all_banks_points)
-
-	vor = Voronoi(all_banks_points)
-	vor_vertices = vor.vertices # Voronoi vertices
-	vor_regions = vor.regions  # Voronoi regions: each sub-list contains coordiantes for the regions
-	#plt.scatter(vor_vertices[:,1],vor_vertices[:,0], c="red", s=1, label="Voronoi Vertices")
-	#voronoi_plot_2d(vor, show_points=True, point_size=1, ax=ax)
+	plt.scatter(river_bank_voronoi.vertices[:,1], river_bank_voronoi.vertices[:,0], c="red", s=1, label="Voronoi Vertices")
+	#voronoi_plot_2d(river_bank_voronoi, show_points=True, point_size=1, ax=ax) #TODO
 
 	# Plot River as a Polygon
 	plt.plot(*river_bank_polygon.exterior.xy, c="silver")
@@ -118,7 +122,7 @@ def plotRiver(river_df,
 	plt.scatter(x, y, c="orange", s=scatter_plot_size, label="Left Bank Extrapolation")
 
 	plt.title("River Coordinates")
-	plt.xlabel("Longitude")
+	plt.xlabel("Longitude (")
 	plt.ylabel("Latitude")
 	plt.legend()
 	plt.show()
@@ -150,10 +154,13 @@ if __name__ == "__main__":
 	left_bank_expanded =  expand_list(left_bank_pairs, additional_points_between_each_pair)
 
 	# Set up a polygon based on the left and right bank
-	river_polygon = generatePolygon(left_bank_expanded, right_bank_expanded)
+	polygon_river = generatePolygon(left_bank_expanded, right_bank_expanded)
 
+	# Set up Vornoi based on the left and right bank
+	voronoi_river = generateVoronoi(left_bank_expanded, right_bank_expanded)
+	
 	# Plot river banks
 	plotRiver(df, latitude_points, longitude_points,
 			right_bank_expanded, left_bank_expanded,
-			river_polygon,
+			polygon_river, voronoi_river,
 			 "data/river_coords.png")
