@@ -1,7 +1,6 @@
 # Find the center point and width between lat/long points along river bank
 import math
 import csv
-import itertools
 
 import matplotlib.pyplot as plt
 from matplotlib.patches import Polygon as mat_poly
@@ -144,7 +143,7 @@ def plotRiver(river_df,
 if __name__ == "__main__":
 	#convertColumnsToCSV("data/river_coords.txt")
 	df = pd.read_csv("data/river_coords.csv")
-	#df = df.head(3)
+	#df = df.head(500)
 	#df = df.loc[100:510]
 
 	# Lines between points on graph
@@ -170,6 +169,9 @@ if __name__ == "__main__":
 
 	# Set up Vornoi based on the left and right bank
 	voronoi_river = generateVoronoi(left_bank_expanded, right_bank_expanded)
+	#print(voronoi_river.vertices)
+	#print(voronoi_river.ridge_points)
+	#exit()
 
 	# Plot river banks
 	plotRiver(df, latitude_points, longitude_points,
