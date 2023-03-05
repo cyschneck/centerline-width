@@ -1,7 +1,28 @@
 # river-geometry
 
-Python implementation to find the centerline and width of rivers
+Python implementation of R-Code CMGO to find the centerline and width of rivers based on the latitude and longitude of a right and left bank
 
+## Data
+Data is accepted as txt file that is converted to a .csv script
+
+Left and Right Bank Latitude and Longtiude:
+- Header: llat, llon, rlat, rlon
+- Data in degrees
+
+## Requirements
+Currently running on Python 3.7+
+
+```
+pip install -r requirments.txt
+```
+
+## Running Script
+
+```python
+python3 river_centerline_width.py 
+```
+
+Output:
 ![river_coords+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/river_coords.png)
 
 ## Citations
