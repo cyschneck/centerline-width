@@ -109,9 +109,19 @@ def plotRiver(river_df,
 	#plt.scatter(x=river_df['rlon'], y=river_df['rlat'], s=0.5, c="darkgrey")
 
 	# Plot Voronoi Polygons
+	
 	vertices_x, vertices_y = voronoiVerticesWithinPolygon(river_bank_polygon, river_bank_voronoi)
 	plt.scatter(vertices_x, vertices_y, c="red", s=1, label="Voronoi Vertices (Within River)")
 	#voronoi_plot_2d(river_bank_voronoi, show_points=True, point_size=1, ax=ax) #TODO
+
+	# Isolate center line:
+	# Plot the ridge edges of the Voronoi polygons that lie within the river banks
+	for vpair in river_bank_voronoi.ridge_vertices:
+		if vpair[0] >= 0 and vpair[1] >= 0:
+			v0 = river_bank_voronoi.vertices[vpair[0]]
+			v1 = river_bank_voronoi.vertices[vpair[1]]
+			if river_bank_polygon.contains(Point([v0[1], v0[0]])) and river_bank_polygon.contains(Point([v1[1], v1[0]])):
+				plt.plot([v0[1], v1[1]], [v0[0], v1[0]], 'black', linewidth=1)
 
 	# Plot River as a Polygon
 	plt.plot(*river_bank_polygon.exterior.xy, c="silver")
@@ -143,7 +153,7 @@ def plotRiver(river_df,
 if __name__ == "__main__":
 	#convertColumnsToCSV("data/river_coords.txt")
 	df = pd.read_csv("data/river_coords.csv")
-	#df = df.head(500)
+	df = df.head(500)
 	#df = df.loc[100:510]
 
 	# Lines between points on graph
@@ -171,7 +181,7 @@ if __name__ == "__main__":
 	voronoi_river = generateVoronoi(left_bank_expanded, right_bank_expanded)
 	#print(voronoi_river.vertices)
 	#print(voronoi_river.ridge_points)
-	#exit()
+	#print(voronoi_river.ridge_dict)
 
 	# Plot river banks
 	plotRiver(df, latitude_points, longitude_points,
