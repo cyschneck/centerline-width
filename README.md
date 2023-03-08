@@ -35,6 +35,13 @@ python3 river_centerline_width.py
 Output: Latitude (Y-Axis) and Longitude (X-Axis)
 ![river_coords+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/river_coords.png)
 
+## Algorithm
+- Right and Left bank points are plotted (X-Axis for Latitude, Y-Axis for Longitude)
+- Optional: Extrapolate between points to increase points 
+- Generate a polygon to encapsulate the river between the right and left banks
+- Generate a Voronoi based on the points along the river banks
+- Display Voronoi ridge vertices that lie within the polygon (within the river banks)
+
 ## Citations
 Based on the work:
 
