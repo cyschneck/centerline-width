@@ -1,6 +1,7 @@
 # Find the center point and width between lat/long points along river bank
 import math
 import csv
+from collections import Counter
 
 import matplotlib.pyplot as plt
 from matplotlib.patches import Polygon as mat_poly
@@ -102,26 +103,67 @@ def plotRiver(river_df,
 			save_plot_name):
 
 	# Plot river based on right/left bank coordinates
-	fig = plt.figure(figsize=(15,15))
+	fig = plt.figure(figsize=(8,8))
 	ax = fig.add_subplot(111)
 
 	#plt.scatter(x=river_df['llon'], y=river_df['llat'], s=0.5, c="darkgrey")
 	#plt.scatter(x=river_df['rlon'], y=river_df['rlat'], s=0.5, c="darkgrey")
 
 	# Plot Voronoi Polygons
-	
 	vertices_x, vertices_y = voronoiVerticesWithinPolygon(river_bank_polygon, river_bank_voronoi)
-	plt.scatter(vertices_x, vertices_y, c="red", s=1, label="Voronoi Vertices (Within River)")
+	plt.scatter(vertices_x, vertices_y, c="red", s=2, label="Voronoi Vertices (Within River)") # TODO: replace with final ridge points that are within the polygon and along the centerline
 	#voronoi_plot_2d(river_bank_voronoi, show_points=True, point_size=1, ax=ax) #TODO
 
 	# Isolate center line:
 	# Plot the ridge edges of the Voronoi polygons that lie within the river banks
-	for vpair in river_bank_voronoi.ridge_vertices:
-		if vpair[0] >= 0 and vpair[1] >= 0:
-			v0 = river_bank_voronoi.vertices[vpair[0]]
-			v1 = river_bank_voronoi.vertices[vpair[1]]
+	points_dict = {}
+	all_connections_start_to_end = []
+	for ridge_vertex_point in river_bank_voronoi.ridge_vertices:
+		if ridge_vertex_point[0] >= 0 and ridge_vertex_point[1] >= 0:
+			v0 = river_bank_voronoi.vertices[ridge_vertex_point[0]]
+			v1 = river_bank_voronoi.vertices[ridge_vertex_point[1]]
+			# Check if start and end points are within the polygon, otherwise remove the connection
 			if river_bank_polygon.contains(Point([v0[1], v0[0]])) and river_bank_polygon.contains(Point([v1[1], v1[0]])):
-				plt.plot([v0[1], v1[1]], [v0[0], v1[0]], 'black', linewidth=1)
+				start_point = tuple([v0[1], v0[0]])
+				end_point = tuple([v1[1], v1[0]])
+				start_to_end = [start_point, end_point]
+				if start_to_end not in all_connections_start_to_end: 
+					all_connections_start_to_end.append(start_to_end)
+
+	connections_counter_start_to_end = Counter(x for xs in all_connections_start_to_end for x in set(xs))
+	# Plot the connections
+	for connection in all_connections_start_to_end:
+		start_point = connection[0]
+		end_point = connection[1]
+		#print(start_point)
+		#print(end_point)
+		#print(connections_counter_start_to_end[start_point])
+		#print(connections_counter_start_to_end[end_point])
+		# Only plot points with at least two connections
+		if connections_counter_start_to_end[start_point] > 1:
+			if connections_counter_start_to_end[end_point] > 1: 
+				print("Start: {0} - {1}".format(start_point[0], connections_counter_start_to_end[start_point]))
+				print("End  : {0} - {1}".format(end_point[0], connections_counter_start_to_end[end_point]))
+				if start_point not in points_dict.keys():
+					points_dict[start_point] = []
+				points_dict[start_point].append(end_point)
+				
+	x_ridge_point = []
+	y_ridge_point = []
+
+	for start_point, end_point_list in points_dict.items():
+		#print(start_point)
+		#print(end_point_list)
+		for end_point in end_point_list:
+			if len(end_point_list) > 0:
+				x_ridge_point.append([start_point[0], end_point[0]])
+				y_ridge_point.append([start_point[1], end_point[1]])
+
+	for i in range(len(x_ridge_point)):
+		plt.plot(x_ridge_point[i], y_ridge_point[i], 'black', linewidth=1)
+		# Plot (X, Y) positions
+		#ax.text(x=x_ridge_point[i][0], y=y_ridge_point[i][0], s="{0}".format(x_ridge_point[i][0], y_ridge_point[i][0]))
+		#ax.text(x=x_ridge_point[i][1], y=y_ridge_point[i][1], s="{0}".format(x_ridge_point[i][1], y_ridge_point[i][1]))
 
 	# Plot River as a Polygon
 	plt.plot(*river_bank_polygon.exterior.xy, c="silver")
@@ -151,9 +193,9 @@ def plotRiver(river_df,
 
 ########################################################################
 if __name__ == "__main__":
-	#convertColumnsToCSV("data/river_coords.txt")
+	convertColumnsToCSV("data/river_coords.txt")
 	df = pd.read_csv("data/river_coords.csv")
-	df = df.head(500)
+	df = df.head(100)
 	#df = df.loc[100:510]
 
 	# Lines between points on graph
@@ -179,9 +221,6 @@ if __name__ == "__main__":
 
 	# Set up Vornoi based on the left and right bank
 	voronoi_river = generateVoronoi(left_bank_expanded, right_bank_expanded)
-	#print(voronoi_river.vertices)
-	#print(voronoi_river.ridge_points)
-	#print(voronoi_river.ridge_dict)
 
 	# Plot river banks
 	plotRiver(df, latitude_points, longitude_points,
