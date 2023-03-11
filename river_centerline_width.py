@@ -70,7 +70,7 @@ def generatePolygon(left_bank_lst, right_bank_lst):
 
 	if not river_polygon.is_valid:
 		print("Invalid Polygon needs to be corrected")
-		exit()
+		#exit()
 
 	return river_polygon
 
@@ -126,7 +126,7 @@ def networkXGraph(all_points_dict, starting_node, ending_node):
 
 ########################################################################
 
-def plotRiver(river_df, 
+def plotRiver(river_df, print_all_paths,
 			latitude_extrapolation, longitude_extrapolation,
 			right_bank_expanded, left_bank_expanded,
 			river_bank_polygon, river_bank_voronoi,
@@ -173,7 +173,6 @@ def plotRiver(river_df,
 				
 	x_ridge_point = []
 	y_ridge_point = []
-	print(len(points_dict))
 	starting_node = None
 	ending_node = None
 	for start_point, end_point_list in points_dict.items():
@@ -181,8 +180,8 @@ def plotRiver(river_df,
 		else:
 			if start_point[1] > starting_node[1]:
 				starting_node = start_point
-		print(start_point)
-		print(end_point_list)
+		#print(start_point)
+		#print(end_point_list)
 		for end_point in end_point_list:
 			if len(end_point_list) > 0:
 				if ending_node is None: ending_node = end_point
@@ -198,15 +197,17 @@ def plotRiver(river_df,
 	plt.scatter(starting_node[0], starting_node[1], c="green", label="Starting Node")
 	plt.scatter(ending_node[0], ending_node[1], c="purple", label="Ending Node")
 
-	for i in range(len(x_ridge_point)):
-		plt.plot(x_ridge_point[i], y_ridge_point[i], 'cyan', linewidth=1)
-		# Plot (X, Y) positions as text
-		#ax.text(x=x_ridge_point[i][0], y=y_ridge_point[i][0], s="{0}, {1}".format(x_ridge_point[i][0], y_ridge_point[i][0]))
-		#ax.text(x=x_ridge_point[i][1], y=y_ridge_point[i][1], s="{0}, {1}".format(x_ridge_point[i][1], y_ridge_point[i][1]))
-
 	# Plot River as a Polygon
 	plt.plot(*river_bank_polygon.exterior.xy, c="silver")
 	#ax.add_patch(mat_poly(right_bank_expanded+left_bank_expanded, closed=True, facecolor='red'))
+
+	if print_all_paths or not river_bank_polygon.is_valid:
+		for i in range(len(x_ridge_point)):
+			plt.plot(x_ridge_point[i], y_ridge_point[i], 'cyan', linewidth=1)
+			# Plot (X, Y) positions as text
+			#ax.text(x=x_ridge_point[i][0], y=y_ridge_point[i][0], s="{0}, {1}".format(x_ridge_point[i][0], y_ridge_point[i][0]))
+			#ax.text(x=x_ridge_point[i][1], y=y_ridge_point[i][1], s="{0}, {1}".format(x_ridge_point[i][1], y_ridge_point[i][1]))
+
 
 	# Plot colored river bank (including extrapolations) between known points
 	scatter_plot_size = 3
@@ -229,10 +230,11 @@ def plotRiver(river_df,
 		valid_path_through = True
 		plt.plot(*zip(*shortest_path_points), c="black", label="Shortest Path (Centerline)")
 
-	plt.title("River Coordinates: Valid Path = {0}".format(valid_path_through))
+	plt.title("River Coordinates: Valid Path = {0}, Valid Polygon = {1}".format(valid_path_through, river_bank_polygon.is_valid))
 	plt.xlabel("Longitude (°)")
 	plt.ylabel("Latitude (°)")
-	plt.legend(loc="lower left")
+	plt.legend(loc="upper right")
+	plt.tight_layout()
 	plt.show()
 	fig.savefig(save_plot_name)
 
@@ -240,12 +242,12 @@ def plotRiver(river_df,
 if __name__ == "__main__":
 	convertColumnsToCSV("data/river_coords.txt")
 	df = pd.read_csv("data/river_coords.csv")
-	#df = df.head(700) # invalid path
-	df = df.head(100) # valid but incorrect path
-	#df = df.head(550) # valid but incorrect path
-	#df = df.head(40) # valid with correct path
-	#df = df.head(10)
-	#df = df.loc[100:710]
+	#df = df.head(10) # valid path, valid polygon, correct centerline
+	#df = df.head(40) # valid path, valid polgyon, correct centerline
+	#df = df.head(100) # valid path, valid polygon, but incorrect centerline
+	df = df.head(550) # valid path, valid polygon, but incorrect centerline
+	#df = df.head(250) # valid path, invalid polygon, so incorrect centerline
+	#df = df.head(700) # invalid path, valid polgyon, so incorrect centerline
 
 	# Lines between points on graph
 	latitude_points = []
@@ -272,7 +274,8 @@ if __name__ == "__main__":
 	voronoi_river = generateVoronoi(left_bank_expanded, right_bank_expanded)
 
 	# Plot river banks
-	plotRiver(df, latitude_points, longitude_points,
+	print_all_paths = True # print all possible paths (not just centerline) in cyan
+	plotRiver(df, print_all_paths, latitude_points, longitude_points,
 			right_bank_expanded, left_bank_expanded,
 			polygon_river, voronoi_river,
 			 "data/river_coords.png")
