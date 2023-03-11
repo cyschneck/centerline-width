@@ -41,6 +41,10 @@ Output: Latitude (Y-Axis) and Longitude (X-Axis)
 - Generate a polygon to encapsulate the river between the right and left banks
 - Generate a Voronoi based on the points along the river banks
 - Display Voronoi ridge vertices that lie within the polygon (within the river banks)
+- Filter out any point pairs that only have one connections to filter out the short dead end paths
+- Iterate through points to find the longest path to filter out remaining small path dead ends
+
+This is an attempt at a more robust algorithm working from raw data to ensure that all dead ends are removed and no gaps exist in the centerline
 
 ## Citations
 Based on the work:
