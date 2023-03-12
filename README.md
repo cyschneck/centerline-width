@@ -42,9 +42,13 @@ Output: Latitude (Y-Axis) and Longitude (X-Axis)
 - Generate a Voronoi based on the points along the river banks
 - Display Voronoi ridge vertices that lie within the polygon (within the river banks)
 - Filter out any point pairs that only have one connections to filter out the short dead end paths
+- Find the starting and ending node based on distance from the top and bottom of polygon
 - Iterate through points to find the longest path to filter out remaining small path dead ends
 
 This is an attempt at a more robust algorithm working from raw data to ensure that all dead ends are removed and no gaps exist in the centerline
+
+## TODO
+- Ensure starting node is the top vertex path
 
 ## Citations
 Based on the work:
