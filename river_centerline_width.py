@@ -1,18 +1,23 @@
-# Find the center point and width between lat/long points along river bank
+# Find the center point and width between latitude/longitude points along right/left river bank
 import math
 import csv
 from collections import Counter
+import logging
 
 import networkx as nx
 import matplotlib.pyplot as plt
-from matplotlib.patches import Polygon as mat_poly
 import numpy as np
 import pandas as pd
 from scipy.spatial import Voronoi, voronoi_plot_2d
-import shapely
 from shapely.geometry import Point, Polygon, LineString
-########################################################################
 
+## Logging set up for .INFO
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+stream_handler = logging.StreamHandler()
+logger.addHandler(stream_handler)
+
+########################################################################
 def convertColumnsToCSV(text_file=None, flipBankDirection=False):
 	# Convert txt file to a comma seperated version of the file to use in pandas
 	left_rows = []
@@ -49,14 +54,14 @@ def generatePolygon(left_bank_lst, right_bank_lst):
 
 	bank_points_swapped = []
 	for i, bank_point in enumerate(circular_list_of_banks):
-		bank_points_swapped.append([bank_point[1], bank_point[0]]) # Swap the x and y to graph with longitude on the y-axis
+		bank_points_swapped.append([bank_point[0], bank_point[1]]) # Swap the x and y to graph with longitude on the y-axis
 
 	river_polygon = Polygon(bank_points_swapped)
-	top_river = LineString([Point(left_bank_lst[::-1][0][1],left_bank_lst[::-1][0][0]), Point(right_bank_lst[::-1][0][1], right_bank_lst[::-1][0][0])])
-	bottom_river = LineString([Point(right_bank_lst[0][1], right_bank_lst[0][0]), Point(left_bank_lst[0][1], left_bank_lst[0][0])])
+	top_river = LineString([Point(left_bank_lst[::-1][0][0],left_bank_lst[::-1][0][1]), Point(right_bank_lst[::-1][0][0], right_bank_lst[::-1][0][1])])
+	bottom_river = LineString([Point(right_bank_lst[0][0], right_bank_lst[0][1]), Point(left_bank_lst[0][0], left_bank_lst[0][1])])
 
 	if not river_polygon.is_valid:
-		print("Invalid Polygon needs to be corrected")
+		logger.critical("Invalid Polygon needs to be corrected")
 
 	return river_polygon, top_river, bottom_river
 
@@ -68,12 +73,12 @@ def generateVoronoi(left_bank_lst, right_bank_lst):
 	river_voronoi = Voronoi(all_banks_points)
 	return river_voronoi
 
-def networkXGraph(all_points_dict, starting_node, ending_node):
+def networkXGraphShortestPath(all_points_dict, starting_node, ending_node):
 	def distanceBetween(start, end):
-		lat1 = start[1]
-		lat2 = end[1]
-		lon1 = start[0]
-		lon2 = end[0]
+		lat1 = start[0]
+		lat2 = end[0]
+		lon1 = start[1]
+		lon2 = end[1]
 		p = math.pi/180
 		a = 0.5 - math.cos((lat2-lat1)*p)/2 + math.cos(lat1*p) * math.cos(lat2*p) * (1-math.cos((lon2-lon1)*p))/2
 		return math.asin(math.sqrt(a))
@@ -114,9 +119,9 @@ def plotRiver(display_all_paths,
 			v0 = river_bank_voronoi.vertices[ridge_vertex_point[0]]
 			v1 = river_bank_voronoi.vertices[ridge_vertex_point[1]]
 			# Check if start and end points are within the polygon, otherwise remove the connection pair
-			if river_bank_polygon.contains(Point([v0[1], v0[0]])) and river_bank_polygon.contains(Point([v1[1], v1[0]])):
-				start_point = tuple([v0[1], v0[0]])
-				end_point = tuple([v1[1], v1[0]])
+			if river_bank_polygon.contains(Point([v0[0], v0[1]])) and river_bank_polygon.contains(Point([v1[0], v1[1]])):
+				start_point = tuple([v0[0], v0[1]])
+				end_point = tuple([v1[0], v1[1]])
 				start_to_end = [start_point, end_point]
 				if start_to_end not in all_connections_start_to_end: 
 					all_connections_start_to_end.append(start_to_end)
@@ -129,8 +134,8 @@ def plotRiver(display_all_paths,
 		# Only plot points with at least two connections
 		if connections_counter_start_to_end[start_point] > 1:
 			if connections_counter_start_to_end[end_point] > 1: 
-				#print("Start : {0} - {1}".format(start_point[0], connections_counter_start_to_end[start_point]))
-				#print("End   : {0} - {1}".format(end_point[0], connections_counter_start_to_end[end_point]))
+				#logger.debug("Start : {0} - {1}".format(start_point[0], connections_counter_start_to_end[start_point]))
+				#logger.debug("End   : {0} - {1}".format(end_point[0], connections_counter_start_to_end[end_point]))
 				if start_point not in points_dict.keys():
 					points_dict[start_point] = []
 				points_dict[start_point].append(end_point)
@@ -183,18 +188,18 @@ def plotRiver(display_all_paths,
 	x = []
 	y = []
 	for i in right_bank_expanded: 
-		x.append(i[1])
-		y.append(i[0])
+		x.append(i[0])
+		y.append(i[1])
 	plt.scatter(x, y, c="dodgerblue", s=scatter_plot_size, label="Right Bank")
 	x = []
 	y = []
 	for i in left_bank_expanded: 
-		x.append(i[1])
-		y.append(i[0])
+		x.append(i[0])
+		y.append(i[1])
 	plt.scatter(x, y, c="orange", s=scatter_plot_size, label="Left Bank")
 
 	# Find centerline from NetworkX
-	shortest_path_points = networkXGraph(points_dict, starting_node, ending_node)
+	shortest_path_points = networkXGraphShortestPath(points_dict, starting_node, ending_node)
 	valid_path_through = False
 	if shortest_path_points:
 		valid_path_through = True
@@ -224,9 +229,9 @@ if __name__ == "__main__":
 	left_bank_coordinates = [] # wtihout nan
 	for index, row in df.iterrows():
 		if not math.isnan(row.rlat) and not math.isnan(row.rlon):
-			right_bank_coordinates.append([row.rlat, row.rlon]) # TODO: flipped values for longitude = x, latitude = y
+			right_bank_coordinates.append([row.rlon, row.rlat])
 		if not math.isnan(row.llat) and not math.isnan(row.llon):
-			left_bank_coordinates.append([row.llat, row.llon]) # TODO: flipped values for longitude = x, latitude = y
+			left_bank_coordinates.append([row.llon, row.llat])
 
 	# Set up a polygon based on the left and right bank
 	polygon_river, top_river_line, bottom_river_line = generatePolygon(left_bank_coordinates, right_bank_coordinates)
