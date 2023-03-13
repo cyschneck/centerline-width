@@ -99,7 +99,7 @@ def pointsFromVoronoi(river_voronoi, river_polygon):
 				if start_to_end not in all_connections_start_to_end: 
 					all_connections_start_to_end.append(start_to_end)
 
-	# Plot the connections that have at least one connection
+	# Dictionary with connections that have at least one connection
 	connections_counter_start_to_end = Counter(x for xs in all_connections_start_to_end for x in set(xs)) # counter the amount of connections for each point
 	for connection in all_connections_start_to_end:
 		start_point = connection[0]
@@ -163,7 +163,7 @@ def networkXGraphShortestPath(all_points_dict, starting_node, ending_node):
 		shortest_path = nx.shortest_path(graph_connections, source=starting_node, target=ending_node)
 	except nx.NetworkXNoPath: # no direct path found
 		return None
-	#nx.draw(graph_connections)
+	#nx.draw(graph_connections, with_labels=True, font_size=10)
 	return shortest_path
 ########################################################################
 def centerlineLatitudeLongitude(river_df=None):
@@ -192,7 +192,10 @@ def plotRiver(river_df=None, display_all_paths=False, save_plot_name=None):
 	# Isolate center line:
 	# Plot the ridge edges of the Voronoi polygons that lie within the river banks
 	# Find the start and ending node to find the centerline
-	starting_node, ending_node, x_ridge_point, y_ridge_point, start_end_points_dict = centerlinePath(river_bank_voronoi, river_bank_polygon, top_river_line, bottom_river_line)
+	starting_node, ending_node, x_ridge_point, y_ridge_point, start_end_points_dict = centerlinePath(river_bank_voronoi,
+																									river_bank_polygon, 
+																									top_river_line, 
+																									bottom_river_line)
 
 	# Plot River as a Polygon
 	plt.plot(*river_bank_polygon.exterior.xy, c="gainsboro")
@@ -233,7 +236,7 @@ def plotRiver(river_df=None, display_all_paths=False, save_plot_name=None):
 	valid_path_through = False
 	if shortest_path_points:
 		valid_path_through = True
-		plt.plot(*zip(*shortest_path_points), c="black", label="Centerline (Shortest Path)")
+		plt.plot(*zip(*shortest_path_points), c="black", label="Centerline")
 
 	plt.title("River Coordinates: Valid Centerline = {0}, Valid Polygon = {1}".format(valid_path_through, river_bank_polygon.is_valid))
 	plt.xlabel("Longitude (°)")
@@ -242,14 +245,34 @@ def plotRiver(river_df=None, display_all_paths=False, save_plot_name=None):
 	plt.show()
 	fig.savefig(save_plot_name)
 
+def riverWidthFromCenterline(river_df=None, centerline_coordinates=None, save_to_csv=None):
+	# Return river width: right to center, left to center, total width
+	width_dict = {}
+
+	left_bank_coordinates, right_bank_coordinates = leftRightCoordinates(river_df)
+	river_bank_polygon, top_river_line, bottom_river_line = generatePolygon(left_bank_coordinates, right_bank_coordinates)
+
+	if save_to_csv:
+		headers = ["Right-Center Width", "Left-Center Width", "Total Width"]
+		#total_rows = []
+		#total_rows.append(row + right_rows[i])
+
+		#write_file_name = text_file.split(".")[0] + ".csv"
+		#with open(write_file_name, "w") as f:
+		#	write = csv.writer(f)
+		#	write.writerow(header_fields)
+		#	write.writerows(total_rows)
+
+	return width_dict
+
 ########################################################################
 if __name__ == "__main__":
 	convertColumnsToCSV(text_file="data/river_coords.txt", flipBankDirection=True)
 	df = pd.read_csv("data/river_coords.csv")
 	# Valid Examples
-	df = df.head(10) # valid centerline, valid path, valid polygon, valid starting node, valid ending node
+	#df = df.head(15) # valid centerline, valid path, valid polygon, valid starting node, valid ending node
 	#df = df.head(100) # valid centerline, valid path, valid polygon, valid starting node, valid ending node
-	#df = df.head(550) # valid centerline, valid path, valid polygon, valid starting node, valid ending node
+	df = df.head(550) # valid centerline, valid path, valid polygon, valid starting node, valid ending node
 	# Invalid Examples
 	#df = df.head(250) # valid centerline, valid path, invalid polygon, valid starting node, valid ending nodes
 	#df = df.head(40) # invalid centerline, valid path, valid polgyon, invalid starting node, valid ending node
@@ -257,9 +280,10 @@ if __name__ == "__main__":
 	#df = df.head(1000) # invalid centerline, invalid path, invalid polgyon, invalid starting node, valid ending node
 
 	# Return the latitude/longtiude coordinates for the centerline
-	centerline_longitude_latitude_coordinates = centerlineLatitudeLongitude(river_df=df)
+	#centerline_longitude_latitude_coordinates = centerlineLatitudeLongitude(river_df=df)
 
 	# Plot river banks
-	plotRiver(river_df=df, save_plot_name="data/river_coords.png", display_all_paths=True)
+	plotRiver(river_df=df, save_plot_name="data/river_coords.png", display_all_paths=False)
 
 	# Return the width of the river for each centerline vertex (distance from right, left, total)
+	#river_width_dict = riverWidthFromCenterline(river_df=df, centerline_coordinates=centerline_longitude_latitude_coordinates, save_to_csv="data/river_width.csv")
