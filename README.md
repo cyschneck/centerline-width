@@ -36,31 +36,45 @@ Output: Latitude (Y-Axis) and Longitude (X-Axis)
 ![river_coords+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/river_coords.png)
 
 ## Algorithm
-- Right and Left bank points are plotted (X-Axis for Latitude, Y-Axis for Longitude)
-- Generate a polygon to encapsulate the river between the right and left banks to define in and outside of river
-- Generate a Voronoi based on the points along the river banks
-- Display Voronoi ridge vertices that lie within the polygon (within the river banks)
-- Filter out any point pairs that only have one connections to filter out the short dead end paths
-- Find the starting and ending node based on distance from the top and bottom of polygon
-- Find the centerline: shortest path from the starting node to the ending node ([Dijkstra's Algorithm](https://networkx.org/documentation/stable/reference/algorithms/generated/networkx.algorithms.shortest_paths.generic.shortest_path.html#networkx.algorithms.shortest_paths.generic.shortest_path))
+### Right and Left bank points are plotted (X-Axis for Latitude, Y-Axis for Longitude)
+![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example1.png)
+
+### Generate a polygon to encapsulate the river between the right and left banks to define in and outside of river
+![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example2.png)
+
+### Generate a Voronoi based on the points along the river banks
+![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example3.png)
+
+### Display Voronoi ridge vertices that lie within the polygon (within the river banks)
+![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example4.png)
+
+### Filter out any point pairs that only have one connections to filter out the short dead end paths
+
+###  Find the starting and ending node based on distance from the top and bottom of polygon
+![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example6.png)
+![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example7.png)
+
+### Find the centerline: shortest path from the starting node to the ending node ([Dijkstra's Algorithm](https://networkx.org/documentation/stable/reference/algorithms/generated/networkx.algorithms.shortest_paths.generic.shortest_path.html#networkx.algorithms.shortest_paths.generic.shortest_path))
+![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example10.png)
+![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example9.png)
+![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example8.png)
 
 This is an attempt at a more robust algorithm working from raw data to ensure that all dead ends are removed and no gaps exist in the centerline
 
 ## Edge Cases
 invalid centerline, valid path, valid polgyon, invalid starting node, valid ending node
+![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example1.png)
 
 invalid centerline, valid path, valid polgyon, invalid starting node, valid ending node
+![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example2.png)
 
 Invalid Polygon needs to be corrected
+![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example3.png)
 
 invalid centerline, invalid path, invalid polgyon, invalid starting node, valid ending node
+![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example4.png)
 
 flipBankDirection for text data
-
-## TODO
-- Fix flipping the longitude and latitude positions (x=1, y=0)
-- Return centerline positions as LineString to find width/distance of river
-- Return the distance from x sized segments from the banks to the centerline
 
 ## Citations
 Based on the work:
