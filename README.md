@@ -71,17 +71,14 @@ The centerline is defined by the greatest distance from the right and left bank,
 This is an attempt at a more robust algorithm working from raw data to ensure that all dead ends are removed and no gaps exist in the centerline
 
 ## Edge Cases
-invalid centerline, valid path, valid polgyon, invalid starting node, valid ending node
+Invalid Polygon
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example1.png)
 
-invalid centerline, valid path, valid polgyon, invalid starting node, valid ending node
-![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example2.png)
-
-Invalid Polygon needs to be corrected
-![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example3.png)
-
-invalid centerline, invalid path, invalid polgyon, invalid starting node, valid ending node
+Invalid Polygon
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example4.png)
+
+Invalid Starting Node
+![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example3.png)
 
 flipBankDirection for text data
 
