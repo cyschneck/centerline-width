@@ -70,6 +70,14 @@ The centerline is defined by the greatest distance from the right and left bank,
 
 This is an attempt at a more robust algorithm working from raw data to ensure that all dead ends are removed and no gaps exist in the centerline
 
+Points that only have one connection are removed, but by limiting the number of connections for a point to just two will create gaps. The Voronoi vertices connect to other vertex values, but some connect to more and some only connect to one other point. Removing additional values will create gaps, so this is avoided in this code by not applying additional filters.
+
+All vertices:
+![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example4.png)
+
+Vertices that have at least two connections (that would create gaps):
+![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example5.png)
+
 ## Edge Cases
 Invalid Polygon
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example1.png)
@@ -79,8 +87,6 @@ Invalid Polygon
 
 Invalid Starting Node
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example3.png)
-
-flipBankDirection for text data
 
 ## Citations
 Based on the work:
