@@ -37,18 +37,30 @@ Output: Latitude (Y-Axis) and Longitude (X-Axis)
 
 ## Algorithm
 - Right and Left bank points are plotted (X-Axis for Latitude, Y-Axis for Longitude)
-- Optional: Extrapolate between points to increase points 
-- Generate a polygon to encapsulate the river between the right and left banks
+- Generate a polygon to encapsulate the river between the right and left banks to define in and outside of river
 - Generate a Voronoi based on the points along the river banks
 - Display Voronoi ridge vertices that lie within the polygon (within the river banks)
 - Filter out any point pairs that only have one connections to filter out the short dead end paths
 - Find the starting and ending node based on distance from the top and bottom of polygon
-- Iterate through points to find the longest path to filter out remaining small path dead ends
+- Find the centerline: shortest path from the starting node to the ending node ([Dijkstra's Algorithm](https://networkx.org/documentation/stable/reference/algorithms/generated/networkx.algorithms.shortest_paths.generic.shortest_path.html#networkx.algorithms.shortest_paths.generic.shortest_path))
 
 This is an attempt at a more robust algorithm working from raw data to ensure that all dead ends are removed and no gaps exist in the centerline
 
+## Edge Cases
+invalid centerline, valid path, valid polgyon, invalid starting node, valid ending node
+
+invalid centerline, valid path, valid polgyon, invalid starting node, valid ending node
+
+Invalid Polygon needs to be corrected
+
+invalid centerline, invalid path, invalid polgyon, invalid starting node, valid ending node
+
+flipBankDirection for text data
+
 ## TODO
-- Ensure starting node is the top vertex path
+- Fix flipping the longitude and latitude positions (x=1, y=0)
+- Return centerline positions as LineString to find width/distance of river
+- Return the distance from x sized segments from the banks to the centerline
 
 ## Citations
 Based on the work:

@@ -11,10 +11,9 @@ import pandas as pd
 from scipy.spatial import Voronoi, voronoi_plot_2d
 import shapely
 from shapely.geometry import Point, Polygon, LineString
-
 ########################################################################
 
-def convertColumnsToCSV(text_file):
+def convertColumnsToCSV(text_file=None, flipBankDirection=False):
 	# Convert txt file to a comma seperated version of the file to use in pandas
 	left_rows = []
 	right_rows = []
@@ -30,7 +29,8 @@ def convertColumnsToCSV(text_file):
 				right_rows.append(line[2:])
 
 	# reverse the direction for the right bank
-	right_rows = right_rows[::-1]
+	if flipBankDirection:
+		right_rows = right_rows[::-1]
 
 	total_rows = []
 	for i, row in enumerate(left_rows):
@@ -43,22 +43,6 @@ def convertColumnsToCSV(text_file):
 		write.writerows(total_rows)
 
 ########################################################################
-
-def expand_list(lst, expand_n):
-	# Add points between existing points to increase closest neighbors
-	expand_n += 2 # Add two points, to account for the start/end point
-	bank_expanded = []
-	for i in range(len(lst)):
-		if i+1 < len(lst):
-			x_expand = np.linspace(lst[i][0], lst[i+1][0], expand_n)
-			y_expand = np.linspace(lst[i][1], lst[i+1][1], expand_n)
-			for j in range(len(x_expand)):
-				bank_expanded.append([x_expand[j],y_expand[j]])
-			bank_expanded.append(lst[i+1])
-		else: 
-			bank_expanded.append(lst[i])
-	return bank_expanded
-
 def generatePolygon(left_bank_lst, right_bank_lst):
 	# Return a shapely polygon based on the position of the river bank points
 	circular_list_of_banks = left_bank_lst + right_bank_lst[::-1] + [left_bank_lst[0]]
@@ -73,7 +57,6 @@ def generatePolygon(left_bank_lst, right_bank_lst):
 
 	if not river_polygon.is_valid:
 		print("Invalid Polygon needs to be corrected")
-		#exit()
 
 	return river_polygon, top_river, bottom_river
 
@@ -83,20 +66,7 @@ def generateVoronoi(left_bank_lst, right_bank_lst):
 	all_banks_points = np.array(all_banks_points)
 
 	river_voronoi = Voronoi(all_banks_points)
-	#vor_vertices = vor.vertices # Voronoi vertices
-	#vor_regions = vor.regions  # Voronoi regions: each sub-list contains coordiantes for the regions
 	return river_voronoi
-
-def voronoiVerticesWithinPolygon(bank_polygon, bank_voronoi):
-	# Return two lists of points that are contained within the polygon
-	x_points_within = []
-	y_points_within = []
-	#TODO: improve run time by removing values that are exceptionally large/small
-	for vertex_point in bank_voronoi.vertices:
-		if bank_polygon.contains(Point([vertex_point[1], vertex_point[0]])):
-			x_points_within.append(vertex_point[1])
-			y_points_within.append(vertex_point[0])
-	return x_points_within, y_points_within
 
 def networkXGraph(all_points_dict, starting_node, ending_node):
 	def distanceBetween(start, end):
@@ -108,30 +78,25 @@ def networkXGraph(all_points_dict, starting_node, ending_node):
 		a = 0.5 - math.cos((lat2-lat1)*p)/2 + math.cos(lat1*p) * math.cos(lat2*p) * (1-math.cos((lon2-lon1)*p))/2
 		return math.asin(math.sqrt(a))
 
-	g = nx.Graph()
+	graph_connections = nx.Graph()
 	node_as_keys_pos_values = {}
 	for start_point, end_point_list in all_points_dict.items():
 		node_as_keys_pos_values[start_point] = (start_point[0], start_point[1])
-		g.add_node(start_point, pos=(start_point[0], start_point[1]))
-		#print(start_point)
+		graph_connections.add_node(start_point, pos=(start_point[0], start_point[1]))
 		for end_point in end_point_list:
-			#print(end_point)
-			g.add_node(end_point, pos=(end_point[0], end_point[1]))
+			graph_connections.add_node(end_point, pos=(end_point[0], end_point[1]))
 			node_as_keys_pos_values[end_point] = (end_point[0], end_point[1])
-			g.add_edge(start_point, end_point, weight=distanceBetween(start_point,end_point))
-		#print("\n")
+			graph_connections.add_edge(start_point, end_point, weight=distanceBetween(start_point,end_point))
 	try:
-		shortest_path = nx.shortest_path(g, source=starting_node, target=ending_node)
-	except nx.NetworkXNoPath:
+		shortest_path = nx.shortest_path(graph_connections, source=starting_node, target=ending_node)
+	except nx.NetworkXNoPath: # no direct path found
 		return None
+	#nx.draw(graph_connections)
 	return shortest_path
-
-
 ########################################################################
 
-def plotRiver(river_df, print_all_paths,
+def plotRiver(display_all_paths,
 			top_river_line, bottom_river_line,
-			latitude_extrapolation, longitude_extrapolation,
 			right_bank_expanded, left_bank_expanded,
 			river_bank_polygon, river_bank_voronoi,
 			save_plot_name):
@@ -139,12 +104,7 @@ def plotRiver(river_df, print_all_paths,
 	# Plot river based on right/left bank coordinates
 	fig = plt.figure(figsize=(10,10))
 	ax = fig.add_subplot(111)
-
-	# Plot Voronoi Polygons
-	#vertices_x, vertices_y = voronoiVerticesWithinPolygon(river_bank_polygon, river_bank_voronoi)
-	#plt.scatter(vertices_x, vertices_y, c="red", s=2, label="Voronoi Vertices (Within River)") # TODO: replace with final ridge points that are within the polygon and along the centerline
-	#voronoi_plot_2d(river_bank_voronoi, show_points=True, point_size=1, ax=ax)
-
+	
 	# Isolate center line:
 	# Plot the ridge edges of the Voronoi polygons that lie within the river banks
 	points_dict = {}
@@ -174,40 +134,44 @@ def plotRiver(river_df, print_all_paths,
 				if start_point not in points_dict.keys():
 					points_dict[start_point] = []
 				points_dict[start_point].append(end_point)
-				
+
+	# Find the start and ending node to find the centerline
 	x_ridge_point = []
 	y_ridge_point = []
 	starting_node = None
 	ending_node = None
 	for start_point, end_point_list in points_dict.items():
-		if starting_node is None: starting_node = start_point
-		else:
-			if Point(start_point).distance(top_river_line) <= Point(starting_node).distance(top_river_line):
-				starting_node = start_point
-		for end_point in end_point_list:
-			if Point(end_point).distance(top_river_line) <= Point(starting_node).distance(top_river_line):
-				starting_node = end_point
-			if ending_node is None: ending_node = end_point
+		if len(end_point_list) > 0: # TESTING TESTING
+			if starting_node is None: starting_node = start_point
 			else:
-				if Point(start_point).distance(bottom_river_line) <= Point(ending_node).distance(bottom_river_line):
-					ending_node = start_point
-				if Point(end_point).distance(bottom_river_line) <= Point(ending_node).distance(bottom_river_line):
-					ending_node = end_point
-			# Ridge Points for paths
-			x_ridge_point.append([start_point[0], end_point[0]])
-			y_ridge_point.append([start_point[1], end_point[1]])
+				if Point(start_point).distance(top_river_line) <= Point(starting_node).distance(top_river_line):
+					starting_node = start_point
+			for end_point in end_point_list:
+				if Point(end_point).distance(top_river_line) <= Point(starting_node).distance(top_river_line):
+					starting_node = end_point
+				if ending_node is None: ending_node = end_point
+				else:
+					if Point(start_point).distance(bottom_river_line) <= Point(ending_node).distance(bottom_river_line):
+						ending_node = start_point
+					if Point(end_point).distance(bottom_river_line) <= Point(ending_node).distance(bottom_river_line):
+						ending_node = end_point
+				# Ridge Points for paths
+				x_ridge_point.append([start_point[0], end_point[0]])
+				y_ridge_point.append([start_point[1], end_point[1]])
+
+	# Plot River as a Polygon
+	plt.plot(*river_bank_polygon.exterior.xy, c="gainsboro")
+	plt.plot(*top_river_line.xy, c="forestgreen")
+	plt.plot(*bottom_river_line.xy, c="lightcoral")
+
+	#voronoi_plot_2d(river_bank_voronoi, show_points=True, point_size=1, ax=ax)
 
 	# Dynamically assign the starting and ending
 	plt.scatter(starting_node[0], starting_node[1], c="green", label="Starting Node")
 	plt.scatter(ending_node[0], ending_node[1], c="red", label="Ending Node")
 
-	# Plot River as a Polygon
-	plt.plot(*river_bank_polygon.exterior.xy, c="silver")
-	plt.plot(*top_river_line.xy, c="forestgreen")
-	plt.plot(*bottom_river_line.xy, c="lightcoral")
-
 	# Plot all possible paths with text for positions
-	if print_all_paths or not river_bank_polygon.is_valid:
+	if display_all_paths or not river_bank_polygon.is_valid: # display paths if polygon is not valid (debugging purposes)
 		for i in range(len(x_ridge_point)):
 			plt.plot(x_ridge_point[i], y_ridge_point[i], 'cyan', linewidth=1)
 			# Plot (X, Y) positions as text
@@ -229,11 +193,12 @@ def plotRiver(river_df, print_all_paths,
 		y.append(i[0])
 	plt.scatter(x, y, c="orange", s=scatter_plot_size, label="Left Bank")
 
+	# Find centerline from NetworkX
 	shortest_path_points = networkXGraph(points_dict, starting_node, ending_node)
 	valid_path_through = False
 	if shortest_path_points:
 		valid_path_through = True
-		plt.plot(*zip(*shortest_path_points), c="black", label="Shortest Path (Centerline)")
+		plt.plot(*zip(*shortest_path_points), c="black", label="Centerline (Shortest Path)")
 
 	plt.title("River Coordinates: Valid Path = {0}, Valid Polygon = {1}".format(valid_path_through, river_bank_polygon.is_valid))
 	plt.xlabel("Longitude (°)")
@@ -244,7 +209,7 @@ def plotRiver(river_df, print_all_paths,
 
 ########################################################################
 if __name__ == "__main__":
-	convertColumnsToCSV("data/river_coords.txt")
+	convertColumnsToCSV(text_file="data/river_coords.txt", flipBankDirection=True)
 	df = pd.read_csv("data/river_coords.csv")
 	#df = df.head(10) # valid centerline, valid path, valid polygon, valid starting node, valid ending node
 	#df = df.head(100) # valid centerline, valid path, valid polygon, valid starting node, valid ending node
@@ -252,36 +217,27 @@ if __name__ == "__main__":
 	#df = df.head(250) # valid centerline, valid path, invalid polygon, valid starting node, valid ending nodes
 	#df = df.head(40) # invalid centerline, valid path, valid polgyon, invalid starting node, valid ending node
 	#df = df.head(700) # invalid centerline, valid path, valid polgyon, invalid starting node, valid ending node
+	#df = df.head(1000) # invalid centerline, invalid path, invalid polgyon, invalid starting node, valid ending node
 
 	# Lines between points on graph
-	latitude_points = []
-	longitude_points = []
-	right_bank_pairs = [] # without nan
-	left_bank_pairs = [] # wtihout nan
+	right_bank_coordinates = [] # without nan
+	left_bank_coordinates = [] # wtihout nan
 	for index, row in df.iterrows():
-		latitude_points.append([row.llat, row.rlat])
-		longitude_points.append([row.llon, row.rlon])
 		if not math.isnan(row.rlat) and not math.isnan(row.rlon):
-			right_bank_pairs.append([row.rlat, row.rlon])
+			right_bank_coordinates.append([row.rlat, row.rlon]) # TODO: flipped values for longitude = x, latitude = y
 		if not math.isnan(row.llat) and not math.isnan(row.llon):
-			left_bank_pairs.append([row.llat, row.llon])
-
-	# Add points between existing bank points
-	additional_points_between_each_pair = 0 # User defined: 0 only uses the original points
-	right_bank_expanded = expand_list(right_bank_pairs, additional_points_between_each_pair)
-	left_bank_expanded =  expand_list(left_bank_pairs, additional_points_between_each_pair)
+			left_bank_coordinates.append([row.llat, row.llon]) # TODO: flipped values for longitude = x, latitude = y
 
 	# Set up a polygon based on the left and right bank
-	polygon_river, top_river_line, bottom_river_line = generatePolygon(left_bank_expanded, right_bank_expanded)
+	polygon_river, top_river_line, bottom_river_line = generatePolygon(left_bank_coordinates, right_bank_coordinates)
 
 	# Set up Vornoi based on the left and right bank
-	voronoi_river = generateVoronoi(left_bank_expanded, right_bank_expanded)
+	voronoi_river = generateVoronoi(left_bank_coordinates, right_bank_coordinates)
 
 	# Plot river banks
-	print_all_paths = True # print all possible paths (not just centerline) in cyan
-	plotRiver(df, print_all_paths, 
+	display_all_paths = True # display all possible paths (not just centerline) (useful for debugging)
+	plotRiver(display_all_paths, 
 			top_river_line, bottom_river_line,
-			latitude_points, longitude_points,
-			right_bank_expanded, left_bank_expanded,
+			right_bank_coordinates, left_bank_coordinates,
 			polygon_river, voronoi_river,
 			 "data/river_coords.png")
