@@ -28,14 +28,21 @@ pip install -r requirments.txt
 
 ## Running Script
 
+### Plot Centerline on Matplotlib
+
 ```python
 python3 river_centerline_width.py 
 ```
 
-Output: Latitude (Y-Axis) and Longitude (X-Axis)
+Output:
 ![river_coords+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/river_coords.png)
 
-## Algorithm
+### Return the Latitude/Longitude of Centerline
+
+## Documentation and Algorithm
+
+The centerline is defined by the greatest distance from the right and left bank, created from a Voronoi Diagram. The remaining paths within the river are filtered through Dijkstra's algorithm to find the shortest path that is the centerline
+
 ### Right and Left bank points are plotted (X-Axis for Latitude, Y-Axis for Longitude)
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example1.png)
 
@@ -55,8 +62,10 @@ Output: Latitude (Y-Axis) and Longitude (X-Axis)
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example7.png)
 
 ### Find the centerline: shortest path from the starting node to the ending node ([Dijkstra's Algorithm](https://networkx.org/documentation/stable/reference/algorithms/generated/networkx.algorithms.shortest_paths.generic.shortest_path.html#networkx.algorithms.shortest_paths.generic.shortest_path))
-![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example10.png)
-![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example9.png)
+| Points on River Bank | NetworkX Graph of Points on River Bank |
+| ------------- | ------------- |
+| ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example10.png) | ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example9.png) |
+
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example8.png)
 
 This is an attempt at a more robust algorithm working from raw data to ensure that all dead ends are removed and no gaps exist in the centerline
