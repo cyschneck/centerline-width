@@ -4,8 +4,10 @@
 
 Find the centerline and width of rivers based on the latitude and longitude of the right and left bank
 
-![river_google_earth+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_example_google_earth.png)
-![river_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_example.png)
+| Points on River Bank | Centerline of River Bank |
+| ------------- | ------------- |
+| ![river_google_earth+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_example_google_earth.png) | ![river_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_example.png) |
+
 
 Python implementation of [R-Code CMGO](https://github.com/AntoniusGolly/cmgo) (with modification)
 
@@ -45,10 +47,10 @@ centerline_width.convertColumnsToCSV(text_file="data/river_coords.txt", flipBank
 ```python
 import centerline_width
 centerline_width.plotCenterline(csv_data="data/river_coords.csv", 
-								save_plot_name="data/river_coords.png", 
-								display_all_possible_paths=True, 
-								displayVoronoi=False, 
-								optional_cutoff=cutoff)
+				save_plot_name="data/river_coords.png", 
+				display_all_possible_paths=True, 
+				displayVoronoi=False, 
+				optional_cutoff=cutoff)
 ```
 Output:
 ![river_coords+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/river_coords.png)
@@ -56,21 +58,16 @@ Output:
 ### Return Latitude/Longitude Coordinates of Centerline
 ```python
 import centerline_width
-centerline_long_lat_coordinates = centerline_width.centerlineLatitudeLongitude(csv_data="data/river_coords.csv", 
-																				optional_cutoff=cutoff)
+centerline_long_lat_coordinates = centerline_width.centerlineLatitudeLongitude(csv_data="data/river_coords.csv", 																optional_cutoff=cutoff)
 ```
-
 Output: `[(-92.86788596499872, 30.03786596717931), (-92.86789573751797, 30.037834641974108), (-92.8679141386283, 30.037789636848878), (-92.8679251193248, 30.037756853899904), (-92.86796903819089, 30.03765423778148), (-92.86797335733262, 30.037643336049054), (-92.8679920356456, 30.037592224469797), (-92.86800576063828, 30.037555441489403), (-92.86800841510367, 30.037546512833107), (-92.8680119498663, 30.03753043193875)]`
 ### Return Width of River
 ```python
 import centerline_width
-river_width_dict = centerline_width.riverWidthFromCenterline(csv_data="data/river_coords.csv", 
-															centerline_coordinates=centerline_long_lat_coordinates,
-															save_to_csv="data/river_width.csv")
+river_width_dict = centerline_width.riverWidthFromCenterline(csv_data="data/river_coords.csv", 																centerline_coordinates=centerline_long_lat_coordinates,
+							save_to_csv="data/river_width.csv")
 ```
-
-### Return the Latitude/Longitude of Centerline
-
+Output: ``
 ## Documentation and Algorithm (Backend)
 
 The centerline is defined by the greatest distance from the right and left bank, created from a Voronoi Diagram. The remaining paths within the river are filtered through Dijkstra's algorithm to find the shortest path that is the centerline
