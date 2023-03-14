@@ -7,8 +7,21 @@ from scipy.spatial import voronoi_plot_2d
 # Internal centerline_width reference to access functions, global variables, and error handling
 import centerline_width
 
-def plotCenterline(csv_data=None, display_all_possible_paths=False, plot_title=None, save_plot_name=None, displayVoronoi=False, optional_cutoff=None):
+def plotCenterline(csv_data=None,
+					display_all_possible_paths=False, 
+					plot_title=None, 
+					save_plot_name=None, 
+					displayVoronoi=False, 
+					optional_cutoff=None):
 	# display_all_paths: display all possible paths (not just centerline) (useful for debugging)
+
+	centerline_width.errorHandlingPlotCenterline(csv_data=csv_data,
+												display_all_possible_paths=display_all_possible_paths,
+												plot_title=plot_title,
+												save_plot_name=save_plot_name,
+												displayVoronoi=displayVoronoi,
+												optional_cutoff=optional_cutoff)
+
 	# Plot river
 	df = pd.read_csv(csv_data)
 	if optional_cutoff:

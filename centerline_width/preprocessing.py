@@ -9,6 +9,9 @@ import numpy as np
 from shapely.geometry import Point, Polygon, LineString
 from scipy.spatial import Voronoi
 
+# Internal centerline_width reference to access functions, global variables, and error handling
+import centerline_width
+
 ## Logging set up for .INFO
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -17,6 +20,9 @@ logger.addHandler(stream_handler)
 
 def convertColumnsToCSV(text_file=None, flipBankDirection=False):
 	# Convert txt file to a comma seperated version of the file to use in pandas
+
+	centerline_width.errrorHandlingConvertColumnsToCSV(text_file=text_file, flipBankDirection=flipBankDirection)
+
 	left_rows = []
 	right_rows = []
 	with open(text_file) as input_file:

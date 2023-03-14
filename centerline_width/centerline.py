@@ -70,6 +70,9 @@ def networkXGraphShortestPath(all_points_dict, starting_node, ending_node):
 
 def centerlineLatitudeLongitude(csv_data=None, optional_cutoff=None):
 	# Returns the latitude and longitude for the centerline
+
+	centerline_width.errorHandlingCenterlineLatitudeLongitude(csv_data=csv_data, optional_cutoff=optional_cutoff)
+
 	df = pd.read_csv(csv_data)
 	if optional_cutoff:
 		df = df.head(optional_cutoff)
@@ -85,13 +88,28 @@ def centerlineLatitudeLongitude(csv_data=None, optional_cutoff=None):
 
 def riverWidthFromCenterline(csv_data=None, centerline_coordinates=None, save_to_csv=None, optional_cutoff=None):
 	# Return river width: right to center, left to center, total width
+	# { [centerline latitude, centerline longitude] : { rightCenter : distance, leftCenter : distance, totalWidth: distance } }
+
+	centerline_width.errorHandlingRiverWidthFromCenterline(csv_data=csv_data,
+															centerline_coordinates=centerline_coordinates,
+															save_to_csv=save_to_csv,
+															optional_cutoff=optional_cutoff)
+
 	width_dict = {}
 
 	df = pd.read_csv(csv_data)
 	if optional_cutoff:
 		df = df.head(optional_cutoff)
 	left_bank_coordinates, right_bank_coordinates = centerline_width.leftRightCoordinates(df)
-	river_bank_polygon, top_river_line, bottom_river_line = centerline_width.generatePolygon(left_bank_coordinates, right_bank_coordinates)
+	river_bank_polygon, _, _ = centerline_width.generatePolygon(left_bank_coordinates, right_bank_coordinates)
+
+	for centerline_lat_long in centerline_coordinates:
+		distance = 0 # TODO: find distance between each coordinate normal to the polygon
+		internal_dict = {}
+		internal_dict["rightCenter"] = distance
+		internal_dict["leftCenter"] = distance
+		internal_dict["totalWidth"] = distance
+		width_dict[centerline_lat_long] = internal_dict
 
 	if save_to_csv:
 		header_fields = ["Right-Center Width", "Left-Center Width", "Total Width"]
@@ -103,4 +121,5 @@ def riverWidthFromCenterline(csv_data=None, centerline_coordinates=None, save_to
 		#	write.writerow(header_fields)
 		#	write.writerows(total_rows)
 
+	print("riverWidthFromCenterline = {0}".format(width_dict))
 	return width_dict

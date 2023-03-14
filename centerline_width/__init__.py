@@ -13,3 +13,9 @@ from .centerline import riverWidthFromCenterline
 
 # plotDiagrams.py function calls
 from .plotDiagrams import plotCenterline
+
+# error_handling.py function calls
+from .error_handling import errrorHandlingConvertColumnsToCSV
+from .error_handling import errorHandlingPlotCenterline
+from .error_handling import errorHandlingCenterlineLatitudeLongitude
+from .error_handling import errorHandlingRiverWidthFromCenterline
