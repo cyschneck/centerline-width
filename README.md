@@ -1,4 +1,6 @@
-# river-geometry
+# Centerline-Width
+![PyPi](https://img.shields.io/pypi/v/centerline-width)
+![license](https://img.shields.io/github/license/cyschneck/centerline-width)
 
 Python implementation of R-Code CMGO to find the centerline and width of rivers based on the latitude and longitude of a right and left bank
 
@@ -100,5 +102,3 @@ Golly, Antonius & Turowski, Jens. (2017). Deriving principle channel metrics fro
   <img src="https://user-images.githubusercontent.com/22159116/222872119-7c485ee2-4ffd-413a-9e4f-b043b122d2bb.png" />
   <img src="https://user-images.githubusercontent.com/22159116/222872019-12931138-9e10-4e51-aa1e-552e72d09af0.png" />
 </p>
-
-
