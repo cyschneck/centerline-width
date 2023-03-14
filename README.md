@@ -33,7 +33,7 @@ pip install -r requirments.txt
 ### Plot Centerline on Matplotlib
 
 ```python
-python3 river_centerline_width.py 
+python3 river_centerline_width_example.py
 ```
 
 Output:
