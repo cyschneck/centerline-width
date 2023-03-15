@@ -3,7 +3,7 @@
 # Python Package Setup
 from setuptools import setup, find_namespace_packages
 
-VERSION="0.0.1"
+VERSION="0.0.2"
 DESCRIPTION="A Python package to find the centerline and width of rivers based on the latitude and longitude from a right and left bank"
 
 with open("README.md", "r") as f:
@@ -17,7 +17,7 @@ setup(
 	long_description_content_type='text/markdown',
 	url="https://github.com/cyschneck/centerline-width",
 	download_url="https://github.com/cyschneck/centerline-width/archive/refs/tags/v{0}.tar.gz".format(VERSION),
-	author="cyschneck (C. Y. Schneck)",
+	author="Una Schneck (unaschneck), C. Y. Schneck (cyschneck)",
 	keywords=["geophysics", "python", "voronoi", "centerline", "centerline-extraction", "river-bank", "limnology", "hydrology"],
 	license="MIT",
 	classifiers=[

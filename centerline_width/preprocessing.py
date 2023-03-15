@@ -74,6 +74,8 @@ def generatePolygon(left_bank_lst, right_bank_lst):
 
 	if not river_polygon.is_valid:
 		logger.critical("Invalid Polygon needs to be corrected")
+	else:
+		logger.info("Valid polygon generated")
 
 	return river_polygon, top_river, bottom_river
 
@@ -83,6 +85,7 @@ def generateVoronoi(left_bank_lst, right_bank_lst):
 	all_banks_points = np.array(all_banks_points)
 
 	river_voronoi = Voronoi(all_banks_points)
+	logger.info("Voronoi diagram generated")
 	return river_voronoi
 
 def pointsFromVoronoi(river_voronoi, river_polygon):

@@ -110,7 +110,7 @@ def errorHandlingRiverWidthFromCenterline(csv_data=None,
 				exit()
 
 	if type(centerline_coordinates) != list:
-		logger.critical("\nCRITICAL ERROR, [centerline_coordinates]: Must be a dict, current type = '{0}'".format(type(centerline_coordinates)))
+		logger.critical("\nCRITICAL ERROR, [centerline_coordinates]: Must be a list of lists, current type = '{0}'".format(type(centerline_coordinates)))
 		exit()
 
 	if save_to_csv is not None and type(save_to_csv) != str:
