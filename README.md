@@ -2,7 +2,7 @@
 ![PyPi](https://img.shields.io/pypi/v/centerline-width)
 ![license](https://img.shields.io/github/license/cyschneck/centerline-width)
 
-Find the centerline and width of rivers based on the latitude and longitude of the right and left bank
+Find the centerline and width of rivers based on the latitude and longitude from the right and left bank 
 
 | River Outlined in ArcGIS | Generated Centerline for the River Bank |
 | ------------- | ------------- |
@@ -17,8 +17,34 @@ Currently running on Python 3.7+
 ```
 pip install -r requirments.txt
 ```
+Requirements will also be downloaded as part of the pip download
+
+## Install
+PyPi pip install at [pypi.org/project/centerline-width/](https://pypi.org/project/centerline-width/)
+
+```
+pip install pydar
+```
 
 ## Running Script
+### Convert KML files to Text File
+
+Convert two .kml files from Google Earth Pro and exports the coordinates into a text file
+
+```
+extractPointsToTextFile(left_kml=None, right_kml=None, text_output_name="data/river_coords.txt")
+```
+
+* **[REQUIRED]** left_kml (string): File location of the kml file for left bank
+* **[REQUIRED]** right_kml (string): File location of the kml file for right bank
+* [OPTIONAL] text_output_name (string): Output file name (and location), defaults to "data/river_coords.txt"
+
+```python
+import centerline_width
+centerline_width.centerline_width.extractPointsToTextFile(left_kml="leftbank.kml",
+														right_kml="rightbank.kml",
+														text_output_name="data/river_coords_output.txt")
+```
 
 ### Converted Data Text File to CSV
 
@@ -49,11 +75,11 @@ centerline_width.convertColumnsToCSV(text_file="data/river_coords.txt", flipBank
 Converts text file:
 ```
      llat       llon      rlat       rlon
-30.037581 -92.868569 30.119804 -92.907933
-30.037613 -92.868549 30.119772 -92.907924
-30.037648 -92.868546 30.119746 -92.907917
-30.037674 -92.868536 30.119721 -92.907909
-30.037702 -92.868533 30.119706 -92.907905
+30.037581 -92.868569 30.037441 -92.867476
+30.037613 -92.868549 30.037448 -92.867474
+30.037648 -92.868546 30.037482 -92.867449
+30.037674 -92.868536 30.037506 -92.867432
+30.037702 -92.868533 30.037525 -92.867430
 ```
 To a CSV file:
 ```

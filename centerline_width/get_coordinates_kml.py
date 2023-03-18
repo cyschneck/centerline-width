@@ -9,7 +9,7 @@ import centerline_width
  Code takes in a kml file from Google Earth Pro and exports the coordinates
  into a txt file. 
 '''
-def extractPointsToTextFile(left_kml=None, right_kml=None, text_output_name="river_coords.txt"):
+def extractPointsToTextFile(left_kml=None, right_kml=None, text_output_name="data/river_coords.txt"):
 	centerline_width.errorHandlingExtractPointsToTextFile(left_kml=left_kml, right_kml=right_kml, text_output_name=text_output_name)
 
 	# extract points from kml file
