@@ -23,7 +23,7 @@ Requirements will also be downloaded as part of the pip download
 PyPi pip install at [pypi.org/project/centerline-width/](https://pypi.org/project/centerline-width/)
 
 ```
-pip install pydar
+pip install centerline-width
 ```
 
 ## Running Script
@@ -42,8 +42,8 @@ extractPointsToTextFile(left_kml=None, right_kml=None, text_output_name="data/ri
 ```python
 import centerline_width
 centerline_width.centerline_width.extractPointsToTextFile(left_kml="leftbank.kml",
-														right_kml="rightbank.kml",
-														text_output_name="data/river_coords_output.txt")
+							right_kml="rightbank.kml",
+							text_output_name="data/river_coords_output.txt")
 ```
 
 ### Converted Data Text File to CSV
@@ -91,16 +91,30 @@ llat,llon,rlat,rlon
 30.037702,-92.868533,30.037525,-92.867430
 ```
 
+### Return Latitude/Longitude Coordinates of Centerline
+Return a list of lists for each latitude/longtiude coordinate of the centerline
+```
+centerlineLatitudeLongitude(csv_data=None, optional_cutoff=None)
+```
+* **[REQUIRED]** csv_data (string): File location of the text file to convert
+* [OPTIONAL] optional_cutoff (int): Include only the first x amount of the data to chart (useful for debugging)
+
+```python
+import centerline_width
+centerline_coordinates = centerline_width.centerlineLatitudeLongitude(csv_data="data/river_coords.csv", optional_cutoff=cutoff)
+```
+Output: `[(-92.86788596499872, 30.03786596717931), (-92.86789573751797, 30.037834641974108), (-92.8679141386283, 30.037789636848878), (-92.8679251193248, 30.037756853899904), (-92.86796903819089, 30.03765423778148), (-92.86797335733262, 30.037643336049054), (-92.8679920356456, 30.037592224469797), (-92.86800576063828, 30.037555441489403), (-92.86800841510367, 30.037546512833107), (-92.8680119498663, 30.03753043193875)]`
+
 ### Plot Centerline in Matplotlib
 Plot the centerline created from a list of right and left banks with Voronoi vertices
 
 ```
 plotCenterline(csv_data=None,
-			display_all_possible_paths=False, 
-			plot_title=None, 
-			save_plot_name=None, 
-			displayVoronoi=False, 
-			optional_cutoff=None)
+		display_all_possible_paths=False, 
+		plot_title=None, 
+		save_plot_name=None, 
+		displayVoronoi=False, 
+		optional_cutoff=None)
 ```
 * **[REQUIRED]** csv_data (string): File location of the text file to convert
 * [OPTIONAL] display_all_possible_paths (boolean): Display all possible paths, not just the centerline (useful for debugging)
@@ -120,26 +134,13 @@ centerline_width.plotCenterline(csv_data="data/river_coords.csv",
 Output:
 ![river_coords+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/river_coords.png)
 
-### Return Latitude/Longitude Coordinates of Centerline
-Return a list of lists for each latitude/longtiude coordinate of the centerline
-```
-centerlineLatitudeLongitude(csv_data=None, optional_cutoff=None)
-```
-* **[REQUIRED]** csv_data (string): File location of the text file to convert
-* [OPTIONAL] optional_cutoff (int): Include only the first x amount of the data to chart (useful for debugging)
-
-```python
-import centerline_width
-centerline_long_lat_coordinates = centerline_width.centerlineLatitudeLongitude(csv_data="data/river_coords.csv", 																optional_cutoff=cutoff)
-```
-Output: `[(-92.86788596499872, 30.03786596717931), (-92.86789573751797, 30.037834641974108), (-92.8679141386283, 30.037789636848878), (-92.8679251193248, 30.037756853899904), (-92.86796903819089, 30.03765423778148), (-92.86797335733262, 30.037643336049054), (-92.8679920356456, 30.037592224469797), (-92.86800576063828, 30.037555441489403), (-92.86800841510367, 30.037546512833107), (-92.8680119498663, 30.03753043193875)]`
 ### Return Width of River
 Return the width of the river based on the centerline
 ```
 riverWidthFromCenterline(csv_data=None,
-						centerline_coordinates=None,
-						save_to_csv=None,
-						optional_cutoff=None)
+			centerline_coordinates=None,
+			save_to_csv=None,
+			optional_cutoff=None)
 ```
 
 * **[REQUIRED]** csv_data (string): File location of the text file to convert
@@ -150,7 +151,8 @@ riverWidthFromCenterline(csv_data=None,
 
 ```python
 import centerline_width
-river_width_dict = centerline_width.riverWidthFromCenterline(csv_data="data/river_coords.csv", 																centerline_coordinates=centerline_long_lat_coordinates,
+river_width_dict = centerline_width.riverWidthFromCenterline(csv_data="data/river_coords.csv", 
+							centerline_coordinates=centerline_long_lat_coordinates,
 							save_to_csv="data/river_width.csv")
 ```
 Output: ``
