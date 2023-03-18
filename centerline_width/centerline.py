@@ -88,6 +88,7 @@ def centerlineLatitudeLongitude(csv_data=None, optional_cutoff=None):
 
 def riverWidthFromCenterline(csv_data=None, centerline_coordinates=None, save_to_csv=None, optional_cutoff=None):
 	# Return river width: right to center, left to center, total width
+	# Width is measured to the bank, relative to the center point (normal of the centerline)
 	# { [centerline latitude, centerline longitude] : { rightCenter : distance, leftCenter : distance, totalWidth: distance } }
 
 	centerline_width.errorHandlingRiverWidthFromCenterline(csv_data=csv_data,
@@ -123,3 +124,7 @@ def riverWidthFromCenterline(csv_data=None, centerline_coordinates=None, save_to
 
 	print("riverWidthFromCenterline = {0}".format(width_dict))
 	return width_dict
+
+def riverWidthFromCenterlineCoordinates(csv_data=None, centerline_coordinates=None, save_to_csv=None, optional_cutoff=None):
+	# Return the coordinates of the width positions relative to the centerline (latitude/longitude)
+	pass

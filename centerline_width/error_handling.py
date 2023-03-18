@@ -120,3 +120,35 @@ def errorHandlingRiverWidthFromCenterline(csv_data=None,
 	if optional_cutoff is not None and type(optional_cutoff) != int:
 		logger.critical("\nCRITICAL ERROR, [optional_cutoff]: Must be a int, current type = '{0}'".format(type(optional_cutoff)))
 		exit()
+
+def errorHandlingExtractPointsToTextFile(left_kml=None, right_kml=None, text_output_name=None):
+	# Error Handling for extractPoints()
+	if left_kml is None:
+		logger.critical("\nCRITICAL ERROR, [left_kml]: Requires left_kml file")
+		exit()
+	else:
+		if type(left_kml) != str:
+			logger.critical("\nCRITICAL ERROR, [left_kml]: Must be a str, current type = '{0}'".format(type(left_kml)))
+			exit()
+		if not left_kml.lower().endswith(".kml"):
+			logger.critical("\nCRITICAL ERROR, [left_kml]: Extension must be a .kml file, current extension = '{0}'".format(left_kml.split(".")[1]))
+			exit()
+
+	if right_kml is None:
+		logger.critical("\nCRITICAL ERROR, [right_kml]: Requires right_kml file")
+		exit()
+	else:
+		if type(right_kml) != str:
+			logger.critical("\nCRITICAL ERROR, [right_kml]: Must be a str, current type = '{0}'".format(type(right_kml)))
+			exit()
+		if not right_kml.lower().endswith(".kml"):
+			logger.critical("\nCRITICAL ERROR, [right_kml]: Extension must be a .kml file, current extension = '{0}'".format(right_kml.split(".")[1]))
+			exit()
+
+	if text_output_name is None:
+		logger.critical("\nCRITICAL ERROR, [text_output_name]: Requires output file name file")
+		exit()
+	else:
+		if type(text_output_name) != str:
+			logger.critical("\nCRITICAL ERROR, [text_output_name]: Must be a str, current type = '{0}'".format(type(text_output_name)))
+			exit()

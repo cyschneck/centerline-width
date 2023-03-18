@@ -1,30 +1,19 @@
-import matplotlib.pyplot as plt
-import numpy as np
-import os
-import time
-from datetime import timedelta
 from pykml import parser
 import re
-import contextily as cx
-import pandas as pd
-from shapely.geometry import Point
-import geopandas as gpd
-import math
 import pandas as pd
 
+# Internal centerline_width reference to access functions, global variables, and error handling
+import centerline_width
+
 '''
- Code takes in a kml file from google earth pro and exports the coordinates
+ Code takes in a kml file from Google Earth Pro and exports the coordinates
  into a txt file. 
 '''
-def main():
-
-	if __name__ != '__main__':
-		raise RuntimeError("Calling function in a context other than __main__ is not supported.")
-
-	start_time = time.monotonic()
+def extractPointsToTextFile(left_kml=None, right_kml=None, text_output_name="river_coords.txt"):
+	centerline_width.errorHandlingExtractPointsToTextFile(left_kml=left_kml, right_kml=right_kml, text_output_name=text_output_name)
 
 	# extract points from kml file
-	with open('leftbank.kml') as f:
+	with open(left_kml) as f:
 		doc = parser.parse(f)
 	root = doc.getroot()
 	coords = root.Document.Placemark.LineString.coordinates.text
@@ -33,7 +22,7 @@ def main():
 	llon = list([float(i) for i in lon])
 	llat = list([float(i) for i in lat])
 	
-	with open('rightbank.kml') as f:
+	with open(right_kml) as f:
 		doc = parser.parse(f)
 	root = doc.getroot()
 	coords = root.Document.Placemark.LineString.coordinates.text
@@ -46,17 +35,8 @@ def main():
 	df_rb = pd.DataFrame({'rlat':rlat,'rlon':rlon})
 	df = pd.concat([df,df_rb],axis=1)
 	
-	with open('river_coords.txt', 'a') as f:
+	with open(text_output_name, 'a') as f:
 		dfAsString = df.to_string(header=True, index=False)
 		f.write(dfAsString)
-
-	end_time = time.monotonic()
-	
-	
-	print("Time to run get_coordinates_kml.py: {0} seconds".format(timedelta(seconds=end_time - start_time)))
-
-
-if __name__ == '__main__':
-	main()
 
 

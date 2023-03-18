@@ -1,3 +1,6 @@
+# get_coordinates_kml.py function calls
+from .get_coordinates_kml import extractPointsToTextFile
+
 # preprocessing.py function calls
 from .preprocessing import convertColumnsToCSV
 from .preprocessing import leftRightCoordinates
@@ -19,3 +22,4 @@ from .error_handling import errrorHandlingConvertColumnsToCSV
 from .error_handling import errorHandlingPlotCenterline
 from .error_handling import errorHandlingCenterlineLatitudeLongitude
 from .error_handling import errorHandlingRiverWidthFromCenterline
+from .error_handling import errorHandlingExtractPointsToTextFile
