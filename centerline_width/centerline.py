@@ -62,6 +62,7 @@ def networkXGraphShortestPath(all_points_dict, starting_node, ending_node):
 			graph_connections.add_edge(start_point, end_point, weight=distanceBetween(start_point,end_point))
 	try:
 		shortest_path = nx.shortest_path(graph_connections, source=starting_node, target=ending_node)
+		logger.info("Valid Centerline path generated")
 	except nx.NetworkXNoPath: # no direct path found
 		logger.info("No direct path found from starting node to ending node")
 		return None
@@ -124,6 +125,23 @@ def riverWidthFromCenterline(csv_data=None, centerline_coordinates=None, save_to
 
 	print("riverWidthFromCenterline = {0}".format(width_dict))
 	return width_dict
+
+def centerlineLength(centerline_coordinates=None):
+	# Return the length/distance for all the centerline coordaintes
+
+	centerline_width.errorHandlingCenterlineLength(centerline_coordinates=centerline_coordinates)
+
+	total_length = 0
+	previous_pair = None
+	for xy_pair in centerline_coordinates:
+		if previous_pair is None:
+			previous_pair = xy_pair
+		else:
+			x1, x2 = previous_pair[0], xy_pair[0]
+			y1, y2 = previous_pair[1], xy_pair[1]
+			distance_to_add = math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
+			total_length += distance_to_add
+	return total_length
 
 def riverWidthFromCenterlineCoordinates(csv_data=None, centerline_coordinates=None, save_to_csv=None, optional_cutoff=None):
 	# Return the coordinates of the width positions relative to the centerline (latitude/longitude)

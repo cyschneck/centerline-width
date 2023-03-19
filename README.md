@@ -105,6 +105,21 @@ centerline_coordinates = centerline_width.centerlineLatitudeLongitude(csv_data="
 ```
 Output: `[(-92.86788596499872, 30.03786596717931), (-92.86789573751797, 30.037834641974108), (-92.8679141386283, 30.037789636848878), (-92.8679251193248, 30.037756853899904), (-92.86796903819089, 30.03765423778148), (-92.86797335733262, 30.037643336049054), (-92.8679920356456, 30.037592224469797), (-92.86800576063828, 30.037555441489403), (-92.86800841510367, 30.037546512833107), (-92.8680119498663, 30.03753043193875)]`
 
+### Return the length of the centerline
+Return the length of the centerline (in degrees)
+
+```
+centerlineLength(centerline_coordinates=None)
+```
+* **[REQUIRED]** centerline_coordinates (list): A list of centerline coordinates (via centerlineLatitudeLongitude())
+
+```python
+import centerline_width
+centerline_coordinates = centerline_width.centerlineLatitudeLongitude(csv_data="data/river_coords.csv")
+centerline_length = centerlineLength(centerline_coordinates=centerline_coordinates)
+```
+Returns the length from each centerline coordiante (currently in degrees)
+
 ### Plot Centerline in Matplotlib
 Plot the centerline created from a list of right and left banks with Voronoi vertices
 
@@ -134,13 +149,14 @@ centerline_width.plotCenterline(csv_data="data/river_coords.csv",
 Output:
 ![river_coords+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/river_coords.png)
 
+## Future Work:
 ### Return Width of River
 Return the width of the river based on the centerline
 ```
 riverWidthFromCenterline(csv_data=None,
-			centerline_coordinates=None,
-			save_to_csv=None,
-			optional_cutoff=None)
+						centerline_coordinates=None,
+						save_to_csv=None,
+						optional_cutoff=None)
 ```
 
 * **[REQUIRED]** csv_data (string): File location of the text file to convert
@@ -155,8 +171,24 @@ river_width_dict = centerline_width.riverWidthFromCenterline(csv_data="data/rive
 							centerline_coordinates=centerline_long_lat_coordinates,
 							save_to_csv="data/river_width.csv")
 ```
-Output: ``
-## Documentation and Algorithm (Backend)
+
+### Additional Channel Metrics
+
+Return the length of the centerline (length of the left/right bank)
+
+Return the slope of the river
+
+Return the width of the river
+
+Return the bank retreat
+
+Return the abundances of species
+
+Return the knickpoints (occurrences of knickpoints)
+
+Return smoothed centerline
+
+## Documentation and Algorithm to Determine Centerline
 
 The centerline is defined by the greatest distance from the right and left bank, created from a Voronoi Diagram. The remaining paths within the river are filtered through Dijkstra's algorithm to find the shortest path that is the centerline
 
@@ -207,9 +239,9 @@ If the data starts with a large width, it is possible for the starting node to b
 Currently, the starting node is determined by the closest node to the top of the bank (in green) and the ending node is determined by the closest node to the bottom of the bank (in red)
 
 ## Citations
-Based on the work:
+Based on the work in R:
 
-Golly, Antonius & Turowski, Jens. (2017). Deriving principle channel metrics from bank and long-profile geometry with the R-package cmgo. Earth Surface Dynamics Discussions. 5. 1-19. 10.5194/esurf-5-557-2017. 
+>Golly, A. and Turowski, J. M.: Deriving principal channel metrics from bank and long-profile geometry with the R package cmgo, Earth Surf. Dynam., 5, 557-570, https://doi.org/10.5194/esurf-5-557-2017, 2017.
 
 [Github - CMGO](https://github.com/AntoniusGolly/cmgo)
 

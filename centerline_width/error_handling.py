@@ -4,6 +4,8 @@
 
 import logging
 
+import numpy as np
+
 # Internal centerline_width reference to access functions, global variables, and error handling
 import centerline_width
 
@@ -152,3 +154,27 @@ def errorHandlingExtractPointsToTextFile(left_kml=None, right_kml=None, text_out
 		if type(text_output_name) != str:
 			logger.critical("\nCRITICAL ERROR, [text_output_name]: Must be a str, current type = '{0}'".format(type(text_output_name)))
 			exit()
+
+def errorHandlingCenterlineLength(centerline_coordinates=None):
+	# Error Handling for centerlineLength()
+	if centerline_coordinates is None:
+		logger.critical("\nCRITICAL ERROR, [centerline_coordinates]: Requires centerline_coordinates")
+		exit()
+	else:
+		if type(centerline_coordinates) != list:
+			logger.critical("\nCRITICAL ERROR, [centerline_coordinates]: Must be a list, current type = '{0}'".format(type(centerline_coordinates)))
+			exit()
+		else:
+			for centerline_pair in centerline_coordinates:
+				if type(centerline_pair) != list and type(centerline_pair) != tuple:
+					logger.critical("\nCRITICAL ERROR, [centerline_coordinates]: All elements in centerline_coordinates must be a list of lists, current item '{0}' is type = '{1}'".format(centerline_pair, type(centerline_pair)))
+					exit()
+				if len(centerline_pair) != 2:
+					logger.critical("\nCRITICAL ERROR, [centerline_coordinates]: All elements in centerline_coordinates must be xy pair, length = 2, current length of '{0}' = '{1}'".format(centerline_pair, len(centerline_pair)))
+					exit()
+				if type(centerline_pair[0]) != int and type(centerline_pair[0]) != float and type(centerline_pair[0]) != np.float64:
+					logger.critical("\nCRITICAL ERROR, [centerline_coordinates]: All elements in centerline_coordinates be a int or float, current type = '{0}'".format(type(centerline_pair[0])))
+					exit()
+				if type(centerline_pair[1]) != int and type(centerline_pair[1]) != float and type(centerline_pair[1]) != np.float64:
+					logger.critical("\nCRITICAL ERROR, [centerline_coordinates]: All elements in centerline_coordinates be a int or float, current type = '{0}'".format(type(centerline_pair[0])))
+					exit()

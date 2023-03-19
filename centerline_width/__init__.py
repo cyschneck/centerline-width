@@ -12,6 +12,7 @@ from .preprocessing import pointsFromVoronoi
 from .centerline import centerlinePath
 from .centerline import networkXGraphShortestPath
 from .centerline import centerlineLatitudeLongitude
+from .centerline import centerlineLength
 from .centerline import riverWidthFromCenterline
 
 # plotDiagrams.py function calls
@@ -23,3 +24,4 @@ from .error_handling import errorHandlingPlotCenterline
 from .error_handling import errorHandlingCenterlineLatitudeLongitude
 from .error_handling import errorHandlingRiverWidthFromCenterline
 from .error_handling import errorHandlingExtractPointsToTextFile
+from .error_handling import errorHandlingCenterlineLength
