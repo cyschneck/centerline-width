@@ -2,14 +2,14 @@
 import centerline_width
 
 if __name__ == "__main__":
-	#centerline_width.extractPointsToTextFile(left_kml="data/leftbank.kml", right_kml="data/rightbank.kml", text_output_name="data/river_coords.txt")
+	centerline_width.extractPointsToTextFile(left_kml="data/leftbank.kml", right_kml="data/rightbank.kml", text_output_name="data/river_coords.txt")
 	centerline_width.convertColumnsToCSV(text_file="data/river_coords.txt", flipBankDirection=True)
 
 	# Valid Examples
 	cutoff = None
-	cutoff = 15 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
+	#cutoff = 15 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
 	#cutoff = 100 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
-	#cutoff = 550 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
+	cutoff = 550 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
 	# Invalid Examples
 	#cutoff = 250 # valid centerline, valid path, invalid polygon, valid starting node, valid ending nodes
 	#cutoff = 40 # invalid centerline, valid path, valid polgyon, invalid starting node, valid ending node
@@ -19,7 +19,7 @@ if __name__ == "__main__":
 	# Plot river banks
 	#centerline_width.plotCenterline(csv_data="data/river_coords.csv", 
 	#								save_plot_name="data/river_coords.png", 
-	#								display_all_possible_paths=True, 
+	#								display_all_possible_paths=False, 
 	#								displayVoronoi=False, 
 	#								optional_cutoff=cutoff)
 

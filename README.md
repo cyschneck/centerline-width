@@ -142,9 +142,9 @@ plotCenterline(csv_data=None,
 import centerline_width
 centerline_width.plotCenterline(csv_data="data/river_coords.csv", 
 				save_plot_name="data/river_coords.png", 
-				display_all_possible_paths=True, 
+				display_all_possible_paths=False, 
 				displayVoronoi=False, 
-				optional_cutoff=cutoff)
+				optional_cutoff=550)
 ```
 Output:
 ![river_coords+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/river_coords.png)

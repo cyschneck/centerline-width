@@ -10,7 +10,9 @@ import centerline_width
  into a txt file. 
 '''
 def extractPointsToTextFile(left_kml=None, right_kml=None, text_output_name="data/river_coords.txt"):
-	centerline_width.errorHandlingExtractPointsToTextFile(left_kml=left_kml, right_kml=right_kml, text_output_name=text_output_name)
+	centerline_width.errorHandlingExtractPointsToTextFile(left_kml=left_kml,
+														right_kml=right_kml,
+														text_output_name=text_output_name)
 
 	# extract points from kml file
 	with open(left_kml) as f:
@@ -31,10 +33,12 @@ def extractPointsToTextFile(left_kml=None, right_kml=None, text_output_name="dat
 	rlon = list([float(i) for i in lon])
 	rlat = list([float(i) for i in lat])
 
-	df = pd.DataFrame({'llat':llat,'llon':llon})
+	df_lb = pd.DataFrame({'llat':llat,'llon':llon})
 	df_rb = pd.DataFrame({'rlat':rlat,'rlon':rlon})
-	df = pd.concat([df,df_rb],axis=1)
-	
+	df = pd.concat([df_lb,df_rb],axis=1)
+
+	open(text_output_name, 'w').close() # empty original file to avoid overwriting
+
 	with open(text_output_name, 'a') as f:
 		dfAsString = df.to_string(header=True, index=False)
 		f.write(dfAsString)
