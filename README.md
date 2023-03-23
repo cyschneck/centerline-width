@@ -4,7 +4,7 @@
 
 Find the centerline and width of rivers based on the latitude and longitude from the right and left bank 
 
-| River Outlined in ArcGIS | Generated Centerline for the River Bank |
+| River Outlined in Google Earth Pro | Generated Centerline for the River Bank |
 | ------------- | ------------- |
 | ![river_google_earth+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_example_google_earth.png) | ![river_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_example.png) |
 
