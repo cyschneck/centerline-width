@@ -153,40 +153,21 @@ Output:
 ### Return Width of River
 Return the width of the river based on the centerline
 ```
-riverWidthFromCenterline(csv_data=None,
-						centerline_coordinates=None,
-						save_to_csv=None,
-						optional_cutoff=None)
+riverWidthFromCenterline()
 ```
-
-* **[REQUIRED]** csv_data (string): File location of the text file to convert
-* **[REQUIRED]** centerline_coordinates (list): A list of centerline coordinates (via centerlineLatitudeLongitude())
-* [OPTIONAL] plot_title (string): Change plot title, defaults to "River Coordinates: Valid Centerline = True/False, Valid Polygon = True/False"
-* [OPTIONAL] save_to_csv (string): Save the csv with a given name and location
-* [OPTIONAL] optional_cutoff (int): Include only the first x amount of the data to chart (useful for debugging)
-
-```python
-import centerline_width
-river_width_dict = centerline_width.riverWidthFromCenterline(csv_data="data/river_coords.csv", 
-							centerline_coordinates=centerline_long_lat_coordinates,
-							save_to_csv="data/river_width.csv")
+```
+riverWidthFromCenterlineCoordinates()
 ```
 
 ### Additional Channel Metrics
 
 Return the length of the centerline (length of the left/right bank)
 
-Return the slope of the river
-
 Return the width of the river
-
-Return the bank retreat
-
-Return the abundances of species
 
 Return the knickpoints (occurrences of knickpoints)
 
-Return smoothed centerline
+Return smoothed centerline(?)
 
 ## Documentation and Algorithm to Determine Centerline
 
@@ -227,6 +208,12 @@ Points that only have one connection are removed, but by limiting the number of 
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example5.png)
 
 ## Debugging, Error Handling, and Edge Cases
+### Edge Cases
+If the data starts with a large width, it is possible for the starting node to be invalid
+![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example3.png)
+Currently, the starting node is determined by the closest node to the top of the bank (in green) and the ending node is determined by the closest node to the bottom of the bank (in red)
+
+### Invalid Polygon
 A polygon is invalid if it overlaps within itself:
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example1.png)
 In this example, the polygon is invalid, but with such a small overlap it is still able to find a valid path
@@ -234,11 +221,9 @@ In this example, the polygon is invalid, but with such a small overlap it is sti
 With limited data, the polygon will overlap more dramatically and will no longer be able to find a valid centerline:
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example4.png)
 
-If the data starts with a large width, it is possible for the starting node to be invalid
-![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example3.png)
-Currently, the starting node is determined by the closest node to the top of the bank (in green) and the ending node is determined by the closest node to the bottom of the bank (in red)
-
+### Invalid Centerline
 If the data is too small, a centerline and its coordinates cannot not be found (since only a single Voronoi vertex exists within the polygon and after deadends are filtered)
+
 `CRITICAL ERROR, Voronoi diagram generated too small to find centerline (no starting node found), unable to plot centerline. Set displayVoronoi=True to view. Can typically be fixed by adding more data to expand range.`
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example2.png)
 Can be fixed by expanding the data until the polygon is large enough to contain at least two different vertex points
