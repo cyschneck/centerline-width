@@ -13,6 +13,7 @@ from .centerline import centerlinePath
 from .centerline import networkXGraphShortestPath
 from .centerline import centerlineLatitudeLongitude
 from .centerline import centerlineLength
+from .centerline import riverWidthFromCenterlineCoordinates
 from .centerline import riverWidthFromCenterline
 
 # plotDiagrams.py function calls

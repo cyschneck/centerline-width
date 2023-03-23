@@ -62,7 +62,7 @@ def networkXGraphShortestPath(all_points_dict, starting_node, ending_node):
 			graph_connections.add_edge(start_point, end_point, weight=distanceBetween(start_point,end_point))
 	try:
 		shortest_path = nx.shortest_path(graph_connections, source=starting_node, target=ending_node)
-		logger.info("Valid Centerline path generated")
+		logger.info("Valid centerline path found")
 	except nx.NetworkXNoPath: # no direct path found
 		logger.info("No direct path found from starting node to ending node")
 		return None
@@ -87,24 +87,40 @@ def centerlineLatitudeLongitude(csv_data=None, optional_cutoff=None):
 
 	return shortest_path_coordinates
 
-def riverWidthFromCenterline(csv_data=None, centerline_coordinates=None, save_to_csv=None, optional_cutoff=None):
+def riverWidthFromCenterlineCoordinates(csv_data=None, centerline_coordinates=None, bank_polygon=None, save_to_csv=None, optional_cutoff=None):
+	# Return the left/right coordinates of width centerlines
+	right_width_coordinates = {}
+	left_width_coordinates = {}
+
+	df = pd.read_csv(csv_data)
+	if optional_cutoff:
+		df = df.head(optional_cutoff)
+	left_bank_coordinates, right_bank_coordinates = centerline_width.leftRightCoordinates(df)
+	if bank_polygon is None:
+		bank_polygon, _, _ = centerline_width.generatePolygon(left_bank_coordinates, right_bank_coordinates)
+
+	minx, miny, maxx, maxy = bank_polygon.bounds
+	for centerline_points in centerline_coordinates:
+		print(centerline_points)
+		right_width_coordinates[centerline_points] = [minx, miny]
+		left_width_coordinates[centerline_points] = [maxx, maxy]
+
+	return right_width_coordinates, left_width_coordinates
+
+def riverWidthFromCenterline(csv_data=None, centerline_coordinates=None, bank_polygon=None, save_to_csv=None, optional_cutoff=None):
 	# Return river width: right to center, left to center, total width
 	# Width is measured to the bank, relative to the center point (normal of the centerline)
 	# { [centerline latitude, centerline longitude] : { rightCenter : distance, leftCenter : distance, totalWidth: distance } }
 
 	centerline_width.errorHandlingRiverWidthFromCenterline(csv_data=csv_data,
 															centerline_coordinates=centerline_coordinates,
+															bank_polygon=bank_polygon,
 															save_to_csv=save_to_csv,
 															optional_cutoff=optional_cutoff)
 
 	width_dict = {}
 
-	df = pd.read_csv(csv_data)
-	if optional_cutoff:
-		df = df.head(optional_cutoff)
-	left_bank_coordinates, right_bank_coordinates = centerline_width.leftRightCoordinates(df)
-	river_bank_polygon, _, _ = centerline_width.generatePolygon(left_bank_coordinates, right_bank_coordinates)
-
+	'''
 	for centerline_lat_long in centerline_coordinates:
 		distance = 0 # TODO: find distance between each coordinate normal to the polygon
 		internal_dict = {}
@@ -124,6 +140,7 @@ def riverWidthFromCenterline(csv_data=None, centerline_coordinates=None, save_to
 		#	write.writerows(total_rows)
 
 	print("riverWidthFromCenterline = {0}".format(width_dict))
+	'''
 	return width_dict
 
 def centerlineLength(centerline_coordinates=None):
@@ -142,7 +159,3 @@ def centerlineLength(centerline_coordinates=None):
 			distance_to_add = math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
 			total_length += distance_to_add
 	return total_length
-
-def riverWidthFromCenterlineCoordinates(csv_data=None, centerline_coordinates=None, save_to_csv=None, optional_cutoff=None):
-	# Return the coordinates of the width positions relative to the centerline (latitude/longitude)
-	pass

@@ -11,7 +11,8 @@ def plotCenterline(csv_data=None,
 					display_all_possible_paths=False, 
 					plot_title=None, 
 					save_plot_name=None, 
-					displayVoronoi=False, 
+					displayVoronoi=False,
+					plot_width_lines=False,
 					optional_cutoff=None):
 	# display_all_paths: display all possible paths (not just centerline) (useful for debugging)
 
@@ -20,6 +21,7 @@ def plotCenterline(csv_data=None,
 												plot_title=plot_title,
 												save_plot_name=save_plot_name,
 												displayVoronoi=displayVoronoi,
+												plot_width_lines=plot_width_lines,
 												optional_cutoff=optional_cutoff)
 
 	# Plot river
@@ -86,6 +88,26 @@ def plotCenterline(csv_data=None,
 		valid_path_through = True
 		plt.plot(*zip(*shortest_path_points), c="black", label="Centerline")
 
+	# Determine the Width of River
+	if plot_width_lines:
+		right_width_coordinates, left_width_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(csv_data=csv_data, 
+																bank_polygon=river_bank_polygon,
+																centerline_coordinates=shortest_path_points,
+																optional_cutoff=optional_cutoff)
+		x = []
+		y = []
+		for k, v in shortest_path_points:
+			x.append(k)
+			y.append(v)
+		plt.scatter(x, y, c="mediumorchid", label="Centerline Coordinates")
+		for center_coord, edge_coord in right_width_coordinates.items():
+			x_points = (right_width_coordinates[center_coord][0], left_width_coordinates[center_coord][0])
+			y_points = (right_width_coordinates[center_coord][1], left_width_coordinates[center_coord][1])
+			print(x_points)
+			print(y_points)
+			plt.plot(x_points, y_points, 'mediumorchid', linewidth=3)
+
+	# Plot Title, Legends, and Axis Labels
 	if not plot_title:
 		plt.title("River Coordinates: Valid Centerline = {0}, Valid Polygon = {1}".format(valid_path_through, river_bank_polygon.is_valid))
 	else:

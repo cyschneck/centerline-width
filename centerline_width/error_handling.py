@@ -5,6 +5,7 @@
 import logging
 
 import numpy as np
+import shapely
 
 # Internal centerline_width reference to access functions, global variables, and error handling
 import centerline_width
@@ -37,10 +38,11 @@ def errrorHandlingConvertColumnsToCSV(text_file=None,
 
 ## Error Handling: plotDiagrams.py
 def errorHandlingPlotCenterline(csv_data=None,
-								display_all_possible_paths=False,
+								display_all_possible_paths=None,
 								plot_title=None,
 								save_plot_name=None,
-								displayVoronoi=False,
+								displayVoronoi=None,
+								plot_width_lines=None,
 								optional_cutoff=None):
 	# Error handling for plotCenterline()
 	if csv_data is None:
@@ -71,6 +73,10 @@ def errorHandlingPlotCenterline(csv_data=None,
 		logger.critical("\nCRITICAL ERROR, [displayVoronoi]: Must be a bool, current type = '{0}'".format(type(displayVoronoi)))
 		exit()
 
+	if type(plot_width_lines) != bool:
+		logger.critical("\nCRITICAL ERROR, [plot_width_lines]: Must be a bool, current type = '{0}'".format(type(plot_width_lines)))
+		exit()
+
 	if optional_cutoff is not None and type(optional_cutoff) != int:
 		logger.critical("\nCRITICAL ERROR, [optional_cutoff]: Must be a int, current type = '{0}'".format(type(optional_cutoff)))
 		exit()
@@ -96,6 +102,7 @@ def errorHandlingCenterlineLatitudeLongitude(csv_data=None, optional_cutoff=None
 
 def errorHandlingRiverWidthFromCenterline(csv_data=None,
 										centerline_coordinates=None,
+										bank_polygon=None,
 										save_to_csv=None,
 										optional_cutoff=None):
 	# Error Handling for riverWidthFromCenterline()
@@ -111,9 +118,23 @@ def errorHandlingRiverWidthFromCenterline(csv_data=None,
 				logger.critical("\nCRITICAL ERROR, [csv_data]: Extension must be a .csv file, current extension = '{0}'".format(csv_data.split(".")[1]))
 				exit()
 
-	if type(centerline_coordinates) != list:
-		logger.critical("\nCRITICAL ERROR, [centerline_coordinates]: Must be a list of lists, current type = '{0}'".format(type(centerline_coordinates)))
-		exit()
+	if centerline_coordinates is None:
+		if bank_polygon is None:
+			logger.critical("\nCRITICAL ERROR, [bank_polygon]: centerline_coordinates or bank_polygon is required")
+			exit()
+	else:
+		if type(centerline_coordinates) != list:
+			logger.critical("\nCRITICAL ERROR, [centerline_coordinates]: Must be a list of lists, current type = '{0}'".format(type(centerline_coordinates)))
+			exit()
+
+	if bank_polygon is None:
+		if centerline_coordinates is None:
+			logger.critical("\nCRITICAL ERROR, [bank_polygon]: centerline_coordinates or bank_polygon is required")
+			exit()
+	else:
+		if type(bank_polygon) != shapely.geometry.polygon.Polygon:
+			logger.critical("\nCRITICAL ERROR, [bank_polygon]: bank_polygon must be a shapley polygon, current type = '{0}'".format(type(bank_polygon)))
+			exit()
 
 	if save_to_csv is not None and type(save_to_csv) != str:
 		logger.critical("\nCRITICAL ERROR, [save_to_csv]: Must be a str, current type = '{0}'".format(type(save_to_csv)))
