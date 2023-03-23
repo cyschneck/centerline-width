@@ -226,7 +226,7 @@ Points that only have one connection are removed, but by limiting the number of 
 **Vertices that have at least two connections (that would create gaps):**
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example5.png)
 
-## Debugging and Edge Cases
+## Debugging, Error Handling, and Edge Cases
 A polygon is invalid if it overlaps within itself:
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example1.png)
 In this example, the polygon is invalid, but with such a small overlap it is still able to find a valid path
@@ -237,6 +237,11 @@ With limited data, the polygon will overlap more dramatically and will no longer
 If the data starts with a large width, it is possible for the starting node to be invalid
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example3.png)
 Currently, the starting node is determined by the closest node to the top of the bank (in green) and the ending node is determined by the closest node to the bottom of the bank (in red)
+
+If the data is too small, a centerline and its coordinates cannot not be found (since only a single Voronoi vertex exists within the polygon and after deadends are filtered)
+`CRITICAL ERROR, Voronoi diagram generated too small to find centerline (no starting node found), unable to plot centerline. Set displayVoronoi=True to view. Can typically be fixed by adding more data to expand range.`
+![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example2.png)
+Can be fixed by expanding the data until the polygon is large enough to contain at least two different vertex points
 
 ## Citations
 Based on the work in R:

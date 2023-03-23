@@ -55,8 +55,9 @@ def plotCenterline(csv_data=None,
 		voronoi_plot_2d(river_bank_voronoi, show_points=True, point_size=1, ax=ax)
 
 	# Dynamically assign the starting and ending
-	plt.scatter(starting_node[0], starting_node[1], c="green", label="Starting Node")
-	plt.scatter(ending_node[0], ending_node[1], c="red", label="Ending Node")
+	if starting_node is not None: # error handling for when data is too small to generate centerline coordiantes
+		plt.scatter(starting_node[0], starting_node[1], c="green", label="Starting Node")
+		plt.scatter(ending_node[0], ending_node[1], c="red", label="Ending Node")
 
 	# Plot all possible paths with text for positions
 	if display_all_possible_paths or not river_bank_polygon.is_valid: # display paths if polygon is not valid (debugging purposes)
@@ -90,22 +91,23 @@ def plotCenterline(csv_data=None,
 
 	# Determine the Width of River
 	if plot_width_lines:
-		right_width_coordinates, left_width_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(csv_data=csv_data, 
+		if starting_node is not None: # error handling for when data is too small to generate centerline coordiantes
+			right_width_coordinates, left_width_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(csv_data=csv_data, 
 																bank_polygon=river_bank_polygon,
 																centerline_coordinates=shortest_path_points,
-																optional_cutoff=optional_cutoff)
-		x = []
-		y = []
-		for k, v in shortest_path_points:
-			x.append(k)
-			y.append(v)
-		plt.scatter(x, y, c="mediumorchid", label="Centerline Coordinates")
-		for center_coord, edge_coord in right_width_coordinates.items():
-			x_points = (right_width_coordinates[center_coord][0], left_width_coordinates[center_coord][0])
-			y_points = (right_width_coordinates[center_coord][1], left_width_coordinates[center_coord][1])
-			print(x_points)
-			print(y_points)
-			plt.plot(x_points, y_points, 'mediumorchid', linewidth=3)
+																	optional_cutoff=optional_cutoff)
+			x = []
+			y = []
+			for k, v in shortest_path_points:
+				x.append(k)
+				y.append(v)
+			plt.scatter(x, y, c="mediumorchid", label="Centerline Coordinates")
+			for center_coord, edge_coord in right_width_coordinates.items():
+				x_points = (right_width_coordinates[center_coord][0], left_width_coordinates[center_coord][0])
+				y_points = (right_width_coordinates[center_coord][1], left_width_coordinates[center_coord][1])
+				#print(x_points)
+				#print(y_points)
+				plt.plot(x_points, y_points, 'mediumorchid', linewidth=1)
 
 	# Plot Title, Legends, and Axis Labels
 	if not plot_title:

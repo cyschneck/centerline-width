@@ -39,6 +39,10 @@ def centerlinePath(river_voronoi, river_polygon, top_polygon_line, bottom_polygo
 						ending_node = end_point
 				x_ridge_point.append([start_point[0], end_point[0]])
 				y_ridge_point.append([start_point[1], end_point[1]])
+
+	if starting_node is None:
+		logger.critical("\nCRITICAL ERROR, Voronoi diagram generated too small to find centerline (no starting node found), unable to plot centerline. Set displayVoronoi=True to view. Can typically be fixed by adding more data to expand range.")
+
 	return starting_node, ending_node, x_ridge_point, y_ridge_point, start_end_points_dict
 
 def networkXGraphShortestPath(all_points_dict, starting_node, ending_node):
@@ -51,23 +55,26 @@ def networkXGraphShortestPath(all_points_dict, starting_node, ending_node):
 		a = 0.5 - math.cos((lat2-lat1)*p)/2 + math.cos(lat1*p) * math.cos(lat2*p) * (1-math.cos((lon2-lon1)*p))/2
 		return math.asin(math.sqrt(a))
 
-	graph_connections = nx.Graph()
-	node_as_keys_pos_values = {}
-	for start_point, end_point_list in all_points_dict.items():
-		node_as_keys_pos_values[start_point] = (start_point[0], start_point[1])
-		graph_connections.add_node(start_point, pos=(start_point[0], start_point[1]))
-		for end_point in end_point_list:
-			graph_connections.add_node(end_point, pos=(end_point[0], end_point[1]))
-			node_as_keys_pos_values[end_point] = (end_point[0], end_point[1])
-			graph_connections.add_edge(start_point, end_point, weight=distanceBetween(start_point,end_point))
-	try:
-		shortest_path = nx.shortest_path(graph_connections, source=starting_node, target=ending_node)
-		logger.info("Valid centerline path found")
-	except nx.NetworkXNoPath: # no direct path found
-		logger.info("No direct path found from starting node to ending node")
+	if starting_node is not None:
+		graph_connections = nx.Graph()
+		node_as_keys_pos_values = {}
+		for start_point, end_point_list in all_points_dict.items():
+			node_as_keys_pos_values[start_point] = (start_point[0], start_point[1])
+			graph_connections.add_node(start_point, pos=(start_point[0], start_point[1]))
+			for end_point in end_point_list:
+				graph_connections.add_node(end_point, pos=(end_point[0], end_point[1]))
+				node_as_keys_pos_values[end_point] = (end_point[0], end_point[1])
+				graph_connections.add_edge(start_point, end_point, weight=distanceBetween(start_point,end_point))
+		try:
+			shortest_path = nx.shortest_path(graph_connections, source=starting_node, target=ending_node)
+			logger.info("Valid centerline path found")
+		except nx.NetworkXNoPath: # no direct path found
+			logger.info("No direct path found from starting node to ending node")
+			return None
+		#nx.draw(graph_connections, with_labels=True, font_size=10)
+		return shortest_path
+	else:
 		return None
-	#nx.draw(graph_connections, with_labels=True, font_size=10)
-	return shortest_path
 
 def centerlineLatitudeLongitude(csv_data=None, optional_cutoff=None):
 	# Returns the latitude and longitude for the centerline
@@ -100,10 +107,29 @@ def riverWidthFromCenterlineCoordinates(csv_data=None, centerline_coordinates=No
 		bank_polygon, _, _ = centerline_width.generatePolygon(left_bank_coordinates, right_bank_coordinates)
 
 	minx, miny, maxx, maxy = bank_polygon.bounds
-	for centerline_points in centerline_coordinates:
-		print(centerline_points)
-		right_width_coordinates[centerline_points] = [minx, miny]
-		left_width_coordinates[centerline_points] = [maxx, maxy]
+	for i, centerline_points in enumerate(centerline_coordinates):
+		if i+1 < len(centerline_coordinates):
+			print(centerline_points)
+			dx = (centerline_coordinates[i][0] - centerline_coordinates[i+1][0])
+			dy = (centerline_coordinates[i][1] - centerline_coordinates[i+1][1])
+			slope_1 = - dy / dx
+			slope_2 =  dy / - dx
+			print(minx)
+			print(centerline_coordinates[i][0])
+			print(centerline_coordinates[i][1])
+			y_left = slope_1 * (minx - centerline_coordinates[i][0]) + centerline_coordinates[i][1]
+			y_right = slope_2 * (maxx - centerline_coordinates[i][0]) + centerline_coordinates[i][1]
+			sloped_line = LineString([(minx, y_left), (maxx, y_right)])
+			line_intersection_points = bank_polygon.exterior.intersection(sloped_line)
+			print(line_intersection_points)
+			print(len(line_intersection_points.geoms))
+			for i in range(len(line_intersection_points.geoms)):
+				print(line_intersection_points.geoms[i])
+				print(line_intersection_points.geoms[i].x)
+				print(line_intersection_points.geoms[i].y)
+			#left_width_coordinates[centerline_points] = [minx, y_left]
+			#right_width_coordinates[centerline_points] = [maxx, y_right]
+			
 
 	return right_width_coordinates, left_width_coordinates
 
