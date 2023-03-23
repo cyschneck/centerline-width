@@ -45,6 +45,7 @@ centerline_width.centerline_width.extractPointsToTextFile(left_kml="leftbank.kml
 							right_kml="rightbank.kml",
 							text_output_name="data/river_coords_output.txt")
 ```
+Output: A text file `data/river_coords_output.txt` with the headers llat, llon, rlat, rlon
 
 ### Converted Data Text File to CSV
 
@@ -90,9 +91,10 @@ llat,llon,rlat,rlon
 30.037674,-92.868536,30.037506,-92.867432
 30.037702,-92.868533,30.037525,-92.867430
 ```
+Output: A csv file `data/river_coords.csv` with the headers llat, llon, rlat, rlon
 
 ### Return Latitude/Longitude Coordinates of Centerline
-Return a list of lists for each latitude/longtiude coordinate of the centerline
+Return a list of tuples for each latitude/longtiude coordinate of the centerline
 ```
 centerlineLatitudeLongitude(csv_data=None, optional_cutoff=None)
 ```
@@ -161,13 +163,10 @@ riverWidthFromCenterlineCoordinates()
 
 ### Additional Channel Metrics
 
-Return the length of the centerline (length of the left/right bank)
-
-Return the width of the river
-
-Return the knickpoints (occurrences of knickpoints)
-
-Return smoothed centerline(?)
+- Return the length of the centerline (length of the left/right bank)
+- Return the width of the river
+- Return the knickpoints (occurrences of knickpoints)
+= Return smoothed centerline(?)
 
 ## Documentation and Algorithm to Determine Centerline
 
