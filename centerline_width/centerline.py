@@ -125,8 +125,8 @@ def riverWidthFromCenterlineCoordinates(csv_data=None, centerline_coordinates=No
 		bank_polygon, _, _ = centerline_width.generatePolygon(left_bank_coordinates, right_bank_coordinates)
 
 	# Average n amount of slopes around a point
-	avg_n_points = 10
-	if len(centerline_coordinates) <= 100: 
+	avg_n_points = 5
+	if len(centerline_coordinates) < 20:
 		avg_n_points = 3
 	print("avg_n_points = {0}".format(avg_n_points))
 
@@ -134,8 +134,8 @@ def riverWidthFromCenterlineCoordinates(csv_data=None, centerline_coordinates=No
 	centerline_slope = {}
 	groups_of_n_points = [centerline_coordinates[i:i+avg_n_points] for i in range(0, len(centerline_coordinates), avg_n_points)]
 	for group_points in groups_of_n_points:
-		print(group_points)
-		print(len(group_points))
+		#print(group_points)
+		#print(len(group_points))
 		slope_sum = 0
 		for i in range(len(group_points)):
 			if i+1 < len(group_points):
@@ -144,21 +144,24 @@ def riverWidthFromCenterlineCoordinates(csv_data=None, centerline_coordinates=No
 				slope_sum += (dy / dx)
 		if slope_sum != 0:
 			slope_avg = slope_sum / len(group_points)
-			normal_of_slope = -1/slope_avg
+			normal_of_slope = -1 / slope_avg
 			middle_of_list = len(group_points) // 2
-			print(group_points[middle_of_list])
-			print(normal_of_slope)
+			#print(group_points[middle_of_list])
+			#print(normal_of_slope)
 			centerline_slope[group_points[middle_of_list]] = normal_of_slope
 
 	# Generate a list of lines from the centerline point with its normal
-	minx, miny, maxx, maxy = bank_polygon.bounds
-	# center_to_left:  center to min x 
-	# center_to_right: center to max x
+	min_x, min_y, max_x, max_y = bank_polygon.bounds
 	for centerline_point, slope in centerline_slope.items():
-		left_y = slope * (minx - centerline_point[0]) + centerline_point[1]
-		left_width_coordinates[centerline_point] = (minx, left_y)
-		right_y = slope * (maxx - centerline_point[0]) + centerline_point[1]
-		right_width_coordinates[centerline_point] = (maxx, right_y)
+		left_y = slope * (min_x - centerline_point[0]) + centerline_point[1]
+		right_y = slope * (max_x - centerline_point[0]) + centerline_point[1]
+
+		# Save the points where they intersect the polygon
+		sloped_line = LineString([(min_x, left_y), (max_x, right_y)])
+		line_intersection_points = bank_polygon.exterior.intersection(sloped_line)
+		if len(line_intersection_points.geoms) == 2: # TODO: only collect the closest points
+			left_width_coordinates[centerline_point] = (line_intersection_points.geoms[0].x, line_intersection_points.geoms[0].y)
+			right_width_coordinates[centerline_point] = (line_intersection_points.geoms[1].x, line_intersection_points.geoms[1].y)
 
 	return right_width_coordinates, left_width_coordinates, centerline_slope
 
