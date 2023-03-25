@@ -13,8 +13,8 @@ def plotCenterline(csv_data=None,
 					save_plot_name=None, 
 					displayVoronoi=False,
 					plot_width_lines=False,
+					n_interprolate_centerpoints=10,
 					optional_cutoff=None):
-	# display_all_paths: display all possible paths (not just centerline) (useful for debugging)
 
 	centerline_width.errorHandlingPlotCenterline(csv_data=csv_data,
 												display_all_possible_paths=display_all_possible_paths,
@@ -22,6 +22,7 @@ def plotCenterline(csv_data=None,
 												save_plot_name=save_plot_name,
 												displayVoronoi=displayVoronoi,
 												plot_width_lines=plot_width_lines,
+												n_interprolate_centerpoints=n_interprolate_centerpoints,
 												optional_cutoff=optional_cutoff)
 
 	# Plot river
@@ -54,11 +55,6 @@ def plotCenterline(csv_data=None,
 	if displayVoronoi:
 		voronoi_plot_2d(river_bank_voronoi, show_points=True, point_size=1, ax=ax)
 
-	# Dynamically assign the starting and ending
-	if starting_node is not None: # error handling for when data is too small to generate centerline coordiantes
-		plt.scatter(starting_node[0], starting_node[1], c="green", label="Starting Node")
-		plt.scatter(ending_node[0], ending_node[1], c="red", label="Ending Node")
-
 	# Plot all possible paths with text for positions
 	if display_all_possible_paths or not river_bank_polygon.is_valid: # display paths if polygon is not valid (debugging purposes)
 		for i in range(len(x_ridge_point)):
@@ -90,28 +86,44 @@ def plotCenterline(csv_data=None,
 		plt.plot(*zip(*shortest_path_points), c="black", label="Centerline")
 
 	# Determine the Width of River
+	number_of_evenly_spaced_points = ""
 	if plot_width_lines:
+		number_of_evenly_spaced_points = ", Number of Fixed Points = {0}".format(n_interprolate_centerpoints)
 		if starting_node is not None: # error handling for when data is too small to generate centerline coordiantes
+			evenly_spaced_centerline_coordinates = centerline_width.evenlySpacedCenterline(centerline_coordinates=shortest_path_points,
+																						number_of_fixed_points=n_interprolate_centerpoints)
+
 			right_width_coordinates, left_width_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(csv_data=csv_data, 
 																bank_polygon=river_bank_polygon,
-																centerline_coordinates=shortest_path_points,
-																	optional_cutoff=optional_cutoff)
+																centerline_coordinates=evenly_spaced_centerline_coordinates,
+																optional_cutoff=optional_cutoff)
 			x = []
 			y = []
 			for k, v in shortest_path_points:
 				x.append(k)
 				y.append(v)
-			plt.scatter(x, y, c="mediumorchid", label="Centerline Coordinates")
-			for center_coord, edge_coord in right_width_coordinates.items():
-				x_points = (right_width_coordinates[center_coord][0], left_width_coordinates[center_coord][0])
-				y_points = (right_width_coordinates[center_coord][1], left_width_coordinates[center_coord][1])
-				#print(x_points)
-				#print(y_points)
-				plt.plot(x_points, y_points, 'mediumorchid', linewidth=1)
+			plt.scatter(x, y, c="slategray", label="Centerline Coordinates", s=5)
+			x = []
+			y = []
+			for k, v in evenly_spaced_centerline_coordinates:
+				x.append(k)
+				y.append(v)
+			plt.scatter(x, y, c="plum", label="Evenly Spaced Centerline Coordinates", s=20)
+			plt.plot(*zip(*evenly_spaced_centerline_coordinates), c="thistle", label="Evenly Spaced Centerline")
+
+			#for center_coord, edge_coord in right_width_coordinates.items():
+			#	x_points = (right_width_coordinates[center_coord][0], left_width_coordinates[center_coord][0])
+			#	y_points = (right_width_coordinates[center_coord][1], left_width_coordinates[center_coord][1])
+			#	plt.plot(x_points, y_points, 'mediumorchid', linewidth=1)
+
+	# Dynamically assign the starting and ending
+	if starting_node is not None: # error handling for when data is too small to generate centerline coordiantes
+		plt.scatter(starting_node[0], starting_node[1], c="green", label="Starting Node", s=45)
+		plt.scatter(ending_node[0], ending_node[1], c="red", label="Ending Node", s=45)
 
 	# Plot Title, Legends, and Axis Labels
 	if not plot_title:
-		plt.title("River Coordinates: Valid Centerline = {0}, Valid Polygon = {1}".format(valid_path_through, river_bank_polygon.is_valid))
+		plt.title("River Coordinates: Valid Centerline = {0}, Valid Polygon = {1}{2}".format(valid_path_through, river_bank_polygon.is_valid, number_of_evenly_spaced_points))
 	else:
 		plt.title(plot_title)
 	plt.xlabel("Longitude (°)")

@@ -43,6 +43,7 @@ def errorHandlingPlotCenterline(csv_data=None,
 								save_plot_name=None,
 								displayVoronoi=None,
 								plot_width_lines=None,
+								n_interprolate_centerpoints=None,
 								optional_cutoff=None):
 	# Error handling for plotCenterline()
 	if csv_data is None:
@@ -76,6 +77,14 @@ def errorHandlingPlotCenterline(csv_data=None,
 	if type(plot_width_lines) != bool:
 		logger.critical("\nCRITICAL ERROR, [plot_width_lines]: Must be a bool, current type = '{0}'".format(type(plot_width_lines)))
 		exit()
+
+	if type(n_interprolate_centerpoints) != int:
+		logger.critical("\nCRITICAL ERROR, [n_interprolate_centerpoints]: Must be a int, current type = '{0}'".format(type(n_interprolate_centerpoints)))
+		exit()
+	else:
+		if n_interprolate_centerpoints < 2:
+			logger.critical("\nCRITICAL ERROR, [n_interprolate_centerpoints]: Must be a greater than 1, currently = '{0}'".format(n_interprolate_centerpoints))
+			exit()
 
 	if optional_cutoff is not None and type(optional_cutoff) != int:
 		logger.critical("\nCRITICAL ERROR, [optional_cutoff]: Must be a int, current type = '{0}'".format(type(optional_cutoff)))

@@ -1,6 +1,7 @@
 import math
 import logging
 
+import numpy as np
 import pandas as pd
 import networkx as nx
 from shapely.geometry import Point, Polygon, LineString
@@ -94,10 +95,27 @@ def centerlineLatitudeLongitude(csv_data=None, optional_cutoff=None):
 
 	return shortest_path_coordinates
 
+def evenlySpacedCenterline(centerline_coordinates=None, number_of_fixed_points=10):
+	# Interpolate to evenly space points along the centerline coordinates (effectively smoothing with fewer points)
+	centerline_line = LineString(centerline_coordinates)
+
+	# Splitting into a fixed number of points
+	distances_evenly_spaced = np.linspace(0, centerline_line.length, number_of_fixed_points)
+	points_evenly_spaced = [centerline_line.interpolate(distance) for distance in distances_evenly_spaced]
+
+	# Convert Shapley Points to a List of Tuples (coordinates)
+	interpolated_centerline_coordinates = []
+	for point in points_evenly_spaced:
+		interpolated_centerline_coordinates.append((point.x, point.y))
+
+	return interpolated_centerline_coordinates
+
 def riverWidthFromCenterlineCoordinates(csv_data=None, centerline_coordinates=None, bank_polygon=None, save_to_csv=None, optional_cutoff=None):
 	# Return the left/right coordinates of width centerlines
 	right_width_coordinates = {}
 	left_width_coordinates = {}
+	x = []
+	y = []
 
 	df = pd.read_csv(csv_data)
 	if optional_cutoff:
@@ -105,31 +123,6 @@ def riverWidthFromCenterlineCoordinates(csv_data=None, centerline_coordinates=No
 	left_bank_coordinates, right_bank_coordinates = centerline_width.leftRightCoordinates(df)
 	if bank_polygon is None:
 		bank_polygon, _, _ = centerline_width.generatePolygon(left_bank_coordinates, right_bank_coordinates)
-
-	minx, miny, maxx, maxy = bank_polygon.bounds
-	for i, centerline_points in enumerate(centerline_coordinates):
-		if i+1 < len(centerline_coordinates):
-			print(centerline_points)
-			dx = (centerline_coordinates[i][0] - centerline_coordinates[i+1][0])
-			dy = (centerline_coordinates[i][1] - centerline_coordinates[i+1][1])
-			slope_1 = - dy / dx
-			slope_2 =  dy / - dx
-			print(minx)
-			print(centerline_coordinates[i][0])
-			print(centerline_coordinates[i][1])
-			y_left = slope_1 * (minx - centerline_coordinates[i][0]) + centerline_coordinates[i][1]
-			y_right = slope_2 * (maxx - centerline_coordinates[i][0]) + centerline_coordinates[i][1]
-			sloped_line = LineString([(minx, y_left), (maxx, y_right)])
-			line_intersection_points = bank_polygon.exterior.intersection(sloped_line)
-			print(line_intersection_points)
-			print(len(line_intersection_points.geoms))
-			for i in range(len(line_intersection_points.geoms)):
-				print(line_intersection_points.geoms[i])
-				print(line_intersection_points.geoms[i].x)
-				print(line_intersection_points.geoms[i].y)
-			#left_width_coordinates[centerline_points] = [minx, y_left]
-			#right_width_coordinates[centerline_points] = [maxx, y_right]
-			
 
 	return right_width_coordinates, left_width_coordinates
 

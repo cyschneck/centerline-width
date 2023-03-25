@@ -7,7 +7,7 @@ if __name__ == "__main__":
 
 	# Valid Examples
 	cutoff = None
-	#cutoff = 6
+	#cutoff = 10
 	#cutoff = 15 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
 	#cutoff = 100 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
 	cutoff = 550 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
@@ -23,7 +23,8 @@ if __name__ == "__main__":
 									save_plot_name="data/river_coords.png", 
 									display_all_possible_paths=False, 
 									displayVoronoi=False, 
-									plot_width_lines=False,
+									plot_width_lines=True,
+									n_interprolate_centerpoints=2,
 									optional_cutoff=cutoff)
 	exit()
 	# Return the latitude/longtiude coordinates for the centerline
