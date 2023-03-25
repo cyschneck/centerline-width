@@ -22,9 +22,10 @@ if __name__ == "__main__":
 	centerline_width.plotCenterline(csv_data="data/river_coords.csv", 
 									save_plot_name="data/river_coords.png", 
 									display_all_possible_paths=False, 
-									displayVoronoi=False, 
+									displayVoronoi=False,
+									displayCenterline=False,
 									plot_width_lines=True,
-									n_interprolate_centerpoints=2,
+									n_interprolate_centerpoints=100,
 									optional_cutoff=cutoff)
 	exit()
 	# Return the latitude/longtiude coordinates for the centerline

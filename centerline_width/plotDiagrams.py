@@ -12,6 +12,7 @@ def plotCenterline(csv_data=None,
 					plot_title=None, 
 					save_plot_name=None, 
 					displayVoronoi=False,
+					displayCenterline=True,
 					plot_width_lines=False,
 					n_interprolate_centerpoints=10,
 					optional_cutoff=None):
@@ -21,6 +22,7 @@ def plotCenterline(csv_data=None,
 												plot_title=plot_title,
 												save_plot_name=save_plot_name,
 												displayVoronoi=displayVoronoi,
+												displayCenterline=displayCenterline,
 												plot_width_lines=plot_width_lines,
 												n_interprolate_centerpoints=n_interprolate_centerpoints,
 												optional_cutoff=optional_cutoff)
@@ -63,7 +65,7 @@ def plotCenterline(csv_data=None,
 			#ax.text(x=x_ridge_point[i][0], y=y_ridge_point[i][0], s="{0}, {1}".format(x_ridge_point[i][0], y_ridge_point[i][0]))
 			#ax.text(x=x_ridge_point[i][1], y=y_ridge_point[i][1], s="{0}, {1}".format(x_ridge_point[i][1], y_ridge_point[i][1]))
 
-	# Plot colored river bank (including extrapolations) between known points
+	# Plot colored river bank
 	scatter_plot_size = 4
 	x = []
 	y = []
@@ -83,7 +85,14 @@ def plotCenterline(csv_data=None,
 	valid_path_through = False
 	if shortest_path_points:
 		valid_path_through = True
-		plt.plot(*zip(*shortest_path_points), c="black", label="Centerline")
+		if displayCenterline:
+			x = []
+			y = []
+			for k, v in shortest_path_points:
+				x.append(k)
+				y.append(v)
+			plt.scatter(x, y, c="slategray", label="Centerline Coordinates", s=5)
+			plt.plot(*zip(*shortest_path_points), c="black", label="Centerline")
 
 	# Determine the Width of River
 	number_of_evenly_spaced_points = ""
@@ -97,12 +106,6 @@ def plotCenterline(csv_data=None,
 																bank_polygon=river_bank_polygon,
 																centerline_coordinates=evenly_spaced_centerline_coordinates,
 																optional_cutoff=optional_cutoff)
-			x = []
-			y = []
-			for k, v in shortest_path_points:
-				x.append(k)
-				y.append(v)
-			plt.scatter(x, y, c="slategray", label="Centerline Coordinates", s=5)
 			x = []
 			y = []
 			for k, v in evenly_spaced_centerline_coordinates:
