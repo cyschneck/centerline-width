@@ -102,22 +102,29 @@ def plotCenterline(csv_data=None,
 			evenly_spaced_centerline_coordinates = centerline_width.evenlySpacedCenterline(centerline_coordinates=shortest_path_points,
 																						number_of_fixed_points=n_interprolate_centerpoints)
 
-			right_width_coordinates, left_width_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(csv_data=csv_data, 
-																bank_polygon=river_bank_polygon,
-																centerline_coordinates=evenly_spaced_centerline_coordinates,
-																optional_cutoff=optional_cutoff)
+			right_width_coordinates, left_width_coordinates, centerline_slope = centerline_width.riverWidthFromCenterlineCoordinates(csv_data=csv_data, 
+																												bank_polygon=river_bank_polygon,
+																												centerline_coordinates=evenly_spaced_centerline_coordinates,
+																												optional_cutoff=optional_cutoff)
 			x = []
 			y = []
 			for k, v in evenly_spaced_centerline_coordinates:
 				x.append(k)
 				y.append(v)
 			plt.scatter(x, y, c="plum", label="Evenly Spaced Centerline Coordinates", s=20)
-			plt.plot(*zip(*evenly_spaced_centerline_coordinates), c="thistle", label="Evenly Spaced Centerline")
+			#plt.plot(*zip(*evenly_spaced_centerline_coordinates), c="thistle", label="Evenly Spaced Centerline")
 
-			#for center_coord, edge_coord in right_width_coordinates.items():
-			#	x_points = (right_width_coordinates[center_coord][0], left_width_coordinates[center_coord][0])
-			#	y_points = (right_width_coordinates[center_coord][1], left_width_coordinates[center_coord][1])
-			#	plt.plot(x_points, y_points, 'mediumorchid', linewidth=1)
+			x = []
+			y = []
+			for k, v in centerline_slope.items():
+				x.append(k[0])
+				y.append(k[1])
+			plt.scatter(x, y, c="purple", label="Every X Number", s=5)
+
+			for center_coord, edge_coord in right_width_coordinates.items():
+				x_points = (right_width_coordinates[center_coord][0], left_width_coordinates[center_coord][0])
+				y_points = (right_width_coordinates[center_coord][1], left_width_coordinates[center_coord][1])
+				plt.plot(x_points, y_points, 'mediumorchid', linewidth=1)
 
 	# Dynamically assign the starting and ending
 	if starting_node is not None: # error handling for when data is too small to generate centerline coordiantes
