@@ -130,7 +130,10 @@ plotCenterline(csv_data=None,
 		display_all_possible_paths=False, 
 		plot_title=None, 
 		save_plot_name=None, 
-		displayVoronoi=False, 
+		displayVoronoi=False,
+		displayCenterline=True,
+		plot_width_lines=False,
+		n_interprolate_centerpoints=100,
 		optional_cutoff=None)
 ```
 * **[REQUIRED]** csv_data (string): File location of the text file to convert
@@ -138,6 +141,9 @@ plotCenterline(csv_data=None,
 * [OPTIONAL] plot_title (string): Change plot title, defaults to "River Coordinates: Valid Centerline = True/False, Valid Polygon = True/False"
 * [OPTIONAL] save_plot_name (string): Save the plot with a given name and location
 * [OPTIONAL] displayVoronoi (boolean): Overlay Voronoi diagram used to generate centerline
+* [OPTIONAL] displayCenterline (boolean): Display Voronoi generated centerline
+* [OPTIONAL] plot_width_lines (boolean): Display Centerline at even intervals Voronoi generated centerline
+* [OPTIONAL] n_interprolate_centerpoints (int): <>
 * [OPTIONAL] optional_cutoff (int): Include only the first x amount of the data to chart (useful for debugging)
 
 ```python
@@ -156,6 +162,17 @@ Output:
 Return the width of the river based on the centerline
 ```
 riverWidthFromCenterline()
+```
+```
+import centerline_width
+centerline_width.plotCenterline(csv_data="data/river_coords.csv",
+				save_plot_name="data/river_coords.png",
+				display_all_possible_paths=False, 
+				displayVoronoi=False,
+				displayCenterline=False,
+				plot_width_lines=True,
+				n_interprolate_centerpoints=10,
+				optional_cutoff=550)
 ```
 ```
 riverWidthFromCenterlineCoordinates()
