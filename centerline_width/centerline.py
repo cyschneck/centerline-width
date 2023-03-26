@@ -125,16 +125,13 @@ def riverWidthFromCenterlineCoordinates(csv_data=None, centerline_coordinates=No
 		bank_polygon, _, _ = centerline_width.generatePolygon(left_bank_coordinates, right_bank_coordinates)
 
 	# Average n amount of slopes around a point
-	print("centerline_coordinates = {0}".format(len(centerline_coordinates)))
 	avg_n_points = 3
-	print("avg_n_points = {0}".format(avg_n_points))
 
 	# Average slopes for every n points to chart
 	centerline_slope = {}
 	groups_of_n_points = [centerline_coordinates[i:i+avg_n_points] for i in range(0, len(centerline_coordinates), avg_n_points)]
 	for group_points in groups_of_n_points:
-		print(group_points)
-		print(len(group_points))
+		#print(group_points)
 		slope_sum = 0
 		total_slopes = 0
 		for i in range(len(group_points)):
@@ -144,10 +141,11 @@ def riverWidthFromCenterlineCoordinates(csv_data=None, centerline_coordinates=No
 				slope_sum += (dy / dx)
 				total_slopes += 1
 		if slope_sum != 0:
-			print("total_slopes = {0}".format(total_slopes))
 			slope_avg = slope_sum / total_slopes
 			normal_of_slope = -1 / slope_avg
 			middle_of_list = len(group_points) // 2
+			#print("slope_avg = {0}".format(slope_avg))
+			#print("normal_of_slope = {0}\n".format(normal_of_slope))
 			#print(group_points[middle_of_list])
 			#print(normal_of_slope)
 			centerline_slope[group_points[middle_of_list]] = normal_of_slope
@@ -161,9 +159,22 @@ def riverWidthFromCenterlineCoordinates(csv_data=None, centerline_coordinates=No
 		# Save the points where they intersect the polygon
 		sloped_line = LineString([(min_x, left_y), (max_x, right_y)])
 		line_intersection_points = bank_polygon.exterior.intersection(sloped_line)
-		if len(line_intersection_points.geoms) == 2: # TODO: only collect the closest points
+		if len(line_intersection_points.geoms) == 2:#and slope < -0.37: # TODO: only collect the closest points
 			left_width_coordinates[centerline_point] = (line_intersection_points.geoms[0].x, line_intersection_points.geoms[0].y)
 			right_width_coordinates[centerline_point] = (line_intersection_points.geoms[1].x, line_intersection_points.geoms[1].y)
+		else:
+			# line intersects to polygon at multiple points, find the closest two points to chart
+			distances_between_centerline_and_point = []
+			for i in range(len(line_intersection_points.geoms)):
+				point_intersection = Point(line_intersection_points.geoms[i].x, line_intersection_points.geoms[i].y)
+				distance_between = Point(centerline_point).distance(point_intersection)
+				distances_between_centerline_and_point.append(distance_between)
+			# collect the two closest points
+			index_of_sorted_list = sorted(range(len(distances_between_centerline_and_point)),key=distances_between_centerline_and_point.__getitem__)
+			smallest_point = line_intersection_points.geoms[index_of_sorted_list[0]]
+			second_smallest_point = line_intersection_points.geoms[index_of_sorted_list[1]]
+			left_width_coordinates[centerline_point] = (smallest_point.x, smallest_point.y)
+			right_width_coordinates[centerline_point] = (second_smallest_point.x, second_smallest_point.y)
 
 	return right_width_coordinates, left_width_coordinates, centerline_slope
 

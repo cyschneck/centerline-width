@@ -8,7 +8,7 @@ if __name__ == "__main__":
 	# Valid Examples
 	cutoff = None
 	cutoff = 10
-	#cutoff = 15 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
+	cutoff = 15 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
 	#cutoff = 100 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
 	cutoff = 550 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
 	# Invalid Examples
