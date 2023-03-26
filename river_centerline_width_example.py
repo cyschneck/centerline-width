@@ -23,8 +23,8 @@ if __name__ == "__main__":
 									save_plot_name="data/river_coords.png", 
 									display_all_possible_paths=False, 
 									displayVoronoi=False,
-									displayCenterline=False,
-									plot_width_lines=True,
+									displayCenterline=True,
+									plot_width_lines=False,
 									n_interprolate_centerpoints=200,
 									optional_cutoff=cutoff)
 	exit()

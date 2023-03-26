@@ -131,9 +131,6 @@ plotCenterline(csv_data=None,
 		plot_title=None, 
 		save_plot_name=None, 
 		displayVoronoi=False,
-		displayCenterline=True,
-		plot_width_lines=False,
-		n_interprolate_centerpoints=100,
 		optional_cutoff=None)
 ```
 * **[REQUIRED]** csv_data (string): File location of the text file to convert
@@ -141,10 +138,12 @@ plotCenterline(csv_data=None,
 * [OPTIONAL] plot_title (string): Change plot title, defaults to "River Coordinates: Valid Centerline = True/False, Valid Polygon = True/False"
 * [OPTIONAL] save_plot_name (string): Save the plot with a given name and location
 * [OPTIONAL] displayVoronoi (boolean): Overlay Voronoi diagram used to generate centerline
+* [OPTIONAL] optional_cutoff (int): Include only the first x amount of the data to chart (useful for debugging)
+
+COMING SOON:
 * [OPTIONAL] displayCenterline (boolean): Display Voronoi generated centerline
 * [OPTIONAL] plot_width_lines (boolean): Display Centerline at even intervals Voronoi generated centerline
 * [OPTIONAL] n_interprolate_centerpoints (int): <>
-* [OPTIONAL] optional_cutoff (int): Include only the first x amount of the data to chart (useful for debugging)
 
 ```python
 import centerline_width

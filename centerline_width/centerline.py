@@ -125,11 +125,11 @@ def riverWidthFromCenterlineCoordinates(csv_data=None, centerline_coordinates=No
 		bank_polygon, _, _ = centerline_width.generatePolygon(left_bank_coordinates, right_bank_coordinates)
 
 	# Average n amount of slopes around a point
-	avg_n_points = 3
+	n_points = 3
 
 	# Average slopes for every n points to chart
 	centerline_slope = {}
-	groups_of_n_points = [centerline_coordinates[i:i+avg_n_points] for i in range(0, len(centerline_coordinates), avg_n_points)]
+	groups_of_n_points = [centerline_coordinates[i:i+n_points] for i in range(0, len(centerline_coordinates), n_points)]
 	for group_points in groups_of_n_points:
 		#print(group_points)
 		slope_sum = 0

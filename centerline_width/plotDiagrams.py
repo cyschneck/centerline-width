@@ -91,7 +91,7 @@ def plotCenterline(csv_data=None,
 			for k, v in shortest_path_points:
 				x.append(k)
 				y.append(v)
-			plt.scatter(x, y, c="slategray", label="Centerline Coordinates", s=5)
+			#plt.scatter(x, y, c="slategray", label="Centerline Coordinates", s=5)
 			plt.plot(*zip(*shortest_path_points), c="black", label="Centerline")
 
 	# Determine the Width of River
