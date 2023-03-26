@@ -7,7 +7,7 @@ if __name__ == "__main__":
 
 	# Valid Examples
 	cutoff = None
-	#cutoff = 10
+	cutoff = 10
 	#cutoff = 15 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
 	#cutoff = 100 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
 	cutoff = 550 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
@@ -25,7 +25,7 @@ if __name__ == "__main__":
 									displayVoronoi=False,
 									displayCenterline=False,
 									plot_width_lines=True,
-									n_interprolate_centerpoints=500,
+									n_interprolate_centerpoints=200,
 									optional_cutoff=cutoff)
 	exit()
 	# Return the latitude/longtiude coordinates for the centerline

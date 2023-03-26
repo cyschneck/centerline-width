@@ -112,7 +112,7 @@ def plotCenterline(csv_data=None,
 				x.append(k)
 				y.append(v)
 			plt.scatter(x, y, c="plum", label="Evenly Spaced Centerline Coordinates", s=20)
-			plt.plot(*zip(*evenly_spaced_centerline_coordinates), c="thistle", label="Evenly Spaced Centerline")
+			#plt.plot(*zip(*evenly_spaced_centerline_coordinates), c="thistle", label="Evenly Spaced Centerline")
 
 			x = []
 			y = []

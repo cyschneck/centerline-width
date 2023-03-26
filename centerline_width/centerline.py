@@ -125,25 +125,27 @@ def riverWidthFromCenterlineCoordinates(csv_data=None, centerline_coordinates=No
 		bank_polygon, _, _ = centerline_width.generatePolygon(left_bank_coordinates, right_bank_coordinates)
 
 	# Average n amount of slopes around a point
-	avg_n_points = 5
-	if len(centerline_coordinates) < 20:
-		avg_n_points = 3
+	print("centerline_coordinates = {0}".format(len(centerline_coordinates)))
+	avg_n_points = 3
 	print("avg_n_points = {0}".format(avg_n_points))
 
 	# Average slopes for every n points to chart
 	centerline_slope = {}
 	groups_of_n_points = [centerline_coordinates[i:i+avg_n_points] for i in range(0, len(centerline_coordinates), avg_n_points)]
 	for group_points in groups_of_n_points:
-		#print(group_points)
-		#print(len(group_points))
+		print(group_points)
+		print(len(group_points))
 		slope_sum = 0
+		total_slopes = 0
 		for i in range(len(group_points)):
 			if i+1 < len(group_points):
 				dy = group_points[i+1][1] - group_points[i][1]
 				dx = group_points[i+1][0] - group_points[i][0]
 				slope_sum += (dy / dx)
+				total_slopes += 1
 		if slope_sum != 0:
-			slope_avg = slope_sum / len(group_points)
+			print("total_slopes = {0}".format(total_slopes))
+			slope_avg = slope_sum / total_slopes
 			normal_of_slope = -1 / slope_avg
 			middle_of_list = len(group_points) // 2
 			#print(group_points[middle_of_list])
