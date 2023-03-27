@@ -159,7 +159,7 @@ centerline_width.plotCenterline(csv_data="data/river_coords.csv",
 				optional_cutoff=550)
 ```
 Output:
-![river_coords+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/river_coords.png)
+![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/river_coords_centerline.png)
 
 ## Future Work:
 ### Return Width of River
@@ -171,13 +171,11 @@ riverWidthFromCenterline()
 import centerline_width
 centerline_width.plotCenterline(csv_data="data/river_coords.csv",
 				save_plot_name="data/river_coords.png",
-				display_all_possible_paths=False, 
-				displayVoronoi=False,
-				displayCenterline=False,
 				plot_width_lines=True,
 				n_interprolate_centerpoints=10,
 				optional_cutoff=550)
 ```
+![river_coords_width+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/river_coords_width.png)
 ```
 riverWidthFromCenterlineCoordinates(csv_data=None,
 								centerline_coordinates=None,
