@@ -24,6 +24,7 @@ def plotCenterline(csv_data=None,
 					plot_width_lines=False,
 					n_interprolate_centerpoints=100,
 					transect_span_distance=3,
+					gaussian_filter_sigma=0,
 					optional_cutoff=None):
 
 	centerline_width.errorHandlingPlotCenterline(csv_data=csv_data,
@@ -35,6 +36,7 @@ def plotCenterline(csv_data=None,
 												plot_width_lines=plot_width_lines,
 												n_interprolate_centerpoints=n_interprolate_centerpoints,
 												transect_span_distance=transect_span_distance,
+												gaussian_filter_sigma=gaussian_filter_sigma,
 												optional_cutoff=optional_cutoff)
 
 	# Plot river
@@ -109,7 +111,7 @@ def plotCenterline(csv_data=None,
 	if not shortest_path_points:
 		logger.info("Unable to generate width lines without a valid centerline")
 	if shortest_path_points and plot_width_lines:
-		number_of_evenly_spaced_points = ", Number of Fixed Points = {0}".format(n_interprolate_centerpoints)
+		number_of_evenly_spaced_points = "\nCenterline made of {0} Fixed Points, width lines generated every {1} points".format(n_interprolate_centerpoints, transect_span_distance)
 		if starting_node is not None: # error handling for when data is too small to generate centerline coordiantes
 			evenly_spaced_centerline_coordinates = centerline_width.evenlySpacedCenterline(centerline_coordinates=shortest_path_points,
 																						number_of_fixed_points=n_interprolate_centerpoints)

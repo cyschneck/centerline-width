@@ -20,19 +20,19 @@ if __name__ == "__main__":
 	#cutoff = 1000 # invalid centerline, invalid path, invalid polgyon, invalid starting node, valid ending node
 
 	# Plot river banks
-	centerline_width.plotCenterline(csv_data="data/river_coords.csv", 
-									save_plot_name="data/river_coords_centerline.png", 
-									display_all_possible_paths=False, 
-									displayVoronoi=False,
-									displayCenterline=True,
-									optional_cutoff=cutoff)
+	#centerline_width.plotCenterline(csv_data="data/river_coords.csv", 
+	#								save_plot_name="data/river_coords_centerline.png", 
+	#								display_all_possible_paths=False, 
+	#								displayVoronoi=False,
+	#								displayCenterline=True,
+	#								optional_cutoff=cutoff)
 
 	centerline_width.plotCenterline(csv_data="data/river_coords.csv", 
 									save_plot_name="data/river_coords_width.png", 
 									displayCenterline=True,
 									plot_width_lines=True,
-									n_interprolate_centerpoints=10000,
-									transect_span_distance=30,
+									n_interprolate_centerpoints=5000,
+									transect_span_distance=100,
 									optional_cutoff=cutoff)
 	exit()
 	# Return the latitude/longtiude coordinates for the centerline

@@ -46,6 +46,7 @@ def errorHandlingPlotCenterline(csv_data=None,
 								plot_width_lines=None,
 								n_interprolate_centerpoints=None,
 								transect_span_distance=None,
+								gaussian_filter_sigma=None,
 								optional_cutoff=None):
 	# Error handling for plotCenterline()
 	if csv_data is None:
@@ -98,6 +99,14 @@ def errorHandlingPlotCenterline(csv_data=None,
 	else:
 		if transect_span_distance < 3:
 			logger.critical("\nCRITICAL ERROR, [transect_span_distance]: Must be a greater than 2, currently = '{0}'".format(transect_span_distance))
+			exit()
+
+	if type(gaussian_filter_sigma) != int:
+		logger.critical("\nCRITICAL ERROR, [gaussian_filter_sigma]: Must be a int, current type = '{0}'".format(type(gaussian_filter_sigma)))
+		exit()
+	else:
+		if gaussian_filter_sigma < 0:
+			logger.critical("\nCRITICAL ERROR, [gaussian_filter_sigma]: Must be a greater than 0, currently = '{0}'".format(gaussian_filter_sigma))
 			exit()
 
 	if optional_cutoff is not None and type(optional_cutoff) != int:

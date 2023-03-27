@@ -129,8 +129,6 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 	if bank_polygon is None:
 		bank_polygon, _, _ = centerline_width.generatePolygon(left_bank_coordinates, right_bank_coordinates)
 
-	print("transect_span_distance = {0}".format(transect_span_distance))
-
 	# Average slopes for every n points to chart
 	centerline_slope = {}
 	groups_of_n_points = [centerline_coordinates[i:i+transect_span_distance] for i in range(0, len(centerline_coordinates), transect_span_distance)]
