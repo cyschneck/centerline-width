@@ -1,4 +1,5 @@
 import math
+import logging
 
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -6,6 +7,13 @@ from scipy.spatial import voronoi_plot_2d
 
 # Internal centerline_width reference to access functions, global variables, and error handling
 import centerline_width
+
+## Logging set up for .INFO
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+stream_handler = logging.StreamHandler()
+logger.addHandler(stream_handler)
+
 
 def plotCenterline(csv_data=None,
 					display_all_possible_paths=False, 
@@ -15,6 +23,7 @@ def plotCenterline(csv_data=None,
 					displayCenterline=True,
 					plot_width_lines=False,
 					n_interprolate_centerpoints=100,
+					transect_span_distance=3,
 					optional_cutoff=None):
 
 	centerline_width.errorHandlingPlotCenterline(csv_data=csv_data,
@@ -25,6 +34,7 @@ def plotCenterline(csv_data=None,
 												displayCenterline=displayCenterline,
 												plot_width_lines=plot_width_lines,
 												n_interprolate_centerpoints=n_interprolate_centerpoints,
+												transect_span_distance=transect_span_distance,
 												optional_cutoff=optional_cutoff)
 
 	# Plot river
@@ -96,15 +106,18 @@ def plotCenterline(csv_data=None,
 
 	# Determine the Width of River
 	number_of_evenly_spaced_points = ""
-	if plot_width_lines:
+	if not shortest_path_points:
+		logger.info("Unable to generate width lines without a valid centerline")
+	if shortest_path_points and plot_width_lines:
 		number_of_evenly_spaced_points = ", Number of Fixed Points = {0}".format(n_interprolate_centerpoints)
 		if starting_node is not None: # error handling for when data is too small to generate centerline coordiantes
 			evenly_spaced_centerline_coordinates = centerline_width.evenlySpacedCenterline(centerline_coordinates=shortest_path_points,
 																						number_of_fixed_points=n_interprolate_centerpoints)
 
-			right_width_coordinates, left_width_coordinates, centerline_slope = centerline_width.riverWidthFromCenterlineCoordinates(csv_data=csv_data, 
+			right_width_coordinates, left_width_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(csv_data=csv_data, 
 																												bank_polygon=river_bank_polygon,
 																												centerline_coordinates=evenly_spaced_centerline_coordinates,
+																												transect_span_distance=transect_span_distance,
 																												optional_cutoff=optional_cutoff)
 			x = []
 			y = []
@@ -116,7 +129,7 @@ def plotCenterline(csv_data=None,
 
 			x = []
 			y = []
-			for k, v in centerline_slope.items():
+			for k, v in right_width_coordinates.items():
 				x.append(k[0])
 				y.append(k[1])
 			plt.scatter(x, y, c="purple", label="Every X Number", s=5)
@@ -125,6 +138,20 @@ def plotCenterline(csv_data=None,
 				x_points = (right_width_coordinates[center_coord][0], left_width_coordinates[center_coord][0])
 				y_points = (right_width_coordinates[center_coord][1], left_width_coordinates[center_coord][1])
 				plt.plot(x_points, y_points, 'mediumorchid', linewidth=1)
+			"""
+			x = []
+			y = []
+			for center_coord, edge_coord in right_width_coordinates.items():
+				x.append(right_width_coordinates[center_coord][0])
+				y.append(right_width_coordinates[center_coord][1])
+			plt.scatter(x, y, c="red")
+			x = []
+			y = []
+			for center_coord, edge_coord in right_width_coordinates.items():
+				x.append(left_width_coordinates[center_coord][0])
+				y.append(left_width_coordinates[center_coord][1])
+			plt.scatter(x, y, c="blue")
+			"""
 
 	# Dynamically assign the starting and ending
 	if starting_node is not None: # error handling for when data is too small to generate centerline coordiantes

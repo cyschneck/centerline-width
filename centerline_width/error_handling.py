@@ -45,6 +45,7 @@ def errorHandlingPlotCenterline(csv_data=None,
 								displayCenterline=None,
 								plot_width_lines=None,
 								n_interprolate_centerpoints=None,
+								transect_span_distance=None,
 								optional_cutoff=None):
 	# Error handling for plotCenterline()
 	if csv_data is None:
@@ -89,6 +90,14 @@ def errorHandlingPlotCenterline(csv_data=None,
 	else:
 		if n_interprolate_centerpoints < 2:
 			logger.critical("\nCRITICAL ERROR, [n_interprolate_centerpoints]: Must be a greater than 1, currently = '{0}'".format(n_interprolate_centerpoints))
+			exit()
+
+	if type(transect_span_distance) != int:
+		logger.critical("\nCRITICAL ERROR, [transect_span_distance]: Must be a int, current type = '{0}'".format(type(transect_span_distance)))
+		exit()
+	else:
+		if transect_span_distance < 3:
+			logger.critical("\nCRITICAL ERROR, [transect_span_distance]: Must be a greater than 2, currently = '{0}'".format(transect_span_distance))
 			exit()
 
 	if optional_cutoff is not None and type(optional_cutoff) != int:

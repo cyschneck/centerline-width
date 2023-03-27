@@ -110,7 +110,12 @@ def evenlySpacedCenterline(centerline_coordinates=None, number_of_fixed_points=1
 
 	return interpolated_centerline_coordinates
 
-def riverWidthFromCenterlineCoordinates(csv_data=None, centerline_coordinates=None, bank_polygon=None, save_to_csv=None, optional_cutoff=None):
+def riverWidthFromCenterlineCoordinates(csv_data=None,
+										centerline_coordinates=None,
+										transect_span_distance=3,
+										bank_polygon=None,
+										save_to_csv=None,
+										optional_cutoff=None):
 	# Return the left/right coordinates of width centerlines
 	right_width_coordinates = {}
 	left_width_coordinates = {}
@@ -124,12 +129,11 @@ def riverWidthFromCenterlineCoordinates(csv_data=None, centerline_coordinates=No
 	if bank_polygon is None:
 		bank_polygon, _, _ = centerline_width.generatePolygon(left_bank_coordinates, right_bank_coordinates)
 
-	# Average n amount of slopes around a point
-	n_points = 3
+	print("transect_span_distance = {0}".format(transect_span_distance))
 
 	# Average slopes for every n points to chart
 	centerline_slope = {}
-	groups_of_n_points = [centerline_coordinates[i:i+n_points] for i in range(0, len(centerline_coordinates), n_points)]
+	groups_of_n_points = [centerline_coordinates[i:i+transect_span_distance] for i in range(0, len(centerline_coordinates), transect_span_distance)]
 	for group_points in groups_of_n_points:
 		#print(group_points)
 		slope_sum = 0
@@ -138,8 +142,9 @@ def riverWidthFromCenterlineCoordinates(csv_data=None, centerline_coordinates=No
 			if i+1 < len(group_points):
 				dy = group_points[i+1][1] - group_points[i][1]
 				dx = group_points[i+1][0] - group_points[i][0]
-				slope_sum += (dy / dx)
-				total_slopes += 1
+				if dx != 0:
+					slope_sum += (dy / dx)
+					total_slopes += 1
 		if slope_sum != 0:
 			slope_avg = slope_sum / total_slopes
 			normal_of_slope = -1 / slope_avg
@@ -176,7 +181,7 @@ def riverWidthFromCenterlineCoordinates(csv_data=None, centerline_coordinates=No
 			left_width_coordinates[centerline_point] = (smallest_point.x, smallest_point.y)
 			right_width_coordinates[centerline_point] = (second_smallest_point.x, second_smallest_point.y)
 
-	return right_width_coordinates, left_width_coordinates, centerline_slope
+	return right_width_coordinates, left_width_coordinates
 
 def riverWidthFromCenterline(csv_data=None, centerline_coordinates=None, bank_polygon=None, save_to_csv=None, optional_cutoff=None):
 	# Return river width: right to center, left to center, total width

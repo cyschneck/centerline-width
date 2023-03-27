@@ -127,11 +127,15 @@ Plot the centerline created from a list of right and left banks with Voronoi ver
 
 ```
 plotCenterline(csv_data=None,
-		display_all_possible_paths=False, 
-		plot_title=None, 
-		save_plot_name=None, 
-		displayVoronoi=False,
-		optional_cutoff=None)
+			display_all_possible_paths=False, 
+			plot_title=None, 
+			save_plot_name=None, 
+			displayVoronoi=False,
+			displayCenterline=True,
+			plot_width_lines=False,
+			n_interprolate_centerpoints=100,
+			transect_span_distance=3,
+			optional_cutoff=None)
 ```
 * **[REQUIRED]** csv_data (string): File location of the text file to convert
 * [OPTIONAL] display_all_possible_paths (boolean): Display all possible paths, not just the centerline (useful for debugging)
@@ -144,6 +148,7 @@ COMING SOON:
 * [OPTIONAL] displayCenterline (boolean): Display Voronoi generated centerline
 * [OPTIONAL] plot_width_lines (boolean): Display Centerline at even intervals Voronoi generated centerline
 * [OPTIONAL] n_interprolate_centerpoints (int): <>
+* [OPTIONAL] transect_span_distance (int): <>
 
 ```python
 import centerline_width
@@ -174,7 +179,12 @@ centerline_width.plotCenterline(csv_data="data/river_coords.csv",
 				optional_cutoff=550)
 ```
 ```
-riverWidthFromCenterlineCoordinates()
+riverWidthFromCenterlineCoordinates(csv_data=None,
+								centerline_coordinates=None,
+								transect_span_distance=3,
+								bank_polygon=None,
+								save_to_csv=None,
+								optional_cutoff=None)
 ```
 
 ### Additional Channel Metrics
