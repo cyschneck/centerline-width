@@ -126,16 +126,16 @@ centerline_length = centerlineLength(centerline_coordinates=centerline_coordinat
 ```
 Returns the length from each centerline coordiante (currently in degrees)
 
-### Plot Centerline in Matplotlib
-## Plot the centerline created from a list of right and left banks with Voronoi vertices
+## Plot Centerline in Matplotlib
+### Plot the centerline created from a list of right and left banks with Voronoi vertices
 
 ```
 plotCenterline(csv_data=None,
-			display_all_possible_paths=False, 
-			plot_title=None, 
-			save_plot_name=None, 
-			displayVoronoi=False,
-			optional_cutoff=None)
+		display_all_possible_paths=False, 
+		plot_title=None, 
+		save_plot_name=None, 
+		displayVoronoi=False,
+		optional_cutoff=None)
 ```
 * **[REQUIRED]** csv_data (string): File location of the text file to convert
 * [OPTIONAL] display_all_possible_paths (boolean): Display all possible paths, not just the centerline (useful for debugging)
@@ -155,17 +155,17 @@ centerline_width.plotCenterline(csv_data="data/river_coords.csv",
 Output:
 ![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/river_coords_centerline.png)
 
-## Plot the centerline width
+### Plot the centerline width
 Plot the width of the river based on the centerline
 ```
 plotCenterline(csv_data=None,
-			plot_title=None, 
-			save_plot_name=None, 
-			displayCenterline=True,
-			plot_width_lines=False,
-			n_interprolate_centerpoints=100,
-			transect_span_distance=3,
-			optional_cutoff=None)
+		plot_title=None, 
+		save_plot_name=None, 
+		displayCenterline=True,
+		plot_width_lines=False,
+		n_interprolate_centerpoints=100,
+		transect_span_distance=3,
+		optional_cutoff=None)
 ```
 COMING SOON:
 * **[REQUIRED]** csv_data (string): File location of the text file to convert
@@ -181,12 +181,12 @@ COMING SOON:
 ```
 import centerline_width
 centerline_width.plotCenterline(csv_data="data/river_coords.csv", 
-						save_plot_name="data/river_coords_width.png", 
-						displayCenterline=True,
-						plot_width_lines=True,
-						n_interprolate_centerpoints=10000,
-						transect_span_distance=100,
-						optional_cutoff=550)
+				save_plot_name="data/river_coords_width.png", 
+				displayCenterline=True,
+				plot_width_lines=True,
+				n_interprolate_centerpoints=10000,
+				transect_span_distance=100,
+				optional_cutoff=550)
 ```
 ![river_coords_width+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/river_coords_width.png)
 
