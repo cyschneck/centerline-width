@@ -163,7 +163,7 @@ plotCenterline(csv_data=None,
 		save_plot_name=None, 
 		displayCenterline=True,
 		plot_width_lines=False,
-		n_interprolate_centerpoints=100,
+		n_interprolate_centerpoints=None,
 		transect_span_distance=3,
 		optional_cutoff=None)
 ```
@@ -173,8 +173,8 @@ COMING SOON:
 * [OPTIONAL] save_plot_name (string): Save the plot with a given name and location
 * [OPTIONAL] displayCenterline (boolean): Display generated centerline
 * [OPTIONAL] plot_width_lines (boolean): Display Centerline at even intervals Voronoi generated centerline
-* [OPTIONAL] n_interprolate_centerpoints (int): <>
-* [OPTIONAL] transect_span_distance (int): <>
+* [OPTIONAL] n_interprolate_centerpoints (int): Recreate centerline coordinates with n evenly spaced points, defaults to the number of rows in the csv file
+* [OPTIONAL] transect_span_distance (int): Sum up n amount of points around a centerpoint to determine the slope (increase to decrease the impact of sudden changes), defaults to 6, must be greater than 2 (since the slope is found from the difference in position between two points)
 
 ![transect_span_distance](https://user-images.githubusercontent.com/22159116/227870492-69d105b2-0d3e-4d50-90d9-e938400a58fb.png)
 

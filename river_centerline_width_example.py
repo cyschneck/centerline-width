@@ -2,16 +2,18 @@
 import centerline_width
 
 if __name__ == "__main__":
-	centerline_width.extractPointsToTextFile(left_kml="data/leftbank.kml", right_kml="data/rightbank.kml", text_output_name="data/river_coords.txt")
+	centerline_width.extractPointsToTextFile(left_kml="data/leftbank.kml",
+											right_kml="data/rightbank.kml",
+											text_output_name="data/river_coords.txt")
 	centerline_width.convertColumnsToCSV(text_file="data/river_coords.txt", flipBankDirection=True)
 
 	# Valid Examples
 	cutoff = None
-	#cutoff = 10
+	cutoff = 10
 	#cutoff = 15 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
 	#cutoff = 30
 	#cutoff = 100 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
-	cutoff = 550 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
+	#cutoff = 550 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
 	# Invalid Examples
 	#cutoff = 5 # invalid centerline, invalid path, valid polygon, invalid starting node, invalid ending nodes
 	#cutoff = 250 # valid centerline, valid path, invalid polygon, valid starting node, valid ending nodes
@@ -31,8 +33,9 @@ if __name__ == "__main__":
 									save_plot_name="data/river_coords_width.png", 
 									displayCenterline=True,
 									plot_width_lines=True,
-									n_interprolate_centerpoints=5000,
-									transect_span_distance=100,
+									n_interprolate_centerpoints=100,
+									transect_span_distance=3,
+									gaussian_filter_sigma=None,
 									optional_cutoff=cutoff)
 	exit()
 	# Return the latitude/longtiude coordinates for the centerline

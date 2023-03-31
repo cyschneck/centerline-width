@@ -22,9 +22,9 @@ def plotCenterline(csv_data=None,
 					displayVoronoi=False,
 					displayCenterline=True,
 					plot_width_lines=False,
-					n_interprolate_centerpoints=100,
+					n_interprolate_centerpoints=None,
 					transect_span_distance=3,
-					gaussian_filter_sigma=0,
+					gaussian_filter_sigma=None,
 					optional_cutoff=None):
 
 	centerline_width.errorHandlingPlotCenterline(csv_data=csv_data,
@@ -41,8 +41,12 @@ def plotCenterline(csv_data=None,
 
 	# Plot river
 	df = pd.read_csv(csv_data)
-	if optional_cutoff:
+	if optional_cutoff: # only include the first x amount of the data
 		df = df.head(optional_cutoff)
+
+	if plot_width_lines and n_interprolate_centerpoints is None:
+		# if plotting width, but n_interprolate_centerpoints is undefined, set to the size of the dataframe
+		n_interprolate_centerpoints = len(df)
 
 	left_bank_coordinates, right_bank_coordinates = centerline_width.leftRightCoordinates(df)
 	river_bank_polygon, top_river_line, bottom_river_line = centerline_width.generatePolygon(left_bank_coordinates, right_bank_coordinates)
@@ -115,12 +119,27 @@ def plotCenterline(csv_data=None,
 		if starting_node is not None: # error handling for when data is too small to generate centerline coordiantes
 			evenly_spaced_centerline_coordinates = centerline_width.evenlySpacedCenterline(centerline_coordinates=shortest_path_points,
 																						number_of_fixed_points=n_interprolate_centerpoints)
-
 			right_width_coordinates, left_width_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(csv_data=csv_data, 
 																												bank_polygon=river_bank_polygon,
 																												centerline_coordinates=evenly_spaced_centerline_coordinates,
 																												transect_span_distance=transect_span_distance,
 																												optional_cutoff=optional_cutoff)
+			if gaussian_filter_sigma is not None:
+				smoothed_centerline_coordinates = centerline_width.gaussianSmoothedCoordinates(centerline_coordinates=evenly_spaced_centerline_coordinates,
+																								gaussian_sigma=gaussian_filter_sigma)
+				right_width_coordinates, left_width_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(csv_data=csv_data, 
+																												bank_polygon=river_bank_polygon,
+																												centerline_coordinates=smoothed_centerline_coordinates,
+																												transect_span_distance=transect_span_distance,
+																												optional_cutoff=optional_cutoff)
+				x = []
+				y = []
+				for k, v in smoothed_centerline_coordinates:
+					x.append(k)
+					y.append(v)
+				plt.scatter(x, y, c="blue", label="Smoothed Centerline Coordinates, sigma={0}".format(gaussian_filter_sigma), s=20)
+				plt.plot(*zip(*smoothed_centerline_coordinates), c="lightblue", label="Smoothed Centerline, sigma={0}".format(gaussian_filter_sigma))
+
 			x = []
 			y = []
 			for k, v in evenly_spaced_centerline_coordinates:

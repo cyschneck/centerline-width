@@ -85,29 +85,31 @@ def errorHandlingPlotCenterline(csv_data=None,
 		logger.critical("\nCRITICAL ERROR, [plot_width_lines]: Must be a bool, current type = '{0}'".format(type(plot_width_lines)))
 		exit()
 
-	if type(n_interprolate_centerpoints) != int:
-		logger.critical("\nCRITICAL ERROR, [n_interprolate_centerpoints]: Must be a int, current type = '{0}'".format(type(n_interprolate_centerpoints)))
-		exit()
-	else:
-		if n_interprolate_centerpoints < 2:
-			logger.critical("\nCRITICAL ERROR, [n_interprolate_centerpoints]: Must be a greater than 1, currently = '{0}'".format(n_interprolate_centerpoints))
+	if n_interprolate_centerpoints is not None:
+		if type(n_interprolate_centerpoints) != int:
+			logger.critical("\nCRITICAL ERROR, [n_interprolate_centerpoints]: Must be a int, current type = '{0}'".format(type(n_interprolate_centerpoints)))
 			exit()
+		else:
+			if n_interprolate_centerpoints < 2:
+				logger.critical("\nCRITICAL ERROR, [n_interprolate_centerpoints]: Must be a greater than 1, currently = '{0}'".format(n_interprolate_centerpoints))
+				exit()
 
 	if type(transect_span_distance) != int:
 		logger.critical("\nCRITICAL ERROR, [transect_span_distance]: Must be a int, current type = '{0}'".format(type(transect_span_distance)))
 		exit()
 	else:
 		if transect_span_distance < 3:
-			logger.critical("\nCRITICAL ERROR, [transect_span_distance]: Must be a greater than 2, currently = '{0}'".format(transect_span_distance))
+			logger.critical("\nCRITICAL ERROR, [transect_span_distance]: Must be a greater than 2 to find the slope between at least two points, currently = '{0}'".format(transect_span_distance))
 			exit()
 
-	if type(gaussian_filter_sigma) != int:
-		logger.critical("\nCRITICAL ERROR, [gaussian_filter_sigma]: Must be a int, current type = '{0}'".format(type(gaussian_filter_sigma)))
-		exit()
-	else:
-		if gaussian_filter_sigma < 0:
-			logger.critical("\nCRITICAL ERROR, [gaussian_filter_sigma]: Must be a greater than 0, currently = '{0}'".format(gaussian_filter_sigma))
+	if gaussian_filter_sigma is not None:
+		if type(gaussian_filter_sigma) != int:
+			logger.critical("\nCRITICAL ERROR, [gaussian_filter_sigma]: Must be a int, current type = '{0}'".format(type(gaussian_filter_sigma)))
 			exit()
+		else:
+			if gaussian_filter_sigma <= 0:
+				logger.critical("\nCRITICAL ERROR, [gaussian_filter_sigma]: Must be a greater than 0, currently = '{0}'".format(gaussian_filter_sigma))
+				exit()
 
 	if optional_cutoff is not None and type(optional_cutoff) != int:
 		logger.critical("\nCRITICAL ERROR, [optional_cutoff]: Must be a int, current type = '{0}'".format(type(optional_cutoff)))

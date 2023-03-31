@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import networkx as nx
 from shapely.geometry import Point, Polygon, LineString
+from scipy.ndimage import gaussian_filter1d
 
 # Internal centerline_width reference to access functions, global variables, and error handling
 import centerline_width
@@ -59,6 +60,7 @@ def networkXGraphShortestPath(all_points_dict, starting_node, ending_node):
 	if starting_node is not None:
 		graph_connections = nx.Graph()
 		node_as_keys_pos_values = {}
+		logger.info("Attempting to determine a valid centerline path")
 		for start_point, end_point_list in all_points_dict.items():
 			node_as_keys_pos_values[start_point] = (start_point[0], start_point[1])
 			graph_connections.add_node(start_point, pos=(start_point[0], start_point[1]))
@@ -110,6 +112,12 @@ def evenlySpacedCenterline(centerline_coordinates=None, number_of_fixed_points=1
 
 	return interpolated_centerline_coordinates
 
+def gaussianSmoothedCoordinates(centerline_coordinates=None, gaussian_sigma=None):
+	print("sigma = {0}".format(gaussian_sigma))
+	print("TODO: gaussian_filter1d does not work for 2D features")
+	#gaussian_filter1d(x, 0.1)
+	return centerline_coordinates
+
 def riverWidthFromCenterlineCoordinates(csv_data=None,
 										centerline_coordinates=None,
 										transect_span_distance=3,
@@ -127,7 +135,11 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 		df = df.head(optional_cutoff)
 	left_bank_coordinates, right_bank_coordinates = centerline_width.leftRightCoordinates(df)
 	if bank_polygon is None:
-		bank_polygon, _, _ = centerline_width.generatePolygon(left_bank_coordinates, right_bank_coordinates)
+		bank_polygon, top_bank, bottom_bank = centerline_width.generatePolygon(left_bank_coordinates, right_bank_coordinates)
+	else:
+		left_bank_lst, right_bank_lst = centerline_width.leftRightCoordinates(df)
+		top_bank = LineString([Point(left_bank_lst[::-1][0][0],left_bank_lst[::-1][0][1]), Point(right_bank_lst[::-1][0][0], right_bank_lst[::-1][0][1])])
+		bottom_bank = LineString([Point(right_bank_lst[0][0], right_bank_lst[0][1]), Point(left_bank_lst[0][0], left_bank_lst[0][1])])
 
 	# Average slopes for every n points to chart
 	centerline_slope = {}
@@ -153,6 +165,17 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 			#print(normal_of_slope)
 			centerline_slope[group_points[middle_of_list]] = normal_of_slope
 
+	def intersectsTopOrBottomOfBank(point1, point2):
+		# returns True/False if the points lie on the 'false' top/bottom of the river
+		# TODO TODO
+		points_intersect_false_edges = False
+		# avoding floating point precession errors when determining if point lies within the line
+		if top_bank.distance(point1) < 1e-8 or bottom_bank.distance(point1) < 1e-8:
+			points_intersect_false_edges = True
+		if top_bank.distance(point2) < 1e-8 or bottom_bank.distance(point2) < 1e-8:
+			points_intersect_false_edges = True
+		return points_intersect_false_edges
+
 	# Generate a list of lines from the centerline point with its normal
 	min_x, min_y, max_x, max_y = bank_polygon.bounds
 	for centerline_point, slope in centerline_slope.items():
@@ -160,11 +183,12 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 		right_y = slope * (max_x - centerline_point[0]) + centerline_point[1]
 
 		# Save the points where they intersect the polygon
-		sloped_line = LineString([(min_x, left_y), (max_x, right_y)])
-		line_intersection_points = bank_polygon.exterior.intersection(sloped_line)
-		if len(line_intersection_points.geoms) == 2:#and slope < -0.37: # TODO: only collect the closest points
-			left_width_coordinates[centerline_point] = (line_intersection_points.geoms[0].x, line_intersection_points.geoms[0].y)
-			right_width_coordinates[centerline_point] = (line_intersection_points.geoms[1].x, line_intersection_points.geoms[1].y)
+		sloped_line = LineString([(min_x, left_y), (max_x, right_y)]) # sloped line from the centerpoint
+		line_intersection_points = bank_polygon.exterior.intersection(sloped_line) # points where the line intersects the polygon
+		if len(line_intersection_points.geoms) == 2: # TODO: only collect the closest points
+			if not intersectsTopOrBottomOfBank(line_intersection_points.geoms[0], line_intersection_points.geoms[1]):
+				left_width_coordinates[centerline_point] = (line_intersection_points.geoms[0].x, line_intersection_points.geoms[0].y)
+				right_width_coordinates[centerline_point] = (line_intersection_points.geoms[1].x, line_intersection_points.geoms[1].y)
 		else:
 			# line intersects to polygon at multiple points, find the closest two points to chart
 			distances_between_centerline_and_point = []
@@ -176,8 +200,9 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 			index_of_sorted_list = sorted(range(len(distances_between_centerline_and_point)),key=distances_between_centerline_and_point.__getitem__)
 			smallest_point = line_intersection_points.geoms[index_of_sorted_list[0]]
 			second_smallest_point = line_intersection_points.geoms[index_of_sorted_list[1]]
-			left_width_coordinates[centerline_point] = (smallest_point.x, smallest_point.y)
-			right_width_coordinates[centerline_point] = (second_smallest_point.x, second_smallest_point.y)
+			if not intersectsTopOrBottomOfBank(smallest_point, second_smallest_point):
+				left_width_coordinates[centerline_point] = (smallest_point.x, smallest_point.y)
+				right_width_coordinates[centerline_point] = (second_smallest_point.x, second_smallest_point.y)
 
 	return right_width_coordinates, left_width_coordinates
 
