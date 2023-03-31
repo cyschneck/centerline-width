@@ -167,7 +167,6 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 
 	def intersectsTopOrBottomOfBank(point1, point2):
 		# returns True/False if the points lie on the 'false' top/bottom of the river
-		# TODO TODO
 		points_intersect_false_edges = False
 		# avoding floating point precession errors when determining if point lies within the line
 		if top_bank.distance(point1) < 1e-8 or bottom_bank.distance(point1) < 1e-8:
@@ -186,7 +185,7 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 		sloped_line = LineString([(min_x, left_y), (max_x, right_y)]) # sloped line from the centerpoint
 		line_intersection_points = bank_polygon.exterior.intersection(sloped_line) # points where the line intersects the polygon
 		if len(line_intersection_points.geoms) == 2: # TODO: only collect the closest points
-			if not intersectsTopOrBottomOfBank(line_intersection_points.geoms[0], line_intersection_points.geoms[1]):
+			if not intersectsTopOrBottomOfBank(line_intersection_points.geoms[0], line_intersection_points.geoms[1]): # only save width lines that do not touch the artifical top/bottom
 				left_width_coordinates[centerline_point] = (line_intersection_points.geoms[0].x, line_intersection_points.geoms[0].y)
 				right_width_coordinates[centerline_point] = (line_intersection_points.geoms[1].x, line_intersection_points.geoms[1].y)
 		else:
@@ -200,7 +199,7 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 			index_of_sorted_list = sorted(range(len(distances_between_centerline_and_point)),key=distances_between_centerline_and_point.__getitem__)
 			smallest_point = line_intersection_points.geoms[index_of_sorted_list[0]]
 			second_smallest_point = line_intersection_points.geoms[index_of_sorted_list[1]]
-			if not intersectsTopOrBottomOfBank(smallest_point, second_smallest_point):
+			if not intersectsTopOrBottomOfBank(smallest_point, second_smallest_point): # only save width lines that do not touch the artifical top/bottom
 				left_width_coordinates[centerline_point] = (smallest_point.x, smallest_point.y)
 				right_width_coordinates[centerline_point] = (second_smallest_point.x, second_smallest_point.y)
 

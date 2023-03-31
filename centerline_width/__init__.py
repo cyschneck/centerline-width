@@ -20,6 +20,7 @@ from .centerline import riverWidthFromCenterline
 
 # plotDiagrams.py function calls
 from .plotDiagrams import plotCenterline
+from .plotDiagrams import plotCenterlineWidth
 
 # error_handling.py function calls
 from .error_handling import errrorHandlingConvertColumnsToCSV
