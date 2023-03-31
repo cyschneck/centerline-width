@@ -42,11 +42,6 @@ def errorHandlingPlotCenterline(csv_data=None,
 								plot_title=None,
 								save_plot_name=None,
 								displayVoronoi=None,
-								displayCenterline=None,
-								plot_width_lines=None,
-								n_interprolate_centerpoints=None,
-								transect_span_distance=None,
-								gaussian_filter_sigma=None,
 								optional_cutoff=None):
 	# Error handling for plotCenterline()
 	if csv_data is None:
@@ -77,12 +72,41 @@ def errorHandlingPlotCenterline(csv_data=None,
 		logger.critical("\nCRITICAL ERROR, [displayVoronoi]: Must be a bool, current type = '{0}'".format(type(displayVoronoi)))
 		exit()
 
-	if type(displayCenterline) != bool:
-		logger.critical("\nCRITICAL ERROR, [displayCenterline]: Must be a bool, current type = '{0}'".format(type(displayCenterline)))
+	if optional_cutoff is not None and type(optional_cutoff) != int:
+		logger.critical("\nCRITICAL ERROR, [optional_cutoff]: Must be a int, current type = '{0}'".format(type(optional_cutoff)))
 		exit()
 
-	if type(plot_width_lines) != bool:
-		logger.critical("\nCRITICAL ERROR, [plot_width_lines]: Must be a bool, current type = '{0}'".format(type(plot_width_lines)))
+def errorHandlingPlotCenterlineWidth(csv_data=None,
+									plot_title=None,
+									save_plot_name=None,
+									displayTrueCenterline=None,
+									n_interprolate_centerpoints=None,
+									transect_span_distance=None,
+									gaussian_filter_sigma=None,
+									optional_cutoff=None):
+	# Error handling for plotCenterline()
+	if csv_data is None:
+		logger.critical("\nCRITICAL ERROR, [csv_data]: Requires csv file")
+		exit()
+	else:
+		if type(csv_data) != str:
+			logger.critical("\nCRITICAL ERROR, [csv_data]: Must be a str, current type = '{0}'".format(type(csv_data)))
+			exit()
+		else:
+			if not csv_data.lower().endswith(".csv"):
+				logger.critical("\nCRITICAL ERROR, [csv_data]: Extension must be a .csv file, current extension = '{0}'".format(csv_data.split(".")[1]))
+				exit()
+
+	if plot_title is not None and type(plot_title) != str:
+		logger.critical("\nCRITICAL ERROR, [plot_title]: Must be a str, current type = '{0}'".format(type(plot_title)))
+		exit()
+
+	if save_plot_name is not None and type(save_plot_name) != str:
+		logger.critical("\nCRITICAL ERROR, [save_plot_name]: Must be a str, current type = '{0}'".format(type(save_plot_name)))
+		exit()
+
+	if type(displayTrueCenterline) != bool:
+		logger.critical("\nCRITICAL ERROR, [displayTrueCenterline]: Must be a bool, current type = '{0}'".format(type(displayTrueCenterline)))
 		exit()
 
 	if n_interprolate_centerpoints is not None:

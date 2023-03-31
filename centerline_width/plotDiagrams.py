@@ -22,12 +22,12 @@ def plotCenterline(csv_data=None,
 					optional_cutoff=None):
 	# Plot Centerline of River
 
-	#centerline_width.errorHandlingPlotCenterline(csv_data=csv_data,
-	#											display_all_possible_paths=display_all_possible_paths,
-	#											plot_title=plot_title,
-	#											save_plot_name=save_plot_name,
-	#											displayVoronoi=displayVoronoi,
-	#											optional_cutoff=optional_cutoff)
+	centerline_width.errorHandlingPlotCenterline(csv_data=csv_data,
+												display_all_possible_paths=display_all_possible_paths,
+												plot_title=plot_title,
+												save_plot_name=save_plot_name,
+												displayVoronoi=displayVoronoi,
+												optional_cutoff=optional_cutoff)
 
 	# Plot river
 	df = pd.read_csv(csv_data)
@@ -120,6 +120,16 @@ def plotCenterlineWidth(csv_data=None,
 						gaussian_filter_sigma=None,
 						optional_cutoff=None):
 	# Plot Width Lines based on Centerline
+
+	centerline_width.errorHandlingPlotCenterlineWidth(csv_data=csv_data,
+													plot_title=plot_title, 
+													save_plot_name=save_plot_name, 
+													displayTrueCenterline=displayTrueCenterline,
+													n_interprolate_centerpoints=n_interprolate_centerpoints,
+													transect_span_distance=transect_span_distance,
+													gaussian_filter_sigma=gaussian_filter_sigma,
+													optional_cutoff=optional_cutoff)
+
 	# Plot river
 	df = pd.read_csv(csv_data)
 	if optional_cutoff: # only include the first x amount of the data
@@ -205,8 +215,6 @@ def plotCenterlineWidth(csv_data=None,
 					y.append(v)
 				plt.scatter(x, y, c="blue", label="Smoothed Centerline Coordinates, sigma={0}".format(gaussian_filter_sigma), s=20)
 				plt.plot(*zip(*smoothed_centerline_coordinates), "--", c="lightblue", label="Smoothed Centerline, sigma={0}".format(gaussian_filter_sigma))
-				change_in_length = (centerline_width.centerlineLength(centerline_coordinates=smoothed_centerline_coordinates)/centerline_width.centerlineLength(centerline_coordinates=shortest_path_points))*100
-				print("Smoothed length = {0} ({1}%)%".format(centerline_width.centerlineLength(centerline_coordinates=smoothed_centerline_coordinates), change_in_length))
 			else:
 				right_width_coordinates, left_width_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(csv_data=csv_, 
 																														bank_polygon=river_bank_polygon,
@@ -220,9 +228,7 @@ def plotCenterlineWidth(csv_data=None,
 				x.append(k)
 				y.append(v)
 			plt.scatter(x, y, c="plum", label="Evenly Spaced Centerline Coordinates", s=20)
-			#plt.plot(*zip(*evenly_spaced_centerline_coordinates), "--", c="thistle", label="Evenly Spaced Centerline")
-			change_in_length = (centerline_width.centerlineLength(centerline_coordinates=evenly_spaced_centerline_coordinates)/centerline_width.centerlineLength(centerline_coordinates=shortest_path_points))*100
-			print("Evenly spaced length = {0} ({1}%)%".format(centerline_width.centerlineLength(centerline_coordinates=evenly_spaced_centerline_coordinates),change_in_length))
+			plt.plot(*zip(*evenly_spaced_centerline_coordinates), "--", c="thistle", label="Evenly Spaced Centerline")
 
 			x = []
 			y = []

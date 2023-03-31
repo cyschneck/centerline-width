@@ -25,6 +25,7 @@ from .plotDiagrams import plotCenterlineWidth
 # error_handling.py function calls
 from .error_handling import errrorHandlingConvertColumnsToCSV
 from .error_handling import errorHandlingPlotCenterline
+from .error_handling import errorHandlingPlotCenterlineWidth
 from .error_handling import errorHandlingCenterlineLatitudeLongitude
 from .error_handling import errorHandlingRiverWidthFromCenterline
 from .error_handling import errorHandlingExtractPointsToTextFile

@@ -5,7 +5,6 @@ import numpy as np
 import pandas as pd
 import networkx as nx
 from shapely.geometry import Point, Polygon, LineString
-from scipy.ndimage import gaussian_filter1d
 
 # Internal centerline_width reference to access functions, global variables, and error handling
 import centerline_width
@@ -113,9 +112,9 @@ def evenlySpacedCenterline(centerline_coordinates=None, number_of_fixed_points=1
 	return interpolated_centerline_coordinates
 
 def gaussianSmoothedCoordinates(centerline_coordinates=None, gaussian_sigma=None):
-	print("sigma = {0}".format(gaussian_sigma))
-	print("TODO: gaussian_filter1d does not work for 2D features")
-	#gaussian_filter1d(x, 0.1)
+	#from scipy.ndimage import gaussian_filter1d
+	print("[gaussianSmoothedCoordinates]: sigma = {0}".format(gaussian_sigma))
+	print("TODO: gaussian_filter1d does not work for 2D features, currently equals evenly spaced coordinates")
 	return centerline_coordinates
 
 def riverWidthFromCenterlineCoordinates(csv_data=None,
