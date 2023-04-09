@@ -73,9 +73,9 @@ def generatePolygon(left_bank_lst, right_bank_lst):
 	bottom_river = LineString([Point(right_bank_lst[0][0], right_bank_lst[0][1]), Point(left_bank_lst[0][0], left_bank_lst[0][1])])
 
 	if not river_polygon.is_valid:
-		logger.critical("Invalid Polygon needs to be corrected")
+		logger.critical("[FAILED]  Invalid Polygon needs to be corrected")
 	else:
-		logger.info("Valid polygon generated")
+		logger.info("[SUCCESS] Valid polygon generated")
 
 	return river_polygon, top_river, bottom_river
 
@@ -85,13 +85,14 @@ def generateVoronoi(left_bank_lst, right_bank_lst):
 	all_banks_points = np.array(all_banks_points)
 
 	river_voronoi = Voronoi(all_banks_points)
-	logger.info("Voronoi diagram generated")
+	logger.info("[SUCCESS] Voronoi diagram generated")
 	return river_voronoi
 
 def pointsFromVoronoi(river_voronoi, river_polygon):
 	# Returns a dictionary list of all the voronoi points: {start point : [list of end points]}
 	points_dict = {}
 	all_connections_start_to_end = []
+	logger.info("[PROCESSING] Attempting to determine a valid centerline from Voronoi points, may take a few minutes") # longest step, O(n^n)
 	for ridge_vertex_point in river_voronoi.ridge_vertices:
 		if ridge_vertex_point[0] >= 0 and ridge_vertex_point[1] >= 0: # Only include non-infinity vertex edges
 			v0 = river_voronoi.vertices[ridge_vertex_point[0]]

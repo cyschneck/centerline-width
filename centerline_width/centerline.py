@@ -59,7 +59,6 @@ def networkXGraphShortestPath(all_points_dict, starting_node, ending_node):
 	if starting_node is not None:
 		graph_connections = nx.Graph()
 		node_as_keys_pos_values = {}
-		logger.info("Attempting to determine a valid centerline path")
 		for start_point, end_point_list in all_points_dict.items():
 			node_as_keys_pos_values[start_point] = (start_point[0], start_point[1])
 			graph_connections.add_node(start_point, pos=(start_point[0], start_point[1]))
@@ -69,9 +68,9 @@ def networkXGraphShortestPath(all_points_dict, starting_node, ending_node):
 				graph_connections.add_edge(start_point, end_point, weight=distanceBetween(start_point,end_point))
 		try:
 			shortest_path = nx.shortest_path(graph_connections, source=starting_node, target=ending_node)
-			logger.info("Valid centerline path found")
+			logger.info("[SUCCESS] Valid centerline path found")
 		except nx.NetworkXNoPath: # no direct path found
-			logger.info("No direct path found from starting node to ending node")
+			logger.info("[FAILED]  No direct path found from starting node to ending node")
 			return None
 		#nx.draw(graph_connections, with_labels=True, font_size=10)
 		return shortest_path
@@ -113,7 +112,7 @@ def evenlySpacedCenterline(centerline_coordinates=None, number_of_fixed_points=1
 
 def gaussianSmoothedCoordinates(centerline_coordinates=None, gaussian_sigma=None):
 	#from scipy.ndimage import gaussian_filter1d
-	print("[gaussianSmoothedCoordinates]: sigma = {0}".format(gaussian_sigma))
+	print("sigma = {0}".format(gaussian_sigma))
 	print("TODO: gaussian_filter1d does not work for 2D features, currently equals evenly spaced coordinates")
 	return centerline_coordinates
 

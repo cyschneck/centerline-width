@@ -84,7 +84,7 @@ def errorHandlingPlotCenterlineWidth(csv_data=None,
 									transect_span_distance=None,
 									gaussian_filter_sigma=None,
 									optional_cutoff=None):
-	# Error handling for plotCenterline()
+	# Error handling for plotCenterlineWidth()
 	if csv_data is None:
 		logger.critical("\nCRITICAL ERROR, [csv_data]: Requires csv file")
 		exit()

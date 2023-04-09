@@ -280,8 +280,8 @@ Can be fixed by expanding the data until the polygon is large enough to contain 
 
 ## Developer Notes: Tech Debt and Bugs
 * Combine backend functionality for plotCenterline and plotCenterlineWidth into a shared component
-* error handling for plotCenterline and plotCenterlineWidth
 * plotCenterlineWidth: add percentage difference in length for evenly spaced and gaussian smoothed lines compared to voronoi (in legend or title)
+* Verify error handling for public functions
 * Bug: (plotCenterlineWidth) cutoff = 800 debug lines on the outside of the polygon
 * README overview of all three types of centerlines (voronoi generated, evenly spaced, gaussian smoothed)
 
