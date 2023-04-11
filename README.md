@@ -26,10 +26,10 @@ PyPi pip install at [pypi.org/project/centerline-width/](https://pypi.org/projec
 pip install centerline-width
 ```
 
-## Running Script
+## Running Scripts
 ### Convert KML files to Text File
 
-Convert two .kml files from Google Earth Pro and exports the coordinates into a text file
+Convert two .kml files from Google Earth Pro for the left and right bank and export the coordinates into a text file
 
 ```
 extractPointsToTextFile(left_kml=None,
@@ -49,9 +49,9 @@ centerline_width.extractPointsToTextFile(left_kml="leftbank.kml",
 ```
 Output: A text file `data/river_coords_output.txt` with the headers llat, llon, rlat, rlon
 
-### Converted Data Text File to CSV
+### Converted Text File to CSV
 
-Convert a text file with coordinates for a left and right bank's latitude/longitude
+Convert a text file with coordinates for a left and right bank's latitude/longitude to a csv file
 
 ```
      llat       llon      rlat       rlon
@@ -97,7 +97,7 @@ llat,llon,rlat,rlon
 Output: A csv file `data/river_coords.csv` with the headers llat, llon, rlat, rlon
 
 ### Return Latitude/Longitude Coordinates of Centerline
-Return a list of tuples for each latitude/longtiude coordinate of the centerline
+Return a list of tuples for each latitude/longtiude coordinate of the centerline based on the left and right banks
 ```
 centerlineLatitudeLongitude(csv_data=None, optional_cutoff=None)
 ```

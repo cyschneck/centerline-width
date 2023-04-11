@@ -25,11 +25,11 @@ if __name__ == "__main__":
 	#cutoff = 800 # TODO: debug lines on the outside of the polygon
 
 	# Plot river banks
-	#centerline_width.plotCenterline(csv_data="data/river_coords.csv", 
-	#								save_plot_name="data/river_coords_centerline.png", 
-	#								display_all_possible_paths=True, 
-	#								displayVoronoi=False,
-	#								optional_cutoff=cutoff)
+	centerline_width.plotCenterline(csv_data="data/river_coords.csv", 
+									save_plot_name="data/river_coords_centerline.png", 
+									display_all_possible_paths=False, 
+									displayVoronoi=False,
+									optional_cutoff=cutoff)
 
 	centerline_width.plotCenterlineWidth(csv_data="data/river_coords.csv", 
 										save_plot_name="data/river_coords_width.png", 
