@@ -1,5 +1,5 @@
 # get_coordinates_kml.py function calls
-from .get_coordinates_kml import extractPointsToTextFile
+from .getCoordinatesKML import extractPointsToTextFile
 
 # preprocessing.py function calls
 from .preprocessing import convertColumnsToCSV
