@@ -117,7 +117,9 @@ def plotCenterlineWidth(csv_data=None,
 						displayTrueCenterline=True,
 						n_interprolate_centerpoints=None,
 						transect_span_distance=3,
-						gaussian_filter_sigma=None,
+						apply_smoothing=False,
+						flag_intersections=True,
+						remove_intersections=False,
 						optional_cutoff=None):
 	# Plot Width Lines based on Centerline
 
@@ -127,7 +129,9 @@ def plotCenterlineWidth(csv_data=None,
 													displayTrueCenterline=displayTrueCenterline,
 													n_interprolate_centerpoints=n_interprolate_centerpoints,
 													transect_span_distance=transect_span_distance,
-													gaussian_filter_sigma=gaussian_filter_sigma,
+													apply_smoothing=apply_smoothing,
+													flag_intersections=flag_intersections,
+													remove_intersections=remove_intersections,
 													optional_cutoff=optional_cutoff)
 
 	# Plot river
@@ -199,27 +203,29 @@ def plotCenterlineWidth(csv_data=None,
 			# recreate the centerline with evenly spaced points
 			evenly_spaced_centerline_coordinates = centerline_width.evenlySpacedCenterline(centerline_coordinates=shortest_path_points,
 																						number_of_fixed_points=n_interprolate_centerpoints)
-			if gaussian_filter_sigma is not None:
-				smoothed_centerline_coordinates = centerline_width.gaussianSmoothedCoordinates(centerline_coordinates=evenly_spaced_centerline_coordinates,
-																								gaussian_sigma=gaussian_filter_sigma)
-				# if using gaussian_filter, replace left/right coordinates with the smoothed variation
-				right_width_coordinates, left_width_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(csv_data=csv_data, 
+			if apply_smoothing:
+				smoothed_centerline_coordinates = centerline_width.smoothedCoordinates(centerline_coordinates=shortest_path_points,
+																						interprolate_num=n_interprolate_centerpoints)
+				# if using smoothing, replace left/right coordinates with the smoothed variation
+				right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(csv_data=csv_data, 
 																												bank_polygon=river_bank_polygon,
 																												centerline_coordinates=smoothed_centerline_coordinates,
 																												transect_span_distance=transect_span_distance,
+																												remove_intersections=remove_intersections,
 																												optional_cutoff=optional_cutoff)
 				x = []
 				y = []
 				for k, v in smoothed_centerline_coordinates:
 					x.append(k)
 					y.append(v)
-				plt.scatter(x, y, c="blue", label="Smoothed Centerline Coordinates, sigma={0}".format(gaussian_filter_sigma), s=20)
-				plt.plot(*zip(*smoothed_centerline_coordinates), "--", c="lightblue", label="Smoothed Centerline, sigma={0}".format(gaussian_filter_sigma))
+				plt.scatter(x, y, c="blue", label="Smoothed Centerline Coordinates", s=5)
+				plt.plot(*zip(*smoothed_centerline_coordinates), "--", c="lightblue", label="Smoothed Centerline")
 			else:
-				right_width_coordinates, left_width_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(csv_data=csv_, 
+				right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(csv_data=csv_data, 
 																														bank_polygon=river_bank_polygon,
 																														centerline_coordinates=evenly_spaced_centerline_coordinates,
 																														transect_span_distance=transect_span_distance,
+																														remove_intersections=remove_intersections,
 																														optional_cutoff=optional_cutoff)
 
 			x = []
@@ -227,8 +233,8 @@ def plotCenterlineWidth(csv_data=None,
 			for k, v in evenly_spaced_centerline_coordinates:
 				x.append(k)
 				y.append(v)
-			plt.scatter(x, y, c="plum", label="Evenly Spaced Centerline Coordinates", s=20)
-			plt.plot(*zip(*evenly_spaced_centerline_coordinates), "--", c="thistle", label="Evenly Spaced Centerline")
+			#plt.scatter(x, y, c="plum", label="Evenly Spaced Centerline Coordinates", s=20)
+			#plt.plot(*zip(*evenly_spaced_centerline_coordinates), "--", c="thistle", label="Evenly Spaced Centerline")
 
 			x = []
 			y = []
@@ -240,7 +246,13 @@ def plotCenterlineWidth(csv_data=None,
 			for center_coord, edge_coord in right_width_coordinates.items():
 				x_points = (right_width_coordinates[center_coord][0], left_width_coordinates[center_coord][0])
 				y_points = (right_width_coordinates[center_coord][1], left_width_coordinates[center_coord][1])
-				plt.plot(x_points, y_points, 'mediumorchid', linewidth=1)
+				if flag_intersections:
+					if num_intersection_coordinates[center_coord] > 1:
+						plt.plot(x_points, y_points, 'red', linewidth=1)
+					else:
+						plt.plot(x_points, y_points, 'mediumorchid', linewidth=1)
+				else:
+					plt.plot(x_points, y_points, 'mediumorchid', linewidth=1)
 			"""
 			x = []
 			y = []

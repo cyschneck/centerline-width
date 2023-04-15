@@ -160,15 +160,14 @@ Plot the width of the river based on the centerline
 
 Display Centerline at even intervals Voronoi generated centerline
 ```
-plotCenterlineWidth(csv_data=None,
+plotCenterlineWidth((csv_data=None,
 		plot_title=None, 
 		save_plot_name=None, 
 		displayTrueCenterline=True,
-		plot_width_lines=False,
 		n_interprolate_centerpoints=None,
 		transect_span_distance=3,
-		gaussian_filter_sigma=None,
-		optional_cutoff=None)
+		apply_smoothing=False,
+		optional_cutoff=None
 ```
 * **[REQUIRED]** csv_data (string): File location of the text file to convert
 * [OPTIONAL] plot_title (string): Change plot title, defaults to "River Coordinates: Valid Centerline = True/False, Valid Polygon = True/False"

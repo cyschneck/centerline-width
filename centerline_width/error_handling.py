@@ -82,7 +82,9 @@ def errorHandlingPlotCenterlineWidth(csv_data=None,
 									displayTrueCenterline=None,
 									n_interprolate_centerpoints=None,
 									transect_span_distance=None,
-									gaussian_filter_sigma=None,
+									apply_smoothing=None,
+									flag_intersections=None,
+									remove_intersections=None,
 									optional_cutoff=None):
 	# Error handling for plotCenterlineWidth()
 	if csv_data is None:
@@ -126,14 +128,18 @@ def errorHandlingPlotCenterlineWidth(csv_data=None,
 			logger.critical("\nCRITICAL ERROR, [transect_span_distance]: Must be a greater than 2 to find the slope between at least two points, currently = '{0}'".format(transect_span_distance))
 			exit()
 
-	if gaussian_filter_sigma is not None:
-		if type(gaussian_filter_sigma) != int:
-			logger.critical("\nCRITICAL ERROR, [gaussian_filter_sigma]: Must be a int, current type = '{0}'".format(type(gaussian_filter_sigma)))
+	if apply_smoothing is not None:
+		if type(apply_smoothing) != bool:
+			logger.critical("\nCRITICAL ERROR, [apply_smoothing]: Must be a bool, current type = '{0}'".format(type(apply_smoothing)))
 			exit()
-		else:
-			if gaussian_filter_sigma <= 0:
-				logger.critical("\nCRITICAL ERROR, [gaussian_filter_sigma]: Must be a greater than 0, currently = '{0}'".format(gaussian_filter_sigma))
-				exit()
+	
+	if type(flag_intersections) != bool:
+		logger.critical("\nCRITICAL ERROR, [flag_intersections]: Must be a bool, current type = '{0}'".format(type(flag_intersections)))
+		exit()
+
+	if type(remove_intersections) != bool:
+		logger.critical("\nCRITICAL ERROR, [remove_intersections]: Must be a bool, current type = '{0}'".format(type(remove_intersections)))
+		exit()
 
 	if optional_cutoff is not None and type(optional_cutoff) != int:
 		logger.critical("\nCRITICAL ERROR, [optional_cutoff]: Must be a int, current type = '{0}'".format(type(optional_cutoff)))
