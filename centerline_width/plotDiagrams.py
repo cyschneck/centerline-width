@@ -248,6 +248,8 @@ def plotCenterlineWidth(csv_data=None,
 				y_points = (right_width_coordinates[center_coord][1], left_width_coordinates[center_coord][1])
 				if flag_intersections:
 					if num_intersection_coordinates[center_coord] > 0:
+						if remove_intersections:
+							logger.error("\nERROR: Unable to completely resolve all intersections lines to be removed")
 						plt.plot(x_points, y_points, 'red', linewidth=1)
 					else:
 						plt.plot(x_points, y_points, 'green', linewidth=1)

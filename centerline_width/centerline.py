@@ -248,6 +248,7 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 						linestring_with_linestrings_that_intersect[linestring_to_check].append(linestring_to_check_against)
 
 	# Remove Intersection Lines
+	centerline_coordinates_to_be_removed = []
 	if remove_intersections:
 		# iterate from the most intersections to the least intersections
 		for linestring_most_interactions in sorted(linestring_with_linestrings_that_intersect, key=lambda k: len(linestring_with_linestrings_that_intersect[k]), reverse=True):
@@ -259,13 +260,12 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 				for linestring_hit in lst_linestrings_hit_by_linestring: 
 					# remove linestring with most intersections from all linestrings that it hits
 					linestring_with_linestrings_that_intersect[linestring_hit].remove(linestring_most_interactions)
-					# decrease intersecetions by 1 after removing linestring, from both the linestring and the places it intersects
+					# decrease intersections by 1 after removing linestring, from both the linestring and the places it intersects
 					num_intersection_coordinates[linestring_with_centerlines[linestring_most_interactions]] -= 1
 					num_intersection_coordinates[linestring_with_centerlines[linestring_hit]] -= 1
 				# remove linestring that intersects the most linestrings
 				centerline_of_removed_line = linestring_with_centerlines[linestring_most_interactions]
-				del right_width_coordinates[centerline_of_removed_line] # remove coordinates that result in the interactions
-				del left_width_coordinates[centerline_of_removed_line] # remove coordinates coordinates that result in the interactions
+				if centerline_of_removed_line not in centerline_coordinates_to_be_removed: centerline_coordinates_to_be_removed.append(centerline_of_removed_line)
 
 			# when number of intersections == 1, remove the longer width line
 			if num_intersection_coordinates[linestring_with_centerlines[linestring_most_interactions]] == 1: 
@@ -276,11 +276,14 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 					centerline_of_removed_line = linestring_with_centerlines[linestring_1]
 				else:
 					centerline_of_removed_line = linestring_with_centerlines[linestring_2]
+				if centerline_of_removed_line not in centerline_coordinates_to_be_removed: centerline_coordinates_to_be_removed.append(centerline_of_removed_line)
 				# decrease intersecetions by 1 after removing linestring, from both the linestring and the places it intersects
 				num_intersection_coordinates[linestring_with_centerlines[linestring_1]] -= 1
 				num_intersection_coordinates[linestring_with_centerlines[linestring_2]] -= 1
-				del right_width_coordinates[centerline_of_removed_line] # remove coordinates that result in the interactions
-				del left_width_coordinates[centerline_of_removed_line] # remove coordinates coordinates that result in the interactions
+
+	for centerline_coord in centerline_coordinates_to_be_removed:
+		del right_width_coordinates[centerline_coord]
+		del left_width_coordinates[centerline_coord]
 
 	return right_width_coordinates, left_width_coordinates, num_intersection_coordinates
 
