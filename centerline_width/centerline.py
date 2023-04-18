@@ -250,25 +250,28 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 	# Remove Intersection linesc
 	if remove_intersections:
 		contains_intersections = len(linestring_with_linestrings_that_intersect) > 0 # iterate through the list of linestring intersections (if any exist)
-		while(contains_intersections):
-			# iterate from the most intersections to the least intersections
-			# TODO: stop when intersects are 1, then remove by the length of the linestring
-			print("TODO: TODO: stop when intersects are 1, then remove by the length of the linestring")
-			for linestring_most_interactions in sorted(linestring_with_linestrings_that_intersect, key=lambda k: len(linestring_with_linestrings_that_intersect[k]), reverse=True):
+		# iterate from the most intersections to the least intersections
+		print("TODO: TODO: stop when intersects are 1, then remove by the length of the linestring")
+		for linestring_most_interactions in sorted(linestring_with_linestrings_that_intersect, key=lambda k: len(linestring_with_linestrings_that_intersect[k]), reverse=True):
+			# TODO: stop when intersects are 1, then remove by the length of the linestring (when fixing, set to > 1)
+			print("\n")
+			print(dict((k, v) for k, v in num_intersection_coordinates.items() if v > 0))
+			if num_intersection_coordinates[linestring_with_centerlines[linestring_most_interactions]] > 1: 
+				#print("linestring with most intersections = {0}".format(linestring_most_interactions))
+				#print("centerline of linestring = {0}".format(linestring_with_centerlines[linestring_most_interactions]))
+				#print("number of intersections = {0}".format(num_intersection_coordinates[linestring_with_centerlines[linestring_most_interactions]]))
 				lst_of_max_interactions = linestring_with_linestrings_that_intersect[linestring_most_interactions]
 				for remove_intersect_linestring in lst_of_max_interactions: # iterate through each and remove them from the associated lists
-					for main_linestring, lst_of_intersects in linestring_with_linestrings_that_intersect.items():
-						if remove_intersect_linestring in lst_of_intersects:
-							# remove intersecting linestring from existing list of linestrings
-							lst_of_intersects.remove(remove_intersect_linestring)
-							centerline_of_intersecting_line = linestring_with_centerlines[remove_intersect_linestring]
-							num_intersection_coordinates[centerline_of_intersecting_line] -= 1
-					del right_width_coordinates[centerline_of_intersecting_line] # remove max coordinates that result in the interactions
-					del left_width_coordinates[centerline_of_intersecting_line] # remove max coordinates that result in the interactions
-				# if all intersections have been removed, all interior lists are empty, recurrsion is complete, exit
-				if [[]]*len(linestring_with_linestrings_that_intersect.values()) == list(linestring_with_linestrings_that_intersect.values()):
-					contains_intersections = False
-		
+					for line_intersected in linestring_with_linestrings_that_intersect[remove_intersect_linestring]:
+						#print(linestring_with_linestrings_that_intersect)
+						linestring_with_linestrings_that_intersect[line_intersected].remove(remove_intersect_linestring)
+						centerline_of_intersecting_line = linestring_with_centerlines[remove_intersect_linestring]
+						num_intersection_coordinates[linestring_with_centerlines[line_intersected]] -= 1
+						num_intersection_coordinates[linestring_with_centerlines[linestring_most_interactions]] -= 1
+				del right_width_coordinates[centerline_of_intersecting_line] # remove max coordinates that result in the interactions
+				del left_width_coordinates[centerline_of_intersecting_line] # remove max coordinates that result in the interactions
+				#print("number of intersections, finished = {0}".format(num_intersection_coordinates[linestring_with_centerlines[linestring_most_interactions]]))
+	#exit()
 	return right_width_coordinates, left_width_coordinates, num_intersection_coordinates
 
 def riverWidthFromCenterline(csv_data=None, centerline_coordinates=None, bank_polygon=None, save_to_csv=None, optional_cutoff=None):
