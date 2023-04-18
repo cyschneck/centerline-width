@@ -35,7 +35,7 @@ if __name__ == "__main__":
 										save_plot_name="data/river_coords_width.png", 
 										displayTrueCenterline=False,
 										n_interprolate_centerpoints=None,
-										transect_span_distance=30,
+										transect_span_distance=3,
 										apply_smoothing=True,
 										flag_intersections=True,
 										remove_intersections=True,
