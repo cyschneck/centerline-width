@@ -208,7 +208,6 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 				left_width_coordinates[centerline_point] = (line_intersection_points.geoms[0].x, line_intersection_points.geoms[0].y)
 				right_width_coordinates[centerline_point] = (line_intersection_points.geoms[1].x, line_intersection_points.geoms[1].y)
 		else:
-			# TODO: bug closest pair of points can lie outside of the polygon
 			# line intersects to polygon at multiple points, find the closest two points to chart
 			distances_between_centerline_and_point = []
 			for i in range(len(line_intersection_points.geoms)):
@@ -225,24 +224,51 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 				# Verify that closest pair of points that form the line lie within the polygon
 				print("TODO: bug fix: check if a linestring lies outside a polygon")
 	
-	# determine lines that have multiple intersections to flag/remove
+	# Determine lines that have multiple intersections to flag/remove
 	all_linestrings = []
 	linestring_with_centerlines = {} # TODOODODO: replace when can figure out how to decompose LineString into two points
-	print("TODOODODO: replace when can figure out how to decompose LineString into two points")
+	linestring_with_linestrings_that_intersect = {} # dictionary of all the linestrings that a linestring intersects with
 	# Generate a list of linestrings
 	for centerline_coord in right_width_coordinates.keys():
 		linestring_generated = LineString([Point(left_width_coordinates[centerline_coord][0], left_width_coordinates[centerline_coord][1]),
 											Point(right_width_coordinates[centerline_coord][0], right_width_coordinates[centerline_coord][1])])
 		linestring_with_centerlines[linestring_generated] = centerline_coord
 		all_linestrings.append(linestring_generated)
-	# count the number of intersections for each linestring
+	# count the number of intersections for each linestring, +1 for each time one line string intersects another
 	for linestring_to_check in all_linestrings:
-		num_intersection_coordinates[linestring_with_centerlines[linestring_to_check]] = 0
+		num_intersection_coordinates[linestring_with_centerlines[linestring_to_check]] = 0 # default set all intersects to zero
 		for linestring_to_check_against in all_linestrings:
-			intersection_points_linestrings = linestring_to_check.intersection(linestring_to_check_against)
-			if str(intersection_points_linestrings) != "LINESTRING Z EMPTY":
-				num_intersection_coordinates[linestring_with_centerlines[linestring_to_check]] += 1
+			if linestring_to_check != linestring_to_check_against:
+				if linestring_to_check.intersects(linestring_to_check_against): # check if two lines intersect
+					intersection_points_linestrings = linestring_to_check.intersection(linestring_to_check_against) # return point positions where intersection occurs
+					if str(intersection_points_linestrings) != "LINESTRING Z EMPTY": # if linestring has intersect, increment count
+						num_intersection_coordinates[linestring_with_centerlines[linestring_to_check]] += 1
+						if linestring_to_check not in linestring_with_linestrings_that_intersect.keys():
+							linestring_with_linestrings_that_intersect[linestring_to_check] = []
+						linestring_with_linestrings_that_intersect[linestring_to_check].append(linestring_to_check_against)
 
+	# Remove Intersection linesc
+	if remove_intersections:
+		contains_intersections = len(linestring_with_linestrings_that_intersect) > 0 # iterate through the list of linestring intersections (if any exist)
+		while(contains_intersections):
+			# iterate from the most intersections to the least intersections
+			# TODO: stop when intersects are 1, then remove by the length of the linestring
+			print("TODO: TODO: stop when intersects are 1, then remove by the length of the linestring")
+			for linestring_most_interactions in sorted(linestring_with_linestrings_that_intersect, key=lambda k: len(linestring_with_linestrings_that_intersect[k]), reverse=True):
+				lst_of_max_interactions = linestring_with_linestrings_that_intersect[linestring_most_interactions]
+				for remove_intersect_linestring in lst_of_max_interactions: # iterate through each and remove them from the associated lists
+					for main_linestring, lst_of_intersects in linestring_with_linestrings_that_intersect.items():
+						if remove_intersect_linestring in lst_of_intersects:
+							# remove intersecting linestring from existing list of linestrings
+							lst_of_intersects.remove(remove_intersect_linestring)
+							centerline_of_intersecting_line = linestring_with_centerlines[remove_intersect_linestring]
+							num_intersection_coordinates[centerline_of_intersecting_line] -= 1
+					del right_width_coordinates[centerline_of_intersecting_line] # remove max coordinates that result in the interactions
+					del left_width_coordinates[centerline_of_intersecting_line] # remove max coordinates that result in the interactions
+				# if all intersections have been removed, all interior lists are empty, recurrsion is complete, exit
+				if [[]]*len(linestring_with_linestrings_that_intersect.values()) == list(linestring_with_linestrings_that_intersect.values()):
+					contains_intersections = False
+		
 	return right_width_coordinates, left_width_coordinates, num_intersection_coordinates
 
 def riverWidthFromCenterline(csv_data=None, centerline_coordinates=None, bank_polygon=None, save_to_csv=None, optional_cutoff=None):

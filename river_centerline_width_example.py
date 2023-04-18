@@ -38,6 +38,7 @@ if __name__ == "__main__":
 										transect_span_distance=30,
 										apply_smoothing=True,
 										flag_intersections=True,
+										remove_intersections=True,
 										optional_cutoff=cutoff)
 	# TO DO ERROR HANDLING: check that smoothing filter option does not produce a line that goes outside of the polygon
 	exit()

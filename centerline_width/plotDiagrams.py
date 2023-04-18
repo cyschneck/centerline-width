@@ -247,12 +247,12 @@ def plotCenterlineWidth(csv_data=None,
 				x_points = (right_width_coordinates[center_coord][0], left_width_coordinates[center_coord][0])
 				y_points = (right_width_coordinates[center_coord][1], left_width_coordinates[center_coord][1])
 				if flag_intersections:
-					if num_intersection_coordinates[center_coord] > 1:
+					if num_intersection_coordinates[center_coord] > 0:
 						plt.plot(x_points, y_points, 'red', linewidth=1)
 					else:
-						plt.plot(x_points, y_points, 'mediumorchid', linewidth=1)
+						plt.plot(x_points, y_points, 'green', linewidth=1)
 				else:
-					plt.plot(x_points, y_points, 'mediumorchid', linewidth=1)
+					plt.plot(x_points, y_points, 'green', linewidth=1)
 			"""
 			x = []
 			y = []
