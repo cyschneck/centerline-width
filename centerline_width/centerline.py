@@ -247,31 +247,40 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 							linestring_with_linestrings_that_intersect[linestring_to_check] = []
 						linestring_with_linestrings_that_intersect[linestring_to_check].append(linestring_to_check_against)
 
-	# Remove Intersection linesc
+	# Remove Intersection lines
 	if remove_intersections:
-		contains_intersections = len(linestring_with_linestrings_that_intersect) > 0 # iterate through the list of linestring intersections (if any exist)
 		# iterate from the most intersections to the least intersections
-		print("TODO: TODO: stop when intersects are 1, then remove by the length of the linestring")
 		for linestring_most_interactions in sorted(linestring_with_linestrings_that_intersect, key=lambda k: len(linestring_with_linestrings_that_intersect[k]), reverse=True):
-			# TODO: stop when intersects are 1, then remove by the length of the linestring (when fixing, set to > 1)
-			print("\n")
-			print(dict((k, v) for k, v in num_intersection_coordinates.items() if v > 0))
+			#print(dict((k, v) for k, v in num_intersection_coordinates.items() if v > 0))
+
+			# when number of intersections > 1, remove lines with the most interactions, to the smallest
 			if num_intersection_coordinates[linestring_with_centerlines[linestring_most_interactions]] > 1: 
-				#print("linestring with most intersections = {0}".format(linestring_most_interactions))
-				#print("centerline of linestring = {0}".format(linestring_with_centerlines[linestring_most_interactions]))
-				#print("number of intersections = {0}".format(num_intersection_coordinates[linestring_with_centerlines[linestring_most_interactions]]))
-				lst_of_max_interactions = linestring_with_linestrings_that_intersect[linestring_most_interactions]
-				for remove_intersect_linestring in lst_of_max_interactions: # iterate through each and remove them from the associated lists
-					for line_intersected in linestring_with_linestrings_that_intersect[remove_intersect_linestring]:
-						#print(linestring_with_linestrings_that_intersect)
-						linestring_with_linestrings_that_intersect[line_intersected].remove(remove_intersect_linestring)
-						centerline_of_intersecting_line = linestring_with_centerlines[remove_intersect_linestring]
-						num_intersection_coordinates[linestring_with_centerlines[line_intersected]] -= 1
-						num_intersection_coordinates[linestring_with_centerlines[linestring_most_interactions]] -= 1
-				del right_width_coordinates[centerline_of_intersecting_line] # remove max coordinates that result in the interactions
-				del left_width_coordinates[centerline_of_intersecting_line] # remove max coordinates that result in the interactions
-				#print("number of intersections, finished = {0}".format(num_intersection_coordinates[linestring_with_centerlines[linestring_most_interactions]]))
-	#exit()
+				lst_linestrings_hit_by_linestring = linestring_with_linestrings_that_intersect[linestring_most_interactions]
+				# iterate through each and remove linestring from the associated lists of places it intersects
+				for linestring_hit in lst_linestrings_hit_by_linestring: 
+					linestring_with_linestrings_that_intersect[linestring_hit].remove(linestring_most_interactions)
+					num_intersection_coordinates[linestring_with_centerlines[linestring_most_interactions]] -= 1
+					num_intersection_coordinates[linestring_with_centerlines[linestring_hit]] -= 1
+				centerline_of_removed_line = linestring_with_centerlines[linestring_most_interactions]
+				del right_width_coordinates[centerline_of_removed_line] # remove coordinates that result in the interactions
+				del left_width_coordinates[centerline_of_removed_line] # remove coordinates coordinates that result in the interactions
+
+			# when number of intersections == 1, remove the longer width line
+			'''
+			if num_intersection_coordinates[linestring_with_centerlines[linestring_most_interactions]] == 1: 
+				pass
+				break
+				if len(linestring_with_linestrings_that_intersect[linestring_most_interactions]):
+					pass
+				print("\nline start = {0}".format(linestring_most_interactions))
+				print(len(linestring_with_linestrings_that_intersect[linestring_most_interactions]))
+				print(num_intersection_coordinates[linestring_with_centerlines[linestring_most_interactions]])
+				for i in linestring_with_linestrings_that_intersect[linestring_most_interactions]:
+					print(i)
+				print("\n")
+			'''
+
+	print(dict((k, v) for k, v in num_intersection_coordinates.items() if v > 0))
 	return right_width_coordinates, left_width_coordinates, num_intersection_coordinates
 
 def riverWidthFromCenterline(csv_data=None, centerline_coordinates=None, bank_polygon=None, save_to_csv=None, optional_cutoff=None):
