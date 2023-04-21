@@ -79,7 +79,7 @@ def errorHandlingPlotCenterline(csv_data=None,
 def errorHandlingPlotCenterlineWidth(csv_data=None,
 									plot_title=None,
 									save_plot_name=None,
-									displayTrueCenterline=None,
+									display_true_centerline=None,
 									n_interprolate_centerpoints=None,
 									transect_span_distance=None,
 									apply_smoothing=None,
@@ -107,8 +107,8 @@ def errorHandlingPlotCenterlineWidth(csv_data=None,
 		logger.critical("\nCRITICAL ERROR, [save_plot_name]: Must be a str, current type = '{0}'".format(type(save_plot_name)))
 		exit()
 
-	if type(displayTrueCenterline) != bool:
-		logger.critical("\nCRITICAL ERROR, [displayTrueCenterline]: Must be a bool, current type = '{0}'".format(type(displayTrueCenterline)))
+	if type(display_true_centerline) != bool:
+		logger.critical("\nCRITICAL ERROR, [display_true_centerline]: Must be a bool, current type = '{0}'".format(type(display_true_centerline)))
 		exit()
 
 	if n_interprolate_centerpoints is not None:

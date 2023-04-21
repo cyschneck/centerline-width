@@ -114,7 +114,7 @@ def plotCenterline(csv_data=None,
 def plotCenterlineWidth(csv_data=None,
 						plot_title=None, 
 						save_plot_name=None, 
-						displayTrueCenterline=True,
+						display_true_centerline=True,
 						n_interprolate_centerpoints=None,
 						transect_span_distance=3,
 						apply_smoothing=False,
@@ -126,7 +126,7 @@ def plotCenterlineWidth(csv_data=None,
 	centerline_width.errorHandlingPlotCenterlineWidth(csv_data=csv_data,
 													plot_title=plot_title, 
 													save_plot_name=save_plot_name, 
-													displayTrueCenterline=displayTrueCenterline,
+													display_true_centerline=display_true_centerline,
 													n_interprolate_centerpoints=n_interprolate_centerpoints,
 													transect_span_distance=transect_span_distance,
 													apply_smoothing=apply_smoothing,
@@ -184,7 +184,7 @@ def plotCenterlineWidth(csv_data=None,
 	valid_path_through = False
 	if shortest_path_points:
 		valid_path_through = True
-		if displayTrueCenterline:
+		if display_true_centerline:
 			x = []
 			y = []
 			for k, v in shortest_path_points:
