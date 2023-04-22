@@ -28,6 +28,15 @@ if __name__ == "__main__":
 	#								displayVoronoi=False,
 	#								optional_cutoff=cutoff)
 
+	river_width_dict = centerline_width.riverWidthFromCenterline(csv_data="data/river_coords.csv",
+																n_interprolate_centerpoints=None,
+																transect_span_distance=15,
+																apply_smoothing=True,
+																remove_intersections=True,
+																save_to_csv=None,
+																optional_cutoff=cutoff)
+	print(river_width_dict)
+
 	centerline_width.plotCenterlineWidth(csv_data="data/river_coords.csv", 
 										save_plot_name="data/river_coords_width.png", 
 										display_true_centerline=False,
@@ -37,7 +46,6 @@ if __name__ == "__main__":
 										flag_intersections=True,
 										remove_intersections=True,
 										optional_cutoff=cutoff)
-	# TO DO ERROR HANDLING: check that smoothing filter option does not produce a line that goes outside of the polygon
 	exit()
 
 	# Return the latitude/longtiude coordinates for the centerline

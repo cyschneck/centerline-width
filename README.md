@@ -286,11 +286,11 @@ If the data is too small, a centerline and its coordinates cannot not be found (
 Can be fixed by expanding the data until the polygon is large enough to contain at least two different vertex points
 
 ## Developer Notes: Tech Debt and Bugs
-* Combine backend functionality for plotCenterline and plotCenterlineWidth into a shared component
-* plotCenterlineWidth: add percentage difference in length for evenly spaced and gaussian smoothed lines compared to voronoi (in legend or title)
-* Verify error handling for public functions
-* Bug: (plotCenterlineWidth) cutoff = 800 debug lines on the outside of the polygon
 * README overview of all three types of centerlines (voronoi generated, evenly spaced, gaussian smoothed)
+* Combine backend functionality for plotCenterline and plotCenterlineWidth into a shared component
+* Combine backend for riverWidthFromCenterline() and plotCenterline()
+* Verify error handling for public functions
+* Check that smoothing filter option does not produce a line that goes outside of the polygon
 
 ## Citations
 Based on similar work written in R:

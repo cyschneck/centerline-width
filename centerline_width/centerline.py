@@ -133,6 +133,16 @@ def smoothedCoordinates(centerline_coordinates=None, interprolate_num=None):
 	#print(smoothed_coordinates)
 	return smoothed_coordinates
 
+def returnShortestPathPoint(river_voronoi=None, river_polygon=None, top_polygon_line=None, bottom_polygon_line=None):
+	# Find the centerline from NetworkX
+	starting_node, ending_node, x_ridge_point, y_ridge_point, start_end_points_dict = centerline_width.centerlinePath(river_voronoi=river_voronoi,
+																													river_polygon=river_polygon, 
+																													top_polygon_line=top_polygon_line, 
+																													bottom_polygon_line=bottom_polygon_line)
+
+	shortest_path_points = centerline_width.networkXGraphShortestPath(start_end_points_dict, starting_node, ending_node)
+	return shortest_path_points
+
 def riverWidthFromCenterlineCoordinates(csv_data=None,
 										centerline_coordinates=None,
 										transect_span_distance=3,
@@ -300,40 +310,63 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 
 	return right_width_coordinates, left_width_coordinates, num_intersection_coordinates
 
-def riverWidthFromCenterline(csv_data=None, centerline_coordinates=None, bank_polygon=None, save_to_csv=None, optional_cutoff=None):
-	# Return river width: right to center, left to center, total width
+def riverWidthFromCenterline(csv_data=None,
+							n_interprolate_centerpoints=None,
+							transect_span_distance=3,
+							apply_smoothing=True,
+							remove_intersections=False,
+							save_to_csv=None,
+							optional_cutoff=None):
+	# Return river width: centerline and width at centerline
 	# Width is measured to the bank, relative to the center point (normal of the centerline)
-	# { [centerline latitude, centerline longitude] : { rightCenter : distance, leftCenter : distance, totalWidth: distance } }
+	# { [centerline latitude, centerline longitude] : { width : widthValue }
 
 	centerline_width.errorHandlingRiverWidthFromCenterline(csv_data=csv_data,
-															centerline_coordinates=centerline_coordinates,
-															bank_polygon=bank_polygon,
 															save_to_csv=save_to_csv,
 															optional_cutoff=optional_cutoff)
 
+	df = pd.read_csv(csv_data)
+	if optional_cutoff:
+		df = df.head(optional_cutoff)
+
+	if n_interprolate_centerpoints is None:
+		# if plotting width, but n_interprolate_centerpoints is undefined, set to the size of the dataframe
+		n_interprolate_centerpoints = len(df)
+
+	left_bank_coordinates, right_bank_coordinates = centerline_width.leftRightCoordinates(df)
+	river_bank_polygon, top_river_line, bottom_river_line = centerline_width.generatePolygon(left_bank_coordinates, right_bank_coordinates)
+	river_bank_voronoi = centerline_width.generateVoronoi(left_bank_coordinates, right_bank_coordinates)
+
+	shortest_path_points = returnShortestPathPoint(river_voronoi=river_bank_voronoi,
+													river_polygon=river_bank_polygon,
+													top_polygon_line=top_river_line,
+													bottom_polygon_line=bottom_river_line)
+
+	# recreate the centerline with evenly spaced points
+	defined_centerline_coordinates = centerline_width.evenlySpacedCenterline(centerline_coordinates=shortest_path_points,
+																			number_of_fixed_points=n_interprolate_centerpoints)
+	if apply_smoothing:
+		defined_centerline_coordinates = centerline_width.smoothedCoordinates(centerline_coordinates=shortest_path_points,
+																				interprolate_num=n_interprolate_centerpoints)
+	# if using smoothing, replace left/right coordinates with the smoothed variation
+	right_width_coord, left_width_coord, _ = centerline_width.riverWidthFromCenterlineCoordinates(csv_data=csv_data, 
+																										bank_polygon=river_bank_polygon,
+																										centerline_coordinates=defined_centerline_coordinates,
+																										transect_span_distance=transect_span_distance,
+																										remove_intersections=remove_intersections,
+																										optional_cutoff=optional_cutoff)
+
 	width_dict = {}
+	for centerline_coord, _ in right_width_coord.items():
+		linestring_between_points = LineString([Point(right_width_coord[centerline_coord][0], right_width_coord[centerline_coord][1]), 
+												Point(left_width_coord[centerline_coord][0], left_width_coord[centerline_coord][1])])
+		# TODO: haversine to convert length into distance
+		width_dict[centerline_coord] = linestring_between_points.length
+	print("haversine to convert length into distance")
 
-	'''
-	for centerline_lat_long in centerline_coordinates:
-		distance = 0 # TODO: find distance between each coordinate normal to the polygon
-		internal_dict = {}
-		internal_dict["rightCenter"] = distance
-		internal_dict["leftCenter"] = distance
-		internal_dict["totalWidth"] = distance
-		width_dict[centerline_lat_long] = internal_dict
+	if not save_to_csv:
+		print("optional function [save_to_csv]")
 
-	if save_to_csv:
-		header_fields = ["Right-Center Width", "Left-Center Width", "Total Width"]
-		#total_rows = []
-		#for coordinates in centerline_coordinates:
-		#	total_rows.append(coordinates)
-		#with open(save_to_csv, "w") as f:
-		#	write = csv.writer(f)
-		#	write.writerow(header_fields)
-		#	write.writerows(total_rows)
-
-	print("riverWidthFromCenterline = {0}".format(width_dict))
-	'''
 	return width_dict
 
 def centerlineLength(centerline_coordinates=None):

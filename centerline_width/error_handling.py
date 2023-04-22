@@ -170,6 +170,8 @@ def errorHandlingRiverWidthFromCenterline(csv_data=None,
 										save_to_csv=None,
 										optional_cutoff=None):
 	# Error Handling for riverWidthFromCenterline()
+	print("TODO: riverWidthFromCenterline error handling")
+	'''
 	if csv_data is None:
 		logger.critical("\nCRITICAL ERROR, [csv_data]: Requires csv file")
 		exit()
@@ -207,6 +209,7 @@ def errorHandlingRiverWidthFromCenterline(csv_data=None,
 	if optional_cutoff is not None and type(optional_cutoff) != int:
 		logger.critical("\nCRITICAL ERROR, [optional_cutoff]: Must be a int, current type = '{0}'".format(type(optional_cutoff)))
 		exit()
+	'''
 
 def errorHandlingExtractPointsToTextFile(left_kml=None, right_kml=None, text_output_name=None):
 	# Error Handling for extractPoints()

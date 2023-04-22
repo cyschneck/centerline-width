@@ -15,6 +15,7 @@ from .centerline import centerlineLatitudeLongitude
 from .centerline import centerlineLength
 from .centerline import evenlySpacedCenterline
 from .centerline import smoothedCoordinates
+from .centerline import returnShortestPathPoint
 from .centerline import riverWidthFromCenterlineCoordinates
 from .centerline import riverWidthFromCenterline
 
