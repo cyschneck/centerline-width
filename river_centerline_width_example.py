@@ -28,9 +28,11 @@ if __name__ == "__main__":
 	#								displayVoronoi=False,
 	#								optional_cutoff=cutoff)
 
+	transect = 3
+
 	river_width_dict = centerline_width.riverWidthFromCenterline(csv_data="data/river_coords.csv",
 																n_interprolate_centerpoints=None,
-																transect_span_distance=15,
+																transect_span_distance=transect,
 																apply_smoothing=True,
 																remove_intersections=True,
 																save_to_csv=None,
@@ -41,7 +43,7 @@ if __name__ == "__main__":
 										save_plot_name="data/river_coords_width.png", 
 										display_true_centerline=False,
 										n_interprolate_centerpoints=None,
-										transect_span_distance=15,
+										transect_span_distance=transect,
 										apply_smoothing=True,
 										flag_intersections=True,
 										remove_intersections=True,
