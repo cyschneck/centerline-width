@@ -214,16 +214,29 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 				point_intersection = Point(line_intersection_points.geoms[i].x, line_intersection_points.geoms[i].y)
 				distance_between = Point(centerline_point).distance(point_intersection)
 				distances_between_centerline_and_point.append(distance_between)
+
 			# collect the two closest points
 			index_of_sorted_list = sorted(range(len(distances_between_centerline_and_point)),key=distances_between_centerline_and_point.__getitem__)
 			smallest_point = line_intersection_points.geoms[index_of_sorted_list[0]]
 			second_smallest_point = line_intersection_points.geoms[index_of_sorted_list[1]]
 			if not intersectsTopOrBottomOfBank(smallest_point, second_smallest_point): # only save width lines that do not touch the artifical top/bottom
+
+				# Verify linestring contains the centerline (avoid making connections outside of polygon)
+				linestring_generated = LineString([Point(smallest_point.x, smallest_point.y), Point(second_smallest_point.x, second_smallest_point.y)])
+				if not linestring_generated.distance(Point(centerline_point)) < 1e-8: 
+					# linestring does not contains the centerline
+					# find a new second_smallest_point that falls on the centerline
+					for i in index_of_sorted_list: # search for new point in order of distance (smallest -> greatest)
+						second_smallest_point = line_intersection_points.geoms[index_of_sorted_list[i]]
+						linestring_generated = LineString([Point(smallest_point.x, smallest_point.y), Point(second_smallest_point.x, second_smallest_point.y)])
+						if smallest_point != second_smallest_point: # ignore current smallest_point (make a unique pair)
+							if linestring_generated.distance(Point(centerline_point)) < 1e-8:
+								break # once a linestring is found that lies within polygon, break out of search
+
+				# linestring contains the centerline, save coordinates
 				left_width_coordinates[centerline_point] = (smallest_point.x, smallest_point.y)
 				right_width_coordinates[centerline_point] = (second_smallest_point.x, second_smallest_point.y)
-				# Verify that closest pair of points that form the line lie within the polygon
-				print("TODO: bug fix: check if a linestring lies outside a polygon")
-	
+
 	# Determine lines that have multiple intersections to flag/remove
 	all_linestrings = []
 	linestring_with_centerlines = {}
