@@ -1,6 +1,7 @@
 # Centerline-Width
 ![PyPi](https://img.shields.io/pypi/v/centerline-width)
 ![license](https://img.shields.io/github/license/cyschneck/centerline-width)
+[![NSF-2141064](https://img.shields.io/badge/NSF-2141064-blue)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2141064&HistoricalAwards=false)
 
 Find the centerline and width of rivers based on the latitude and longitude from the right and left bank 
 
@@ -304,6 +305,7 @@ If the data is too small, a centerline and its coordinates cannot not be found (
 Can be fixed by expanding the data until the polygon is large enough to contain at least two different vertex points
 
 ## Developer Notes: Tech Debt and Bugs
+* clean up README with examples, working functions, and remove unused functions from __init__
 * README overview of all three types of centerlines (voronoi generated, evenly spaced, gaussian smoothed)
 * Combine backend functionality for plotCenterline and plotCenterlineWidth into a shared component
 * Combine backend for riverWidthFromCenterline() and plotCenterline()

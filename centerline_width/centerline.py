@@ -1,5 +1,6 @@
 import math
 import logging
+import csv
 
 import numpy as np
 import pandas as pd
@@ -133,7 +134,7 @@ def smoothedCoordinates(centerline_coordinates=None, interprolate_num=None):
 	#print(smoothed_coordinates)
 	return smoothed_coordinates
 
-def returnShortestPathPoint(river_voronoi=None, river_polygon=None, top_polygon_line=None, bottom_polygon_line=None):
+def returnShortestPathPoints(river_voronoi=None, river_polygon=None, top_polygon_line=None, bottom_polygon_line=None):
 	# Find the centerline from NetworkX
 	starting_node, ending_node, x_ridge_point, y_ridge_point, start_end_points_dict = centerline_width.centerlinePath(river_voronoi=river_voronoi,
 																													river_polygon=river_polygon, 
@@ -172,7 +173,6 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 	centerline_slope = {}
 	groups_of_n_points = [centerline_coordinates[i:i+transect_span_distance] for i in range(0, len(centerline_coordinates), transect_span_distance)]
 	for group_points in groups_of_n_points:
-		#print(group_points)
 		slope_sum = 0
 		total_slopes = 0
 		for i in range(len(group_points)):
@@ -185,17 +185,13 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 		if slope_sum != 0:
 			slope_avg = slope_sum / total_slopes
 			normal_of_slope = -1 / slope_avg
-			middle_of_list = len(group_points) // 2
-			#print("slope_avg = {0}".format(slope_avg))
-			#print("normal_of_slope = {0}\n".format(normal_of_slope))
-			#print(group_points[middle_of_list])
-			#print(normal_of_slope)
+			middle_of_list = len(group_points) // 2 # set centerline point to be the middle point being averaged
 			centerline_slope[group_points[middle_of_list]] = normal_of_slope
 
 	def intersectsTopOrBottomOfBank(point1, point2):
 		# returns True/False if the points lie on the 'false' top/bottom of the river
 		points_intersect_false_edges = False
-		# avoding floating point precession errors when determining if point lies within the line
+		# avoiding floating point precession errors when determining if point lies within the line
 		# if point is within a small distance of a line it is considered to intersect
 		if top_bank.distance(point1) < 1e-8 or bottom_bank.distance(point1) < 1e-8:
 			points_intersect_false_edges = True
@@ -206,19 +202,21 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 	# Generate a list of lines from the centerline point with its normal
 	min_x, min_y, max_x, max_y = bank_polygon.bounds
 	for centerline_point, slope in centerline_slope.items():
+		# draw a max line that extends the entire distance of the available space, will be trimmed below to just within polygon
 		left_y = slope * (min_x - centerline_point[0]) + centerline_point[1]
 		right_y = slope * (max_x - centerline_point[0]) + centerline_point[1]
 
 		# Save the points where they intersect the polygon
 		sloped_line = LineString([(min_x, left_y), (max_x, right_y)]) # sloped line from the centerpoint
 		line_intersection_points = bank_polygon.exterior.intersection(sloped_line) # points where the line intersects the polygon
+		# if the line only intersects in two places (does not intersect polygon any additional times)
 		if len(line_intersection_points.geoms) == 2:
 			 # only save width lines that do not touch the artifical top/bottom
 			if not intersectsTopOrBottomOfBank(line_intersection_points.geoms[0], line_intersection_points.geoms[1]):
 				left_width_coordinates[centerline_point] = (line_intersection_points.geoms[0].x, line_intersection_points.geoms[0].y)
 				right_width_coordinates[centerline_point] = (line_intersection_points.geoms[1].x, line_intersection_points.geoms[1].y)
 		else:
-			# line intersects to polygon at multiple points, find the closest two points to chart
+			# line intersects to polygon at multiple points, by default, find the closest two points to chart
 			distances_between_centerline_and_point = []
 			for i in range(len(line_intersection_points.geoms)):
 				point_intersection = Point(line_intersection_points.geoms[i].x, line_intersection_points.geoms[i].y)
@@ -240,16 +238,16 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 						second_smallest_point = line_intersection_points.geoms[index_of_sorted_list[i]]
 						linestring_generated = LineString([Point(smallest_point.x, smallest_point.y), Point(second_smallest_point.x, second_smallest_point.y)])
 						if smallest_point != second_smallest_point: # ignore current smallest_point (make a unique pair)
-							if linestring_generated.distance(Point(centerline_point)) < 1e-8:
-								break # once a linestring is found that lies within polygon, break out of search
+							if linestring_generated.distance(Point(centerline_point)) < 1e-8: # if point is within a small distance of a line it is considered to intersect
+								break # once a linestring is found that lies within polygon, break out of search early
 
 				# linestring contains the centerline, save coordinates
 				left_width_coordinates[centerline_point] = (smallest_point.x, smallest_point.y)
 				right_width_coordinates[centerline_point] = (second_smallest_point.x, second_smallest_point.y)
 
-	# Determine lines that have multiple intersections to flag/remove
+	# Determine lines that intersect with other lines in mulitple places to flag/remove
 	all_linestrings = []
-	linestring_with_centerlines = {}
+	linestring_with_centerlines = {} # linestring with associated centerline: {linestring : centerline coordinate}
 	linestring_with_linestrings_that_intersect = {} # dictionary of all the linestrings that a linestring intersects with
 	# Generate a list of linestrings
 	for centerline_coord in right_width_coordinates.keys():
@@ -264,7 +262,7 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 			if linestring_to_check != linestring_to_check_against:
 				if linestring_to_check.intersects(linestring_to_check_against): # check if two lines intersect
 					intersection_points_linestrings = linestring_to_check.intersection(linestring_to_check_against) # return point positions where intersection occurs
-					if str(intersection_points_linestrings) != "LINESTRING Z EMPTY": # if linestring has intersect, increment count
+					if str(intersection_points_linestrings) != "LINESTRING Z EMPTY": # if linestring has intersect (not empty), increment count
 						num_intersection_coordinates[linestring_with_centerlines[linestring_to_check]] += 1
 						if linestring_to_check not in linestring_with_linestrings_that_intersect.keys():
 							linestring_with_linestrings_that_intersect[linestring_to_check] = []
@@ -276,9 +274,10 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 		# iterate from the most intersections to the least intersections
 		for linestring_most_interactions in sorted(linestring_with_linestrings_that_intersect, key=lambda k: len(linestring_with_linestrings_that_intersect[k]), reverse=True):
 
-			# when number of intersections > 1, remove lines with the most interactions, to the smallest
+			# when number of intersections > 1, remove lines with the most interactions to the smallest
 			if num_intersection_coordinates[linestring_with_centerlines[linestring_most_interactions]] > 1: 
 				lst_linestrings_hit_by_linestring = linestring_with_linestrings_that_intersect[linestring_most_interactions]
+
 				# iterate through each and remove linestring from the associated lists of places it intersects
 				for linestring_hit in lst_linestrings_hit_by_linestring: 
 					# remove linestring with most intersections from all linestrings that it hits
@@ -286,11 +285,12 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 					# decrease intersections by 1 after removing linestring, from both the linestring and the places it intersects
 					num_intersection_coordinates[linestring_with_centerlines[linestring_most_interactions]] -= 1
 					num_intersection_coordinates[linestring_with_centerlines[linestring_hit]] -= 1
+
 				# remove linestring that intersects the most linestrings
 				centerline_of_removed_line = linestring_with_centerlines[linestring_most_interactions]
 				if centerline_of_removed_line not in centerline_coordinates_to_be_removed: centerline_coordinates_to_be_removed.append(centerline_of_removed_line)
 
-			# when number of intersections == 1, remove the longer width line
+			# if two linestring both have one intersection (with just eachother), remove the longer width line
 			if num_intersection_coordinates[linestring_with_centerlines[linestring_most_interactions]] == 1: 
 				linestring_1 = linestring_most_interactions
 				linestring_2 = linestring_with_linestrings_that_intersect[linestring_most_interactions][0]
@@ -304,6 +304,7 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 				num_intersection_coordinates[linestring_with_centerlines[linestring_1]] -= 1
 				num_intersection_coordinates[linestring_with_centerlines[linestring_2]] -= 1
 
+	# Delete all width lines that have been flagged for removal
 	for centerline_coord in centerline_coordinates_to_be_removed:
 		del right_width_coordinates[centerline_coord]
 		del left_width_coordinates[centerline_coord]
@@ -319,7 +320,7 @@ def riverWidthFromCenterline(csv_data=None,
 							optional_cutoff=None):
 	# Return river width: centerline and width at centerline
 	# Width is measured to the bank, relative to the center point (normal of the centerline)
-	# { [centerline latitude, centerline longitude] : { width : widthValue }
+	# { [centerline latitude, centerline longitude] : widthValue }
 
 	centerline_width.errorHandlingRiverWidthFromCenterline(csv_data=csv_data,
 															save_to_csv=save_to_csv,
@@ -337,7 +338,7 @@ def riverWidthFromCenterline(csv_data=None,
 	river_bank_polygon, top_river_line, bottom_river_line = centerline_width.generatePolygon(left_bank_coordinates, right_bank_coordinates)
 	river_bank_voronoi = centerline_width.generateVoronoi(left_bank_coordinates, right_bank_coordinates)
 
-	shortest_path_points = returnShortestPathPoint(river_voronoi=river_bank_voronoi,
+	shortest_path_points = returnShortestPathPoints(river_voronoi=river_bank_voronoi,
 													river_polygon=river_bank_polygon,
 													top_polygon_line=top_river_line,
 													bottom_polygon_line=bottom_river_line)
@@ -364,8 +365,13 @@ def riverWidthFromCenterline(csv_data=None,
 		width_dict[centerline_coord] = linestring_between_points.length
 	print("haversine to convert length into distance")
 
-	if not save_to_csv:
-		print("optional function [save_to_csv]")
+	# Save width dictionary to a csv file (Latitude, Longtiude, Width)
+	if save_to_csv:
+		with open(save_to_csv, "w") as csv_file_output:
+			writer = csv.writer(csv_file_output)
+			writer.writerow(["Centerline Latitude (°)", "Centerline Longitude (°)", "Width (units)"])
+			for coordinate_key, width_value in width_dict.items():
+				writer.writerow([coordinate_key[0], coordinate_key[1], width_value])
 
 	return width_dict
 
