@@ -44,8 +44,8 @@ extractPointsToTextFile(left_kml=None,
 ```python
 import centerline_width
 centerline_width.extractPointsToTextFile(left_kml="leftbank.kml",
-							right_kml="rightbank.kml",
-							text_output_name="data/river_coords_output.txt")
+					right_kml="rightbank.kml",
+					text_output_name="data/river_coords_output.txt")
 ```
 Output: A text file `data/river_coords_output.txt` with the headers llat, llon, rlat, rlon
 
@@ -74,7 +74,7 @@ convertColumnsToCSV(text_file=None, flipBankDirection=False)
 ```python
 import centerline_width
 centerline_width.convertColumnsToCSV(text_file="data/river_coords.txt",
-							flipBankDirection=True)
+				flipBankDirection=True)
 ```
 Converts text file:
 ```
@@ -107,24 +107,9 @@ centerlineLatitudeLongitude(csv_data=None, optional_cutoff=None)
 ```python
 import centerline_width
 centerline_width.centerlineLatitudeLongitude(csv_data="data/river_coords.csv", 
-										optional_cutoff=cutoff)
+					optional_cutoff=cutoff)
 ```
 Output: `[(-92.86788596499872, 30.03786596717931), (-92.86789573751797, 30.037834641974108), (-92.8679141386283, 30.037789636848878), (-92.8679251193248, 30.037756853899904), (-92.86796903819089, 30.03765423778148), (-92.86797335733262, 30.037643336049054), (-92.8679920356456, 30.037592224469797), (-92.86800576063828, 30.037555441489403), (-92.86800841510367, 30.037546512833107), (-92.8680119498663, 30.03753043193875)]`
-
-### Return the length of the centerline
-Return the length of the centerline (in degrees)
-
-```
-centerlineLength(centerline_coordinates=None)
-```
-* **[REQUIRED]** centerline_coordinates (list): A list of centerline coordinates (via centerlineLatitudeLongitude())
-
-```python
-import centerline_width
-centerline_coordinates = centerline_width.centerlineLatitudeLongitude(csv_data="data/river_coords.csv")
-centerline_length = centerlineLength(centerline_coordinates=centerline_coordinates)
-```
-Returns the length from each centerline coordiante (currently in degrees)
 
 ## Plot Centerline in Matplotlib
 ### Plot the centerline created from a list of right and left banks with Voronoi vertices
@@ -161,15 +146,15 @@ Plot the width of the river based on the centerline
 Display Centerline at even intervals Voronoi generated centerline
 ```
 plotCenterlineWidth(csv_data=None,
-				plot_title=None, 
-				save_plot_name=None, 
-				display_true_centerline=True,
-				n_interprolate_centerpoints=None,
-				transect_span_distance=3,
-				apply_smoothing=False,
-				flag_intersections=True,
-				remove_intersections=False,
-				optional_cutoff=None)
+		plot_title=None, 
+		save_plot_name=None, 
+		display_true_centerline=True,
+		n_interprolate_centerpoints=None,
+		transect_span_distance=3,
+		apply_smoothing=False,
+		flag_intersections=True,
+		remove_intersections=False,
+		optional_cutoff=None)
 ```
 * **[REQUIRED]** csv_data (string): File location of the text file to convert
 * [OPTIONAL] plot_title (string): Change plot title, defaults to "River Coordinates: Valid Centerline = True/False, Valid Polygon = True/False"
@@ -178,8 +163,8 @@ plotCenterlineWidth(csv_data=None,
 * [OPTIONAL] n_interprolate_centerpoints (int): Recreate centerline coordinates with n evenly spaced points, defaults to the number of rows in the csv file
 * [OPTIONAL] transect_span_distance (int): Sum up n amount of points around a centerpoint to determine the slope (increase to decrease the impact of sudden changes), defaults to 6, must be greater than 2 (since the slope is found from the difference in position between two points), measured orthogonal to the centerline
 * [OPTIONAL] apply_smoothing (bool): Apply a B-spline smoothing to centerline
-* [OPTIONAL] flag_intersections (bool): Display intersecting width lines as red in graph
-* [OPTIONAL] remove_intersections (bool): Iterative remove intersecting lines, to maintain the most width lines, but return only non-intersecting width lines
+* [OPTIONAL] flag_intersections (bool): Display intersecting width lines as red in graph, defaults to True
+* [OPTIONAL] remove_intersections (bool): Iterative remove intersecting lines, to maintain the most width lines, but return only non-intersecting width lines, defaults to False
 * [OPTIONAL] optional_cutoff (int): Include only the first x amount of the data to chart (useful for debugging)
 
 Transect span distance:
@@ -188,61 +173,47 @@ Transect span distance:
 ```
 import centerline_width
 centerline_width.plotCenterlineWidth(csv_data="data/river_coords.csv", 
-								save_plot_name="data/river_coords_width.png", 
-								display_true_centerline=False,
-								n_interprolate_centerpoints=None,
-								transect_span_distance=3,
-								apply_smoothing=True,
-								flag_intersections=True,
-								remove_intersections=True,
-								optional_cutoff=cutoff)
+				save_plot_name="data/river_coords_width.png", 
+				display_true_centerline=False,
+				n_interprolate_centerpoints=None,
+				transect_span_distance=3,
+				apply_smoothing=True,
+				flag_intersections=True,
+				remove_intersections=True,
+				optional_cutoff=cutoff)
 ```
 ![river_coords_width+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/river_coords_width.png)
 
-### Evenly Spaced Centerline
-Returns the centerline calculated but evenly spaced with a fixed number of points, instead of the points generated by the Vornoi diagram
-```
-evenlySpacedCenterline(centerline_coordinates=None, number_of_fixed_points=10)
-```
-### Smooth Centerline
-Returns a gaussian smoothed centerline
-```
-gaussianSmoothedCoordinates(centerline_coordinates=None, gaussian_sigma=None)
-```
+### Types of Centerlines
+- Voronoi centerline: centerline generated by Voronoi vertices
+- Evenly Spaced Centerline: centerline calculated but evenly spaced with a fixed number of points, instead of the points generated by the Vornoi diagram
+- Smoothed Centerline: centerline smoothed by a b-spline
 
 ### Return Width of River
 ```
 riverWidthFromCenterline(csv_data=None,
-						n_interprolate_centerpoints=None,
-						transect_span_distance=3,
-						apply_smoothing=True,
-						remove_intersections=False,
-						save_to_csv=None,
-						optional_cutoff=None)
+			n_interprolate_centerpoints=None,
+			transect_span_distance=3,
+			apply_smoothing=True,
+			remove_intersections=False,
+			save_to_csv=None,
+			optional_cutoff=None)
 ```
 * **[REQUIRED]** csv_data (string): File location of the text file to convert
 * [OPTIONAL] n_interprolate_centerpoints (int): Recreate centerline coordinates with n evenly spaced points, defaults to the number of rows in the csv file
 * [OPTIONAL] transect_span_distance (int): Sum up n amount of points around a centerpoint to determine the slope (increase to decrease the impact of sudden changes), defaults to 6, must be greater than 2 (since the slope is found from the difference in position between two points), measured orthogonal to the centerline
 * [OPTIONAL] apply_smoothing (bool): Apply a B-spline smoothing to centerline
-* [OPTIONAL] remove_intersections (bool): Iterative remove intersecting lines, to maintain the most width lines, but return only non-intersecting width lines
+* [OPTIONAL] remove_intersections (bool): Iterative remove intersecting lines, to maintain the most width lines, but return only non-intersecting width lines, defaultsl to True
 * [OPTIONAL] optional_cutoff (int): Include only the first x amount of the data to chart (useful for debugging)
 
 ```
 river_width_dict = centerline_width.riverWidthFromCenterline(csv_data="data/river_coords.csv",
-																transect_span_distance=3,
-																apply_smoothing=True,
-																remove_intersections=True,
-																optional_cutoff=30)
+							transect_span_distance=3,
+							apply_smoothing=True,
+							remove_intersections=True,
+							optional_cutoff=30)
 ```
 Width dictionary = `{(-92.86781253030335, 30.038091261157252): 0.0012665460374170527, (-92.86785237492347, 30.037936004362408): 0.0012253609552254057, (-92.86788265990378, 30.037859857932435): 0.001166563476716173, (-92.86791593240025, 30.037784209097087): 0.0011192823818546845, (-92.86794925171479, 30.037708690068605): 0.0010967819847309656, (-92.86797967714938, 30.03763293305923): 0.001072182634460594}`
-
-
-### Additional Channel Metrics
-
-- Return the length of the centerline (length of the left/right bank)
-- Return the width of the river
-- Return the knickpoints (occurrences of knickpoints)
-= Return smoothed centerline(?)
 
 ## Documentation and Algorithm to Determine Centerline
 
@@ -309,6 +280,8 @@ Can be fixed by expanding the data until the polygon is large enough to contain 
 * Combine backend for riverWidthFromCenterline() and plotCenterline()
 * Verify error handling for public functions
 * Check that smoothing filter option does not produce a line that goes outside of the polygon
+* Return the length of the centerline (length of the left/right bank)
+* Return the knickpoints (occurrences of knickpoints)
 
 ## Citations
 Based on similar work written in R:
