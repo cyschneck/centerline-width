@@ -178,9 +178,6 @@ plotCenterlineWidth(csv_data=None,
 * [OPTIONAL] remove_intersections (bool): Iterative remove intersecting lines, to maintain the most width lines, but return only non-intersecting width lines, defaults to False
 * [OPTIONAL] optional_cutoff (int): Include only the first x amount of the data to chart (useful for debugging)
 
-Transect span distance:
-![transect_span_distance](https://user-images.githubusercontent.com/22159116/227870492-69d105b2-0d3e-4d50-90d9-e938400a58fb.png)
-
 ```
 import centerline_width
 centerline_width.plotCenterlineWidth(csv_data="data/river_coords.csv", 
@@ -195,9 +192,18 @@ centerline_width.plotCenterlineWidth(csv_data="data/river_coords.csv",
 ```
 ![river_coords_width+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/river_coords_width.png)
 
+**transect_span_distance**
+
+Transect span describes the number of points that are averaged to generated a width line (example: transect_span_distance=3, average of three slopes)
+
+![transect_span_distance](https://user-images.githubusercontent.com/22159116/227870492-69d105b2-0d3e-4d50-90d9-e938400a58fb.png)
+| transect_span_distance=6 | transect_span_distance=30 |
+| ------------- | ------------- |
+| ![river_transect_6+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_transect_6.png) | ![river_transect_30+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_transect_30.png) |
+
 **apply_smoothing**
 
-apply_smoothing applies a spline to smooth the centerline centered by the Voronoi vertices. This reduces the noise of the slopes and can create width lines that are less susceptible to small changes in the bank
+apply_smoothing applies a spline to smooth the centerline points created by the Voronoi vertices. This reduces the noise of the slopes and can create width lines that are less susceptible to small changes in the bank
 
 | apply_smoothing=False | apply_smoothing=True |
 | ------------- | ------------- |
@@ -209,9 +215,9 @@ remove_intersections will remove the width lines that intersect other lines (tha
 
 Intersecting lines are flagged in red by default (flag_intersections=True)
 
-| remove_intersections=True | remove_intersections=False |
+| remove_intersections=False | remove_intersections=True |
 | ------------- | ------------- |
-| ![river_remove+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_remove_intersections.png) | ![river_keep+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_keep_intersections.png) |
+| ![river_keep+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_keep_intersections.png) | ![river_remove+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_remove_intersections.png)|
 
 ### Return Width of River
 
