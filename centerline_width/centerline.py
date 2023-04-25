@@ -152,6 +152,15 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 										save_to_csv=None,
 										optional_cutoff=None):
 	# Return the left/right coordinates of width centerlines
+
+	centerline_width.errorHandlingRiverWidthFromCenterlineCoordinates(csv_data=csv_data,
+															centerline_coordinates=centerline_coordinates,
+															transect_span_distance=transect_span_distance,
+															bank_polygon=bank_polygon,
+															remove_intersections=remove_intersections,
+															save_to_csv=save_to_csv,
+															optional_cutoff=optional_cutoff)
+
 	right_width_coordinates = {}
 	left_width_coordinates = {}
 	num_intersection_coordinates = {}
@@ -323,6 +332,10 @@ def riverWidthFromCenterline(csv_data=None,
 	# { [centerline latitude, centerline longitude] : widthValue }
 
 	centerline_width.errorHandlingRiverWidthFromCenterline(csv_data=csv_data,
+															n_interprolate_centerpoints=n_interprolate_centerpoints,
+															transect_span_distance=transect_span_distance,
+															apply_smoothing=apply_smoothing,
+															remove_intersections=remove_intersections,
 															save_to_csv=save_to_csv,
 															optional_cutoff=optional_cutoff)
 

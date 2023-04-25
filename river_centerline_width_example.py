@@ -41,7 +41,7 @@ if __name__ == "__main__":
 
 	centerline_width.plotCenterlineWidth(csv_data="data/river_coords.csv", 
 										save_plot_name="data/river_coords_width.png", 
-										display_true_centerline=True,
+										display_true_centerline=False,
 										n_interprolate_centerpoints=None,
 										transect_span_distance=transect,
 										apply_smoothing=True,

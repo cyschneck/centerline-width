@@ -28,6 +28,7 @@ from .error_handling import errrorHandlingConvertColumnsToCSV
 from .error_handling import errorHandlingPlotCenterline
 from .error_handling import errorHandlingPlotCenterlineWidth
 from .error_handling import errorHandlingCenterlineLatitudeLongitude
+from .error_handling import errorHandlingRiverWidthFromCenterlineCoordinates
 from .error_handling import errorHandlingRiverWidthFromCenterline
 from .error_handling import errorHandlingExtractPointsToTextFile
 from .error_handling import errorHandlingCenterlineLength

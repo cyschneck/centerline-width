@@ -164,14 +164,14 @@ def errorHandlingCenterlineLatitudeLongitude(csv_data=None, optional_cutoff=None
 		logger.critical("\nCRITICAL ERROR, [optional_cutoff]: Must be a int, current type = '{0}'".format(type(optional_cutoff)))
 		exit()
 
-def errorHandlingRiverWidthFromCenterline(csv_data=None,
-										centerline_coordinates=None,
-										bank_polygon=None,
-										save_to_csv=None,
-										optional_cutoff=None):
-	# Error Handling for riverWidthFromCenterline()
-	print("TODO: riverWidthFromCenterline error handling")
-	'''
+def errorHandlingRiverWidthFromCenterlineCoordinates(csv_data=None,
+													centerline_coordinates=None,
+													transect_span_distance=3,
+													bank_polygon=None,
+													remove_intersections=False,
+													save_to_csv=None,
+													optional_cutoff=None):
+	# Error Handling for riverWidthFromCenterlineCoordinates()
 	if csv_data is None:
 		logger.critical("\nCRITICAL ERROR, [csv_data]: Requires csv file")
 		exit()
@@ -184,32 +184,80 @@ def errorHandlingRiverWidthFromCenterline(csv_data=None,
 				logger.critical("\nCRITICAL ERROR, [csv_data]: Extension must be a .csv file, current extension = '{0}'".format(csv_data.split(".")[1]))
 				exit()
 
-	if centerline_coordinates is None:
-		if bank_polygon is None:
-			logger.critical("\nCRITICAL ERROR, [bank_polygon]: centerline_coordinates or bank_polygon is required")
+	if transect_span_distance is not None:
+		if type(transect_span_distance) != int:
+			logger.critical("\nCRITICAL ERROR, [transect_span_distance]: Must be a int, current type = '{0}'".format(type(transect_span_distance)))
 			exit()
-	else:
-		if type(centerline_coordinates) != list:
-			logger.critical("\nCRITICAL ERROR, [centerline_coordinates]: Must be a list of lists, current type = '{0}'".format(type(centerline_coordinates)))
-			exit()
+		else:
+			if transect_span_distance < 3:
+				logger.critical("\nCRITICAL ERROR, [transect_span_distance]: Must be greater than 2, currently = '{0}'".format(transect_span_distance))
+				exit()
 
-	if bank_polygon is None:
-		if centerline_coordinates is None:
-			logger.critical("\nCRITICAL ERROR, [bank_polygon]: centerline_coordinates or bank_polygon is required")
-			exit()
-	else:
-		if type(bank_polygon) != shapely.geometry.polygon.Polygon:
-			logger.critical("\nCRITICAL ERROR, [bank_polygon]: bank_polygon must be a shapley polygon, current type = '{0}'".format(type(bank_polygon)))
-			exit()
-
-	if save_to_csv is not None and type(save_to_csv) != str:
-		logger.critical("\nCRITICAL ERROR, [save_to_csv]: Must be a str, current type = '{0}'".format(type(save_to_csv)))
+	if type(remove_intersections) != bool:
+		logger.critical("\nCRITICAL ERROR, [remove_intersections]: Must be a bool, current type = '{0}'".format(type(remove_intersections)))
 		exit()
 
-	if optional_cutoff is not None and type(optional_cutoff) != int:
+	if save_to_csv is not None:
+		if type(save_to_csv) != str:
+			logger.critical("\nCRITICAL ERROR, [save_to_csv]: Must be a str, current type = '{0}'".format(type(save_to_csv)))
+			exit()
+
+	if type(optional_cutoff) != int:
 		logger.critical("\nCRITICAL ERROR, [optional_cutoff]: Must be a int, current type = '{0}'".format(type(optional_cutoff)))
 		exit()
-	'''
+
+
+def errorHandlingRiverWidthFromCenterline(csv_data=None,
+										n_interprolate_centerpoints=None,
+										transect_span_distance=None,
+										apply_smoothing=None,
+										remove_intersections=None,
+										save_to_csv=None,
+										optional_cutoff=None):
+	# Error Handling for riverWidthFromCenterline()
+
+	if csv_data is None:
+		logger.critical("\nCRITICAL ERROR, [csv_data]: Requires csv file")
+		exit()
+	else:
+		if type(csv_data) != str:
+			logger.critical("\nCRITICAL ERROR, [csv_data]: Must be a str, current type = '{0}'".format(type(csv_data)))
+			exit()
+		else:
+			if not csv_data.lower().endswith(".csv"):
+				logger.critical("\nCRITICAL ERROR, [csv_data]: Extension must be a .csv file, current extension = '{0}'".format(csv_data.split(".")[1]))
+				exit()
+
+	if n_interprolate_centerpoints is not None:
+		if type(n_interprolate_centerpoints) != int:
+			logger.critical("\nCRITICAL ERROR, [n_interprolate_centerpoints]: Must be a int, current type = '{0}'".format(type(n_interprolate_centerpoints)))
+			exit()
+
+	if transect_span_distance is not None:
+		if type(transect_span_distance) != int:
+			logger.critical("\nCRITICAL ERROR, [transect_span_distance]: Must be a int, current type = '{0}'".format(type(transect_span_distance)))
+			exit()
+		else:
+			if transect_span_distance < 3:
+				logger.critical("\nCRITICAL ERROR, [transect_span_distance]: Must be greater than 2, currently = '{0}'".format(transect_span_distance))
+				exit()
+
+	if type(apply_smoothing) != bool:
+		logger.critical("\nCRITICAL ERROR, [apply_smoothing]: Must be a bool, current type = '{0}'".format(type(apply_smoothing)))
+		exit()
+
+	if type(remove_intersections) != bool:
+		logger.critical("\nCRITICAL ERROR, [remove_intersections]: Must be a bool, current type = '{0}'".format(type(remove_intersections)))
+		exit()
+
+	if save_to_csv is not None:
+		if type(save_to_csv) != str:
+			logger.critical("\nCRITICAL ERROR, [save_to_csv]: Must be a str, current type = '{0}'".format(type(save_to_csv)))
+			exit()
+
+	if type(optional_cutoff) != int:
+		logger.critical("\nCRITICAL ERROR, [optional_cutoff]: Must be a int, current type = '{0}'".format(type(optional_cutoff)))
+		exit()
 
 def errorHandlingExtractPointsToTextFile(left_kml=None, right_kml=None, text_output_name=None):
 	# Error Handling for extractPoints()

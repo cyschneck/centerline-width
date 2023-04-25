@@ -5,10 +5,18 @@
 
 Find the centerline and width of rivers based on the latitude and longitude from the right and left bank 
 
+* **Convert raw data from Google Earth Pro to CSV**
+	* extractPointsToTextFile()
+	* convertColumnsToCSV()
+* **Find Centerline and Width**
+	* centerlineLatitudeLongitude()
+	* plotCenterline()
+	* plotCenterlineWidth()
+	* riverWidthFromCenterline()
+
 | River Outlined in Google Earth Pro | Generated Centerline for the River Bank |
 | ------------- | ------------- |
 | ![river_google_earth+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_example_google_earth.png) | ![river_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_example.png) |
-
 
 Python implementation of [R-Code CMGO](https://github.com/AntoniusGolly/cmgo) (with modification)
 
