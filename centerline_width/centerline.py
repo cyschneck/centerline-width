@@ -5,6 +5,7 @@ import csv
 import numpy as np
 import pandas as pd
 import networkx as nx
+from scipy import interpolate
 from shapely.geometry import Point, Polygon, LineString
 
 # Internal centerline_width reference to access functions, global variables, and error handling
@@ -123,7 +124,6 @@ def smoothedCoordinates(centerline_coordinates=None, interprolate_num=None):
 
 	# applying a path smoothing spline
 	smoothed_coordinates = []
-	from scipy import interpolate
 	tck, *rest = interpolate.splprep([x_coordinates, y_coordinates], s=0.000001) # spline prep, tck = knots - coefficeinets - degree
 	u = np.linspace(0, 1, interprolate_num) # number of steps between each point (to determine smoothness)
 	x_smoothed, y_smoothed =  interpolate.splev(u, tck) # interpolated list of points

@@ -157,15 +157,15 @@ Plot the width of the river based on the centerline
 Display Centerline at even intervals from the Voronoi generated centerline
 ```
 plotCenterlineWidth(csv_data=None,
-		plot_title=None, 
-		save_plot_name=None, 
-		display_true_centerline=True,
-		n_interprolate_centerpoints=None,
-		transect_span_distance=3,
-		apply_smoothing=False,
-		flag_intersections=True,
-		remove_intersections=False,
-		optional_cutoff=None)
+			plot_title=None, 
+			save_plot_name=None, 
+			display_true_centerline=True,
+			n_interprolate_centerpoints=None,
+			transect_span_distance=3,
+			apply_smoothing=False,
+			flag_intersections=True,
+			remove_intersections=False,
+			optional_cutoff=None)
 ```
 * **[REQUIRED]** csv_data (string): File location of the text file to convert
 * [OPTIONAL] plot_title (string): Change plot title, defaults to "River Coordinates: Valid Centerline = True/False, Valid Polygon = True/False"
@@ -177,20 +177,6 @@ plotCenterlineWidth(csv_data=None,
 * [OPTIONAL] flag_intersections (bool): Display intersecting width lines as red in graph, defaults to True
 * [OPTIONAL] remove_intersections (bool): Iterative remove intersecting lines, to maintain the most width lines, but return only non-intersecting width lines, defaults to False
 * [OPTIONAL] optional_cutoff (int): Include only the first x amount of the data to chart (useful for debugging)
-
-```
-import centerline_width
-centerline_width.plotCenterlineWidth(csv_data="data/river_coords.csv", 
-				save_plot_name="data/river_coords_width.png",
-				display_true_centerline=False,
-				n_interprolate_centerpoints=None,
-				transect_span_distance=3,
-				apply_smoothing=True,
-				flag_intersections=True,
-				remove_intersections=True,
-				optional_cutoff=cutoff)
-```
-![river_coords_width+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/river_coords_width.png)
 
 **transect_span_distance**
 
@@ -218,6 +204,20 @@ Intersecting lines are flagged in red by default (flag_intersections=True)
 | remove_intersections=False | remove_intersections=True |
 | ------------- | ------------- |
 | ![river_keep+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_keep_intersections.png) | ![river_remove+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_remove_intersections.png)|
+
+```
+import centerline_width
+centerline_width.plotCenterlineWidth(csv_data="data/river_coords.csv", 
+					save_plot_name="data/river_coords_width.png",
+					display_true_centerline=False,
+					n_interprolate_centerpoints=None,
+					transect_span_distance=3,
+					apply_smoothing=True,
+					flag_intersections=True,
+					remove_intersections=True,
+					optional_cutoff=cutoff)
+```
+![river_coords_width+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/river_coords_width.png)
 
 ### Return Width of River
 
