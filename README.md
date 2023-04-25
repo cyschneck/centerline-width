@@ -203,6 +203,15 @@ apply_smoothing applies a spline to smooth the centerline centered by the Vorono
 | ------------- | ------------- |
 | ![river_without_smoothing+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_without_smoothing.png) | ![river_with_smoothing+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_with_smoothing.png) |
 
+**remove_intersections**
+
+remove_intersections will remove the width lines that intersect other lines (that could be creating unrepresentative long width lines). Intersections are removed first in order from most to least (to ensure that the most width lines as possible are kept) and then, based on the longer of two intersecting lines
+
+Intersecting lines are flagged in red by default (flag_intersections=True)
+
+| remove_intersections=True | remove_intersections=False |
+| ------------- | ------------- |
+| ![river_remove+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_remove_intersections.png) | ![river_keep+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_keep_intersections.png) |
 
 ### Return Width of River
 
