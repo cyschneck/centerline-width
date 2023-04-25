@@ -44,7 +44,7 @@ if __name__ == "__main__":
 										display_true_centerline=True,
 										n_interprolate_centerpoints=None,
 										transect_span_distance=transect,
-										apply_smoothing=False,
+										apply_smoothing=True,
 										flag_intersections=True,
 										remove_intersections=True,
 										optional_cutoff=cutoff)
