@@ -18,7 +18,7 @@ def plotCenterline(csv_data=None,
 					display_all_possible_paths=False, 
 					plot_title=None, 
 					save_plot_name=None, 
-					displayVoronoi=False,
+					display_voronoi=False,
 					optional_cutoff=None):
 	# Plot Centerline of River
 
@@ -26,7 +26,7 @@ def plotCenterline(csv_data=None,
 												display_all_possible_paths=display_all_possible_paths,
 												plot_title=plot_title,
 												save_plot_name=save_plot_name,
-												displayVoronoi=displayVoronoi,
+												display_voronoi=display_voronoi,
 												optional_cutoff=optional_cutoff)
 
 	# Plot river
@@ -56,7 +56,7 @@ def plotCenterline(csv_data=None,
 	plt.plot(*bottom_river_line.xy, c="lightcoral")
 
 	# Display the Voronoi Diagram
-	if displayVoronoi:
+	if display_voronoi:
 		voronoi_plot_2d(river_bank_voronoi, show_points=True, point_size=1, ax=ax)
 
 	# Plot all possible paths with text for positions
@@ -255,20 +255,6 @@ def plotCenterlineWidth(csv_data=None,
 						plt.plot(x_points, y_points, 'green', linewidth=1)
 				else:
 					plt.plot(x_points, y_points, 'green', linewidth=1)
-			"""
-			x = []
-			y = []
-			for center_coord, edge_coord in right_width_coordinates.items():
-				x.append(right_width_coordinates[center_coord][0])
-				y.append(right_width_coordinates[center_coord][1])
-			plt.scatter(x, y, c="red")
-			x = []
-			y = []
-			for center_coord, edge_coord in right_width_coordinates.items():
-				x.append(left_width_coordinates[center_coord][0])
-				y.append(left_width_coordinates[center_coord][1])
-			plt.scatter(x, y, c="blue")
-			"""
 
 	# Dynamically assign the starting and ending
 	if starting_node is not None: # error handling for when data is too small to generate centerline coordiantes

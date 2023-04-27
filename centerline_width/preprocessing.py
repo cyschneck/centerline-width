@@ -92,7 +92,7 @@ def pointsFromVoronoi(river_voronoi, river_polygon):
 	# Returns a dictionary list of all the voronoi points: {start point : [list of end points]}
 	points_dict = {}
 	all_connections_start_to_end = []
-	logger.info("[PROCESSING] Attempting to determine a valid centerline from Voronoi points, may take a few minutes") # longest step, O(n^n)
+	logger.info("[PROCESSING] Attempting to determine a valid centerline from Voronoi points, may take a few minutes...") # longest step, O(n^n)
 	for ridge_vertex_point in river_voronoi.ridge_vertices:
 		if ridge_vertex_point[0] >= 0 and ridge_vertex_point[1] >= 0: # Only include non-infinity vertex edges
 			v0 = river_voronoi.vertices[ridge_vertex_point[0]]

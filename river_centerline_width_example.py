@@ -20,12 +20,12 @@ if __name__ == "__main__":
 	#cutoff = 40 # invalid centerline, valid path, valid polgyon, invalid starting node, valid ending node
 	#cutoff = 700 # invalid centerline, valid path, valid polgyon, invalid starting node, valid ending node
 	#cutoff = 1000 # invalid centerline, invalid path, invalid polgyon, invalid starting node, valid ending node
-
+	
 	# Plot river banks
 	#centerline_width.plotCenterline(csv_data="data/river_coords.csv", 
 	#								save_plot_name="data/river_coords_centerline.png", 
 	#								display_all_possible_paths=False, 
-	#								displayVoronoi=False,
+	#								display_voronoi=False,
 	#								optional_cutoff=cutoff)
 
 	transect = 3

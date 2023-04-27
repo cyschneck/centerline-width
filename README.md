@@ -20,6 +20,8 @@ Find the centerline and width of rivers based on the latitude and longitude from
 
 Python implementation of [R-Code CMGO](https://github.com/AntoniusGolly/cmgo) (with modification)
 
+NOTE: This is Beta quality software that is being actively developed, use at your own risk. This project is not supported or endorsed by either JPL or NASA. The code is provided “as is”, use at your own risk.
+
 ## Requirements
 Currently running on Python 3.7+
 
@@ -138,21 +140,21 @@ plotCenterline(csv_data=None,
 		display_all_possible_paths=False, 
 		plot_title=None, 
 		save_plot_name=None, 
-		displayVoronoi=False,
+		display_voronoi=False,
 		optional_cutoff=None)
 ```
 * **[REQUIRED]** csv_data (string): File location of the text file to convert
 * [OPTIONAL] display_all_possible_paths (boolean): Display all possible paths, not just the centerline (useful for debugging)
 * [OPTIONAL] plot_title (string): Change plot title, defaults to "River Coordinates: Valid Centerline = True/False, Valid Polygon = True/False"
 * [OPTIONAL] save_plot_name (string): Save the plot with a given name and location
-* [OPTIONAL] displayVoronoi (boolean): Overlay Voronoi diagram used to generate centerline
+* [OPTIONAL] display_voronoi (boolean): Overlay Voronoi diagram used to generate centerline
 * [OPTIONAL] optional_cutoff (int): Include only the first x amount of the data to chart (useful for debugging)
 
 ```python
 import centerline_width
 centerline_width.plotCenterline(csv_data="data/river_coords.csv", 
 				display_all_possible_paths=False, 
-				displayVoronoi=False, 
+				display_voronoi=False, 
 				optional_cutoff=550)
 ```
 Output:

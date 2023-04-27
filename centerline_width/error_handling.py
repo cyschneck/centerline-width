@@ -41,7 +41,7 @@ def errorHandlingPlotCenterline(csv_data=None,
 								display_all_possible_paths=None,
 								plot_title=None,
 								save_plot_name=None,
-								displayVoronoi=None,
+								display_voronoi=None,
 								optional_cutoff=None):
 	# Error handling for plotCenterline()
 	if csv_data is None:
@@ -68,8 +68,8 @@ def errorHandlingPlotCenterline(csv_data=None,
 		logger.critical("\nCRITICAL ERROR, [save_plot_name]: Must be a str, current type = '{0}'".format(type(save_plot_name)))
 		exit()
 
-	if type(displayVoronoi) != bool:
-		logger.critical("\nCRITICAL ERROR, [displayVoronoi]: Must be a bool, current type = '{0}'".format(type(displayVoronoi)))
+	if type(display_voronoi) != bool:
+		logger.critical("\nCRITICAL ERROR, [display_voronoi]: Must be a bool, current type = '{0}'".format(type(display_voronoi)))
 		exit()
 
 	if optional_cutoff is not None and type(optional_cutoff) != int:
@@ -202,7 +202,7 @@ def errorHandlingRiverWidthFromCenterlineCoordinates(csv_data=None,
 			logger.critical("\nCRITICAL ERROR, [save_to_csv]: Must be a str, current type = '{0}'".format(type(save_to_csv)))
 			exit()
 
-	if type(optional_cutoff) != int:
+	if optional_cutoff is not None and type(optional_cutoff) != int:
 		logger.critical("\nCRITICAL ERROR, [optional_cutoff]: Must be a int, current type = '{0}'".format(type(optional_cutoff)))
 		exit()
 
@@ -255,7 +255,7 @@ def errorHandlingRiverWidthFromCenterline(csv_data=None,
 			logger.critical("\nCRITICAL ERROR, [save_to_csv]: Must be a str, current type = '{0}'".format(type(save_to_csv)))
 			exit()
 
-	if type(optional_cutoff) != int:
+	if optional_cutoff is not None and type(optional_cutoff) != int:
 		logger.critical("\nCRITICAL ERROR, [optional_cutoff]: Must be a int, current type = '{0}'".format(type(optional_cutoff)))
 		exit()
 

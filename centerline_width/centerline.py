@@ -280,6 +280,7 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 	# Remove Intersection Lines
 	centerline_coordinates_to_be_removed = []
 	if remove_intersections:
+		logger.info("[PROCSESING] Recursively removing interesection lines...")
 		# iterate from the most intersections to the least intersections
 		for linestring_most_interactions in sorted(linestring_with_linestrings_that_intersect, key=lambda k: len(linestring_with_linestrings_that_intersect[k]), reverse=True):
 
@@ -317,6 +318,7 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 	for centerline_coord in centerline_coordinates_to_be_removed:
 		del right_width_coordinates[centerline_coord]
 		del left_width_coordinates[centerline_coord]
+	logger.info("[SUCCESS] Intersection lines removed")
 
 	return right_width_coordinates, left_width_coordinates, num_intersection_coordinates
 
