@@ -326,9 +326,10 @@ Can be fixed by expanding the data until the polygon is large enough to contain 
 * Check that smoothing filter option does not produce a line that goes outside of the polygon
 * Return the length of the centerline (length of the left/right bank)
 * Return the knickpoints (occurrences of knickpoints)
+* Add bank angle criteria for width transect
 
 ## Citations
-Based on similar work written in R:
+Based on work written in R (Golly et al. 2017):
 
 >Golly, A. and Turowski, J. M.: Deriving principal channel metrics from bank and long-profile geometry with the R package cmgo, Earth Surf. Dynam., 5, 557-570, https://doi.org/10.5194/esurf-5-557-2017, 2017.
 
@@ -341,3 +342,7 @@ Based on similar work written in R:
 </p>
 
 This material is based upon work supported by the National Science Foundation Graduate Fellowship under Grant No. 2141064. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the atuhors and do not neccessarily reflect the views of the National Science Foundation.
+
+## Bug and Feature Request
+
+Submit a bug fix, question, or feature request as a [Github Issue](https://github.com/unaschneck/pydar/issues) or to ugschneck@gmail.com/cyschneck@gmail.com
