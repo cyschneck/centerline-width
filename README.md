@@ -160,7 +160,7 @@ centerline_width.plotCenterline(csv_data="data/river_coords.csv",
 Output:
 ![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/river_coords_centerline.png)
 
-## Future Work: Coming Soon
+## Plot Centerline Width Lines in Matplotlib
 ### Plot the Centerline Width Lines
 Plot the width of the river based on the centerline
 
@@ -188,6 +188,14 @@ plotCenterlineWidth(csv_data=None,
 * [OPTIONAL] remove_intersections (bool): Iterative remove intersecting lines, to maintain the most width lines, but return only non-intersecting width lines, defaults to False
 * [OPTIONAL] optional_cutoff (int): Include only the first x amount of the data to chart (useful for debugging)
 
+**apply_smoothing**
+
+apply_smoothing applies a spline to smooth the centerline points created by the Voronoi vertices. This reduces the noise of the slopes and can create width lines that are less susceptible to small changes in the bank
+
+| apply_smoothing=False | apply_smoothing=True |
+| ------------- | ------------- |
+| ![river_without_smoothing+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_without_smoothing.png) | ![river_with_smoothing+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_with_smoothing.png) |
+
 **transect_span_distance**
 
 Transect span describes the number of points that are averaged to generated a width line (example: transect_span_distance=3, average of three slopes)
@@ -196,14 +204,6 @@ Transect span describes the number of points that are averaged to generated a wi
 | transect_span_distance=6 | transect_span_distance=30 |
 | ------------- | ------------- |
 | ![river_transect_6+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_transect_6.png) | ![river_transect_30+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_transect_30.png) |
-
-**apply_smoothing**
-
-apply_smoothing applies a spline to smooth the centerline points created by the Voronoi vertices. This reduces the noise of the slopes and can create width lines that are less susceptible to small changes in the bank
-
-| apply_smoothing=False | apply_smoothing=True |
-| ------------- | ------------- |
-| ![river_without_smoothing+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_without_smoothing.png) | ![river_with_smoothing+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_with_smoothing.png) |
 
 **remove_intersections**
 
@@ -229,6 +229,7 @@ centerline_width.plotCenterlineWidth(csv_data="data/river_coords.csv",
 ```
 ![river_coords_width+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/river_coords_width.png)
 
+## Future Work: Coming Soon
 ### Return Width of River
 
 Return the width of the river at each evenly spaced centerline coordinate

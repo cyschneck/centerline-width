@@ -314,11 +314,11 @@ def riverWidthFromCenterlineCoordinates(csv_data=None,
 				num_intersection_coordinates[linestring_with_centerlines[linestring_1]] -= 1
 				num_intersection_coordinates[linestring_with_centerlines[linestring_2]] -= 1
 
-	# Delete all width lines that have been flagged for removal
-	for centerline_coord in centerline_coordinates_to_be_removed:
-		del right_width_coordinates[centerline_coord]
-		del left_width_coordinates[centerline_coord]
-	logger.info("[SUCCESS] Intersection lines removed")
+		# Delete all width lines that have been flagged for removal
+		for centerline_coord in centerline_coordinates_to_be_removed:
+			del right_width_coordinates[centerline_coord]
+			del left_width_coordinates[centerline_coord]
+		logger.info("[SUCCESS] Intersection lines removed")
 
 	return right_width_coordinates, left_width_coordinates, num_intersection_coordinates
 

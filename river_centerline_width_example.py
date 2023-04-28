@@ -20,8 +20,8 @@ if __name__ == "__main__":
 	#cutoff = 40 # invalid centerline, valid path, valid polgyon, invalid starting node, valid ending node
 	#cutoff = 700 # invalid centerline, valid path, valid polgyon, invalid starting node, valid ending node
 	#cutoff = 1000 # invalid centerline, invalid path, invalid polgyon, invalid starting node, valid ending node
-	
-	# Plot river banks
+
+	# Plot river bank centerline
 	#centerline_width.plotCenterline(csv_data="data/river_coords.csv", 
 	#								save_plot_name="data/river_coords_centerline.png", 
 	#								display_all_possible_paths=False, 
@@ -30,15 +30,7 @@ if __name__ == "__main__":
 
 	transect = 3
 
-	#river_width_dict = centerline_width.riverWidthFromCenterline(csv_data="data/river_coords.csv",
-	#															n_interprolate_centerpoints=None,
-	#															transect_span_distance=transect,
-	#															apply_smoothing=True,
-	#															remove_intersections=True,
-	#															save_to_csv="data/centerline_coords.csv",
-	#															optional_cutoff=cutoff)
-	#print(river_width_dict)
-
+	# Plot river bank width line
 	centerline_width.plotCenterlineWidth(csv_data="data/river_coords.csv", 
 										save_plot_name="data/river_coords_width.png", 
 										display_true_centerline=False,
@@ -50,18 +42,22 @@ if __name__ == "__main__":
 										optional_cutoff=cutoff)
 	exit()
 
+	# Return width line for each centerline coordinates
+	river_width_dict = centerline_width.riverWidthFromCenterline(csv_data="data/river_coords.csv",
+																n_interprolate_centerpoints=None,
+																transect_span_distance=transect,
+																apply_smoothing=True,
+																remove_intersections=True,
+																save_to_csv="data/centerline_coords.csv",
+																optional_cutoff=cutoff)
+	print("\nriver width dict = {0}\n".format(river_width_dict))
+
 	# Return the latitude/longtiude coordinates for the centerline
 	centerline_long_lat_coordinates = centerline_width.centerlineLatitudeLongitude(csv_data="data/river_coords.csv", 
 																					optional_cutoff=cutoff)
-	#print(centerline_long_lat_coordinates)
-
-	# Return the width of the river for each centerline vertex (distance from right, left, total)
-	#river_width_dict = centerline_width.riverWidthFromCenterline(csv_data="data/river_coords.csv", 
-	#															centerline_coordinates=centerline_long_lat_coordinates,
-	#															save_to_csv="data/river_width.csv",
-	#															optional_cutoff=cutoff)
+	print("\ncenterline lat/long = {0}\n".format(centerline_long_lat_coordinates))
 
 	# Centerline Total Length (in degrees)
 	centerline_length = centerline_width.centerlineLength(centerline_coordinates=centerline_long_lat_coordinates)
-	print("Centerline Length (degrees) = {0}".format(centerline_length))
+	print("\nCenterline Length (degrees) = {0}".format(centerline_length))
 
