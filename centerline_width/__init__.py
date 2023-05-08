@@ -19,6 +19,8 @@ from .centerline import returnShortestPathPoints
 from .centerline import riverWidthFromCenterlineCoordinates
 from .centerline import riverWidthFromCenterline
 
+from .centerline import river
+
 # plotDiagrams.py function calls
 from .plotDiagrams import plotCenterline
 from .plotDiagrams import plotCenterlineWidth

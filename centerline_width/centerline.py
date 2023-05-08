@@ -17,15 +17,43 @@ logger.setLevel(logging.INFO)
 stream_handler = logging.StreamHandler()
 logger.addHandler(stream_handler)
 
+class river:
+	def __init__(self, csv_data, optional_cutoff):
+		self.river_name = csv_data
+		df = pd.read_csv(csv_data)
+		if optional_cutoff:
+			df = df.head(optional_cutoff)
+
+		# Left and Right Coordinates from the given csv data and data cutoff
+		left_bank_coordinates, right_bank_coordinates = centerline_width.leftRightCoordinates(df)
+		self.left_bank_coordinates = left_bank_coordinates
+		self.right_bank_coordinates = right_bank_coordinates
+
+		# River polygon, position of the top/bottom polygon
+		river_bank_polygon, top_bank, bottom_bank = centerline_width.generatePolygon(left_bank_coordinates, right_bank_coordinates)
+		self.river_bank_polygon = river_bank_polygon
+		self.top_bank = top_bank
+		self.bottom_bank = bottom_bank
+
+		# Voronoi
+		river_bank_voronoi = centerline_width.generateVoronoi(left_bank_coordinates, right_bank_coordinates)
+		self.river_bank_voronoi = river_bank_voronoi
+
+		# Centerline path
+		#starting_node, ending_node, x_ridge_point, y_ridge_point, start_end_points_dict = centerline_width.centerlinePath(river_bank_voronoi, river_bank_polygon, top_bank, bottom_bank)
+		#self.starting_node = starting_node # starting position for centerline
+		#self.ending_node = ending_node # ending position for centerline
+		#shortest_path_coordinates = centerline_width.networkXGraphShortestPath(start_end_points_dict, starting_node, ending_node)
+
 def centerlinePath(river_voronoi, river_polygon, top_polygon_line, bottom_polygon_line):
-	# Return the starting node, ending node, and centerline path
-	start_end_points_dict = centerline_width.pointsFromVoronoi(river_voronoi, river_polygon)
-	x_ridge_point = []
-	y_ridge_point = []
-	starting_node = None
-	ending_node = None
+	# Return the starting node, ending node, all possible paths positions, and all paths starting/end position as a dictionary
+	start_end_points_dict = centerline_width.pointsFromVoronoi(river_voronoi, river_polygon) # All possible path connections from Voronoi
+	x_ridge_point = [] # X position on path
+	y_ridge_point = [] # Y poistion on path
+	starting_node = None # starting position at the top of the river
+	ending_node = None # ending position at the bottom of the river
 	for start_point, end_point_list in start_end_points_dict.items():
-		if len(end_point_list) > 0: # TESTING TESTING: Show only the end points that have multiple connections
+		if len(end_point_list) > 0: # TESTING TESTING: Show only the end points that have multiple connections (set to 0 during production)
 			# Find the starting and ending node based on distance from the top and bottom of the polygon
 			if starting_node is None: starting_node = start_point
 			else:
@@ -40,6 +68,7 @@ def centerlinePath(river_voronoi, river_polygon, top_polygon_line, bottom_polygo
 						ending_node = start_point
 					if Point(end_point).distance(bottom_polygon_line) <= Point(ending_node).distance(bottom_polygon_line):
 						ending_node = end_point
+				# Save all starting and end positions for all possible paths
 				x_ridge_point.append([start_point[0], end_point[0]])
 				y_ridge_point.append([start_point[1], end_point[1]])
 
@@ -130,8 +159,7 @@ def smoothedCoordinates(centerline_coordinates=None, interprolate_num=None):
 
 	x_smoothed, y_smoothed = x_smoothed.tolist(), y_smoothed.tolist() # convert array to list
 	smoothed_coordinates = list(zip(x_smoothed, y_smoothed))
-	#print(centerline_coordinates)
-	#print(smoothed_coordinates)
+
 	return smoothed_coordinates
 
 def returnShortestPathPoints(river_voronoi=None, river_polygon=None, top_polygon_line=None, bottom_polygon_line=None):

@@ -13,7 +13,7 @@ if __name__ == "__main__":
 	#cutoff = 15 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
 	#cutoff = 30
 	#cutoff = 100 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
-	cutoff = 550 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
+	#cutoff = 550 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
 	# Invalid Examples
 	#cutoff = 5 # invalid centerline, invalid path, valid polygon, invalid starting node, invalid ending nodes
 	#cutoff = 250 # valid centerline, valid path, invalid polygon, valid starting node, valid ending nodes
@@ -30,6 +30,12 @@ if __name__ == "__main__":
 
 	transect = 3
 
+	river_object = centerline_width.river(csv_data="data/river_coords.csv", optional_cutoff=cutoff)
+	print(river_object)
+	print(river_object.river_name)
+	#print(river_object.__dict__)
+	
+	exit()
 	# Plot river bank width line
 	centerline_width.plotCenterlineWidth(csv_data="data/river_coords.csv", 
 										save_plot_name="data/river_coords_width.png", 
