@@ -51,4 +51,3 @@ if __name__ == "__main__":
 													save_to_csv="data/centerline_coords.csv")
 
 	print("\nriver width dict = {0}\n".format(river_width_dict))
-

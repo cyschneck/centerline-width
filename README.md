@@ -143,7 +143,7 @@ river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv"
 
 ### Return Latitude/Longitude Coordinates of Centerline
 Return the latitude/longtiude coordinates of the centerline based on the left and right banks
-```
+```cle
 river_object.centerline_latitude_longtiude
 ```
 Centerline coordinates are formed from Voronoi vertices
@@ -328,7 +328,6 @@ Can be fixed by expanding the data until the polygon is large enough to contain 
 
 ## Developer Notes: Tech Debt and Bugs
 * centerlineLength/riverWidthFromCenterline: haversine to convert length into distance
-* combine backend for plotCenterline and plotCenterlineWidth with shared components
 * clean up README with examples, working functions, and remove unused functions from __init__
 * Verify error handling for public functions
 * Check that smoothing filter option does not produce a line that goes outside of the polygon
