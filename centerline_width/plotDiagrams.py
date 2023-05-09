@@ -163,8 +163,6 @@ def plotCenterlineWidth(river_object=None,
 
 	# Determine the Width of River
 	number_of_evenly_spaced_points = ""
-	if not river_object.centerline_latitude_longtiude:
-		logger.info("Unable to generate width lines without a valid centerline")
 	if river_object.centerline_latitude_longtiude:
 		number_of_evenly_spaced_points = "\nCenterline made of {0} Fixed Points, width lines generated every {1} points".format(n_interprolate_centerpoints, transect_span_distance)
 		if river_object.starting_node is not None: # error handling for when data is too small to generate centerline coordiantes

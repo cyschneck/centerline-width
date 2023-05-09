@@ -13,9 +13,9 @@ if __name__ == "__main__":
 	#cutoff = 15 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
 	#cutoff = 30
 	#cutoff = 100 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
-	cutoff = 550 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
+	#cutoff = 550 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
 	# Invalid Examples
-	#cutoff = 5 # invalid centerline, invalid path, valid polygon, invalid starting node, invalid ending nodes
+	cutoff = 5 # invalid centerline, invalid path, valid polygon, invalid starting node, invalid ending nodes
 	#cutoff = 250 # valid centerline, valid path, invalid polygon, valid starting node, valid ending nodes
 	#cutoff = 40 # invalid centerline, valid path, valid polgyon, invalid starting node, valid ending node
 	#cutoff = 700 # invalid centerline, valid path, valid polgyon, invalid starting node, valid ending node

@@ -9,7 +9,7 @@ from .preprocessing import generateVoronoi
 from .preprocessing import pointsFromVoronoi
 
 # riverObject.py function calls
-from .riverObject import riverCenterline
+from .riverCenterlineClass import riverCenterline
 
 # centerline.py function calls
 from .centerline import centerlinePath

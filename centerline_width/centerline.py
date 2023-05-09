@@ -82,6 +82,9 @@ def networkXGraphShortestPath(all_points_dict, starting_node, ending_node):
 
 def evenlySpacedCenterline(centerline_coordinates=None, number_of_fixed_points=10):
 	# Interpolate to evenly space points along the centerline coordinates (effectively smoothing with fewer points)
+	if centerline_coordinates is None:
+		return None
+
 	centerline_line = LineString(centerline_coordinates)
 
 	# Splitting into a fixed number of points
@@ -97,6 +100,9 @@ def evenlySpacedCenterline(centerline_coordinates=None, number_of_fixed_points=1
 
 def smoothedCoordinates(centerline_coordinates=None, interprolate_num=None):
 	# return a list coordinates after applying b-spline (smoothing)
+	if centerline_coordinates is None:
+		return None
+
 	x_coordinates = []
 	y_coordinates = []
 
@@ -310,6 +316,10 @@ def riverWidthFromCenterline(river_object=None,
 		# if plotting width, but n_interprolate_centerpoints is undefined, set to the size of the dataframe
 		n_interprolate_centerpoints = len(river_object.df)
 
+	if river_object.centerline_latitude_longtiude is None:
+		logger.critical("\nCRITICAL ERROR, unable to find width without a valid centerline")
+		return None
+
 	# recreate the centerline with evenly spaced points
 	defined_centerline_coordinates = centerline_width.evenlySpacedCenterline(centerline_coordinates=river_object.centerline_latitude_longtiude,
 																			number_of_fixed_points=n_interprolate_centerpoints)
@@ -345,6 +355,9 @@ def centerlineLength(centerline_coordinates=None):
 	print("TODO: [centerlineLength] haversine to convert length into distance")
 	total_length = 0
 	previous_pair = None
+	if centerline_coordinates is None:
+		return None
+
 	for xy_pair in centerline_coordinates:
 		if previous_pair is None:
 			previous_pair = xy_pair
