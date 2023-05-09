@@ -21,37 +21,33 @@ if __name__ == "__main__":
 	#cutoff = 700 # invalid centerline, valid path, valid polgyon, invalid starting node, valid ending node
 	#cutoff = 1000 # invalid centerline, invalid path, invalid polgyon, invalid starting node, valid ending node
 
-	river = centerline_width.river(csv_data="data/river_coords.csv", optional_cutoff=cutoff)
+	river = centerline_width.riverCenterline(csv_data="data/river_coords.csv", optional_cutoff=cutoff)
 	print(river)
 	#print(river.centerline_length)
-	print(river.centerline_latitude_longtiude)
+	#print(river.centerline_latitude_longtiude)
 	#exit()
 
 	# Plot river bank centerline
-	centerline_width.plotCenterline(river_object=river,
-									save_plot_name="data/river_coords_centerline.png", 
-									display_all_possible_paths=False, 
-									display_voronoi=False)
-
+	river.plotCenterline(save_plot_name="data/river_coords_centerline.png", 
+						display_all_possible_paths=False, 
+						display_voronoi=False)
 	transect = 3
 
-
 	# Plot river bank width line
-	centerline_width.plotCenterlineWidth(river_object=river, 
-										save_plot_name="data/river_coords_width.png", 
-										display_true_centerline=False,
-										n_interprolate_centerpoints=None,
-										transect_span_distance=transect,
-										apply_smoothing=True,
-										flag_intersections=True,
-										remove_intersections=True)
+	river.plotCenterlineWidth(save_plot_name="data/river_coords_width.png", 
+							display_true_centerline=False,
+							n_interprolate_centerpoints=None,
+							transect_span_distance=transect,
+							apply_smoothing=True,
+							flag_intersections=True,
+							remove_intersections=True)
 
 	# Return width line for each centerline coordinates
-	river_width_dict = centerline_width.riverWidthFromCenterline(river_object=river,
-																n_interprolate_centerpoints=None,
-																transect_span_distance=transect,
-																apply_smoothing=True,
-																remove_intersections=True,
-																save_to_csv="data/centerline_coords.csv")
+	river_width_dict = river.riverWidthFromCenterline(n_interprolate_centerpoints=None,
+													transect_span_distance=transect,
+													apply_smoothing=True,
+													remove_intersections=True,
+													save_to_csv="data/centerline_coords.csv")
+
 	print("\nriver width dict = {0}\n".format(river_width_dict))
 

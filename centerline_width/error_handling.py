@@ -47,7 +47,7 @@ def errorHandlingPlotCenterline(river_object=None,
 		logger.critical("\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.river)")
 		exit()
 	else:
-		if not isinstance(river_object, centerline_width.river):
+		if not isinstance(river_object, centerline_width.riverCenterline):
 			logger.critical("\nCRITICAL ERROR, [river_object]: Must be a river object (see: centerline_width.river), current type = '{0}'".format(type(river_object)))
 			exit()
 
@@ -81,7 +81,7 @@ def errorHandlingPlotCenterlineWidth(river_object=None,
 		logger.critical("\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.river)")
 		exit()
 	else:
-		if not isinstance(river_object, centerline_width.river):
+		if not isinstance(river_object, centerline_width.riverCenterline):
 			logger.critical("\nCRITICAL ERROR, [river_object]: Must be a river object (see: centerline_width.river), current type = '{0}'".format(type(river_object)))
 			exit()
 
@@ -138,7 +138,7 @@ def errorHandlingRiverWidthFromCenterlineCoordinates(river_object=None,
 		logger.critical("\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.river)")
 		exit()
 	else:
-		if not isinstance(river_object, centerline_width.river):
+		if not isinstance(river_object, centerline_width.riverCenterline):
 			logger.critical("\nCRITICAL ERROR, [river_object]: Must be a river object (see: centerline_width.river), current type = '{0}'".format(type(river_object)))
 			exit()
 
@@ -173,7 +173,7 @@ def errorHandlingRiverWidthFromCenterline(river_object=None,
 		logger.critical("\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.river)")
 		exit()
 	else:
-		if not isinstance(river_object, centerline_width.river):
+		if not isinstance(river_object, centerline_width.riverCenterline):
 			logger.critical("\nCRITICAL ERROR, [river_object]: Must be a river object (see: centerline_width.river), current type = '{0}'".format(type(river_object)))
 			exit()
 

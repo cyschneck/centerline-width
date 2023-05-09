@@ -1,9 +1,10 @@
+# River object class used for all functions and centerline functions
 import pandas as pd
 
 # Internal centerline_width reference to access functions, global variables, and error handling
 import centerline_width
 
-class river:
+class riverCenterline:
 	def __init__(self, csv_data, optional_cutoff=None):
 		self.river_name = csv_data
 		df = pd.read_csv(csv_data)
@@ -37,3 +38,42 @@ class river:
 
 		# Centerline length
 		self.centerline_length = centerline_width.centerlineLength(centerline_coordinates=shortest_path_coordinates)
+
+	def riverWidthFromCenterline(self,
+								n_interprolate_centerpoints=None,
+								transect_span_distance=3,
+								apply_smoothing=True,
+								remove_intersections=False,
+								save_to_csv=None):
+		return centerline_width.riverWidthFromCenterline(river_object=self,
+														n_interprolate_centerpoints=n_interprolate_centerpoints,
+														transect_span_distance=transect_span_distance,
+														apply_smoothing=apply_smoothing,
+														remove_intersections=remove_intersections,
+														save_to_csv=save_to_csv)
+
+	def plotCenterline(self, display_all_possible_paths=False, plot_title=None, save_plot_name=None, display_voronoi=False):
+		centerline_width.plotCenterline(river_object=self,
+										display_all_possible_paths=display_all_possible_paths, 
+										plot_title=plot_title, 
+										save_plot_name=save_plot_name, 
+										display_voronoi=display_voronoi)
+
+	def plotCenterlineWidth(self,
+							plot_title=None, 
+							save_plot_name=None, 
+							display_true_centerline=True,
+							n_interprolate_centerpoints=None,
+							transect_span_distance=3,
+							apply_smoothing=False,
+							flag_intersections=True,
+							remove_intersections=False):
+		centerline_width.plotCenterlineWidth(river_object=self,
+											plot_title=plot_title, 
+											save_plot_name=save_plot_name, 
+											display_true_centerline=display_true_centerline,
+											n_interprolate_centerpoints=n_interprolate_centerpoints,
+											transect_span_distance=transect_span_distance,
+											apply_smoothing=apply_smoothing,
+											flag_intersections=flag_intersections,
+											remove_intersections=remove_intersections)
