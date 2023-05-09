@@ -10,10 +10,10 @@ if __name__ == "__main__":
 	# Valid Examples
 	cutoff = None
 	#cutoff = 10
-	cutoff = 15 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
+	#cutoff = 15 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
 	#cutoff = 30
 	#cutoff = 100 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
-	#cutoff = 550 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
+	cutoff = 550 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
 	# Invalid Examples
 	#cutoff = 5 # invalid centerline, invalid path, valid polygon, invalid starting node, invalid ending nodes
 	#cutoff = 250 # valid centerline, valid path, invalid polygon, valid starting node, valid ending nodes
@@ -23,9 +23,9 @@ if __name__ == "__main__":
 
 	river = centerline_width.river(csv_data="data/river_coords.csv", optional_cutoff=cutoff)
 	print(river)
-	print(river.centerline_length)
-	#print(river.centerline_latitude_longtiude)
-	exit()
+	#print(river.centerline_length)
+	print(river.centerline_latitude_longtiude)
+	#exit()
 
 	# Plot river bank centerline
 	centerline_width.plotCenterline(river_object=river,

@@ -8,6 +8,9 @@ from .preprocessing import generatePolygon
 from .preprocessing import generateVoronoi
 from .preprocessing import pointsFromVoronoi
 
+# riverObject.py function calls
+from .riverObject import river
+
 # centerline.py function calls
 from .centerline import centerlinePath
 from .centerline import networkXGraphShortestPath
@@ -17,9 +20,6 @@ from .centerline import smoothedCoordinates
 from .centerline import returnShortestPathPoints
 from .centerline import riverWidthFromCenterlineCoordinates
 from .centerline import riverWidthFromCenterline
-
-# riverObject.py function calls
-from .riverObject import river
 
 # plotDiagrams.py function calls
 from .plotDiagrams import plotCenterline

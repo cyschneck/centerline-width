@@ -128,25 +128,19 @@ def errorHandlingPlotCenterlineWidth(river_object=None,
 		exit()
 
 ## Error Handling: centerline.py
-def errorHandlingRiverWidthFromCenterlineCoordinates(csv_data=None,
+def errorHandlingRiverWidthFromCenterlineCoordinates(river_object=None,
 													centerline_coordinates=None,
 													transect_span_distance=3,
-													bank_polygon=None,
 													remove_intersections=False,
-													save_to_csv=None,
-													optional_cutoff=None):
+													save_to_csv=None):
 	# Error Handling for riverWidthFromCenterlineCoordinates()
-	if csv_data is None:
-		logger.critical("\nCRITICAL ERROR, [csv_data]: Requires csv file")
+	if river_object is None:
+		logger.critical("\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.river)")
 		exit()
 	else:
-		if type(csv_data) != str:
-			logger.critical("\nCRITICAL ERROR, [csv_data]: Must be a str, current type = '{0}'".format(type(csv_data)))
+		if not isinstance(river_object, centerline_width.river):
+			logger.critical("\nCRITICAL ERROR, [river_object]: Must be a river object (see: centerline_width.river), current type = '{0}'".format(type(river_object)))
 			exit()
-		else:
-			if not csv_data.lower().endswith(".csv"):
-				logger.critical("\nCRITICAL ERROR, [csv_data]: Extension must be a .csv file, current extension = '{0}'".format(csv_data.split(".")[1]))
-				exit()
 
 	if transect_span_distance is not None:
 		if type(transect_span_distance) != int:
@@ -166,12 +160,7 @@ def errorHandlingRiverWidthFromCenterlineCoordinates(csv_data=None,
 			logger.critical("\nCRITICAL ERROR, [save_to_csv]: Must be a str, current type = '{0}'".format(type(save_to_csv)))
 			exit()
 
-	if optional_cutoff is not None and type(optional_cutoff) != int:
-		logger.critical("\nCRITICAL ERROR, [optional_cutoff]: Must be a int, current type = '{0}'".format(type(optional_cutoff)))
-		exit()
-
-
-def errorHandlingRiverWidthFromCenterline(csv_data=None,
+def errorHandlingRiverWidthFromCenterline(river_object=None,
 										n_interprolate_centerpoints=None,
 										transect_span_distance=None,
 										apply_smoothing=None,
@@ -180,17 +169,13 @@ def errorHandlingRiverWidthFromCenterline(csv_data=None,
 										optional_cutoff=None):
 	# Error Handling for riverWidthFromCenterline()
 
-	if csv_data is None:
-		logger.critical("\nCRITICAL ERROR, [csv_data]: Requires csv file")
+	if river_object is None:
+		logger.critical("\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.river)")
 		exit()
 	else:
-		if type(csv_data) != str:
-			logger.critical("\nCRITICAL ERROR, [csv_data]: Must be a str, current type = '{0}'".format(type(csv_data)))
+		if not isinstance(river_object, centerline_width.river):
+			logger.critical("\nCRITICAL ERROR, [river_object]: Must be a river object (see: centerline_width.river), current type = '{0}'".format(type(river_object)))
 			exit()
-		else:
-			if not csv_data.lower().endswith(".csv"):
-				logger.critical("\nCRITICAL ERROR, [csv_data]: Extension must be a .csv file, current extension = '{0}'".format(csv_data.split(".")[1]))
-				exit()
 
 	if n_interprolate_centerpoints is not None:
 		if type(n_interprolate_centerpoints) != int:
@@ -218,10 +203,6 @@ def errorHandlingRiverWidthFromCenterline(csv_data=None,
 		if type(save_to_csv) != str:
 			logger.critical("\nCRITICAL ERROR, [save_to_csv]: Must be a str, current type = '{0}'".format(type(save_to_csv)))
 			exit()
-
-	if optional_cutoff is not None and type(optional_cutoff) != int:
-		logger.critical("\nCRITICAL ERROR, [optional_cutoff]: Must be a int, current type = '{0}'".format(type(optional_cutoff)))
-		exit()
 
 def errorHandlingExtractPointsToTextFile(left_kml=None, right_kml=None, text_output_name=None):
 	# Error Handling for extractPoints()

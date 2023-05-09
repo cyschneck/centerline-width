@@ -133,13 +133,11 @@ def riverWidthFromCenterlineCoordinates(river_object=None,
 										save_to_csv=None):
 	# Return the left/right coordinates of width centerlines
 
-	#centerline_width.errorHandlingRiverWidthFromCenterlineCoordinates(csv_data=csv_data,
-	#														centerline_coordinates=centerline_coordinates,
-	#														transect_span_distance=transect_span_distance,
-	#														bank_polygon=bank_polygon,
-	#														remove_intersections=remove_intersections,
-	#														save_to_csv=save_to_csv,
-	#														optional_cutoff=optional_cutoff)
+	centerline_width.errorHandlingRiverWidthFromCenterlineCoordinates(river_object=river_object,
+															centerline_coordinates=centerline_coordinates,
+															transect_span_distance=transect_span_distance,
+															remove_intersections=remove_intersections,
+															save_to_csv=save_to_csv)
 
 	right_width_coordinates = {}
 	left_width_coordinates = {}
@@ -301,13 +299,12 @@ def riverWidthFromCenterline(river_object=None,
 	# Width is measured to the bank, relative to the center point (normal of the centerline)
 	# { [centerline latitude, centerline longitude] : widthValue }
 
-	#centerline_width.errorHandlingRiverWidthFromCenterline(csv_data=csv_data,
-	#														n_interprolate_centerpoints=n_interprolate_centerpoints,
-	#														transect_span_distance=transect_span_distance,
-	#														apply_smoothing=apply_smoothing,
-	#														remove_intersections=remove_intersections,
-	#														save_to_csv=save_to_csv,
-	#														optional_cutoff=optional_cutoff)
+	centerline_width.errorHandlingRiverWidthFromCenterline(river_object=river_object,
+															n_interprolate_centerpoints=n_interprolate_centerpoints,
+															transect_span_distance=transect_span_distance,
+															apply_smoothing=apply_smoothing,
+															remove_intersections=remove_intersections,
+															save_to_csv=save_to_csv)
 
 	if n_interprolate_centerpoints is None:
 		# if plotting width, but n_interprolate_centerpoints is undefined, set to the size of the dataframe
