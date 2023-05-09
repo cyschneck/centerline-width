@@ -118,7 +118,7 @@ def plotCenterlineWidth(river_object=None,
 	# Plot river
 	if n_interprolate_centerpoints is None:
 		# if plotting width, but n_interprolate_centerpoints is undefined, set to the size of the dataframe
-		n_interprolate_centerpoints = len(river_object.df)
+		n_interprolate_centerpoints = river_object.df_len
 
 	# Plot river based on right/left bank coordinates
 	fig = plt.figure(figsize=(10,10))

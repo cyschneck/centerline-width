@@ -314,7 +314,7 @@ def riverWidthFromCenterline(river_object=None,
 
 	if n_interprolate_centerpoints is None:
 		# if plotting width, but n_interprolate_centerpoints is undefined, set to the size of the dataframe
-		n_interprolate_centerpoints = len(river_object.df)
+		n_interprolate_centerpoints = river_object.df_len
 
 	if river_object.centerline_latitude_longtiude is None:
 		logger.critical("\nCRITICAL ERROR, unable to find width without a valid centerline")

@@ -126,7 +126,7 @@ centerline_width.riverCenterline(csv_data=None, optional_cutoff=None)
 Object (class) attributes:
 
 * river_name (string): name of object, set to the csv_data string
-* df (pandas dataframe): dataframe of the csv data spliced by the optional_cutoff
+* df_len (int): length of the dataframe of the csv data spliced by the optional_cutoff
 * left_bank_coordinates (list of two element lists): list of coordiantes of the left bank generated from the csv file
 * right_bank_coordinates (list of two element lists) list of coordinates of the right bank generated from the csv file
 * river_bank_polygon (Shapley Polygon): Multi-sided polygon generated to encapsulate river bank (used to define an inside and an outside of the river)

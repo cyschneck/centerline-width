@@ -11,7 +11,7 @@ class riverCenterline:
 		df = pd.read_csv(csv_data)
 		if optional_cutoff:
 			df = df.head(optional_cutoff)
-		self.df = df
+		self.df_len = len(df)
 
 		# Left and Right Coordinates from the given csv data and data cutoff
 		left_bank_coordinates, right_bank_coordinates = centerline_width.leftRightCoordinates(df)
