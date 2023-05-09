@@ -37,24 +37,19 @@ def errrorHandlingConvertColumnsToCSV(text_file=None,
 		exit()
 
 ## Error Handling: plotDiagrams.py
-def errorHandlingPlotCenterline(csv_data=None,
+def errorHandlingPlotCenterline(river_object=None,
 								display_all_possible_paths=None,
 								plot_title=None,
 								save_plot_name=None,
-								display_voronoi=None,
-								optional_cutoff=None):
+								display_voronoi=None):
 	# Error handling for plotCenterline()
-	if csv_data is None:
-		logger.critical("\nCRITICAL ERROR, [csv_data]: Requires csv file")
+	if river_object is None:
+		logger.critical("\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.river)")
 		exit()
 	else:
-		if type(csv_data) != str:
-			logger.critical("\nCRITICAL ERROR, [csv_data]: Must be a str, current type = '{0}'".format(type(csv_data)))
+		if not isinstance(river_object, centerline_width.river):
+			logger.critical("\nCRITICAL ERROR, [river_object]: Must be a river object (see: centerline_width.river), current type = '{0}'".format(type(river_object)))
 			exit()
-		else:
-			if not csv_data.lower().endswith(".csv"):
-				logger.critical("\nCRITICAL ERROR, [csv_data]: Extension must be a .csv file, current extension = '{0}'".format(csv_data.split(".")[1]))
-				exit()
 
 	if type(display_all_possible_paths) != bool:
 		logger.critical("\nCRITICAL ERROR, [display_all_possible_paths]: Must be a bool, current type = '{0}'".format(type(display_all_possible_paths)))
@@ -72,11 +67,7 @@ def errorHandlingPlotCenterline(csv_data=None,
 		logger.critical("\nCRITICAL ERROR, [display_voronoi]: Must be a bool, current type = '{0}'".format(type(display_voronoi)))
 		exit()
 
-	if optional_cutoff is not None and type(optional_cutoff) != int:
-		logger.critical("\nCRITICAL ERROR, [optional_cutoff]: Must be a int, current type = '{0}'".format(type(optional_cutoff)))
-		exit()
-
-def errorHandlingPlotCenterlineWidth(csv_data=None,
+def errorHandlingPlotCenterlineWidth(river_object=None,
 									plot_title=None,
 									save_plot_name=None,
 									display_true_centerline=None,
@@ -84,20 +75,15 @@ def errorHandlingPlotCenterlineWidth(csv_data=None,
 									transect_span_distance=None,
 									apply_smoothing=None,
 									flag_intersections=None,
-									remove_intersections=None,
-									optional_cutoff=None):
+									remove_intersections=None):
 	# Error handling for plotCenterlineWidth()
-	if csv_data is None:
-		logger.critical("\nCRITICAL ERROR, [csv_data]: Requires csv file")
+	if river_object is None:
+		logger.critical("\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.river)")
 		exit()
 	else:
-		if type(csv_data) != str:
-			logger.critical("\nCRITICAL ERROR, [csv_data]: Must be a str, current type = '{0}'".format(type(csv_data)))
+		if not isinstance(river_object, centerline_width.river):
+			logger.critical("\nCRITICAL ERROR, [river_object]: Must be a river object (see: centerline_width.river), current type = '{0}'".format(type(river_object)))
 			exit()
-		else:
-			if not csv_data.lower().endswith(".csv"):
-				logger.critical("\nCRITICAL ERROR, [csv_data]: Extension must be a .csv file, current extension = '{0}'".format(csv_data.split(".")[1]))
-				exit()
 
 	if plot_title is not None and type(plot_title) != str:
 		logger.critical("\nCRITICAL ERROR, [plot_title]: Must be a str, current type = '{0}'".format(type(plot_title)))
@@ -141,29 +127,7 @@ def errorHandlingPlotCenterlineWidth(csv_data=None,
 		logger.critical("\nCRITICAL ERROR, [remove_intersections]: Must be a bool, current type = '{0}'".format(type(remove_intersections)))
 		exit()
 
-	if optional_cutoff is not None and type(optional_cutoff) != int:
-		logger.critical("\nCRITICAL ERROR, [optional_cutoff]: Must be a int, current type = '{0}'".format(type(optional_cutoff)))
-		exit()
-
 ## Error Handling: centerline.py
-def errorHandlingCenterlineLatitudeLongitude(csv_data=None, optional_cutoff=None):
-	# Error Handling for centerlineLatitudeLongitude()
-	if csv_data is None:
-		logger.critical("\nCRITICAL ERROR, [csv_data]: Requires csv file")
-		exit()
-	else:
-		if type(csv_data) != str:
-			logger.critical("\nCRITICAL ERROR, [csv_data]: Must be a str, current type = '{0}'".format(type(csv_data)))
-			exit()
-		else:
-			if not csv_data.lower().endswith(".csv"):
-				logger.critical("\nCRITICAL ERROR, [csv_data]: Extension must be a .csv file, current extension = '{0}'".format(csv_data.split(".")[1]))
-				exit()
-
-	if optional_cutoff is not None and type(optional_cutoff) != int:
-		logger.critical("\nCRITICAL ERROR, [optional_cutoff]: Must be a int, current type = '{0}'".format(type(optional_cutoff)))
-		exit()
-
 def errorHandlingRiverWidthFromCenterlineCoordinates(csv_data=None,
 													centerline_coordinates=None,
 													transect_span_distance=3,
@@ -290,27 +254,3 @@ def errorHandlingExtractPointsToTextFile(left_kml=None, right_kml=None, text_out
 		if type(text_output_name) != str:
 			logger.critical("\nCRITICAL ERROR, [text_output_name]: Must be a str, current type = '{0}'".format(type(text_output_name)))
 			exit()
-
-def errorHandlingCenterlineLength(centerline_coordinates=None):
-	# Error Handling for centerlineLength()
-	if centerline_coordinates is None:
-		logger.critical("\nCRITICAL ERROR, [centerline_coordinates]: Requires centerline_coordinates")
-		exit()
-	else:
-		if type(centerline_coordinates) != list:
-			logger.critical("\nCRITICAL ERROR, [centerline_coordinates]: Must be a list, current type = '{0}'".format(type(centerline_coordinates)))
-			exit()
-		else:
-			for centerline_pair in centerline_coordinates:
-				if type(centerline_pair) != list and type(centerline_pair) != tuple:
-					logger.critical("\nCRITICAL ERROR, [centerline_coordinates]: All elements in centerline_coordinates must be a list of lists, current item '{0}' is type = '{1}'".format(centerline_pair, type(centerline_pair)))
-					exit()
-				if len(centerline_pair) != 2:
-					logger.critical("\nCRITICAL ERROR, [centerline_coordinates]: All elements in centerline_coordinates must be xy pair, length = 2, current length of '{0}' = '{1}'".format(centerline_pair, len(centerline_pair)))
-					exit()
-				if type(centerline_pair[0]) != int and type(centerline_pair[0]) != float and type(centerline_pair[0]) != np.float64:
-					logger.critical("\nCRITICAL ERROR, [centerline_coordinates]: All elements in centerline_coordinates be a int or float, current type = '{0}'".format(type(centerline_pair[0])))
-					exit()
-				if type(centerline_pair[1]) != int and type(centerline_pair[1]) != float and type(centerline_pair[1]) != np.float64:
-					logger.critical("\nCRITICAL ERROR, [centerline_coordinates]: All elements in centerline_coordinates be a int or float, current type = '{0}'".format(type(centerline_pair[0])))
-					exit()

@@ -11,7 +11,6 @@ from .preprocessing import pointsFromVoronoi
 # centerline.py function calls
 from .centerline import centerlinePath
 from .centerline import networkXGraphShortestPath
-from .centerline import centerlineLatitudeLongitude
 from .centerline import centerlineLength
 from .centerline import evenlySpacedCenterline
 from .centerline import smoothedCoordinates
@@ -19,7 +18,8 @@ from .centerline import returnShortestPathPoints
 from .centerline import riverWidthFromCenterlineCoordinates
 from .centerline import riverWidthFromCenterline
 
-from .centerline import river
+# riverObject.py function calls
+from .riverObject import river
 
 # plotDiagrams.py function calls
 from .plotDiagrams import plotCenterline
@@ -29,8 +29,6 @@ from .plotDiagrams import plotCenterlineWidth
 from .error_handling import errrorHandlingConvertColumnsToCSV
 from .error_handling import errorHandlingPlotCenterline
 from .error_handling import errorHandlingPlotCenterlineWidth
-from .error_handling import errorHandlingCenterlineLatitudeLongitude
 from .error_handling import errorHandlingRiverWidthFromCenterlineCoordinates
 from .error_handling import errorHandlingRiverWidthFromCenterline
 from .error_handling import errorHandlingExtractPointsToTextFile
-from .error_handling import errorHandlingCenterlineLength
