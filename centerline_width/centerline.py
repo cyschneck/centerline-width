@@ -338,7 +338,6 @@ def riverWidthFromCenterline(river_object=None,
 												Point(left_width_coord[centerline_coord][0], left_width_coord[centerline_coord][1])])
 		# TODO: haversine to convert length into distance
 		width_dict[centerline_coord] = linestring_between_points.length
-	print("TODO: [riverWidthFromCenterline] haversine to convert length into distance")
 
 	# Save width dictionary to a csv file (Latitude, Longtiude, Width)
 	if save_to_csv:
@@ -352,7 +351,7 @@ def riverWidthFromCenterline(river_object=None,
 
 def centerlineLength(centerline_coordinates=None):
 	# Return the length/distance for all the centerline coordaintes
-	print("TODO: [centerlineLength] haversine to convert length into distance")
+	# TODO: haversine to convert length into distance
 	total_length = 0
 	previous_pair = None
 	if centerline_coordinates is None:
