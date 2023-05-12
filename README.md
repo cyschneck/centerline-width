@@ -143,7 +143,7 @@ river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv"
 
 ### Return Latitude/Longitude Coordinates of Centerline
 Return the latitude/longtiude coordinates of the centerline based on the left and right banks
-```cle
+```
 river_object.centerline_latitude_longtiude
 ```
 Centerline coordinates are formed from Voronoi vertices
@@ -160,9 +160,9 @@ Output is a list of tuples: (example) `[(-92.86788596499872, 30.03786596717931),
 
 ```
 plotCenterline(display_all_possible_paths=False, 
-				plot_title=None, 
-				save_plot_name=None, 
-				display_voronoi=False)
+		plot_title=None, 
+		save_plot_name=None, 
+		display_voronoi=False)
 ```
 * [OPTIONAL] display_all_possible_paths (boolean): Display all possible paths, not just the centerline (useful for debugging)
 * [OPTIONAL] plot_title (string): Change plot title, defaults to "River Coordinates: Valid Centerline = True/False, Valid Polygon = True/False"
@@ -184,13 +184,13 @@ Plot the width of the river based on the centerline
 Display Centerline at even intervals from the Voronoi generated centerline
 ```
 plotCenterlineWidth(plot_title=None, 
-					save_plot_name=None, 
-					display_true_centerline=True,
-					n_interprolate_centerpoints=None,
-					transect_span_distance=3,
-					apply_smoothing=False,
-					flag_intersections=True,
-					remove_intersections=False)
+		save_plot_name=None, 
+		display_true_centerline=True,
+		n_interprolate_centerpoints=None,
+		transect_span_distance=3,
+		apply_smoothing=False,
+		flag_intersections=True,
+		remove_intersections=False)
 ```
 * [OPTIONAL] plot_title (string): Change plot title, defaults to "River Coordinates: Valid Centerline = True/False, Valid Polygon = True/False"
 * [OPTIONAL] save_plot_name (string): Save the plot with a given name and location
@@ -326,14 +326,13 @@ If the data is too small, a centerline and its coordinates cannot not be found (
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example2.png)
 Can be fixed by expanding the data until the polygon is large enough to contain at least two different vertex points
 
-## Developer Notes: Tech Debt and Bugs
+## Developer Notes: Tech Debt and Bug Fixes
 * centerlineLength/riverWidthFromCenterline: haversine to convert length into distance
 * Return the length of the left/right bank
 * clean up README with examples, working functions, and remove unused functions from __init__
 * Verify error handling for public functions
 * Check that smoothing filter option does not produce a line that goes outside of the polygon
 * Return the knickpoints (occurrences of knickpoints)
-* Add bank angle criteria for width transect
 
 ## Citations
 Based on work written in R (Golly et al. 2017):
