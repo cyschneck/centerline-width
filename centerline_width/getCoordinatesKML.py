@@ -1,15 +1,16 @@
-from pykml import parser
+# Built in Python functions
 import re
+
+# External Python libraries (installed via pip install)
 import pandas as pd
+from pykml import parser
 
 # Internal centerline_width reference to access functions, global variables, and error handling
 import centerline_width
 
-'''
- Code takes in a kml file from Google Earth Pro and exports the coordinates
- into a txt file. 
-'''
 def extractPointsToTextFile(left_kml=None, right_kml=None, text_output_name="data/river_coords.txt"):
+	# Extract points from KML files from Google Earth Pro and exports coordinates into a text file with headers: llat, llong, rlat, rlong
+
 	centerline_width.errorHandlingExtractPointsToTextFile(left_kml=left_kml,
 														right_kml=right_kml,
 														text_output_name=text_output_name)

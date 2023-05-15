@@ -1,11 +1,15 @@
 # River object class used for all functions and centerline functions
+
+# External Python libraries (installed via pip install)
 import pandas as pd
 
 # Internal centerline_width reference to access functions, global variables, and error handling
 import centerline_width
 
 class riverCenterline:
-	def __init__(self, csv_data, optional_cutoff=None):
+	def __init__(self, csv_data=None, optional_cutoff=None):
+		centerline_width.errorHandlingRiverCenterlineClass(csv_data=csv_data, optional_cutoff=optional_cutoff)
+
 		# Description and dataframe
 		self.river_name = csv_data
 		df = pd.read_csv(csv_data)

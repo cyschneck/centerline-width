@@ -1,8 +1,9 @@
+# Built in Python functions
 import math
 import logging
 
+# External Python libraries (installed via pip install)
 import matplotlib.pyplot as plt
-import pandas as pd
 from scipy.spatial import voronoi_plot_2d
 
 # Internal centerline_width reference to access functions, global variables, and error handling

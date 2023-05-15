@@ -1,9 +1,9 @@
-# Convert a text file to a csv
-# Option to flip bank directions
+# Built in Python functions
 import csv
 import logging
 import math
 
+# External Python libraries (installed via pip install)
 from collections import Counter
 import numpy as np
 from shapely.geometry import Point, Polygon, LineString

@@ -26,7 +26,6 @@ if __name__ == "__main__":
 	#print(river.__dict__)
 	#print(river.centerline_length)
 	#print(river.centerline_latitude_longtiude)
-	#exit()
 
 	# Plot river bank centerline
 	river.plotCenterline(save_plot_name="data/river_coords_centerline.png", 

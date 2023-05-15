@@ -1,12 +1,13 @@
+# Built in Python functions
 import math
 import logging
 import csv
 
+# External Python libraries (installed via pip install)
 import numpy as np
-import pandas as pd
 import networkx as nx
 from scipy import interpolate
-from shapely.geometry import Point, Polygon, LineString
+from shapely.geometry import Point, LineString
 
 # Internal centerline_width reference to access functions, global variables, and error handling
 import centerline_width
