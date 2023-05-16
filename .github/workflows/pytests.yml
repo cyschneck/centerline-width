@@ -23,7 +23,6 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
-        pip install centerline-width
     - name: Test with pytest
       run: |
-        pytest
+        python3 -m pytest
