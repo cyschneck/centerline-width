@@ -41,8 +41,9 @@ setup(
 		"matplotlib>=3.1.0",
 		"networkx>=3.0",
 		"numpy>=1.24.1",
-		"pykml>=0.2.0",
 		"pandas>=1.3.5",
+		"pykml>=0.2.0",
+		"pytest>=7.2.2",
 		"scipy>=1.10.1",
 		"shapely>=2.0.1"
 	],

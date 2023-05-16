@@ -31,7 +31,7 @@ def errrorHandlingConvertColumnsToCSV(text_file=None,
 				exit()
 
 	if type(flipBankDirection) != bool:
-		logger.critical("\nCRITICAL ERROR, [flipBankDirection]: Must be a bool, current type = '{0}'".format(flipBankDirection))
+		logger.critical("\nCRITICAL ERROR, [flipBankDirection]: Must be a bool, current type = '{0}'".format(type(flipBankDirection)))
 		exit()
 
 ## Error Handling: plotDiagrams.py
@@ -202,6 +202,7 @@ def errorHandlingRiverWidthFromCenterline(river_object=None,
 			logger.critical("\nCRITICAL ERROR, [save_to_csv]: Must be a str, current type = '{0}'".format(type(save_to_csv)))
 			exit()
 
+# Error Handling: getCoordinatesKML.py
 def errorHandlingExtractPointsToTextFile(left_kml=None, right_kml=None, text_output_name=None):
 	# Error Handling for extractPoints()
 	if left_kml is None:
@@ -234,8 +235,7 @@ def errorHandlingExtractPointsToTextFile(left_kml=None, right_kml=None, text_out
 			logger.critical("\nCRITICAL ERROR, [text_output_name]: Must be a str, current type = '{0}'".format(type(text_output_name)))
 			exit()
 
-
-## Error Handling: riverCenterlineClass
+## Error Handling: riverCenterlineClass.py
 def errorHandlingRiverCenterlineClass(csv_data=None, optional_cutoff=None):
 	# Error Handling for riverCenterlineClass()
 	if csv_data is None:
