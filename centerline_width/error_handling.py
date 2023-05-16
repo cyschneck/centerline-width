@@ -45,7 +45,7 @@ def errorHandlingPlotCenterline(river_object=None,
 		logger.critical("\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.riverCenterline)")
 		exit()
 	else:
-		if not isinstance(river_object, centerline_width.riverCenterline):
+		if not isinstance(river_object, type(centerline_width.riverCenterline)):
 			logger.critical("\nCRITICAL ERROR, [river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{0}'".format(type(river_object)))
 			exit()
 
