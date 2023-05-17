@@ -8,6 +8,7 @@ import numpy as np
 import networkx as nx
 from scipy import interpolate
 from shapely.geometry import Point, LineString
+from haversine import haversine
 
 # Internal centerline_width reference to access functions, global variables, and error handling
 import centerline_width
@@ -294,6 +295,7 @@ def riverWidthFromCenterline(river_object=None,
 							transect_span_distance=3,
 							apply_smoothing=True,
 							remove_intersections=False,
+							units="km",
 							save_to_csv=None):
 	# Return river width: centerline and width at centerline
 	# Width is measured to the bank, relative to the center point (normal of the centerline)
@@ -304,6 +306,7 @@ def riverWidthFromCenterline(river_object=None,
 															transect_span_distance=transect_span_distance,
 															apply_smoothing=apply_smoothing,
 															remove_intersections=remove_intersections,
+															units=units,
 															save_to_csv=save_to_csv)
 
 	if n_interprolate_centerpoints is None:
@@ -328,24 +331,24 @@ def riverWidthFromCenterline(river_object=None,
 
 	width_dict = {}
 	for centerline_coord, _ in right_width_coord.items():
-		linestring_between_points = LineString([Point(right_width_coord[centerline_coord][0], right_width_coord[centerline_coord][1]), 
-												Point(left_width_coord[centerline_coord][0], left_width_coord[centerline_coord][1])])
-		# TODO: haversine to convert length into distance
-		width_dict[centerline_coord] = linestring_between_points.length
+		# store the haversine distance between the lat/lon position of the right/left bank
+		lon1, lat1 = right_width_coord[centerline_coord]
+		lon2, lat2 = left_width_coord[centerline_coord]
+		haversine_distance_between_right_and_left = haversine((lat1, lon1), (lat2, lon2), unit=units)
+		width_dict[centerline_coord] = haversine_distance_between_right_and_left
 
 	# Save width dictionary to a csv file (Latitude, Longtiude, Width)
 	if save_to_csv:
 		with open(save_to_csv, "w") as csv_file_output:
 			writer = csv.writer(csv_file_output)
-			writer.writerow(["Centerline Latitude (°)", "Centerline Longitude (°)", "Width (units)"])
+			writer.writerow(["Centerline Latitude (°)", "Centerline Longitude (°)", "Width ({0})".format(units)])
 			for coordinate_key, width_value in width_dict.items():
 				writer.writerow([coordinate_key[0], coordinate_key[1], width_value])
 
 	return width_dict
 
 def centerlineLength(centerline_coordinates=None):
-	# Return the length/distance for all the centerline coordaintes
-	# TODO: haversine to convert length into distance
+	# Return the length/distance for all the centerline coordaintes in km
 	total_length = 0
 	previous_pair = None
 	if centerline_coordinates is None:
@@ -355,8 +358,8 @@ def centerlineLength(centerline_coordinates=None):
 		if previous_pair is None:
 			previous_pair = xy_pair
 		else:
-			x1, x2 = previous_pair[0], xy_pair[0]
-			y1, y2 = previous_pair[1], xy_pair[1]
-			distance_to_add = math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
+			lon1, lon2 = previous_pair[0], xy_pair[0]
+			lat1, lat2 = previous_pair[1], xy_pair[1]
+			distance_to_add = haversine((lat1, lon1), (lat2, lon2), unit="km")
 			total_length += distance_to_add
 	return total_length

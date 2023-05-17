@@ -38,6 +38,7 @@ setup(
 											'centerline_width.*']),
 	include_package_data=True,
 	install_requires=[
+		"haversine>=2.8.0",
 		"matplotlib>=3.1.0",
 		"networkx>=3.0",
 		"numpy>=1.24.1",

@@ -242,7 +242,6 @@ river_object.plotCenterlineWidth(save_plot_name="data/river_coords_width.png",
 ```
 ![river_coords_width+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/river_coords_width.png)
 
-## Future Work: Coming Soon
 ### Return Width of River
 
 Return the width of the river at each (evenly spaced) centerline coordinate
@@ -252,12 +251,15 @@ riverWidthFromCenterline(n_interprolate_centerpoints=None,
 			transect_span_distance=3,
 			apply_smoothing=True,
 			remove_intersections=False,
+			units="km",
 			save_to_csv=None)
 ```
 * [OPTIONAL] n_interprolate_centerpoints (int): Recreate centerline coordinates with n evenly spaced points, defaults to the number of rows in the csv file
 * [OPTIONAL] transect_span_distance (int): Sum up n amount of points around a centerpoint to determine the slope (increase to decrease the impact of sudden changes), defaults to 6, must be greater than 2 (since the slope is found from the difference in position between two points), measured orthogonal to the centerline
 * [OPTIONAL] apply_smoothing (bool): Apply a B-spline smoothing to centerline
 * [OPTIONAL] remove_intersections (bool): Iterative remove intersecting lines, to maintain the most width lines, but return only non-intersecting width lines, defaultsl to True
+* [OPTIONAL] units (string): Units to measure distance, options: ["km" (kilometers), "m" (meters), "mi" (miles), "nmi" (nautical miles), "ft" (feet), "in" (inches), "rad" (radians), "deg" (degrees)], defaults to "km" (kilometers)
+* [OPTIONAL] save_to_csv (string): Save river width output to a csv file, defaults to None (no file is saved)
 
 ```python
 import centerline_width
@@ -266,7 +268,7 @@ river_width_dict = river_object.riverWidthFromCenterline(transect_span_distance=
 							apply_smoothing=True,
 							remove_intersections=True)
 ```
-Width dictionary = `{(-92.86781253030335, 30.038091261157252): 0.0012665460374170527, (-92.86785237492347, 30.037936004362408): 0.0012253609552254057, (-92.86788265990378, 30.037859857932435): 0.001166563476716173, (-92.86791593240025, 30.037784209097087): 0.0011192823818546845, (-92.86794925171479, 30.037708690068605): 0.0010967819847309656, (-92.86797967714938, 30.03763293305923): 0.001072182634460594}`
+Width dictionary = `{(-92.86792084788995, 30.037769672351182): 0.10969163557087018, (-92.86795038641004, 30.03769867854198): 0.10794219579997719}`
 
 ## Documentation and Algorithm to Determine Centerline
 

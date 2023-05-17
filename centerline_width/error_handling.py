@@ -50,8 +50,6 @@ def errorHandlingPlotCenterline(river_object=None,
 			logger.critical("\nCRITICAL ERROR, [river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{0}'".format(type(river_object)))
 			exit()
 
-	print(display_all_possible_paths)
-	print(type(display_all_possible_paths))
 	if type(display_all_possible_paths) != bool:
 		logger.critical("\nCRITICAL ERROR, [display_all_possible_paths]: Must be a bool, current type = '{0}'".format(type(display_all_possible_paths)))
 		exit()
@@ -134,6 +132,7 @@ def errorHandlingRiverWidthFromCenterline(river_object=None,
 										transect_span_distance=None,
 										apply_smoothing=None,
 										remove_intersections=None,
+										units=None,
 										save_to_csv=None):
 	# Error Handling for riverWidthFromCenterline()
 	if river_object is None:
@@ -165,6 +164,12 @@ def errorHandlingRiverWidthFromCenterline(river_object=None,
 	if type(remove_intersections) != bool:
 		logger.critical("\nCRITICAL ERROR, [remove_intersections]: Must be a bool, current type = '{0}'".format(type(remove_intersections)))
 		exit()
+
+	#if units is not None and type(units) != str:
+	#		logger.critical("\nCRITICAL ERROR, [units]: Must be a str, current type = '{0}'".format(type(units)))
+	#		exit()
+	#else:
+	#	if units not in units_options:
 
 	if save_to_csv is not None and type(save_to_csv) != str:
 			logger.critical("\nCRITICAL ERROR, [save_to_csv]: Must be a str, current type = '{0}'".format(type(save_to_csv)))

@@ -49,12 +49,14 @@ class riverCenterline:
 								transect_span_distance=3,
 								apply_smoothing=True,
 								remove_intersections=False,
+								units="km",
 								save_to_csv=None):
 		return centerline_width.riverWidthFromCenterline(river_object=self,
 														n_interprolate_centerpoints=n_interprolate_centerpoints,
 														transect_span_distance=transect_span_distance,
 														apply_smoothing=apply_smoothing,
 														remove_intersections=remove_intersections,
+														units=units,
 														save_to_csv=save_to_csv)
 
 	def plotCenterline(self, display_all_possible_paths=False, plot_title=None, save_plot_name=None, display_voronoi=False):

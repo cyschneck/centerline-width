@@ -24,7 +24,7 @@ if __name__ == "__main__":
 	river = centerline_width.riverCenterline(csv_data="data/river_coords.csv", optional_cutoff=cutoff)
 	print(river)
 	#print(river.__dict__)
-	#print(river.centerline_length)
+	print("Length = {0} km".format(river.centerline_length))
 	#print(river.centerline_latitude_longtiude)
 
 	# Plot river bank centerline
@@ -47,6 +47,7 @@ if __name__ == "__main__":
 													transect_span_distance=transect,
 													apply_smoothing=True,
 													remove_intersections=True,
+													units="m",
 													save_to_csv="data/centerline_coords.csv")
 
 	print("\nriver width dict = {0}\n".format(river_width_dict))
