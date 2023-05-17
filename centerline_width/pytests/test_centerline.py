@@ -93,6 +93,23 @@ def test_riverWidthFromCenterline_removeIntersectionsInvalidTypes(caplog, remove
 	assert log_record.levelno == logging.CRITICAL
 	assert log_record.message == "\nCRITICAL ERROR, [remove_intersections]: Must be a bool, current type = '{0}'".format(remove_intersections_error_output)
 
+@pytest.mark.parametrize("units_invalid, units_error_output", invalid_non_str_options)
+def test_riverWidthFromCenterline_unitsInvalidTypes(caplog, units_invalid, units_error_output):
+	with pytest.raises(SystemExit):
+		centerline_width.riverWidthFromCenterline(river_object=river_class_example,
+											units=units_invalid)
+	log_record = caplog.records[0]
+	assert log_record.levelno == logging.CRITICAL
+	assert log_record.message == "\nCRITICAL ERROR, [units]: Must be a str, current type = '{0}'".format(units_error_output)
+
+def test_riverWidthFromCenterline_unitsInvalidOption(caplog):
+	with pytest.raises(SystemExit):
+		centerline_width.riverWidthFromCenterline(river_object=river_class_example,
+											units="un")
+	log_record = caplog.records[0]
+	assert log_record.levelno == logging.CRITICAL
+	assert log_record.message == "\nCRITICAL ERROR, [units]: Must be an option available (['km', 'm', 'mi', 'nmi', 'ft', 'in', 'rad', 'deg']), current given option = 'un'"
+
 @pytest.mark.parametrize("save_to_csv_invalid, save_to_csv_error_output", invalid_non_str_options)
 def test_riverWidthFromCenterline_saveToCSVInvalidTypes(caplog, save_to_csv_invalid, save_to_csv_error_output):
 	with pytest.raises(SystemExit):

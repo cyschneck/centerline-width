@@ -165,11 +165,14 @@ def errorHandlingRiverWidthFromCenterline(river_object=None,
 		logger.critical("\nCRITICAL ERROR, [remove_intersections]: Must be a bool, current type = '{0}'".format(type(remove_intersections)))
 		exit()
 
-	#if units is not None and type(units) != str:
-	#		logger.critical("\nCRITICAL ERROR, [units]: Must be a str, current type = '{0}'".format(type(units)))
-	#		exit()
-	#else:
-	#	if units not in units_options:
+	units_options = ["km","m","mi","nmi","ft","in","rad","deg"]
+	if units is not None and type(units) != str:
+			logger.critical("\nCRITICAL ERROR, [units]: Must be a str, current type = '{0}'".format(type(units)))
+			exit()
+	else:
+		if units not in units_options:
+			logger.critical("\nCRITICAL ERROR, [units]: Must be an option available ({0}), current given option = '{1}'".format(units_options, units))
+			exit()
 
 	if save_to_csv is not None and type(save_to_csv) != str:
 			logger.critical("\nCRITICAL ERROR, [save_to_csv]: Must be a str, current type = '{0}'".format(type(save_to_csv)))
