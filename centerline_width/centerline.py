@@ -139,13 +139,6 @@ def riverWidthFromCenterlineCoordinates(river_object=None,
 										remove_intersections=False,
 										save_to_csv=None):
 	# Return the left/right coordinates of width centerlines
-
-	centerline_width.errorHandlingRiverWidthFromCenterlineCoordinates(river_object=river_object,
-															centerline_coordinates=centerline_coordinates,
-															transect_span_distance=transect_span_distance,
-															remove_intersections=remove_intersections,
-															save_to_csv=save_to_csv)
-
 	right_width_coordinates = {}
 	left_width_coordinates = {}
 	num_intersection_coordinates = {}

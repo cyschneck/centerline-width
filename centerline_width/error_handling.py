@@ -4,6 +4,7 @@
 
 # Built in Python functions
 import logging
+from io import StringIO
 
 # Internal centerline_width reference to access functions, global variables, and error handling
 import centerline_width
@@ -45,10 +46,12 @@ def errorHandlingPlotCenterline(river_object=None,
 		logger.critical("\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.riverCenterline)")
 		exit()
 	else:
-		if not isinstance(river_object, type(centerline_width.riverCenterline)):
+		if not isinstance(river_object, centerline_width.riverCenterline):
 			logger.critical("\nCRITICAL ERROR, [river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{0}'".format(type(river_object)))
 			exit()
 
+	print(display_all_possible_paths)
+	print(type(display_all_possible_paths))
 	if type(display_all_possible_paths) != bool:
 		logger.critical("\nCRITICAL ERROR, [display_all_possible_paths]: Must be a bool, current type = '{0}'".format(type(display_all_possible_paths)))
 		exit()
@@ -126,47 +129,13 @@ def errorHandlingPlotCenterlineWidth(river_object=None,
 		exit()
 
 ## Error Handling: centerline.py
-def errorHandlingRiverWidthFromCenterlineCoordinates(river_object=None,
-													centerline_coordinates=None,
-													transect_span_distance=3,
-													remove_intersections=False,
-													save_to_csv=None):
-	# Error Handling for riverWidthFromCenterlineCoordinates()
-	if river_object is None:
-		logger.critical("\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.riverCenterline)")
-		exit()
-	else:
-		if not isinstance(river_object, centerline_width.riverCenterline):
-			logger.critical("\nCRITICAL ERROR, [river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{0}'".format(type(river_object)))
-			exit()
-
-	if transect_span_distance is not None:
-		if type(transect_span_distance) != int:
-			logger.critical("\nCRITICAL ERROR, [transect_span_distance]: Must be a int, current type = '{0}'".format(type(transect_span_distance)))
-			exit()
-		else:
-			if transect_span_distance < 3:
-				logger.critical("\nCRITICAL ERROR, [transect_span_distance]: Must be greater than 2, currently = '{0}'".format(transect_span_distance))
-				exit()
-
-	if type(remove_intersections) != bool:
-		logger.critical("\nCRITICAL ERROR, [remove_intersections]: Must be a bool, current type = '{0}'".format(type(remove_intersections)))
-		exit()
-
-	if save_to_csv is not None:
-		if type(save_to_csv) != str:
-			logger.critical("\nCRITICAL ERROR, [save_to_csv]: Must be a str, current type = '{0}'".format(type(save_to_csv)))
-			exit()
-
 def errorHandlingRiverWidthFromCenterline(river_object=None,
 										n_interprolate_centerpoints=None,
 										transect_span_distance=None,
 										apply_smoothing=None,
 										remove_intersections=None,
-										save_to_csv=None,
-										optional_cutoff=None):
+										save_to_csv=None):
 	# Error Handling for riverWidthFromCenterline()
-
 	if river_object is None:
 		logger.critical("\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.riverCenterline)")
 		exit()
@@ -197,14 +166,13 @@ def errorHandlingRiverWidthFromCenterline(river_object=None,
 		logger.critical("\nCRITICAL ERROR, [remove_intersections]: Must be a bool, current type = '{0}'".format(type(remove_intersections)))
 		exit()
 
-	if save_to_csv is not None:
-		if type(save_to_csv) != str:
+	if save_to_csv is not None and type(save_to_csv) != str:
 			logger.critical("\nCRITICAL ERROR, [save_to_csv]: Must be a str, current type = '{0}'".format(type(save_to_csv)))
 			exit()
 
 # Error Handling: getCoordinatesKML.py
 def errorHandlingExtractPointsToTextFile(left_kml=None, right_kml=None, text_output_name=None):
-	# Error Handling for extractPoints()
+	# Error Handling for extractPointsToTextFile()
 	if left_kml is None:
 		logger.critical("\nCRITICAL ERROR, [left_kml]: Requires left_kml file")
 		exit()
@@ -228,7 +196,7 @@ def errorHandlingExtractPointsToTextFile(left_kml=None, right_kml=None, text_out
 			exit()
 
 	if text_output_name is None:
-		logger.critical("\nCRITICAL ERROR, [text_output_name]: Requires output file name file")
+		logger.critical("\nCRITICAL ERROR, [text_output_name]: Requires output file name")
 		exit()
 	else:
 		if type(text_output_name) != str:
@@ -239,10 +207,10 @@ def errorHandlingExtractPointsToTextFile(left_kml=None, right_kml=None, text_out
 def errorHandlingRiverCenterlineClass(csv_data=None, optional_cutoff=None):
 	# Error Handling for riverCenterlineClass()
 	if csv_data is None:
-		logger.critical("\nCRITICAL ERROR, [csv_data]: Requires csv_data name")
+		logger.critical("\nCRITICAL ERROR, [csv_data]: Requires csv_data location")
 		exit()
 	else:
-		if type(csv_data) != str:
+		if type(csv_data) != str and not isinstance(csv_data, StringIO):
 			logger.critical("\nCRITICAL ERROR, [csv_data]: Must be a str, current type = '{0}'".format(type(csv_data)))
 			exit()
 

@@ -44,7 +44,6 @@ setup(
 		"pandas>=1.3.5",
 		"pykml>=0.2.0",
 		"pytest>=7.2.2",
-		"pytest-mock>=3.10.0",
 		"scipy>=1.10.1",
 		"shapely>=2.0.1"
 	],

@@ -1,5 +1,5 @@
 # Pytest for preprocessing.py
-# centerline-width/: python3 -m pytest centerline_width/pytests/ -v
+# centerline-width/: python3 -m pytest -v
 import logging
 
 # External Python libraries (installed via pip install)
@@ -8,15 +8,15 @@ import pytest
 # Internal centerline-width reference to access functions, global variables, and error handling
 import centerline_width
 
-invalid_non_str_options = [(1961, "<class 'int'>"),
-						(3.1415, "<class 'float'>"),
-						([], "<class 'list'>"),
-						(False, "<class 'bool'>")]
-
 invalid_non_bool_options = [(1961, "<class 'int'>"),
 						(3.1415, "<class 'float'>"),
 						([], "<class 'list'>"),
 						("testing_string", "<class 'str'>")]
+
+invalid_non_str_options = [(1961, "<class 'int'>"),
+						(3.1415, "<class 'float'>"),
+						([], "<class 'list'>"),
+						(False, "<class 'bool'>")]
 
 ## convertColumnsToCSV() #####################################################
 def test_convertColumnsToCSV_textFileRequired(caplog):

@@ -8,7 +8,7 @@ from pykml import parser
 # Internal centerline_width reference to access functions, global variables, and error handling
 import centerline_width
 
-def extractPointsToTextFile(left_kml=None, right_kml=None, text_output_name="data/river_coords.txt"):
+def extractPointsToTextFile(left_kml=None, right_kml=None, text_output_name=None):
 	# Extract points from KML files from Google Earth Pro and exports coordinates into a text file with headers: llat, llong, rlat, rlong
 
 	centerline_width.errorHandlingExtractPointsToTextFile(left_kml=left_kml,

@@ -46,12 +46,12 @@ Convert two .kml files from Google Earth Pro (for the left and right bank) and e
 ```
 extractPointsToTextFile(left_kml=None,
 			right_kml=None,
-			text_output_name="data/river_coords.txt")
+			text_output_name=None)
 ```
 
 * **[REQUIRED]** left_kml (string): File location of the kml file for left bank
 * **[REQUIRED]** right_kml (string): File location of the kml file for right bank
-* [OPTIONAL] text_output_name (string): Output file name (and location), defaults to "data/river_coords.txt"
+* **[REQUIRED] text_output_name (string): Output file name (and location)
 
 ```python
 import centerline_width
