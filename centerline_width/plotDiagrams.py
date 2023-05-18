@@ -74,12 +74,12 @@ def plotCenterline(river_object=None,
 
 	# Display the Voronoi Diagram
 	if display_voronoi:
-		voronoi_plot_2d(river_bank_voronoi, show_points=True, point_size=1, ax=ax)
+		voronoi_plot_2d(river_object.river_bank_voronoi, show_points=True, point_size=1, ax=ax)
 
 	# Plot all possible paths with text for positions
 	if display_all_possible_paths or not river_object.bank_polygon.is_valid: # display paths if polygon is not valid (debugging purposes)
-		for i in range(len(x_ridge_point)):
-			plt.plot(x_ridge_point[i], y_ridge_point[i], 'cyan', linewidth=1)
+		for i in range(len(river_object.x_ridge_point)):
+			plt.plot(river_object.x_ridge_point[i], river_object.y_ridge_point[i], 'cyan', linewidth=1)
 			# Plot (X, Y) positions as text
 			#ax.text(x=x_ridge_point[i][0], y=y_ridge_point[i][0], s="{0}, {1}".format(x_ridge_point[i][0], y_ridge_point[i][0]))
 			#ax.text(x=x_ridge_point[i][1], y=y_ridge_point[i][1], s="{0}, {1}".format(x_ridge_point[i][1], y_ridge_point[i][1]))

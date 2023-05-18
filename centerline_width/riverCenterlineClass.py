@@ -36,6 +36,8 @@ class riverCenterline:
 		starting_node, ending_node, x_ridge_point, y_ridge_point, start_end_points_dict = centerline_width.centerlinePath(river_bank_voronoi, river_bank_polygon, top_bank, bottom_bank)
 		self.starting_node = starting_node # starting position for centerline
 		self.ending_node = ending_node # ending position for centerline
+		self.x_ridge_point = x_ridge_point # Voronoi x positions
+		self.y_ridge_point = y_ridge_point # Voronoi y postions
 
 		# Centerline coordinates
 		shortest_path_coordinates = centerline_width.networkXGraphShortestPath(start_end_points_dict, starting_node, ending_node)
