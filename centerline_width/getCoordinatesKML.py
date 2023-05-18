@@ -20,19 +20,25 @@ def extractPointsToTextFile(left_kml=None, right_kml=None, text_output_name=None
 		doc = parser.parse(f)
 	root = doc.getroot()
 	coords = root.Document.Placemark.LineString.coordinates.text
-	lon = re.findall(r'(-[0-9]{2}\.[0-9]*)',coords)
-	lat = re.findall(r'[^-]([0-9]{2}\.[0-9]*)',coords)
-	llon = list([float(i) for i in lon])
-	llat = list([float(i) for i in lat])
-	
+	llon = []
+	llat = []
+	coords = coords.replace('\n', '').replace('\t', '')
+	for coord in coords.split(" "): # split coordinates based on commas (excluding preceding 0's)
+		if coord != "":
+			llon.append(coord.split(",")[0])
+			llat.append(coord.split(",")[1])
+
 	with open(right_kml) as f:
 		doc = parser.parse(f)
 	root = doc.getroot()
 	coords = root.Document.Placemark.LineString.coordinates.text
-	lon = re.findall(r'(-[0-9]{2}\.[0-9]*)',coords)
-	lat = re.findall(r'[^-]([0-9]{2}\.[0-9]*)',coords)
-	rlon = list([float(i) for i in lon])
-	rlat = list([float(i) for i in lat])
+	rlon = []
+	rlat = []
+	coords = coords.replace('\n', '').replace('\t', '')
+	for coord in coords.split(" "): # split coordinates based on commas (excluding preceding 0's)
+		if coord != "":
+			rlon.append(coord.split(",")[0])
+			rlat.append(coord.split(",")[1])
 
 	df_lb = pd.DataFrame({'llat':llat,'llon':llon})
 	df_rb = pd.DataFrame({'rlat':rlat,'rlon':rlon})
