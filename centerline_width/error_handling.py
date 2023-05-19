@@ -40,7 +40,8 @@ def errorHandlingPlotCenterline(river_object=None,
 								display_all_possible_paths=None,
 								plot_title=None,
 								save_plot_name=None,
-								display_voronoi=None):
+								display_voronoi=None,
+								interpolate_data=None):
 	# Error handling for plotCenterline()
 	if river_object is None:
 		logger.critical("\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.riverCenterline)")
@@ -64,6 +65,10 @@ def errorHandlingPlotCenterline(river_object=None,
 
 	if type(display_voronoi) != bool:
 		logger.critical("\nCRITICAL ERROR, [display_voronoi]: Must be a bool, current type = '{0}'".format(type(display_voronoi)))
+		exit()
+
+	if type(interpolate_data) != bool:
+		logger.critical("\nCRITICAL ERROR, [interpolate_data]: Must be a bool, current type = '{0}'".format(type(interpolate_data)))
 		exit()
 
 def errorHandlingPlotCenterlineWidth(river_object=None,

@@ -352,7 +352,7 @@ def centerlineLength(centerline_coordinates=None):
 	total_length = 0
 	previous_pair = None
 	if centerline_coordinates is None:
-		return None
+		return 0
 
 	for xy_pair in centerline_coordinates:
 		if previous_pair is None:

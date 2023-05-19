@@ -7,6 +7,7 @@ from .preprocessing import leftRightCoordinates
 from .preprocessing import generatePolygon
 from .preprocessing import generateVoronoi
 from .preprocessing import pointsFromVoronoi
+from .preprocessing import interpolateBetweenPoints
 
 # riverObject.py function calls
 from .riverCenterlineClass import riverCenterline

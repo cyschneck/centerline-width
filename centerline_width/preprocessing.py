@@ -118,3 +118,27 @@ def pointsFromVoronoi(river_voronoi, river_polygon):
 				points_dict[start_point].append(end_point)
 
 	return points_dict
+
+def interpolateBetweenPoints(left_bank_coordinates, right_bank_coordinates):
+	# Interpolated between points at an even distance along the river banks to attempt to even out Voronoi diagrams
+	expand_n = 2 + 6 # Add two points, to account for the start/end point (adds 6 points between)
+
+	def interpolateList(lst, expand_n):
+		# Add points to existing list to increase resolution
+		bank_expanded = []
+		for i in range(len(lst)):
+			if i+1 < len(lst):
+				x_expand = np.linspace(lst[i][0], lst[i+1][0], expand_n)
+				y_expand = np.linspace(lst[i][1], lst[i+1][1], expand_n)
+				for j in range(len(x_expand)):
+					bank_expanded.append([x_expand[j],y_expand[j]])
+					bank_expanded.append(lst[i+1])
+			else: 
+				bank_expanded.append(lst[i])
+		return bank_expanded
+
+	right_interpolated_coordinates = interpolateList(right_bank_coordinates, expand_n)
+	left_interpolated_coordinates = interpolateList(left_bank_coordinates, expand_n)
+
+	return right_interpolated_coordinates, left_interpolated_coordinates, None
+	#return right_interpolated_coordinates, left_interpolated_coordinates, interpolated_voronoi

@@ -62,27 +62,46 @@ def plotCenterline(river_object=None,
 					display_all_possible_paths=False, 
 					plot_title=None, 
 					save_plot_name=None, 
-					display_voronoi=False):
+					display_voronoi=False,
+					interpolate_data=False):
 	# Plot Centerline of River
 	centerline_width.errorHandlingPlotCenterline(river_object=river_object,
 												display_all_possible_paths=display_all_possible_paths,
 												plot_title=plot_title,
 												save_plot_name=save_plot_name,
-												display_voronoi=display_voronoi)
+												display_voronoi=display_voronoi,
+												interpolate_data=interpolate_data)
 
 	fig, ax, valid_path_through = plotCenterlineBackend(river_object=river_object)
 
 	# Display the Voronoi Diagram
 	if display_voronoi:
-		voronoi_plot_2d(river_object.river_bank_voronoi, show_points=True, point_size=1, ax=ax)
+		voronoi_plot_2d(river_object.bank_voronoi, show_points=True, point_size=1, ax=ax)
 
 	# Plot all possible paths with text for positions
 	if display_all_possible_paths or not river_object.bank_polygon.is_valid: # display paths if polygon is not valid (debugging purposes)
-		for i in range(len(river_object.x_ridge_point)):
-			plt.plot(river_object.x_ridge_point[i], river_object.y_ridge_point[i], 'cyan', linewidth=1)
+		for i in range(len(river_object.x_voronoi_ridge_point)):
+			plt.plot(river_object.x_voronoi_ridge_point[i], river_object.y_voronoi_ridge_point[i], 'cyan', linewidth=1)
 			# Plot (X, Y) positions as text
 			#ax.text(x=x_ridge_point[i][0], y=y_ridge_point[i][0], s="{0}, {1}".format(x_ridge_point[i][0], y_ridge_point[i][0]))
 			#ax.text(x=x_ridge_point[i][1], y=y_ridge_point[i][1], s="{0}, {1}".format(x_ridge_point[i][1], y_ridge_point[i][1]))
+
+	if interpolate_data:
+		scatter_plot_size = 5
+		x = []
+		y = []
+		for i in river_object.right_bank_interpolated_coordinates: 
+			x.append(i[0])
+			y.append(i[1])
+		plt.scatter(x, y, c="blue", s=scatter_plot_size, label="Right Bank Interpolated")
+		x = []
+		y = []
+		for i in river_object.left_bank_interpolated_coordinates:
+			x.append(i[0])
+			y.append(i[1])
+		plt.scatter(x, y, c="red", s=scatter_plot_size, label="Left Bank Interpolated")
+			
+
 
 	# Plot Title, Legends, and Axis Labels
 	if not plot_title:
