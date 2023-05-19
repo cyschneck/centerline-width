@@ -53,9 +53,12 @@ def plotCenterlineBackend(river_object=None):
 
 	# Dynamically assign the starting and ending
 	if river_object.starting_node is not None: # error handling for when data is too small to generate centerline coordiantes
-		plt.scatter(river_object.starting_node[0], river_object.starting_node[1], c="green", label="Starting Node", s=45)
-		plt.scatter(river_object.ending_node[0], river_object.ending_node[1], c="red", label="Ending Node", s=45)
-
+		if river_object.interpolated_voronoi is None: # if not using interpolate
+			plt.scatter(river_object.starting_node[0], river_object.starting_node[1], c="green", label="Starting Node", s=45)
+			plt.scatter(river_object.ending_node[0], river_object.ending_node[1], c="red", label="Ending Node", s=45)
+		else:
+			plt.scatter(river_object.interpolated_starting_node[0], river_object.interpolated_starting_node[1], c="green", label="Starting Node", s=45)
+			plt.scatter(river_object.interpolated_ending_node[0], river_object.interpolated_ending_node[1], c="red", label="Ending Node", s=45)
 	return fig, ax, valid_path_through
 
 def plotCenterline(river_object=None,
@@ -76,18 +79,25 @@ def plotCenterline(river_object=None,
 
 	# Display the Voronoi Diagram
 	if display_voronoi:
-		voronoi_plot_2d(river_object.bank_voronoi, show_points=True, point_size=1, ax=ax)
+		if not interpolate_data:
+			voronoi_plot_2d(river_object.bank_voronoi, show_points=True, point_size=1, ax=ax)
+		else:
+			voronoi_plot_2d(river_object.interpolated_voronoi, show_points=True, point_size=1, ax=ax)
 
 	# Plot all possible paths with text for positions
-	if display_all_possible_paths or not river_object.bank_polygon.is_valid: # display paths if polygon is not valid (debugging purposes)
-		for i in range(len(river_object.x_voronoi_ridge_point)):
-			plt.plot(river_object.x_voronoi_ridge_point[i], river_object.y_voronoi_ridge_point[i], 'cyan', linewidth=1)
-			# Plot (X, Y) positions as text
-			#ax.text(x=x_ridge_point[i][0], y=y_ridge_point[i][0], s="{0}, {1}".format(x_ridge_point[i][0], y_ridge_point[i][0]))
-			#ax.text(x=x_ridge_point[i][1], y=y_ridge_point[i][1], s="{0}, {1}".format(x_ridge_point[i][1], y_ridge_point[i][1]))
+	if display_all_possible_paths or not river_object.bank_polygon.is_valid: # display paths if polygon is not valid (for debugging)
+		if not interpolate_data:
+			for i in range(len(river_object.x_voronoi_ridge_point)):
+				plt.plot(river_object.x_voronoi_ridge_point[i], river_object.y_voronoi_ridge_point[i], 'cyan', linewidth=1)
+				# Plot (X, Y) positions as text
+				#ax.text(x=x_ridge_point[i][0], y=y_ridge_point[i][0], s="{0}, {1}".format(x_ridge_point[i][0], y_ridge_point[i][0]))
+				#ax.text(x=x_ridge_point[i][1], y=y_ridge_point[i][1], s="{0}, {1}".format(x_ridge_point[i][1], y_ridge_point[i][1]))
+		else:
+			for i in range(len(river_object.x_voronoi_interpolated_ridge_point)):
+				plt.plot(river_object.x_voronoi_interpolated_ridge_point[i], river_object.y_voronoi_interpolated_ridge_point[i], 'cyan', linewidth=1)
 
 	if interpolate_data:
-		scatter_plot_size = 5
+		scatter_plot_size = 30
 		x = []
 		y = []
 		for i in river_object.right_bank_interpolated_coordinates: 
@@ -100,8 +110,6 @@ def plotCenterline(river_object=None,
 			x.append(i[0])
 			y.append(i[1])
 		plt.scatter(x, y, c="red", s=scatter_plot_size, label="Left Bank Interpolated")
-			
-
 
 	# Plot Title, Legends, and Axis Labels
 	if not plot_title:

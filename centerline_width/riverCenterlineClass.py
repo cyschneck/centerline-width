@@ -34,10 +34,28 @@ class riverCenterline:
 
 		# All possible paths: starting/ending node, all possible paths (ridges), paths dictionary
 		starting_node, ending_node, x_ridge_point, y_ridge_point, start_end_points_dict = centerline_width.centerlinePath(river_bank_voronoi, river_bank_polygon, top_bank, bottom_bank)
+		self.start_end_points_dict = start_end_points_dict
 		self.starting_node = starting_node # starting position for centerline
 		self.ending_node = ending_node # ending position for centerline
 		self.x_voronoi_ridge_point = x_ridge_point # Voronoi x positions
 		self.y_voronoi_ridge_point = y_ridge_point # Voronoi y postions
+
+		# Right/Length Bank Length
+		self.right_bank_length = centerline_width.centerlineLength(centerline_coordinates=right_bank_coordinates)
+		self.left_bank_length = centerline_width.centerlineLength(centerline_coordinates=left_bank_coordinates)
+
+		# Interpolate Data
+		print("interpolate_data={0}".format(interpolate_data))
+		if not interpolate_data:
+			self.right_bank_interpolated_coordinates = None
+			self.left_bank_interpolated_coordinates = None
+			self.interpolated_voronoi = None
+			self.interpolated_starting_node = None
+			self.interpolated_ending_node = None
+			self.x_voronoi_interpolated_ridge_point = None
+			self.y_voronoi_interpolated_ridge_point = None
+		else:
+			self.setInterpolateData()
 
 		# Centerline coordinates
 		shortest_path_coordinates = centerline_width.networkXGraphShortestPath(start_end_points_dict, starting_node, ending_node)
@@ -46,24 +64,26 @@ class riverCenterline:
 		# Centerline length
 		self.centerline_length = centerline_width.centerlineLength(centerline_coordinates=shortest_path_coordinates)
 
-		# Interprolate Data
-		if not interpolate_data:
-			self.right_bank_interpolated_coordinates = None
-			self.left_bank_interpolated_coordinates = None
-			self.interpolated_voronoi = None
-		else:
-			right_bank_interpolated_coordinates, left_bank_interpolated_coordinates, interpolated_voronoi = centerline_width.interpolateBetweenPoints(self.left_bank_coordinates, self.right_bank_coordinates)
-			self.right_bank_interpolated_coordinates = right_bank_interpolated_coordinates
-			self.left_bank_interpolated_coordinates = left_bank_interpolated_coordinates
-			self.interpolated_voronoi = interpolated_voronoi
+	def setInterpolateData(self):
+		# Set Interpolate Data at runtime if needed
+		right_bank_interpolated_coordinates, left_bank_interpolated_coordinates, interpolated_voronoi = centerline_width.interpolateBetweenPoints(self, self.left_bank_coordinates, self.right_bank_coordinates)
+		self.right_bank_interpolated_coordinates = right_bank_interpolated_coordinates
+		self.left_bank_interpolated_coordinates = left_bank_interpolated_coordinates
+		self.interpolated_voronoi = interpolated_voronoi
+		starting_node, ending_node, x_ridge_point, y_ridge_point, start_end_points_dict = centerline_width.centerlinePath(interpolated_voronoi, self.bank_polygon, self.top_bank, self.bottom_bank)
+		self.start_end_points_dict = start_end_points_dict
+		self.interpolated_starting_node = starting_node
+		self.interpolated_ending_node = ending_node
+		self.x_voronoi_interpolated_ridge_point = x_ridge_point
+		self.y_voronoi_interpolated_ridge_point = y_ridge_point
+
+		shortest_path_coordinates = centerline_width.networkXGraphShortestPath(start_end_points_dict, starting_node, ending_node)
+		self.centerline_latitude_longtiude = shortest_path_coordinates
 
 	def plotCenterline(self, display_all_possible_paths=False, plot_title=None, save_plot_name=None, display_voronoi=False, interpolate_data=False):
 		if interpolate_data and self.interpolated_voronoi is None: # if using interpolated data, add right/left bank coordinates and interpolated voronoi to class
 			# get interpolated data if not already defined
-			right_bank_interpolated_coordinates, left_bank_interpolated_coordinates, interpolated_voronoi = centerline_width.interpolateBetweenPoints(self.left_bank_coordinates, self.right_bank_coordinates)
-			self.right_bank_interpolated_coordinates = right_bank_interpolated_coordinates
-			self.left_bank_interpolated_coordinates = left_bank_interpolated_coordinates
-			self.interpolated_voronoi = interpolated_voronoi
+			self.setInterpolateData()
 	
 		centerline_width.plotCenterline(river_object=self,
 										display_all_possible_paths=display_all_possible_paths, 
@@ -81,6 +101,10 @@ class riverCenterline:
 							apply_smoothing=False,
 							flag_intersections=True,
 							remove_intersections=False):
+		if interpolate_data and self.interpolated_voronoi is None: # if using interpolated data, add right/left bank coordinates and interpolated voronoi to class
+			# get interpolated data if not already defined
+			self.setInterpolateData()
+
 		centerline_width.plotCenterlineWidth(river_object=self,
 											plot_title=plot_title, 
 											save_plot_name=save_plot_name, 
