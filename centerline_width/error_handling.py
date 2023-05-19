@@ -212,13 +212,14 @@ def errorHandlingExtractPointsToTextFile(left_kml=None, right_kml=None, text_out
 			exit()
 
 ## Error Handling: riverCenterlineClass.py
-def errorHandlingRiverCenterlineClass(csv_data=None, optional_cutoff=None):
+def errorHandlingRiverCenterlineClass(csv_data=None, optional_cutoff=None, interpolate_data=None, interpolate_n=None):
 	# Error Handling for riverCenterlineClass()
 	if csv_data is None:
 		logger.critical("\nCRITICAL ERROR, [csv_data]: Requires csv_data location")
 		exit()
 	else:
-		if type(csv_data) != str and not isinstance(csv_data, StringIO):
+		if type(csv_data) != str and not isinstance(csv_data, StringIO): 
+			# StringIO accounts for testing against a StringIO instead of a CSV (used in pytests)
 			logger.critical("\nCRITICAL ERROR, [csv_data]: Must be a str, current type = '{0}'".format(type(csv_data)))
 			exit()
 
@@ -226,3 +227,13 @@ def errorHandlingRiverCenterlineClass(csv_data=None, optional_cutoff=None):
 		if type(optional_cutoff) != int:
 			logger.critical("\nCRITICAL ERROR, [optional_cutoff]: Must be a int, current type = '{0}'".format(type(optional_cutoff)))
 			exit()
+
+	if type(interpolate_data) != bool:
+		logger.critical("\nCRITICAL ERROR, [interpolate_data]: Must be a bool, current type = '{0}'".format(type(interpolate_data)))
+		exit()
+
+	if type(interpolate_n) != int:
+		logger.critical("\nCRITICAL ERROR, [interpolate_n]: Must be a int, current type = '{0}'".format(type(interpolate_n)))
+		exit()
+		if interpolate_n > 15:
+			logger.warn("WARNING, [interpolate_n]: Setting interpolate_n above 15 will cause the code to execute exponentially slower")

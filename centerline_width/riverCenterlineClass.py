@@ -7,8 +7,11 @@ import pandas as pd
 import centerline_width
 
 class riverCenterline:
-	def __init__(self, csv_data=None, optional_cutoff=None, interpolate_data=False, interpolate_n=10):
-		centerline_width.errorHandlingRiverCenterlineClass(csv_data=csv_data, optional_cutoff=optional_cutoff)
+	def __init__(self, csv_data=None, optional_cutoff=None, interpolate_data=False, interpolate_n=5):
+		centerline_width.errorHandlingRiverCenterlineClass(csv_data=csv_data,
+															optional_cutoff=optional_cutoff,
+															interpolate_data=interpolate_data,
+															interpolate_n=interpolate_n)
 
 		# Description and dataframe
 		self.river_name = csv_data
@@ -38,7 +41,6 @@ class riverCenterline:
 
 		# All possible paths: starting/ending node, all possible paths (ridges), paths dictionary
 		starting_node, ending_node, x_ridge_point, y_ridge_point, start_end_points_dict = centerline_width.centerlinePath(self.bank_voronoi, self.bank_polygon, self.top_bank, self.bottom_bank)
-		self.start_end_points_dict = start_end_points_dict
 		self.starting_node = starting_node # starting position for centerline
 		self.ending_node = ending_node # ending position for centerline
 		self.x_voronoi_ridge_point = x_ridge_point # Voronoi x positions
@@ -49,7 +51,7 @@ class riverCenterline:
 		self.left_bank_length = centerline_width.centerlineLength(centerline_coordinates=left_bank_coordinates)
 
 		# Centerline coordinates
-		shortest_path_coordinates = centerline_width.networkXGraphShortestPath(self.start_end_points_dict, self.starting_node, self.ending_node)
+		shortest_path_coordinates = centerline_width.networkXGraphShortestPath(start_end_points_dict, self.starting_node, self.ending_node)
 		self.centerline_latitude_longtiude = shortest_path_coordinates
 
 		# Centerline length

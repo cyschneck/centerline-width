@@ -9,6 +9,11 @@ import pytest
 # Internal centerline-width reference to access functions, global variables, and error handling
 import centerline_width
 
+invalid_non_bool_options = [(1961, "<class 'int'>"),
+						(3.1415, "<class 'float'>"),
+						([], "<class 'list'>"),
+						("testing_string", "<class 'str'>")]
+
 invalid_non_int_options = [("testing_string", "<class 'str'>"),
 						(3.1415, "<class 'float'>"),
 						([], "<class 'list'>"),
@@ -42,3 +47,19 @@ def test_riverCenterline_optionalCutoffInvalidTypes(caplog, optional_cutoff_inva
 	log_record = caplog.records[0]
 	assert log_record.levelno == logging.CRITICAL
 	assert log_record.message == "\nCRITICAL ERROR, [optional_cutoff]: Must be a int, current type = '{0}'".format(optional_cutoff_error_output)
+
+@pytest.mark.parametrize("interpolate_data_invalid, interpolate_data_error_output", invalid_non_bool_options)
+def test_riverCenterline_interpolateDataInvalidTypes(caplog, interpolate_data_invalid, interpolate_data_error_output):
+	with pytest.raises(SystemExit):
+		centerline_width.riverCenterline(csv_data="csv_example.csv", interpolate_data=interpolate_data_invalid)
+	log_record = caplog.records[0]
+	assert log_record.levelno == logging.CRITICAL
+	assert log_record.message == "\nCRITICAL ERROR, [interpolate_data]: Must be a bool, current type = '{0}'".format(interpolate_data_error_output)
+
+@pytest.mark.parametrize("interpolate_n_invalid, interpolate_n_error_output", invalid_non_int_options)
+def test_riverCenterline_interpolateNInvalidTypes(caplog, interpolate_n_invalid, interpolate_n_error_output):
+	with pytest.raises(SystemExit):
+		centerline_width.riverCenterline(csv_data="csv_example.csv", interpolate_n=interpolate_n_invalid)
+	log_record = caplog.records[0]
+	assert log_record.levelno == logging.CRITICAL
+	assert log_record.message == "\nCRITICAL ERROR, [interpolate_n]: Must be a int, current type = '{0}'".format(interpolate_n_error_output)

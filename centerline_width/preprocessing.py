@@ -62,6 +62,12 @@ def leftRightCoordinates(dataframe):
 
 def generatePolygon(left_bank_lst, right_bank_lst):
 	# Return a shapely polygon based on the position of the river bank points
+	if len(right_bank_lst) == 0:
+		logger.critical("\nCRITICAL ERROR, right bank data is empty (or NaN)")
+		exit()
+	if len(left_bank_lst) == 0:
+		logger.critical("\nCRITICAL ERROR, left bank data is empty (or NaN)")
+		exit()
 	circular_list_of_banks = left_bank_lst + right_bank_lst[::-1] + [left_bank_lst[0]]
 
 	bank_points_swapped = []
@@ -121,7 +127,8 @@ def pointsFromVoronoi(river_voronoi, river_polygon):
 
 def interpolateBetweenPoints(left_bank_coordinates, right_bank_coordinates, interpolate_n):
 	# Interpolated between points at an even distance along the river banks to attempt to even out Voronoi diagrams
-
+	interpolate_n += 2 # adds two exta points, to ensure that interpolating is adding the points between the existing points
+	print(interpolate_n)
 	def interpolateList(lst):
 		# Add points to existing list to increase resolution
 		#haversine_distance_between = haversine((lat1, lon1), (lat2, lon2), unit=units)
@@ -136,6 +143,7 @@ def interpolateBetweenPoints(left_bank_coordinates, right_bank_coordinates, inte
 
 				for j in range(len(x_expand)):
 					bank_expanded.append([x_expand[j],y_expand[j]])
+				bank_expanded.append(lst[i+1]) # add end position (np.linspace excludes ending position)
 			else: 
 				bank_expanded.append(lst[i])
 		return bank_expanded

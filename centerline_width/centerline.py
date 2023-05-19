@@ -43,8 +43,8 @@ def centerlinePath(river_voronoi, river_polygon, top_polygon_line, bottom_polygo
 					if Point(end_point).distance(bottom_polygon_line) <= Point(ending_node).distance(bottom_polygon_line):
 						ending_node = end_point
 				# Save all starting and end positions for all possible paths
-				x_ridge_point.append([start_point[0], end_point[0]])
-				y_ridge_point.append([start_point[1], end_point[1]])
+				x_ridge_point.append((start_point[0], end_point[0]))
+				y_ridge_point.append((start_point[1], end_point[1]))
 
 	if starting_node is None:
 		logger.critical("\nCRITICAL ERROR, Voronoi diagram generated too small to find centerline (no starting node found), unable to plot centerline. Set displayVoronoi=True to view. Can typically be fixed by adding more data to expand range.")
