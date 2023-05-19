@@ -138,8 +138,7 @@ def riverWidthFromCenterlineCoordinates(river_object=None,
 										centerline_coordinates=None,
 										transect_span_distance=3,
 										remove_intersections=False,
-										save_to_csv=None,
-										interpolate_data=False):
+										save_to_csv=None):
 	# Return the left/right coordinates of width centerlines
 	right_width_coordinates = {}
 	left_width_coordinates = {}
@@ -297,8 +296,7 @@ def riverWidthFromCenterline(river_object=None,
 							apply_smoothing=True,
 							remove_intersections=False,
 							units="km",
-							save_to_csv=None,
-							interpolate_data=False):
+							save_to_csv=None):
 	# Return river width: centerline and width at centerline
 	# Width is measured to the bank, relative to the center point (normal of the centerline)
 	# { [centerline latitude, centerline longitude] : widthValue }
@@ -309,33 +307,27 @@ def riverWidthFromCenterline(river_object=None,
 															apply_smoothing=apply_smoothing,
 															remove_intersections=remove_intersections,
 															units=units,
-															save_to_csv=save_to_csv,
-															interpolate_data=interpolate_data)
+															save_to_csv=save_to_csv)
 
 	if n_interprolate_centerpoints is None:
 		# if plotting width, but n_interprolate_centerpoints is undefined, set to the size of the dataframe
 		n_interprolate_centerpoints = river_object.df_len
 
-	centerline_lat_long = river_object.centerline_latitude_longtiude
-	if interpolate_data:
-		centerline_lat_long = river_object.centerline_latitude_longtiude_interpolated
-
-	if centerline_lat_long is None:
+	if river_object.centerline_latitude_longtiude is None:
 		logger.critical("\nCRITICAL ERROR, unable to find width without a valid centerline")
 		return None
 
 	# recreate the centerline with evenly spaced points
-	defined_centerline_coordinates = centerline_width.evenlySpacedCenterline(centerline_coordinates=centerline_lat_long,
+	defined_centerline_coordinates = centerline_width.evenlySpacedCenterline(centerline_coordinates=river_object.centerline_latitude_longtiude,
 																			number_of_fixed_points=n_interprolate_centerpoints)
 	if apply_smoothing:
-		defined_centerline_coordinates = centerline_width.smoothedCoordinates(centerline_coordinates=centerline_lat_long,
+		defined_centerline_coordinates = centerline_width.smoothedCoordinates(centerline_coordinates=river_object.centerline_latitude_longtiude,
 																				interprolate_num=n_interprolate_centerpoints)
 	# if using smoothing, replace left/right coordinates with the smoothed variation
 	right_width_coord, left_width_coord, _ = centerline_width.riverWidthFromCenterlineCoordinates(river_object=river_object, 
 																									centerline_coordinates=defined_centerline_coordinates,
 																									transect_span_distance=transect_span_distance,
-																									remove_intersections=remove_intersections,
-																									interpolate_data=interpolate_data)
+																									remove_intersections=remove_intersections)
 
 	width_dict = {}
 	for centerline_coord, _ in right_width_coord.items():

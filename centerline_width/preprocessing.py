@@ -5,7 +5,6 @@ import math
 
 # External Python libraries (installed via pip install)
 from collections import Counter
-from haversine import haversine
 import numpy as np
 from shapely.geometry import Point, Polygon, LineString
 from scipy.spatial import Voronoi
@@ -74,7 +73,7 @@ def generatePolygon(left_bank_lst, right_bank_lst):
 	bottom_river = LineString([Point(right_bank_lst[0][0], right_bank_lst[0][1]), Point(left_bank_lst[0][0], left_bank_lst[0][1])])
 
 	if not river_polygon.is_valid:
-		logger.critical("[FAILED]  Invalid Polygon needs to be corrected")
+		logger.critical("[FAILED]  Invalid Polygon may need to be corrected")
 	else:
 		logger.info("[SUCCESS] Valid polygon generated")
 
@@ -120,10 +119,8 @@ def pointsFromVoronoi(river_voronoi, river_polygon):
 
 	return points_dict
 
-def interpolateBetweenPoints(river_object, left_bank_coordinates, right_bank_coordinates):
+def interpolateBetweenPoints(left_bank_coordinates, right_bank_coordinates, interpolate_n):
 	# Interpolated between points at an even distance along the river banks to attempt to even out Voronoi diagrams
-	deg_to_m = 111.139 * 1000 # degrees to kilometers to meters
-	distance_delta = int(deg_to_m / 700) # every 700 meters
 
 	def interpolateList(lst):
 		# Add points to existing list to increase resolution
@@ -134,20 +131,16 @@ def interpolateBetweenPoints(river_object, left_bank_coordinates, right_bank_coo
 				lon1, lat1 = lst[i][0], lst[i][1]
 				lon2, lat2 = lst[i+1][0], lst[i+1][1]
 
-				x_lon_distance = haversine((0, lon1), (0, lon2), unit="m")
-				y_lat_distance = haversine((lat1, 0), (lat2, 0), unit="m")
-				x_expand = np.linspace(lon1, lon2, distance_delta)
-				y_expand = np.linspace(lat1, lat2, distance_delta)
+				x_expand = np.linspace(lon1, lon2, interpolate_n)
+				y_expand = np.linspace(lat1, lat2, interpolate_n)
 
 				for j in range(len(x_expand)):
 					bank_expanded.append([x_expand[j],y_expand[j]])
-					bank_expanded.append(lst[i+1])
 			else: 
 				bank_expanded.append(lst[i])
 		return bank_expanded
 
 	right_interpolated_coordinates = interpolateList(right_bank_coordinates)
 	left_interpolated_coordinates = interpolateList(left_bank_coordinates)
-	interpolated_voronoi = centerline_width.generateVoronoi(left_interpolated_coordinates, right_interpolated_coordinates)
 
-	return right_interpolated_coordinates, left_interpolated_coordinates, interpolated_voronoi
+	return right_interpolated_coordinates, left_interpolated_coordinates

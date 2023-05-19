@@ -15,7 +15,7 @@ logger.setLevel(logging.INFO)
 stream_handler = logging.StreamHandler()
 logger.addHandler(stream_handler)
 
-def plotCenterlineBackend(river_object=None, interpolate_data=False):
+def plotCenterlineBackend(river_object=None):
 	# Shared components between plotCenterline and plotCenterlineWidth
 	fig = plt.figure(figsize=(10,10))
 	ax = fig.add_subplot(111)
@@ -41,28 +41,20 @@ def plotCenterlineBackend(river_object=None, interpolate_data=False):
 
 	# Plot centerline found from NetworkX
 	valid_path_through = False
-	centerline_lat_lon = river_object.centerline_latitude_longtiude
-	if interpolate_data:
-		centerline_lat_lon = river_object.centerline_latitude_longtiude_interpolated
-
-	if centerline_lat_lon: # shortest path through points
+	if river_object.centerline_latitude_longtiude: # shortest path through points
 		valid_path_through = True
 		x = []
 		y = []
-		for k, v in centerline_lat_lon:
+		for k, v in river_object.centerline_latitude_longtiude:
 			x.append(k)
 			y.append(v)
 		#plt.scatter(x, y, c="slategray", label="Centerline Coordinates", s=5)
-		plt.plot(*zip(*centerline_lat_lon), c="black", label="Centerline")
+		plt.plot(*zip(*river_object.centerline_latitude_longtiude), c="black", label="Centerline")
 
 	# Dynamically assign the starting and ending
 	if river_object.starting_node is not None: # error handling for when data is too small to generate centerline coordiantes
-		if not interpolate_data:
 			plt.scatter(river_object.starting_node[0], river_object.starting_node[1], c="green", label="Starting Node", s=45)
 			plt.scatter(river_object.ending_node[0], river_object.ending_node[1], c="red", label="Ending Node", s=45)
-		else:
-			plt.scatter(river_object.interpolated_starting_node[0], river_object.interpolated_starting_node[1], c="green", label="Starting Node", s=45)
-			plt.scatter(river_object.interpolated_ending_node[0], river_object.interpolated_ending_node[1], c="red", label="Ending Node", s=45)
 
 	return fig, ax, valid_path_through
 
@@ -70,52 +62,28 @@ def plotCenterline(river_object=None,
 					display_all_possible_paths=False, 
 					plot_title=None, 
 					save_plot_name=None, 
-					display_voronoi=False,
-					interpolate_data=False):
+					display_voronoi=False):
 	# Plot Centerline of River
 	centerline_width.errorHandlingPlotCenterline(river_object=river_object,
 												display_all_possible_paths=display_all_possible_paths,
 												plot_title=plot_title,
 												save_plot_name=save_plot_name,
-												display_voronoi=display_voronoi,
-												interpolate_data=interpolate_data)
+												display_voronoi=display_voronoi)
 
-	fig, ax, valid_path_through = plotCenterlineBackend(river_object=river_object, interpolate_data=interpolate_data)
+	fig, ax, valid_path_through = plotCenterlineBackend(river_object=river_object)
 
 	# Display the Voronoi Diagram
 	if display_voronoi:
-		if not interpolate_data:
-			voronoi_plot_2d(river_object.bank_voronoi, show_points=True, point_size=1, ax=ax)
-		else:
-			voronoi_plot_2d(river_object.interpolated_voronoi, show_points=True, point_size=1, ax=ax)
+		voronoi_plot_2d(river_object.bank_voronoi, show_points=True, point_size=1, ax=ax)
 
 	# Plot all possible paths with text for positions
 	if display_all_possible_paths or not river_object.bank_polygon.is_valid: # display paths if polygon is not valid (for debugging)
-		if not interpolate_data:
-			for i in range(len(river_object.x_voronoi_ridge_point)):
-				plt.plot(river_object.x_voronoi_ridge_point[i], river_object.y_voronoi_ridge_point[i], 'cyan', linewidth=1)
-		else:
-			for i in range(len(river_object.x_voronoi_interpolated_ridge_point)):
-				plt.plot(river_object.x_voronoi_interpolated_ridge_point[i], river_object.y_voronoi_interpolated_ridge_point[i], 'cyan', linewidth=1)
-
-	if interpolate_data:
-		scatter_plot_size = 30
-		x = []
-		y = []
-		for i in river_object.right_bank_interpolated_coordinates: 
-			x.append(i[0])
-			y.append(i[1])
-		plt.scatter(x, y, c="blue", s=scatter_plot_size, label="Right Bank Interpolated")
-		x = []
-		y = []
-		for i in river_object.left_bank_interpolated_coordinates:
-			x.append(i[0])
-			y.append(i[1])
-		plt.scatter(x, y, c="red", s=scatter_plot_size, label="Left Bank Interpolated")
+		for i in range(len(river_object.x_voronoi_ridge_point)):
+			plt.plot(river_object.x_voronoi_ridge_point[i], river_object.y_voronoi_ridge_point[i], 'cyan', linewidth=1)
 
 	# Plot Title, Legends, and Axis Labels
 	if not plot_title:
-		plt.title("River Coordinates: Valid Centerline = {0}, Valid Polygon = {1}".format(valid_path_through, river_object.bank_polygon.is_valid))
+		plt.title("River Coordinates: Valid Centerline = {0}, Valid Polygon = {1}, Interpolated = {2}".format(valid_path_through, river_object.bank_polygon.is_valid, river_object.interpolate_data))
 	else:
 		plt.title(plot_title)
 	plt.xlabel("Longitude (°)")
@@ -132,8 +100,7 @@ def plotCenterlineWidth(river_object=None,
 						transect_span_distance=3,
 						apply_smoothing=False,
 						flag_intersections=True,
-						remove_intersections=False,
-						interpolate_data=False):
+						remove_intersections=False):
 	# Plot Width Lines based on Centerline
 	centerline_width.errorHandlingPlotCenterlineWidth(river_object=river_object,
 													plot_title=plot_title, 
@@ -143,10 +110,9 @@ def plotCenterlineWidth(river_object=None,
 													transect_span_distance=transect_span_distance,
 													apply_smoothing=apply_smoothing,
 													flag_intersections=flag_intersections,
-													remove_intersections=remove_intersections,
-													interpolate_data=interpolate_data)
+													remove_intersections=remove_intersections)
 
-	fig, ax, valid_path_through = plotCenterlineBackend(river_object=river_object, interpolate_data=interpolate_data)
+	fig, ax, valid_path_through = plotCenterlineBackend(river_object=river_object)
 
 	# Plot river
 	if n_interprolate_centerpoints is None:
@@ -155,28 +121,21 @@ def plotCenterlineWidth(river_object=None,
 
 	# Determine the Width of River
 	number_of_evenly_spaced_points = ""
-	centerline_lat_lon = river_object.centerline_latitude_longtiude
-	starting_node = river_object.starting_node
-	if interpolate_data:
-		centerline_lat_lon = river_object.centerline_latitude_longtiude_interpolated
-		starting_node = river_object.interpolated_starting_node
-		ending_node = river_object.interpolated_ending_node
 
-	if centerline_lat_lon is not None:
+	if river_object.centerline_latitude_longtiude is not None:
 		number_of_evenly_spaced_points = "\nCenterline made of {0} Fixed Points, width lines generated every {1} points".format(n_interprolate_centerpoints, transect_span_distance)
-		if starting_node is not None: # error handling for when data is too small to generate centerline coordiantes
+		if river_object.starting_node is not None: # error handling for when data is too small to generate centerline coordiantes
 			# recreate the centerline with evenly spaced points
-			evenly_spaced_centerline_coordinates = centerline_width.evenlySpacedCenterline(centerline_coordinates=centerline_lat_lon,
+			evenly_spaced_centerline_coordinates = centerline_width.evenlySpacedCenterline(centerline_coordinates=river_object.centerline_latitude_longtiude,
 																						number_of_fixed_points=n_interprolate_centerpoints)
 			if apply_smoothing:
-				smoothed_centerline_coordinates = centerline_width.smoothedCoordinates(centerline_coordinates=centerline_lat_lon,
+				smoothed_centerline_coordinates = centerline_width.smoothedCoordinates(centerline_coordinates=river_object.centerline_latitude_longtiude,
 																						interprolate_num=n_interprolate_centerpoints)
 				# if using smoothing, replace left/right coordinates with the smoothed variation
 				right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(river_object=river_object,
 																																					centerline_coordinates=smoothed_centerline_coordinates,
 																																					transect_span_distance=transect_span_distance,
-																																					remove_intersections=remove_intersections,
-																																					interpolate_data=interpolate_data)
+																																					remove_intersections=remove_intersections)
 				x = []
 				y = []
 				for k, v in smoothed_centerline_coordinates:
@@ -188,8 +147,7 @@ def plotCenterlineWidth(river_object=None,
 				right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(river_object=river_object, 
 																														centerline_coordinates=evenly_spaced_centerline_coordinates,
 																														transect_span_distance=transect_span_distance,
-																														remove_intersections=remove_intersections,
-																														interpolate_data=interpolate_data)
+																														remove_intersections=remove_intersections)
 
 			x = []
 			y = []
@@ -221,7 +179,7 @@ def plotCenterlineWidth(river_object=None,
 
 	# Plot Title, Legends, and Axis Labels
 	if not plot_title:
-		plt.title("River Width Coordinates: Valid Centerline = {0}, Valid Polygon = {1}{2}".format(valid_path_through, river_object.bank_polygon.is_valid, number_of_evenly_spaced_points))
+		plt.title("River Width Coordinates: Valid Centerline = {0}, Valid Polygon = {1}{2}, Interpolated = {3}".format(valid_path_through, river_object.bank_polygon.is_valid, number_of_evenly_spaced_points, river_object.interpolate_data))
 	else:
 		plt.title(plot_title)
 	plt.xlabel("Longitude (°)")
