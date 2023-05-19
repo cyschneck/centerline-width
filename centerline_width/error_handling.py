@@ -79,7 +79,8 @@ def errorHandlingPlotCenterlineWidth(river_object=None,
 									transect_span_distance=None,
 									apply_smoothing=None,
 									flag_intersections=None,
-									remove_intersections=None):
+									remove_intersections=None,
+									interpolate_data=None):
 	# Error handling for plotCenterlineWidth()
 	if river_object is None:
 		logger.critical("\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.riverCenterline)")
@@ -131,6 +132,10 @@ def errorHandlingPlotCenterlineWidth(river_object=None,
 		logger.critical("\nCRITICAL ERROR, [remove_intersections]: Must be a bool, current type = '{0}'".format(type(remove_intersections)))
 		exit()
 
+	if type(interpolate_data) != bool:
+		logger.critical("\nCRITICAL ERROR, [interpolate_data]: Must be a bool, current type = '{0}'".format(type(interpolate_data)))
+		exit()
+
 ## Error Handling: centerline.py
 def errorHandlingRiverWidthFromCenterline(river_object=None,
 										n_interprolate_centerpoints=None,
@@ -138,7 +143,8 @@ def errorHandlingRiverWidthFromCenterline(river_object=None,
 										apply_smoothing=None,
 										remove_intersections=None,
 										units=None,
-										save_to_csv=None):
+										save_to_csv=None,
+										interpolate_data=None):
 	# Error Handling for riverWidthFromCenterline()
 	if river_object is None:
 		logger.critical("\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.riverCenterline)")
@@ -182,6 +188,10 @@ def errorHandlingRiverWidthFromCenterline(river_object=None,
 	if save_to_csv is not None and type(save_to_csv) != str:
 			logger.critical("\nCRITICAL ERROR, [save_to_csv]: Must be a str, current type = '{0}'".format(type(save_to_csv)))
 			exit()
+
+	if type(interpolate_data) != bool:
+		logger.critical("\nCRITICAL ERROR, [interpolate_data]: Must be a bool, current type = '{0}'".format(type(interpolate_data)))
+		exit()
 
 # Error Handling: getCoordinatesKML.py
 def errorHandlingExtractPointsToTextFile(left_kml=None, right_kml=None, text_output_name=None):

@@ -7,7 +7,7 @@ import pandas as pd
 import centerline_width
 
 class riverCenterline:
-	def __init__(self, csv_data=None, optional_cutoff=None, interpolate_data=False):
+	def __init__(self, csv_data=None, optional_cutoff=None):
 		centerline_width.errorHandlingRiverCenterlineClass(csv_data=csv_data, optional_cutoff=optional_cutoff)
 
 		# Description and dataframe
@@ -45,18 +45,14 @@ class riverCenterline:
 		self.left_bank_length = centerline_width.centerlineLength(centerline_coordinates=left_bank_coordinates)
 
 		# Interpolate Data
-		print("interpolate_data={0}".format(interpolate_data))
-		if not interpolate_data:
-			self.right_bank_interpolated_coordinates = None
-			self.left_bank_interpolated_coordinates = None
-			self.interpolated_voronoi = None
-			self.interpolated_starting_node = None
-			self.interpolated_ending_node = None
-			self.x_voronoi_interpolated_ridge_point = None
-			self.y_voronoi_interpolated_ridge_point = None
-		else:
-			self.setInterpolateData()
-
+		self.right_bank_interpolated_coordinates = None
+		self.left_bank_interpolated_coordinates = None
+		self.interpolated_voronoi = None
+		self.interpolated_starting_node = None
+		self.interpolated_ending_node = None
+		self.x_voronoi_interpolated_ridge_point = None
+		self.y_voronoi_interpolated_ridge_point = None
+		
 		# Centerline coordinates
 		shortest_path_coordinates = centerline_width.networkXGraphShortestPath(start_end_points_dict, starting_node, ending_node)
 		self.centerline_latitude_longtiude = shortest_path_coordinates
@@ -78,7 +74,8 @@ class riverCenterline:
 		self.y_voronoi_interpolated_ridge_point = y_ridge_point
 
 		shortest_path_coordinates = centerline_width.networkXGraphShortestPath(start_end_points_dict, starting_node, ending_node)
-		self.centerline_latitude_longtiude = shortest_path_coordinates
+		self.centerline_latitude_longtiude_interpolated = shortest_path_coordinates
+		self.centerline_length = centerline_width.centerlineLength(centerline_coordinates=shortest_path_coordinates)
 
 	def plotCenterline(self, display_all_possible_paths=False, plot_title=None, save_plot_name=None, display_voronoi=False, interpolate_data=False):
 		if interpolate_data and self.interpolated_voronoi is None: # if using interpolated data, add right/left bank coordinates and interpolated voronoi to class
@@ -100,7 +97,8 @@ class riverCenterline:
 							transect_span_distance=3,
 							apply_smoothing=False,
 							flag_intersections=True,
-							remove_intersections=False):
+							remove_intersections=False,
+							interpolate_data=False):
 		if interpolate_data and self.interpolated_voronoi is None: # if using interpolated data, add right/left bank coordinates and interpolated voronoi to class
 			# get interpolated data if not already defined
 			self.setInterpolateData()
@@ -113,7 +111,8 @@ class riverCenterline:
 											transect_span_distance=transect_span_distance,
 											apply_smoothing=apply_smoothing,
 											flag_intersections=flag_intersections,
-											remove_intersections=remove_intersections)
+											remove_intersections=remove_intersections,
+											interpolate_data=interpolate_data)
 
 	def riverWidthFromCenterline(self,
 								n_interprolate_centerpoints=None,
@@ -121,11 +120,13 @@ class riverCenterline:
 								apply_smoothing=True,
 								remove_intersections=False,
 								units="km",
-								save_to_csv=None):
+								save_to_csv=None,
+								interpolate_data=False):
 		return centerline_width.riverWidthFromCenterline(river_object=self,
 														n_interprolate_centerpoints=n_interprolate_centerpoints,
 														transect_span_distance=transect_span_distance,
 														apply_smoothing=apply_smoothing,
 														remove_intersections=remove_intersections,
 														units=units,
-														save_to_csv=save_to_csv)
+														save_to_csv=save_to_csv,
+														interpolate_data=interpolate_data)
