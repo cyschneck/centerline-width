@@ -40,6 +40,34 @@ PyPi pip install at [pypi.org/project/centerline-width/](https://pypi.org/projec
 ```
 pip install centerline-width
 ```
+## Quickstart: centerline-width
+
+The core of centerline-width works with a .csv file of the left and right bank latitude/longitudes. Starting with Google Earth Pro, .kml must first be translated to .csv files
+
+```python
+import centerline_width
+centerline_width.extractPointsToTextFile(left_kml="left_bank.kml",
+											right_kml="right_bank.kml",
+											text_output_name="river_coordinates_output.txt")
+centerline_width.convertColumnsToCSV(text_file="river_coordinates_output.txt")
+```
+The `river_coordinates_output.csv` file generated will be given as the river object's data
+
+```python
+river_object = centerline_width.riverCenterline(csv_data="river_coordinates_output")
+```
+
+Plot the centerline
+```python
+river_object.plotCenterline()
+```
+![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/river_coords_centerline.png)
+
+Plot the width lines (apply_smoothing is option, and defaults to False, but is recommended)
+```python
+river_object.plotCenterlineWidth(apply_smoothing=True)
+```
+![river_coords_width+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/river_coords_width.png)
 
 ## Preprocessing
 ### Convert KML files to Text File
@@ -122,7 +150,10 @@ Output: A csv file `data/river_coords.csv` with the headers llat, llon, rlat, rl
 ### River Object
 First, generate a river object to contain river data and available transformations
 ```
-centerline_width.riverCenterline(csv_data=None, optional_cutoff=None, interpolate_data=False, interpolate_n=5)
+centerline_width.riverCenterline(csv_data=None,
+								optional_cutoff=None,
+								interpolate_data=False,
+								interpolate_n=5)
 ```
 * **[REQUIRED]** csv_data (string): File location of the text file to convert
 * [OPTIONAL] optional_cutoff (int): Include only the first x amount of the data to chart (useful for debugging)
@@ -341,8 +372,8 @@ Points that only have one connection are removed, but by limiting the number of 
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example5.png)
 
 ## Debugging, Error Handling, and Edge Cases
-### Edge Cases
-If the data starts with a large width, it is possible for the starting node to be invalid
+### Wide Start or Ending Rivers
+If the data starts or ends with a large width, it is possible for the starting/ending nodes to be invalid
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example3.png)
 Currently, the starting node is determined by the closest node to the top of the bank (in green) and the ending node is determined by the closest node to the bottom of the bank (in red)
 
@@ -369,7 +400,7 @@ If the latitude/longitude of the banks are generated in reverse order, flip the 
 This can be fixed by using the flipDirection optional argument `centerline_width.convertColumnsToCSV(text_file="data_example.txt", flipBankDirection=True)`
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/flipDirection_example.png)
 
-## Fix Gaps and Jagged Centerlines
+### Fix Gaps and Jagged Centerlines
 
 Set river object created by `centerline_width.riverCenterline` to `interpolate_data=True` to fix for jagged edges or gaps formed by the interaction of sparse data and narrow banks
 
@@ -386,6 +417,7 @@ The amount of additional points added by interpolating can be adjusted with `int
 ## Developer Notes: Tech Debt and Bug Fixes
 * Return the length of the left/right bank in riverCenterline class (right_bank_length, left_bank_length)
 * Verify that smoothing filter option does not produce a line that goes outside of the polygon
+* edge case: (wide starting/ending banks) redefine how the starting and ending nodes are calcualted to avoid ending up on an 'island' (NA7_FP1)
 * Return the knickpoints (occurrences of knickpoints)
 
 ## Citations
