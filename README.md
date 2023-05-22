@@ -42,28 +42,28 @@ pip install centerline-width
 ```
 ## Quickstart: centerline-width
 
-The core of centerline-width works with a .csv file of the left and right bank latitude/longitudes. Starting with Google Earth Pro, .kml must first be translated to .csv files
+The core of centerline-width works with a .csv file of the left and right bank latitude/longitudes. Starting with Google Earth Pro, two .kml must first be translated to a single .csv file
 
 ```python
 import centerline_width
 centerline_width.extractPointsToTextFile(left_kml="left_bank.kml",
-											right_kml="right_bank.kml",
-											text_output_name="river_coordinates_output.txt")
+					right_kml="right_bank.kml",
+					text_output_name="river_coordinates_output.txt")
 centerline_width.convertColumnsToCSV(text_file="river_coordinates_output.txt")
 ```
-The `river_coordinates_output.csv` file generated will be given as the river object's data
+Then, to run the centerline-width functions, generate a river object from the `river_coordinates_output.csv`
 
 ```python
 river_object = centerline_width.riverCenterline(csv_data="river_coordinates_output")
 ```
 
-Plot the centerline
+To plot the centerline, run the `plotCenterline()` function from `river_object` created
 ```python
 river_object.plotCenterline()
 ```
 ![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/river_coords_centerline.png)
 
-Plot the width lines (apply_smoothing is option, and defaults to False, but is recommended)
+To plot the width of the river at intervals along the bank, run `plotCenterlineWidth` (apply_smoothing is optional and defaults to False, but is recommended)
 ```python
 river_object.plotCenterlineWidth(apply_smoothing=True)
 ```
@@ -141,19 +141,13 @@ llat,llon,rlat,rlon
 Output: A csv file `data/river_coords.csv` with the headers llat, llon, rlat, rlon
 
 ## Centerline and Width
-
-### Types of Centerlines
-- Voronoi centerline: centerline generated from where Voronoi vertices intersect within the river
-- Evenly Spaced Centerline: centerline based on Voronoi centerline but evenly spaced with a fixed number of points
-- Smoothed Centerline: centerline generated from the evenly spaced centerline but smoothed by a b-spline
-
 ### River Object
 First, generate a river object to contain river data and available transformations
 ```
 centerline_width.riverCenterline(csv_data=None,
-								optional_cutoff=None,
-								interpolate_data=False,
-								interpolate_n=5)
+		optional_cutoff=None,
+		interpolate_data=False,
+		interpolate_n=5)
 ```
 * **[REQUIRED]** csv_data (string): File location of the text file to convert
 * [OPTIONAL] optional_cutoff (int): Include only the first x amount of the data to chart (useful for debugging)
@@ -371,13 +365,20 @@ Points that only have one connection are removed, but by limiting the number of 
 **Vertices that have at least two connections (that would create gaps):**
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example5.png)
 
+### Types of Centerlines
+- Voronoi centerline: centerline generated from where Voronoi vertices intersect within the river
+- Evenly Spaced Centerline: centerline based on Voronoi centerline but evenly spaced with a fixed number of points
+- Smoothed Centerline: centerline generated from the evenly spaced centerline but smoothed by a b-spline
+
 ## Debugging, Error Handling, and Edge Cases
-### Wide Start or Ending Rivers
+### If the Start of End of the River is Wide
 If the data starts or ends with a large width, it is possible for the starting/ending nodes to be invalid
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example3.png)
 Currently, the starting node is determined by the closest node to the top of the bank (in green) and the ending node is determined by the closest node to the bottom of the bank (in red)
 
 ### Invalid Polygon
+A polygon is formed to encapsulate the river with the given data (to determine the inside and outside of the river). The top and bottom are connected by a straight line from the start/end of the available data. As a result, it is possible for this straight line to overlap and create an invalid polygon.
+
 A polygon is invalid if it overlaps within itself:
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example1.png)
 In this example, the polygon is invalid, but with such a small overlap it is still able to find a valid path
@@ -415,7 +416,6 @@ river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv"
 The amount of additional points added by interpolating can be adjusted with `interpolate_n`, but defaults to add 5 additional points between values
 
 ## Developer Notes: Tech Debt and Bug Fixes
-* Return the length of the left/right bank in riverCenterline class (right_bank_length, left_bank_length)
 * Verify that smoothing filter option does not produce a line that goes outside of the polygon
 * edge case: (wide starting/ending banks) redefine how the starting and ending nodes are calcualted to avoid ending up on an 'island' (NA7_FP1)
 * Return the knickpoints (occurrences of knickpoints)
