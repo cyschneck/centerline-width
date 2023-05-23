@@ -19,39 +19,8 @@ logger.setLevel(logging.INFO)
 stream_handler = logging.StreamHandler()
 logger.addHandler(stream_handler)
 
-def centerlinePath(river_voronoi, river_polygon, top_polygon_line, bottom_polygon_line):
-	# Return the starting node, ending node, all possible paths positions, and all paths starting/end position as a dictionary
-	start_end_points_dict = centerline_width.pointsFromVoronoi(river_voronoi, river_polygon) # All possible path connections from Voronoi
-	x_ridge_point = [] # X position on path
-	y_ridge_point = [] # Y poistion on path
-	starting_node = None # starting position at the top of the river
-	ending_node = None # ending position at the bottom of the river
-	for start_point, end_point_list in start_end_points_dict.items():
-		if len(end_point_list) > 0: # TESTING TESTING: Show only the end points that have multiple connections (set to 0 during production)
-			# Find the starting and ending node based on distance from the top and bottom of the polygon
-			if starting_node is None: starting_node = start_point
-			else:
-				if Point(start_point).distance(top_polygon_line) <= Point(starting_node).distance(top_polygon_line):
-					starting_node = start_point
-			for end_point in end_point_list:
-				if Point(end_point).distance(top_polygon_line) <= Point(starting_node).distance(top_polygon_line):
-					starting_node = end_point
-				if ending_node is None: ending_node = end_point
-				else:
-					if Point(start_point).distance(bottom_polygon_line) <= Point(ending_node).distance(bottom_polygon_line):
-						ending_node = start_point
-					if Point(end_point).distance(bottom_polygon_line) <= Point(ending_node).distance(bottom_polygon_line):
-						ending_node = end_point
-				# Save all starting and end positions for all possible paths
-				x_ridge_point.append((start_point[0], end_point[0]))
-				y_ridge_point.append((start_point[1], end_point[1]))
-
-	if starting_node is None:
-		logger.critical("\nCRITICAL ERROR, Voronoi diagram generated too small to find centerline (no starting node found), unable to plot centerline. Set displayVoronoi=True to view. Can typically be fixed by adding more data to expand range.")
-
-	return starting_node, ending_node, x_ridge_point, y_ridge_point, start_end_points_dict
-
-def networkXGraphShortestPath(all_points_dict, starting_node, ending_node):
+def generateNXGraph(all_points_dict):
+	# Generate a NetworkX graph to find the largest graph
 	def distanceBetween(start, end):
 		lat1 = start[0]
 		lat2 = end[0]
@@ -61,18 +30,30 @@ def networkXGraphShortestPath(all_points_dict, starting_node, ending_node):
 		a = 0.5 - math.cos((lat2-lat1)*p)/2 + math.cos(lat1*p) * math.cos(lat2*p) * (1-math.cos((lon2-lon1)*p))/2
 		return math.asin(math.sqrt(a))
 
+	all_connections_in_graph = nx.Graph()
+	node_as_keys_pos_values = {}
+	for start_point, end_point_list in all_points_dict.items():
+		node_as_keys_pos_values[start_point] = (start_point[0], start_point[1])
+		all_connections_in_graph.add_node(start_point, pos=(start_point[0], start_point[1]))
+		for end_point in end_point_list:
+			all_connections_in_graph.add_node(end_point, pos=(end_point[0], end_point[1]))
+			node_as_keys_pos_values[end_point] = (end_point[0], end_point[1])
+			all_connections_in_graph.add_edge(start_point, end_point, weight=distanceBetween(start_point,end_point))
+
+	components_of_subgraphs = [all_connections_in_graph.subgraph(c).copy() for c in nx.connected_components(all_connections_in_graph)]
+	nodes_of_largest_subgraph = []
+	for idx, g in enumerate(components_of_subgraphs, start=1):
+		if len(g.nodes()) > len(nodes_of_largest_subgraph):
+			nodes_of_largest_subgraph = list(g.nodes())
+		#print("Subgraph {0}: Nodes: {1}, Edges: {2}".format(idx, len(g.nodes()), len(g.edges())))
+
+	return all_connections_in_graph, nodes_of_largest_subgraph
+
+def networkXGraphShortestPath(nx_graph, starting_node, ending_node):
+	# Find the shortest path if it exists
 	if starting_node is not None:
-		graph_connections = nx.Graph()
-		node_as_keys_pos_values = {}
-		for start_point, end_point_list in all_points_dict.items():
-			node_as_keys_pos_values[start_point] = (start_point[0], start_point[1])
-			graph_connections.add_node(start_point, pos=(start_point[0], start_point[1]))
-			for end_point in end_point_list:
-				graph_connections.add_node(end_point, pos=(end_point[0], end_point[1]))
-				node_as_keys_pos_values[end_point] = (end_point[0], end_point[1])
-				graph_connections.add_edge(start_point, end_point, weight=distanceBetween(start_point,end_point))
 		try:
-			shortest_path = nx.shortest_path(graph_connections, source=starting_node, target=ending_node)
+			shortest_path = nx.shortest_path(nx_graph, source=starting_node, target=ending_node)
 			logger.info("[SUCCESS] Valid centerline path found")
 		except nx.NetworkXNoPath: # no direct path found
 			logger.info("[FAILED]  No direct path found from starting node to ending node")
@@ -81,6 +62,47 @@ def networkXGraphShortestPath(all_points_dict, starting_node, ending_node):
 		return shortest_path
 	else:
 		return None
+
+def centerlinePath(river_voronoi, river_polygon, top_polygon_line, bottom_polygon_line):
+	# Return the starting node, ending node, all possible paths positions, and all paths starting/end position as a dictionary
+	start_end_points_dict = centerline_width.pointsFromVoronoi(river_voronoi, river_polygon) # All possible path connections from Voronoi
+	nx_graphs, largest_subgraph_nodes = generateNXGraph(start_end_points_dict)
+
+	x_ridge_point = [] # X position on path
+	y_ridge_point = [] # Y poistion on path
+	starting_node = None # starting position at the top of the river
+	ending_node = None # ending position at the bottom of the river
+	for start_point, end_point_list in start_end_points_dict.items():
+			if len(end_point_list) > 0: # TESTING TESTING: Show only the end points that have multiple connections (set to 0 during production)
+				# Find the starting and ending node based on distance from the top and bottom of the polygon
+				if starting_node is None: 
+					starting_node = start_point
+				else:
+					if start_point in largest_subgraph_nodes: # Only include if node is on the largest subgraph (that represents the centerline)
+						if Point(start_point).distance(top_polygon_line) <= Point(starting_node).distance(top_polygon_line):
+							starting_node = start_point
+				for end_point in end_point_list:
+					if start_point in largest_subgraph_nodes: # Only include if node is on the largest subgraph (that represents the centerline)
+						if Point(end_point).distance(top_polygon_line) <= Point(starting_node).distance(top_polygon_line):
+							starting_node = end_point
+						if ending_node is None: 
+							ending_node = end_point
+						else:
+							if Point(start_point).distance(bottom_polygon_line) <= Point(ending_node).distance(bottom_polygon_line):
+								ending_node = start_point
+							if Point(end_point).distance(bottom_polygon_line) <= Point(ending_node).distance(bottom_polygon_line):
+								ending_node = end_point
+					# Save all starting and end positions for all possible paths
+					x_ridge_point.append((start_point[0], end_point[0]))
+					y_ridge_point.append((start_point[1], end_point[1]))
+
+	if starting_node is None:
+		logger.critical("\nCRITICAL ERROR, Voronoi diagram generated too small to find centerline (no starting node found), unable to plot centerline. Set displayVoronoi=True to view. Can typically be fixed by adding more data to expand range.")
+		shortest_path_points = None
+	else:
+		shortest_path_points = networkXGraphShortestPath(nx_graphs, starting_node, ending_node)
+
+	return starting_node, ending_node, x_ridge_point, y_ridge_point, shortest_path_points
 
 def evenlySpacedCenterline(centerline_coordinates=None, number_of_fixed_points=10):
 	# Interpolate to evenly space points along the centerline coordinates (effectively smoothing with fewer points)
@@ -123,16 +145,6 @@ def smoothedCoordinates(centerline_coordinates=None, interprolate_num=None):
 	smoothed_coordinates = list(zip(x_smoothed, y_smoothed))
 
 	return smoothed_coordinates
-
-def returnShortestPathPoints(river_voronoi=None, river_polygon=None, top_polygon_line=None, bottom_polygon_line=None):
-	# Find the centerline from NetworkX
-	starting_node, ending_node, x_ridge_point, y_ridge_point, start_end_points_dict = centerline_width.centerlinePath(river_voronoi=river_voronoi,
-																													river_polygon=river_polygon, 
-																													top_polygon_line=top_polygon_line, 
-																													bottom_polygon_line=bottom_polygon_line)
-
-	shortest_path_points = centerline_width.networkXGraphShortestPath(start_end_points_dict, starting_node, ending_node)
-	return shortest_path_points
 
 def riverWidthFromCenterlineCoordinates(river_object=None,
 										centerline_coordinates=None,

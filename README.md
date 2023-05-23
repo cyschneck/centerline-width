@@ -402,6 +402,8 @@ This can be fixed by using the flipDirection optional argument `centerline_width
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/flipDirection_example.png)
 
 ### Fix Gaps and Jagged Centerlines
+Gaps formed can cause part of the Centerline near the end or start of the river to be removed
+[example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/interpolate_false_gaps_short_path.png)
 
 Set river object created by `centerline_width.riverCenterline` to `interpolate_data=True` to fix for jagged edges or gaps formed by the interaction of sparse data and narrow banks
 

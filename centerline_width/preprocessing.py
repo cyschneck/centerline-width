@@ -20,7 +20,6 @@ logger.addHandler(stream_handler)
 
 def convertColumnsToCSV(text_file=None, flipBankDirection=False):
 	# Convert txt file to a comma seperated version of the file to use in pandas
-
 	centerline_width.errrorHandlingConvertColumnsToCSV(text_file=text_file, flipBankDirection=flipBankDirection)
 
 	left_rows = []
@@ -128,7 +127,6 @@ def pointsFromVoronoi(river_voronoi, river_polygon):
 def interpolateBetweenPoints(left_bank_coordinates, right_bank_coordinates, interpolate_n):
 	# Interpolated between points at an even distance along the river banks to attempt to even out Voronoi diagrams
 	interpolate_n += 2 # adds two exta points, to ensure that interpolating is adding the points between the existing points
-	print(interpolate_n)
 	def interpolateList(lst):
 		# Add points to existing list to increase resolution
 		#haversine_distance_between = haversine((lat1, lon1), (lat2, lon2), unit=units)
