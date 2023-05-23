@@ -372,9 +372,9 @@ Points that only have one connection are removed, but by limiting the number of 
 
 ## Debugging, Error Handling, and Edge Cases
 ### If the Start of End of the River is Wide
-If the data starts or ends with a large width, it is possible for the starting/ending nodes to be invalid
+If the data starts or ends with a large width, it is possible for the starting/ending nodes to end up in the wrong position
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example3.png)
-Currently, the starting node is determined by the closest node to the top of the bank (in green) and the ending node is determined by the closest node to the bottom of the bank (in red)
+Currently, the starting node is determined by the closest node to the top of the bank (in green) and the ending node is determined by the closest node to the bottom of the bank (in red) that sits along the longest path
 
 ### Invalid Polygon
 A polygon is formed to encapsulate the river with the given data (to determine the inside and outside of the river). The top and bottom are connected by a straight line from the start/end of the available data. As a result, it is possible for this straight line to overlap and create an invalid polygon.
@@ -402,15 +402,12 @@ This can be fixed by using the flipDirection optional argument `centerline_width
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/flipDirection_example.png)
 
 ### Fix Gaps and Jagged Centerlines
-Gaps formed can cause part of the Centerline near the end or start of the river to be removed
-[example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/interpolate_false_gaps_short_path.png)
-
+Gaps formed can cause part of the centerline due to sparse data. As a result, the start and end of the centerline can end up missing parts of the river
+![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/interpolate_false_gaps_short_path.png)
 Set river object created by `centerline_width.riverCenterline` to `interpolate_data=True` to fix for jagged edges or gaps formed by the interaction of sparse data and narrow banks
-
 ```python
 river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv", interpolate_data=True)
 ```
-
 | interpolate_data = False | interpolate_data = True |
 | ------------- | ------------- |
 | ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/interpolate_false_gaps.png) | ![river_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/interpolate_true_no_gaps.png) |
@@ -419,7 +416,6 @@ The amount of additional points added by interpolating can be adjusted with `int
 
 ## Developer Notes: Tech Debt and Bug Fixes
 * Verify that smoothing filter option does not produce a line that goes outside of the polygon
-* edge case: (wide starting/ending banks) redefine how the starting and ending nodes are calcualted to avoid ending up on an 'island' (NA7_FP1)
 * Return the knickpoints (occurrences of knickpoints)
 
 ## Citations
