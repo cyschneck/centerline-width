@@ -325,15 +325,15 @@ def riverWidthFromCenterline(river_object=None,
 		# if plotting width, but n_interprolate_centerpoints is undefined, set to the size of the dataframe
 		n_interprolate_centerpoints = river_object.df_len
 
-	if river_object.centerline_latitude_longtiude is None:
+	if river_object.centerlineLatitudeLongtiude is None:
 		logger.critical("\nCRITICAL ERROR, unable to find width without a valid centerline")
 		return None
 
 	# recreate the centerline with evenly spaced points
-	defined_centerline_coordinates = centerline_width.evenlySpacedCenterline(centerline_coordinates=river_object.centerline_latitude_longtiude,
+	defined_centerline_coordinates = centerline_width.evenlySpacedCenterline(centerline_coordinates=river_object.centerlineLatitudeLongtiude,
 																			number_of_fixed_points=n_interprolate_centerpoints)
 	if apply_smoothing:
-		defined_centerline_coordinates = centerline_width.smoothedCoordinates(centerline_coordinates=river_object.centerline_latitude_longtiude,
+		defined_centerline_coordinates = centerline_width.smoothedCoordinates(centerline_coordinates=river_object.centerlineLatitudeLongtiude,
 																				interprolate_num=n_interprolate_centerpoints)
 	# if using smoothing, replace left/right coordinates with the smoothed variation
 	right_width_coord, left_width_coord, _ = centerline_width.riverWidthFromCenterlineCoordinates(river_object=river_object, 

@@ -4,7 +4,7 @@
 from setuptools import setup, find_namespace_packages
 
 VERSION="0.1.0"
-DESCRIPTION="A Python package to find the centerline and width of rivers based on the latitude and longitude from a right and left bank"
+DESCRIPTION="A Python package to find the centerline and width of rivers based on the latitude and longitude of the right and left bank"
 
 with open("README.md", "r") as f:
 	long_description_readme = f.read()
@@ -17,11 +17,11 @@ setup(
 	long_description_content_type='text/markdown',
 	url="https://github.com/cyschneck/centerline-width",
 	download_url="https://github.com/cyschneck/centerline-width/archive/refs/tags/v{0}.tar.gz".format(VERSION),
-	author="Una Schneck (unaschneck), C. Y. Schneck (cyschneck)",
-	keywords=["geophysics", "python", "voronoi", "centerline", "centerline-extraction", "river-bank", "limnology", "hydrology"],
+	author="Una Schneck (unaschneck), Cora Schneck (cyschneck)",
+	keywords=["geophysics", "python", "voronoi", "networkx", "centerline", "centerline-extraction", "centerline-detection", "rivers", "river-bank-length", "river-bank", "limnology", "hydrology"],
 	license="MIT",
 	classifiers=[
-		"Development Status :: 1 - Planning",
+		"Development Status :: 2 - Pre-Alpha",
 		"Intended Audience :: Developers",
 		"Intended Audience :: Education",
 		"Intended Audience :: Science/Research",

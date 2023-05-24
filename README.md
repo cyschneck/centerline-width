@@ -13,10 +13,10 @@ Find the centerline and width of rivers based on the latitude and longitude posi
 	* plotCenterline()
 	* plotCenterlineWidth()
 	* riverWidthFromCenterline()
-	* centerline_latitude_longtiude
-	* centerline_length
-	* right_bank_length
-	* left_bank_length
+	* centerlineLatitudeLongtiude
+	* centerlineLength
+	* rightBankLength
+	* leftBankLength
 
 | River Outlined in Google Earth Pro | Generated Centerline for the River Bank |
 | ------------- | ------------- |
@@ -54,7 +54,7 @@ centerline_width.convertColumnsToCSV(text_file="river_coordinates_output.txt")
 Then, to run the centerline-width functions, generate a river object from the `river_coordinates_output.csv`
 
 ```python
-river_object = centerline_width.riverCenterline(csv_data="river_coordinates_output")
+river_object = centerline_width.riverCenterline(csv_data="river_coordinates_output.csv")
 ```
 
 To plot the centerline, run the `plotCenterline()` function from `river_object` created
@@ -145,9 +145,9 @@ Output: A csv file `data/river_coords.csv` with the headers llat, llon, rlat, rl
 First, generate a river object to contain river data and available transformations
 ```
 centerline_width.riverCenterline(csv_data=None,
-		optional_cutoff=None,
-		interpolate_data=False,
-		interpolate_n=5)
+				optional_cutoff=None,
+				interpolate_data=False,
+				interpolate_n=5)
 ```
 * **[REQUIRED]** csv_data (string): File location of the text file to convert
 * [OPTIONAL] optional_cutoff (int): Include only the first x amount of the data to chart (useful for debugging)
@@ -158,16 +158,16 @@ Interpolating is an option that can be used to find a centerline when the existi
 
 Object (class) useful attributes:
 
-* left_bank_coordinates (list of tuples): list of coordinates of the left bank generated from the csv file (`[(x, y), (x, y)]`)
-* right_bank_coordinates (list of tuples) list of coordinates of the right bank generated from the csv file (`[(x, y), (x, y)]`)
-* centerline_latitude_longtiude (list of tuples): List of the latitude and longitude coordinates of the centerline
-* centerline_length (float): Length of the centerline of the river (in km)
-* right_bank_length (float): Length of the right bank of the river (in km)
-* left_bank_length (float): Length of the left bank of the river (in km)
+* centerlineLatitudeLongtiude (list of tuples): List of the latitude and longitude coordinates of the centerline
+* centerlineLength (float): Length of the centerline of the river (in km)
+* rightBankLength (float): Length of the right bank of the river (in km)
+* leftBankLength (float): Length of the left bank of the river (in km)
 
 Object (class) additional atttributes:
 
 * river_name (string): name of object, set to the csv_data string
+* left_bank_coordinates (list of tuples): list of coordinates of the left bank generated from the csv file (`[(x, y), (x, y)]`)
+* right_bank_coordinates (list of tuples) list of coordinates of the right bank generated from the csv file (`[(x, y), (x, y)]`)
 * df_len (int): Length of the dataframe of the csv data spliced by the optional_cutoff
 * bank_polygon (Shapley Polygon): Multi-sided polygon generated to encapsulate river bank (used to define an inside and an outside of the river)
 * top_bank (Shapley Linestring): Linestring that represents the top of the river/polygon
@@ -289,12 +289,12 @@ Intersecting lines are flagged in red by default (flag_intersections=True)
 import centerline_width
 river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
 river_object.plotCenterlineWidth(save_plot_name="data/river_coords_width.png",
-					display_true_centerline=False,
-					n_interprolate_centerpoints=None,
-					transect_span_distance=3,
-					apply_smoothing=True,
-					flag_intersections=True,
-					remove_intersections=True)
+				display_true_centerline=False,
+				n_interprolate_centerpoints=None,
+				transect_span_distance=3,
+				apply_smoothing=True,
+				flag_intersections=True,
+				remove_intersections=True)
 ```
 ![river_coords_width+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/river_coords_width.png)
 
@@ -344,6 +344,7 @@ The centerline is defined by the greatest distance from the right and left bank,
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example4.png)
 
 ### Filter out any point pairs that only have one connections to filter out the short dead end paths and find the starting and ending node based on distance from the top and bottom of polygon
+With the vertices removed, it is possible form multiple unconnected graphs within the polygon. The largest subgraph is assumed to contain the centerline and the other subgraphs are filtered out
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example6.png)
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example7.png)
 
@@ -371,7 +372,7 @@ Points that only have one connection are removed, but by limiting the number of 
 - Smoothed Centerline: centerline generated from the evenly spaced centerline but smoothed by a b-spline
 
 ## Debugging, Error Handling, and Edge Cases
-### If the Start of End of the River is Wide
+### Wide Start/End of River
 If the data starts or ends with a large width, it is possible for the starting/ending nodes to end up in the wrong position
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example3.png)
 Currently, the starting node is determined by the closest node to the top of the bank (in green) and the ending node is determined by the closest node to the bottom of the bank (in red) that sits along the longest path
@@ -383,7 +384,7 @@ A polygon is invalid if it overlaps within itself:
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example1.png)
 In this example, the polygon is invalid, but with such a small overlap it is still able to find a valid path
 
-With limited data, the polygon will overlap more dramatically and will no longer be able to find a valid centerline:
+With limited data, the polygon will overlap more dramatically and will struggle to find a valid centerline:
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example4.png)
 
 ### Invalid Centerline
@@ -402,7 +403,7 @@ This can be fixed by using the flipDirection optional argument `centerline_width
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/flipDirection_example.png)
 
 ### Fix Gaps and Jagged Centerlines
-Gaps formed can cause part of the centerline due to sparse data. As a result, the start and end of the centerline can end up missing parts of the river
+Gaps formed can cause part of the centerline to be skipped due to sparse data. As a result, the start and end of the centerline can skip parts at the beginning or end of a river
 ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/interpolate_false_gaps_short_path.png)
 Set river object created by `centerline_width.riverCenterline` to `interpolate_data=True` to fix for jagged edges or gaps formed by the interaction of sparse data and narrow banks
 ```python

@@ -41,15 +41,15 @@ def plotCenterlineBackend(river_object=None):
 
 	# Plot centerline found from NetworkX
 	valid_path_through = False
-	if river_object.centerline_latitude_longtiude: # shortest path through points
+	if river_object.centerlineLatitudeLongtiude: # shortest path through points
 		valid_path_through = True
 		x = []
 		y = []
-		for k, v in river_object.centerline_latitude_longtiude:
+		for k, v in river_object.centerlineLatitudeLongtiude:
 			x.append(k)
 			y.append(v)
 		#plt.scatter(x, y, c="slategray", label="Centerline Coordinates", s=5)
-		plt.plot(*zip(*river_object.centerline_latitude_longtiude), c="black", label="Centerline")
+		plt.plot(*zip(*river_object.centerlineLatitudeLongtiude), c="black", label="Centerline")
 
 	# Dynamically assign the starting and ending
 	if river_object.starting_node is not None: # error handling for when data is too small to generate centerline coordiantes
@@ -77,7 +77,7 @@ def plotCenterline(river_object=None,
 		voronoi_plot_2d(river_object.bank_voronoi, show_points=True, point_size=1, ax=ax)
 
 	# Plot all possible paths with text for positions
-	if display_all_possible_paths or not river_object.bank_polygon.is_valid: # display paths if polygon is not valid (for debugging)
+	if display_all_possible_paths:
 		for i in range(len(river_object.x_voronoi_ridge_point)):
 			plt.plot(river_object.x_voronoi_ridge_point[i], river_object.y_voronoi_ridge_point[i], 'cyan', linewidth=1)
 
@@ -122,14 +122,14 @@ def plotCenterlineWidth(river_object=None,
 	# Determine the Width of River
 	number_of_evenly_spaced_points = ""
 
-	if river_object.centerline_latitude_longtiude is not None:
+	if river_object.centerlineLatitudeLongtiude is not None:
 		number_of_evenly_spaced_points = "\nCenterline made of {0} Fixed Points, width lines generated every {1} points".format(n_interprolate_centerpoints, transect_span_distance)
 		if river_object.starting_node is not None: # error handling for when data is too small to generate centerline coordiantes
 			# recreate the centerline with evenly spaced points
-			evenly_spaced_centerline_coordinates = centerline_width.evenlySpacedCenterline(centerline_coordinates=river_object.centerline_latitude_longtiude,
+			evenly_spaced_centerline_coordinates = centerline_width.evenlySpacedCenterline(centerline_coordinates=river_object.centerlineLatitudeLongtiude,
 																						number_of_fixed_points=n_interprolate_centerpoints)
 			if apply_smoothing:
-				smoothed_centerline_coordinates = centerline_width.smoothedCoordinates(centerline_coordinates=river_object.centerline_latitude_longtiude,
+				smoothed_centerline_coordinates = centerline_width.smoothedCoordinates(centerline_coordinates=river_object.centerlineLatitudeLongtiude,
 																						interprolate_num=n_interprolate_centerpoints)
 				# if using smoothing, replace left/right coordinates with the smoothed variation
 				right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(river_object=river_object,

@@ -47,14 +47,14 @@ class riverCenterline:
 		self.y_voronoi_ridge_point = y_ridge_point # Voronoi y postions
 
 		# Centerline coordinates
-		self.centerline_latitude_longtiude = shortest_path_coordinates
+		self.centerlineLatitudeLongtiude = shortest_path_coordinates
 
 		# Right/Length Bank Length
-		self.right_bank_length = centerline_width.centerlineLength(centerline_coordinates=right_bank_coordinates)
-		self.left_bank_length = centerline_width.centerlineLength(centerline_coordinates=left_bank_coordinates)
+		self.rightBankLength = centerline_width.centerlineLength(centerline_coordinates=right_bank_coordinates)
+		self.leftBankLength = centerline_width.centerlineLength(centerline_coordinates=left_bank_coordinates)
 
 		# Centerline length
-		self.centerline_length = centerline_width.centerlineLength(centerline_coordinates=shortest_path_coordinates)
+		self.centerlineLength = centerline_width.centerlineLength(centerline_coordinates=shortest_path_coordinates)
 
 	def plotCenterline(self,
 						display_all_possible_paths=False,
