@@ -418,6 +418,7 @@ The amount of additional points added by interpolating can be adjusted with `int
 ## Developer Notes: Tech Debt and Bug Fixes
 * Verify that smoothing filter option does not produce a line that goes outside of the polygon
 * Return the knickpoints (occurrences of knickpoints)
+* conversion of centerline lat-lon to meters
 
 ## Citations
 Based on work written in R (Golly et al. 2017):
