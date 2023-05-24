@@ -72,3 +72,10 @@ def test_plotCenterline_textOutputNameInvalidTypes(caplog, text_output_name_inva
 	log_record = caplog.records[0]
 	assert log_record.levelno == logging.CRITICAL
 	assert log_record.message == "\nCRITICAL ERROR, [text_output_name]: Must be a str, current type = '{0}'".format(text_output_name_error_output)
+
+def test_extractPointsToTextFile_rightAndLeftKMLMatchInvalid(caplog):
+	with pytest.raises(SystemExit):
+		centerline_width.extractPointsToTextFile(left_kml="same_kml.kml", right_kml="same_kml.kml", text_output_name=None)
+	log_record = caplog.records[0]
+	assert log_record.levelno == logging.CRITICAL
+	assert log_record.message == "\nCRITICAL ERROR, right_kml and left_kml are set to the same file (needs a seperate left and right bank): right_kml='same_kml.kml' and left_kml='same_kml.kml'"

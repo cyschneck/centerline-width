@@ -203,6 +203,10 @@ def errorHandlingExtractPointsToTextFile(left_kml=None, right_kml=None, text_out
 			logger.critical("\nCRITICAL ERROR, [right_kml]: Extension must be a .kml file, current extension = '{0}'".format(right_kml.split(".")[1]))
 			exit()
 
+	if right_kml == left_kml:
+			logger.critical("\nCRITICAL ERROR, right_kml and left_kml are set to the same file (needs a seperate left and right bank): right_kml='{0}' and left_kml='{1}'".format(right_kml, left_kml))
+			exit()
+
 	if text_output_name is None:
 		logger.critical("\nCRITICAL ERROR, [text_output_name]: Requires output file name")
 		exit()

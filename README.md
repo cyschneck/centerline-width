@@ -188,27 +188,27 @@ river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv"
 ### Return Latitude/Longitude Coordinates of Centerline
 Return the latitude/longtiude coordinates of the centerline based on the left and right banks
 ```
-river_object.centerline_latitude_longtiude
+river_object.centerlineLatitudeLongtiude
 ```
 Centerline coordinates are formed from Voronoi vertices
 
 ```python
 import centerline_width
 river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv", optional_cutoff=15)
-river_centerline_coordinates = river_object.centerline_latitude_longtiude
+river_centerline_coordinates = river_object.centerlineLatitudeLongtiude
 ```
 Output is a list of tuples: (example) `[(-92.86788596499872, 30.03786596717931), (-92.86789573751797, 30.037834641974108), (-92.8679141386283, 30.037789636848878), (-92.8679251193248, 30.037756853899904), (-92.86796903819089, 30.03765423778148), (-92.86797335733262, 30.037643336049054), (-92.8679920356456, 30.037592224469797), (-92.86800576063828, 30.037555441489403), (-92.86800841510367, 30.037546512833107), (-92.8680119498663, 30.03753043193875)]`
 
 ### Return Length of Centerline
 Return the length of the centerline found between the left and right bank
 ```
-river_object.centerline_length
+river_object.centerlineLength
 ```
 Length returned in kilometers
 ```python
 import centerline_width
 river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv", optional_cutoff=550)
-river_centerline_length = river_object.centerline_length
+river_centerline_length = river_object.centerlineLength
 ```
 The length of the river centerline returns `215.34700589636674` km
 
@@ -416,9 +416,9 @@ river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv"
 The amount of additional points added by interpolating can be adjusted with `interpolate_n`, but defaults to add 5 additional points between values
 
 ## Developer Notes: Tech Debt and Bug Fixes
-* Verify that smoothing filter option does not produce a line that goes outside of the polygon
-* Return the knickpoints (occurrences of knickpoints)
 * conversion of centerline lat-lon to meters
+* Fix legend overlapping on graph, replace doc_examples that have an overlapping
+* Verify that smoothing filter option does not produce a line that goes outside of the polygon
 
 ## Citations
 Based on work written in R (Golly et al. 2017):
