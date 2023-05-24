@@ -97,7 +97,7 @@ def centerlinePath(river_voronoi, river_polygon, top_polygon_line, bottom_polygo
 					y_ridge_point.append((start_point[1], end_point[1]))
 
 	if starting_node is None:
-		logger.critical("\nCRITICAL ERROR, Voronoi diagram generated too small to find centerline (no starting node found), unable to plot centerline. Set displayVoronoi=True to view. Can typically be fixed by adding more data to expand range.")
+		logger.critical("\nCRITICAL ERROR, Polygon too short for the Voronoi diagram generated (no starting node found), unable to plot centerline. Set displayVoronoi=True to view vertices. Can typically be fixed by adding more data to expand range.")
 		shortest_path_points = None
 	else:
 		shortest_path_points = networkXGraphShortestPath(nx_graphs, starting_node, ending_node)
@@ -260,7 +260,7 @@ def riverWidthFromCenterlineCoordinates(river_object=None,
 	# Remove Intersection Lines
 	centerline_coordinates_to_be_removed = []
 	if remove_intersections:
-		logger.info("[PROCSESING] Recursively removing interesection lines...")
+		logger.info("[PROCESSING] Recursively removing intersection lines...")
 		# iterate from the most intersections to the least intersections
 		for linestring_most_interactions in sorted(linestring_with_linestrings_that_intersect, key=lambda k: len(linestring_with_linestrings_that_intersect[k]), reverse=True):
 

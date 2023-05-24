@@ -186,7 +186,7 @@ river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv"
 ```
 
 ### Return Latitude/Longitude Coordinates of Centerline
-Return the latitude/longtiude coordinates of the centerline based on the left and right banks
+Return the latitude/longitude coordinates of the centerline based on the left and right banks
 ```
 river_object.centerlineLatitudeLongtiude
 ```
@@ -388,13 +388,13 @@ With limited data, the polygon will overlap more dramatically and will struggle 
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example4.png)
 
 ### Invalid Centerline
-If the data is too small, a centerline and its coordinates cannot not be found (since only a single Voronoi vertex exists within the polygon and after deadends are filtered)
+If the data is too small, a centerline and its coordinates cannot not be found (since only a single Voronoi vertex exists within the polygon and after dead ends are filtered)
 
-`CRITICAL ERROR, Voronoi diagram generated too small to find centerline (no starting node found), unable to plot centerline. Set displayVoronoi=True to view. Can typically be fixed by adding more data to expand range.`
+`CRITICAL ERROR, Polygon too short for the Voronoi diagram generated (no starting node found), unable to plot centerline. Set displayVoronoi=True to view vertices. Can typically be fixed by adding more data to expand range.`
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example2.png)
 Can be fixed by expanding the data until the polygon is large enough to contain at least two different vertex points
 
-### Invalid Top and Bottom Bank Postiions (flipBankDirection = True)
+### Invalid Top and Bottom Bank Postions (flipBankDirection = True)
 Error: `Invalid Polygon Due to Flipped Banks, fix recommendation: rerun convertColumnsToCSV() and set flipBankDirection=True (or reset to default 'False' if currently set to flipBankDirection=True)`
 
 If the data for the left and right river banks are generated in reverse order, they will be read in the incorrect order and the graph will find the invalid top and bottom of the bank
@@ -435,7 +435,7 @@ Based on work written in R (Golly et al. 2017):
   <img src="https://user-images.githubusercontent.com/22159116/222872019-12931138-9e10-4e51-aa1e-552e72d09af0.png" />
 </p>
 
-This material is based upon work supported by the National Science Foundation Graduate Fellowship under Grant No. 2141064. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the atuhors and do not neccessarily reflect the views of the National Science Foundation.
+This material is based upon work supported by the National Science Foundation Graduate Fellowship under Grant No. 2141064. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the National Science Foundation.
 
 ## Bug and Feature Request
 
