@@ -394,12 +394,14 @@ If the data is too small, a centerline and its coordinates cannot not be found (
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example2.png)
 Can be fixed by expanding the data until the polygon is large enough to contain at least two different vertex points
 
-### Invalid Top and Bottom Bank Postiions (flipDirection = True)
+### Invalid Top and Bottom Bank Postiions (flipBankDirection = True)
+Error: `Invalid Polygon Due to Flipped Banks, fix recommendation: rerun convertColumnsToCSV() and set flipBankDirection=True (or reset to default 'False' if currently set to flipBankDirection=True)`
+
 If the data for the left and right river banks are generated in reverse order, they will be read in the incorrect order and the graph will find the invalid top and bottom of the bank
 
 If the latitude/longitude of the banks are generated in reverse order, flip the final values so left/right bank are in order
 
-This can be fixed by using the flipDirection optional argument `centerline_width.convertColumnsToCSV(text_file="data_example.txt", flipBankDirection=True)`
+This can be fixed by using the flipBankDirection optional argument `centerline_width.convertColumnsToCSV(text_file="data_example.txt", flipBankDirection=True)`
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/flipDirection_example.png)
 
 ### Fix Gaps and Jagged Centerlines
