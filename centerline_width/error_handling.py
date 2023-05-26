@@ -174,10 +174,10 @@ def errorHandlingRiverWidthFromCenterline(river_object=None,
 			logger.critical("\nCRITICAL ERROR, [units]: Must be an option available ({0}), current given option = '{1}'".format(units_options, units))
 			exit()
 
-	if save_to_csv is not None and type(save_to_csv) != str:
-		logger.critical("\nCRITICAL ERROR, [save_to_csv]: Must be a str, current type = '{0}'".format(type(save_to_csv)))
-		exit()
-	else:
+	if save_to_csv is not None:
+		if type(save_to_csv) != str:
+			logger.critical("\nCRITICAL ERROR, [save_to_csv]: Must be a str, current type = '{0}'".format(type(save_to_csv)))
+			exit()
 		if not save_to_csv.lower().endswith(".csv"):
 			logger.critical("\nCRITICAL ERROR, [save_to_csv]: Extension must be a .csv file, current extension = '{0}'".format(save_to_csv.split(".")[1]))
 			exit()

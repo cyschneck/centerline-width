@@ -201,13 +201,13 @@ river_centerline_coordinates = river_object.centerlineLatitudeLongtiude
 ```
 Output is a list of tuples: (example) `[(-92.86788596499872, 30.03786596717931), (-92.86789573751797, 30.037834641974108), (-92.8679141386283, 30.037789636848878), (-92.8679251193248, 30.037756853899904), (-92.86796903819089, 30.03765423778148), (-92.86797335733262, 30.037643336049054), (-92.8679920356456, 30.037592224469797), (-92.86800576063828, 30.037555441489403), (-92.86800841510367, 30.037546512833107), (-92.8680119498663, 30.03753043193875)]`
 
-## Save Centerline Coordinates to a CSV
+### Save Centerline Coordinates to a CSV
 Save the centerline coordinates from `river_object.centerlineLatitudeLongtiude` to a csv file with the column headers: `Centerline Latitude (Deg)", "Centerline Longitude (Deg)"`
 
 ```
 saveCenterlineCSV(save_to_csv=None)
 ```
-* **[REQUIRED]** save_to_csv (str): CSV file name and location to save to
+* **[REQUIRED]** save_to_csv (str): CSV filename, requires a .csv extension
 
 ```python
 import centerline_width
@@ -229,7 +229,7 @@ river_centerline_length = river_object.centerlineLength
 The length of the river centerline returns `215.34700589636674` km
 
 ## Plot Centerline in Matplotlib
-### Plot the centerline created from a list of right and left banks with Voronoi vertices
+Plot the centerline created from a list of right and left banks with Voronoi vertices
 
 ```
 plotCenterline(display_all_possible_paths=False, 
@@ -331,7 +331,9 @@ riverWidthFromCenterline(n_interprolate_centerpoints=None,
 * [OPTIONAL] apply_smoothing (bool): Apply a B-spline smoothing to centerline
 * [OPTIONAL] remove_intersections (bool): Iterative remove intersecting lines, to maintain the most width lines, but return only non-intersecting width lines, defaultsl to True
 * [OPTIONAL] units (string): Units to measure distance, options: ["km" (kilometers), "m" (meters), "mi" (miles), "nmi" (nautical miles), "ft" (feet), "in" (inches), "rad" (radians), "deg" (degrees)], defaults to "km" (kilometers)
-* [OPTIONAL] save_to_csv (string): CSV filename to output width, defaults to None (no file is saved), (Column Headers: `Centerline Latitude (Deg)", "Centerline Longitude (Deg)", "Width (<units specified>)`)
+* [OPTIONAL] save_to_csv (string): CSV filename to output width, defaults to None (no file is saved), requires a .csv extension (Column Headers: `Centerline Latitude (Deg)", "Centerline Longitude (Deg)", "Width (<units specified>)`)
+
+Important note, when using `apply_smoothing=True`, the centerline generated is the result of evenly spaced coordinates generated from the original Voronoi coordinates, so the smoothed coordiantes may not match exactly to the original centerline coordinates
 
 ```python
 import centerline_width
@@ -383,9 +385,13 @@ Points that only have one connection are removed, but by limiting the number of 
 ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example5.png)
 
 ### Types of Centerlines
+There are three centerline coordinates that can be formed from the data, that can have a some degree of difference from one another
 - Voronoi centerline: centerline generated from where Voronoi vertices intersect within the river
+![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/voronoi_centerline.png)
 - Evenly Spaced Centerline: centerline based on Voronoi centerline but evenly spaced with a fixed number of points
+![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/evenly_spaced_centerline.png)
 - Smoothed Centerline: centerline generated from the evenly spaced centerline but smoothed by a b-spline
+![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/smoothed_centerline.png)
 
 ## Debugging, Error Handling, and Edge Cases
 ### Wide Start/End of River

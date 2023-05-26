@@ -104,7 +104,7 @@ def centerlinePath(river_voronoi, river_polygon, top_polygon_line, bottom_polygo
 
 	return starting_node, ending_node, x_ridge_point, y_ridge_point, shortest_path_points
 
-def evenlySpacedCenterline(centerline_coordinates=None, number_of_fixed_points=10):
+def evenlySpacedCenterline(centerline_coordinates=None, number_of_fixed_points=None):
 	# Interpolate to evenly space points along the centerline coordinates (effectively smoothing with fewer points)
 	if centerline_coordinates is None:
 		return None
@@ -337,9 +337,9 @@ def riverWidthFromCenterline(river_object=None,
 																				interprolate_num=n_interprolate_centerpoints)
 	# if using smoothing, replace left/right coordinates with the smoothed variation
 	right_width_coord, left_width_coord, _ = centerline_width.riverWidthFromCenterlineCoordinates(river_object=river_object, 
-																									centerline_coordinates=defined_centerline_coordinates,
-																									transect_span_distance=transect_span_distance,
-																									remove_intersections=remove_intersections)
+																								centerline_coordinates=defined_centerline_coordinates,
+																								transect_span_distance=transect_span_distance,
+																								remove_intersections=remove_intersections)
 
 	width_dict = {}
 	for centerline_coord, _ in right_width_coord.items():
@@ -355,7 +355,7 @@ def riverWidthFromCenterline(river_object=None,
 			writer = csv.writer(csv_file_output)
 			writer.writerow(["Centerline Latitude (Deg)", "Centerline Longitude (Deg)", "Width ({0})".format(units)])
 			for coordinate_key, width_value in width_dict.items():
-				writer.writerow([coordinate_key[0], coordinate_key[1], width_value])
+				writer.writerow([coordinate_key[1], coordinate_key[0], width_value])
 
 	return width_dict
 
