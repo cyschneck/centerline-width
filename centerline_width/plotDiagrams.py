@@ -140,9 +140,10 @@ def plotCenterlineWidth(river_object=None,
 																														transect_span_distance=transect_span_distance,
 																														remove_intersections=remove_intersections)
 
+			# Display the evenly spaced centerline
 			#x = []
 			#y = []
-			#for k, v in evenly_spaced_centerline_coordinates:
+			#for k, v in river_object.centerlineEvenlySpaced:
 			#	x.append(k)
 			#	y.append(v)
 			#plt.scatter(x, y, c="plum", label="Evenly Spaced Centerline Coordinates", s=8)
