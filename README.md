@@ -62,13 +62,15 @@ To plot the centerline, run the `plotCenterline()` function from `river_object` 
 ```python
 river_object.plotCenterline()
 ```
-![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/river_coords_centerline.png)
+![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/river_coords_centerline.png)
 
-To plot the width of the river at intervals along the bank, run `plotCenterlineWidth` (apply_smoothing is optional and defaults to False, but is recommended)
+To plot the width of the river at intervals along the bank, run `plotCenterlineWidth`
+
+While `apply_smoothing`, `remove_intersections`, and `display_true_centerline` are optional, they are recommended to generate a minimal width diagram
 ```python
-river_object.plotCenterlineWidth(apply_smoothing=True)
+river.plotCenterlineWidth(apply_smoothing=True, remove_intersections=True, display_true_centerline=False)
 ```
-![river_coords_width+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/river_coords_width.png)
+![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/river_coords_width.png)
 
 ## Preprocessing
 ### Convert KML files to Text File
@@ -304,15 +306,9 @@ Intersecting lines are flagged in red by default (flag_intersections=True)
 ```python
 import centerline_width
 river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
-river_object.plotCenterlineWidth(save_plot_name="data/river_coords_width.png",
-				display_true_centerline=False,
-				n_interprolate_centerpoints=None,
-				transect_span_distance=3,
-				apply_smoothing=True,
-				flag_intersections=True,
-				remove_intersections=True)
+river_object.plotCenterlineWidth(apply_smoothing=True, remove_intersections=True, display_true_centerline=False)
 ```
-![river_coords_width+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/river_coords_width.png)
+![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/river_coords_width.png)
 
 ### Return Width of River
 
