@@ -57,15 +57,6 @@ def test_riverWidthFromCenterline_riverObjectInvalidTypes(caplog, river_object_i
 	assert log_record.levelno == logging.CRITICAL
 	assert log_record.message == "\nCRITICAL ERROR, [river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{0}'".format(river_object_error_output)
 
-@pytest.mark.parametrize("n_interprolate_centerpoints_invalid, n_interprolate_centerpoints_error_output", invalid_non_int_options)
-def test_riverWidthFromCenterline_nInterprolateCenterpointsInvalidTypes(caplog, n_interprolate_centerpoints_invalid, n_interprolate_centerpoints_error_output):
-	with pytest.raises(SystemExit):
-		centerline_width.riverWidthFromCenterline(river_object=river_class_example,
-											n_interprolate_centerpoints=n_interprolate_centerpoints_invalid)
-	log_record = caplog.records[0]
-	assert log_record.levelno == logging.CRITICAL
-	assert log_record.message == "\nCRITICAL ERROR, [n_interprolate_centerpoints]: Must be a int, current type = '{0}'".format(n_interprolate_centerpoints_error_output)
-
 @pytest.mark.parametrize("transect_span_distance_invalid, transect_span_distance_error_output", invalid_non_int_options)
 def test_riverWidthFromCenterline_transectSpanDistanceInvalidTypes(caplog, transect_span_distance_invalid, transect_span_distance_error_output):
 	with pytest.raises(SystemExit):
@@ -148,3 +139,22 @@ def test_saveCenterlineCSV_csvRequired(caplog):
 	log_record = caplog.records[0]
 	assert log_record.levelno == logging.CRITICAL
 	assert log_record.message == "\nCRITICAL ERROR, [save_to_csv]: Extension must be a .csv file, current extension = 'txt'"
+
+@pytest.mark.parametrize("centerline_type_invalid, centerline_type_error_output", invalid_non_str_options)
+def test_saveCenterlineCSV_centerlineTypeInvalidTypes(caplog, centerline_type_invalid, centerline_type_error_output):
+	with pytest.raises(SystemExit):
+		centerline_width.saveCenterlineCSV(river_object=river_class_example,
+											save_to_csv="testing.csv",
+											centerline_type=centerline_type_invalid)
+	log_record = caplog.records[0]
+	assert log_record.levelno == logging.CRITICAL
+	assert log_record.message == "\nCRITICAL ERROR, [centerline_type]: Must be a str, current type = '{0}'".format(centerline_type_error_output)
+
+def test_saveCenterlineCSV_centerlineTypeInvalidOptions(caplog):
+	with pytest.raises(SystemExit):
+		centerline_width.saveCenterlineCSV(river_object=river_class_example,
+											save_to_csv="testing.csv",
+											centerline_type="not valid")
+	log_record = caplog.records[0]
+	assert log_record.levelno == logging.CRITICAL
+	assert log_record.message == "\nCRITICAL ERROR, [centerline_type]: Must be an available option in ['Voronoi', 'Evenly Spaced', 'Smoothed'], current option = 'not valid'"

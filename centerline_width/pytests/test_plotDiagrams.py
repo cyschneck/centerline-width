@@ -137,15 +137,6 @@ def test_plotCenterlineWidth_displayTrueCenterlineInvalidTypes(caplog, display_t
 	assert log_record.levelno == logging.CRITICAL
 	assert log_record.message == "\nCRITICAL ERROR, [display_true_centerline]: Must be a bool, current type = '{0}'".format(display_true_centerline_error_output)
 
-@pytest.mark.parametrize("n_interprolate_centerpoints_invalid, n_interprolate_centerpoints_error_output", invalid_non_int_options)
-def test_plotCenterlineWidth_nInterprolateCenterpointsInvalidTypes(caplog, n_interprolate_centerpoints_invalid, n_interprolate_centerpoints_error_output):
-	with pytest.raises(SystemExit):
-		centerline_width.plotCenterlineWidth(river_object=river_class_example,
-											n_interprolate_centerpoints=n_interprolate_centerpoints_invalid)
-	log_record = caplog.records[0]
-	assert log_record.levelno == logging.CRITICAL
-	assert log_record.message == "\nCRITICAL ERROR, [n_interprolate_centerpoints]: Must be a int, current type = '{0}'".format(n_interprolate_centerpoints_error_output)
-
 @pytest.mark.parametrize("transect_span_distance_invalid, transect_span_distance_error_output", invalid_non_int_options)
 def test_plotCenterlineWidth_transectSpanDistanceInvalidTypes(caplog, transect_span_distance_invalid, transect_span_distance_error_output):
 	with pytest.raises(SystemExit):

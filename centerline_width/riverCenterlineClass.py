@@ -7,11 +7,12 @@ import pandas as pd
 import centerline_width
 
 class riverCenterline:
-	def __init__(self, csv_data=None, optional_cutoff=None, interpolate_data=False, interpolate_n=5):
+	def __init__(self, csv_data=None, optional_cutoff=None, interpolate_data=False, interpolate_n=5, interpolate_n_centerpoints=None):
 		centerline_width.errorHandlingRiverCenterlineClass(csv_data=csv_data,
 															optional_cutoff=optional_cutoff,
 															interpolate_data=interpolate_data,
-															interpolate_n=interpolate_n)
+															interpolate_n=interpolate_n,
+															interpolate_n_centerpoints=interpolate_n_centerpoints)
 
 		# Description and dataframe
 		self.river_name = csv_data
@@ -21,6 +22,8 @@ class riverCenterline:
 		if optional_cutoff:
 			df = df.head(optional_cutoff)
 		self.df_len = len(df)
+		self.interpolate_n_centerpoints = interpolate_n_centerpoints
+		if self.interpolate_n_centerpoints is None: self.interpolate_n_centerpoints = self.df_len
 
 		# Left and Right Coordinates from the given csv data and data cutoff
 		left_bank_coordinates, right_bank_coordinates = centerline_width.leftRightCoordinates(df)
@@ -47,7 +50,11 @@ class riverCenterline:
 		self.y_voronoi_ridge_point = y_ridge_point # Voronoi y postions
 
 		# Centerline coordinates
-		self.centerlineLatitudeLongtiude = shortest_path_coordinates
+		self.centerlineVoronoi = shortest_path_coordinates
+		self.centerlineEvenlySpaced = centerline_width.evenlySpacedCenterline(centerline_coordinates=self.centerlineVoronoi,
+																						number_of_fixed_points=self.interpolate_n_centerpoints)
+		self.centerlineSmoothed = centerline_width.smoothedCoordinates(centerline_coordinates=self.centerlineEvenlySpaced,
+																						interprolate_num=self.interpolate_n_centerpoints)
 
 		# Right/Length Bank Length
 		self.rightBankLength = centerline_width.centerlineLength(centerline_coordinates=right_bank_coordinates)
@@ -71,7 +78,6 @@ class riverCenterline:
 							plot_title=None, 
 							save_plot_name=None, 
 							display_true_centerline=True,
-							n_interprolate_centerpoints=None,
 							transect_span_distance=3,
 							apply_smoothing=False,
 							flag_intersections=True,
@@ -80,26 +86,25 @@ class riverCenterline:
 											plot_title=plot_title, 
 											save_plot_name=save_plot_name, 
 											display_true_centerline=display_true_centerline,
-											n_interprolate_centerpoints=n_interprolate_centerpoints,
 											transect_span_distance=transect_span_distance,
 											apply_smoothing=apply_smoothing,
 											flag_intersections=flag_intersections,
 											remove_intersections=remove_intersections)
 
 	def riverWidthFromCenterline(self,
-								n_interprolate_centerpoints=None,
 								transect_span_distance=3,
 								apply_smoothing=True,
 								remove_intersections=False,
 								units="km",
 								save_to_csv=None):
 		return centerline_width.riverWidthFromCenterline(river_object=self,
-														n_interprolate_centerpoints=n_interprolate_centerpoints,
 														transect_span_distance=transect_span_distance,
 														apply_smoothing=apply_smoothing,
 														remove_intersections=remove_intersections,
 														units=units,
 														save_to_csv=save_to_csv)
 
-	def saveCenterlineCSV(self, save_to_csv=None):
-		return centerline_width.saveCenterlineCSV(river_object=self, save_to_csv=save_to_csv)
+	def saveCenterlineCSV(self, save_to_csv=None, centerline_type="Voronoi"):
+		return centerline_width.saveCenterlineCSV(river_object=self,
+												save_to_csv=save_to_csv,
+												centerline_type=centerline_type)

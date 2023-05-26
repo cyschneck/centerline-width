@@ -70,7 +70,6 @@ def errorHandlingPlotCenterlineWidth(river_object=None,
 									plot_title=None,
 									save_plot_name=None,
 									display_true_centerline=None,
-									n_interprolate_centerpoints=None,
 									transect_span_distance=None,
 									apply_smoothing=None,
 									flag_intersections=None,
@@ -96,15 +95,6 @@ def errorHandlingPlotCenterlineWidth(river_object=None,
 		logger.critical("\nCRITICAL ERROR, [display_true_centerline]: Must be a bool, current type = '{0}'".format(type(display_true_centerline)))
 		exit()
 
-	if n_interprolate_centerpoints is not None:
-		if type(n_interprolate_centerpoints) != int:
-			logger.critical("\nCRITICAL ERROR, [n_interprolate_centerpoints]: Must be a int, current type = '{0}'".format(type(n_interprolate_centerpoints)))
-			exit()
-		else:
-			if n_interprolate_centerpoints < 2:
-				logger.critical("\nCRITICAL ERROR, [n_interprolate_centerpoints]: Must be a greater than 1, currently = '{0}'".format(n_interprolate_centerpoints))
-				exit()
-
 	if type(transect_span_distance) != int:
 		logger.critical("\nCRITICAL ERROR, [transect_span_distance]: Must be a int, current type = '{0}'".format(type(transect_span_distance)))
 		exit()
@@ -128,7 +118,6 @@ def errorHandlingPlotCenterlineWidth(river_object=None,
 
 ## Error Handling: centerline.py
 def errorHandlingRiverWidthFromCenterline(river_object=None,
-										n_interprolate_centerpoints=None,
 										transect_span_distance=None,
 										apply_smoothing=None,
 										remove_intersections=None,
@@ -141,11 +130,6 @@ def errorHandlingRiverWidthFromCenterline(river_object=None,
 	else:
 		if not isinstance(river_object, centerline_width.riverCenterline):
 			logger.critical("\nCRITICAL ERROR, [river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{0}'".format(type(river_object)))
-			exit()
-
-	if n_interprolate_centerpoints is not None:
-		if type(n_interprolate_centerpoints) != int:
-			logger.critical("\nCRITICAL ERROR, [n_interprolate_centerpoints]: Must be a int, current type = '{0}'".format(type(n_interprolate_centerpoints)))
 			exit()
 
 	if transect_span_distance is not None:
@@ -182,7 +166,7 @@ def errorHandlingRiverWidthFromCenterline(river_object=None,
 			logger.critical("\nCRITICAL ERROR, [save_to_csv]: Extension must be a .csv file, current extension = '{0}'".format(save_to_csv.split(".")[1]))
 			exit()
 
-def errorHandlingSaveCenterlineCSV(river_object=None, save_to_csv=None):
+def errorHandlingSaveCenterlineCSV(river_object=None, save_to_csv=None, centerline_type=None):
 	# Error Handling for saveCenterlineCSV()
 	if river_object is None:
 		logger.critical("\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.riverCenterline)")
@@ -203,6 +187,15 @@ def errorHandlingSaveCenterlineCSV(river_object=None, save_to_csv=None):
 			if not save_to_csv.lower().endswith(".csv"):
 				logger.critical("\nCRITICAL ERROR, [save_to_csv]: Extension must be a .csv file, current extension = '{0}'".format(save_to_csv.split(".")[1]))
 				exit()
+
+	centerline_type_options = ["Voronoi", "Evenly Spaced", "Smoothed"]
+	if type(centerline_type) != str:
+		logger.critical("\nCRITICAL ERROR, [centerline_type]: Must be a str, current type = '{0}'".format(type(centerline_type)))
+		exit()
+	else:
+		if centerline_type.title() not in centerline_type_options:
+			logger.critical("\nCRITICAL ERROR, [centerline_type]: Must be an available option in {0}, current option = '{1}'".format(centerline_type_options, centerline_type))
+			exit()
 
 # Error Handling: getCoordinatesKML.py
 def errorHandlingExtractPointsToTextFile(left_kml=None, right_kml=None, text_output_name=None):
@@ -242,7 +235,11 @@ def errorHandlingExtractPointsToTextFile(left_kml=None, right_kml=None, text_out
 			exit()
 
 ## Error Handling: riverCenterlineClass.py
-def errorHandlingRiverCenterlineClass(csv_data=None, optional_cutoff=None, interpolate_data=None, interpolate_n=None):
+def errorHandlingRiverCenterlineClass(csv_data=None,
+									optional_cutoff=None,
+									interpolate_data=None,
+									interpolate_n=None,
+									interpolate_n_centerpoints=None):
 	# Error Handling for riverCenterlineClass()
 	if csv_data is None:
 		logger.critical("\nCRITICAL ERROR, [csv_data]: Requires csv_data location")
@@ -267,3 +264,12 @@ def errorHandlingRiverCenterlineClass(csv_data=None, optional_cutoff=None, inter
 		exit()
 		if interpolate_n > 15:
 			logger.warn("WARNING, [interpolate_n]: Setting interpolate_n above 15 will cause the code to execute exponentially slower")
+
+	if interpolate_n_centerpoints is not None:
+		if type(interpolate_n_centerpoints) != int:
+			logger.critical("\nCRITICAL ERROR, [interpolate_n_centerpoints]: Must be a int, current type = '{0}'".format(type(interpolate_n_centerpoints)))
+			exit()
+		else:
+			if interpolate_n_centerpoints < 2:
+				logger.critical("\nCRITICAL ERROR, [interpolate_n_centerpoints]: Must be a greater than 1, currently = '{0}'".format(interpolate_n_centerpoints))
+				exit()

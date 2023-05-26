@@ -41,16 +41,16 @@ def plotCenterlineBackend(river_object=None, display_true_centerline=True):
 
 	# Plot centerline found from NetworkX
 	valid_path_through = False
-	if river_object.centerlineLatitudeLongtiude: # shortest path through points
+	if river_object.centerlineVoronoi: # shortest path through points
 		valid_path_through = True
 		x = []
 		y = []
-		for k, v in river_object.centerlineLatitudeLongtiude:
+		for k, v in river_object.centerlineVoronoi:
 			x.append(k)
 			y.append(v)
 		#plt.scatter(x, y, c="black", label="Centerline Coordinates", s=8)
 		if display_true_centerline:
-			plt.plot(*zip(*river_object.centerlineLatitudeLongtiude), c="black", label="Centerline")
+			plt.plot(*zip(*river_object.centerlineVoronoi), c="black", label="Centerline")
 
 	# Dynamically assign the starting and ending
 	if river_object.starting_node is not None: # error handling for when data is too small to generate centerline coordiantes
@@ -97,7 +97,6 @@ def plotCenterlineWidth(river_object=None,
 						plot_title=None, 
 						save_plot_name=None, 
 						display_true_centerline=True,
-						n_interprolate_centerpoints=None,
 						transect_span_distance=3,
 						apply_smoothing=False,
 						flag_intersections=True,
@@ -107,7 +106,6 @@ def plotCenterlineWidth(river_object=None,
 													plot_title=plot_title, 
 													save_plot_name=save_plot_name, 
 													display_true_centerline=display_true_centerline,
-													n_interprolate_centerpoints=n_interprolate_centerpoints,
 													transect_span_distance=transect_span_distance,
 													apply_smoothing=apply_smoothing,
 													flag_intersections=flag_intersections,
@@ -116,37 +114,29 @@ def plotCenterlineWidth(river_object=None,
 	fig, ax, valid_path_through = plotCenterlineBackend(river_object=river_object, display_true_centerline=display_true_centerline)
 
 	# Plot river
-	if n_interprolate_centerpoints is None:
-		# if plotting width, but n_interprolate_centerpoints is undefined, set to the size of the dataframe
-		n_interprolate_centerpoints = river_object.df_len
 
 	# Determine the Width of River
 	number_of_evenly_spaced_points = ""
 
-	if river_object.centerlineLatitudeLongtiude is not None:
-		number_of_evenly_spaced_points = "\nCenterline made of {0} Fixed Points, width lines generated every {1} points".format(n_interprolate_centerpoints, transect_span_distance)
+	if river_object.centerlineVoronoi is not None:
+		number_of_evenly_spaced_points = "\nCenterline made of {0} Fixed Points, width lines generated every {1} points".format(river_object.interpolate_n_centerpoints, transect_span_distance)
 		if river_object.starting_node is not None: # error handling for when data is too small to generate centerline coordiantes
-			# recreate the centerline with evenly spaced points
-			evenly_spaced_centerline_coordinates = centerline_width.evenlySpacedCenterline(centerline_coordinates=river_object.centerlineLatitudeLongtiude,
-																						number_of_fixed_points=n_interprolate_centerpoints)
 			if apply_smoothing:
-				smoothed_centerline_coordinates = centerline_width.smoothedCoordinates(centerline_coordinates=evenly_spaced_centerline_coordinates,
-																						interprolate_num=n_interprolate_centerpoints)
 				# if using smoothing, replace left/right coordinates with the smoothed variation
 				right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(river_object=river_object,
-																																					centerline_coordinates=smoothed_centerline_coordinates,
+																																					centerline_coordinates=river_object.centerlineSmoothed,
 																																					transect_span_distance=transect_span_distance,
 																																					remove_intersections=remove_intersections)
 				x = []
 				y = []
-				for k, v in smoothed_centerline_coordinates:
+				for k, v in river_object.centerlineSmoothed:
 					x.append(k)
 					y.append(v)
 				plt.scatter(x, y, c="blue", label="Smoothed Centerline Coordinates", s=5)
-				#plt.plot(*zip(*smoothed_centerline_coordinates), "--", c="lightblue", label="Smoothed Centerline")
 			else:
+				# recreate the centerline with evenly spaced points
 				right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(river_object=river_object, 
-																														centerline_coordinates=evenly_spaced_centerline_coordinates,
+																														centerline_coordinates=river_object.centerlineEvenlySpaced,
 																														transect_span_distance=transect_span_distance,
 																														remove_intersections=remove_intersections)
 
