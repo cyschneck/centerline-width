@@ -118,3 +118,33 @@ def test_riverWidthFromCenterline_saveToCSVInvalidTypes(caplog, save_to_csv_inva
 	log_record = caplog.records[0]
 	assert log_record.levelno == logging.CRITICAL
 	assert log_record.message == "\nCRITICAL ERROR, [save_to_csv]: Must be a str, current type = '{0}'".format(save_to_csv_error_output)
+
+def test_riverWidthFromCenterline_csvInvalidExtension(caplog):
+	with pytest.raises(SystemExit):
+		centerline_width.riverWidthFromCenterline(river_object=river_class_example,
+												save_to_csv="filename.txt")
+	log_record = caplog.records[0]
+	assert log_record.levelno == logging.CRITICAL
+	assert log_record.message == "\nCRITICAL ERROR, [save_to_csv]: Extension must be a .csv file, current extension = 'txt'"
+
+## saveCenterlineCSV() #####################################################
+def test_saveCenterlineCSV_riverObjectRequired(caplog):
+	with pytest.raises(SystemExit):
+		centerline_width.saveCenterlineCSV(river_object=None)
+	log_record = caplog.records[0]
+	assert log_record.levelno == logging.CRITICAL
+	assert log_record.message == "\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.riverCenterline)"
+
+def test_saveCenterlineCSV_csvInvalidExtension(caplog):
+	with pytest.raises(SystemExit):
+		centerline_width.saveCenterlineCSV(river_object=river_class_example, save_to_csv=None)
+	log_record = caplog.records[0]
+	assert log_record.levelno == logging.CRITICAL
+	assert log_record.message == "\nCRITICAL ERROR, [save_to_csv]: Requires csv filename"
+
+def test_saveCenterlineCSV_csvRequired(caplog):
+	with pytest.raises(SystemExit):
+		centerline_width.saveCenterlineCSV(river_object=river_class_example, save_to_csv="filename.txt")
+	log_record = caplog.records[0]
+	assert log_record.levelno == logging.CRITICAL
+	assert log_record.message == "\nCRITICAL ERROR, [save_to_csv]: Extension must be a .csv file, current extension = 'txt'"

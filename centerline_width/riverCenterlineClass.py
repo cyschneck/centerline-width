@@ -100,3 +100,6 @@ class riverCenterline:
 														remove_intersections=remove_intersections,
 														units=units,
 														save_to_csv=save_to_csv)
+
+	def saveCenterlineCSV(self, save_to_csv=None):
+		return centerline_width.saveCenterlineCSV(river_object=self, save_to_csv=save_to_csv)

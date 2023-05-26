@@ -175,8 +175,34 @@ def errorHandlingRiverWidthFromCenterline(river_object=None,
 			exit()
 
 	if save_to_csv is not None and type(save_to_csv) != str:
+		logger.critical("\nCRITICAL ERROR, [save_to_csv]: Must be a str, current type = '{0}'".format(type(save_to_csv)))
+		exit()
+	else:
+		if not save_to_csv.lower().endswith(".csv"):
+			logger.critical("\nCRITICAL ERROR, [save_to_csv]: Extension must be a .csv file, current extension = '{0}'".format(save_to_csv.split(".")[1]))
+			exit()
+
+def errorHandlingSaveCenterlineCSV(river_object=None, save_to_csv=None):
+	# Error Handling for saveCenterlineCSV()
+	if river_object is None:
+		logger.critical("\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.riverCenterline)")
+		exit()
+	else:
+		if not isinstance(river_object, centerline_width.riverCenterline):
+			logger.critical("\nCRITICAL ERROR, [river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{0}'".format(type(river_object)))
+			exit()
+
+	if save_to_csv is None:
+		logger.critical("\nCRITICAL ERROR, [save_to_csv]: Requires csv filename")
+		exit()
+	else:
+		if type(save_to_csv) != str:
 			logger.critical("\nCRITICAL ERROR, [save_to_csv]: Must be a str, current type = '{0}'".format(type(save_to_csv)))
 			exit()
+		else:
+			if not save_to_csv.lower().endswith(".csv"):
+				logger.critical("\nCRITICAL ERROR, [save_to_csv]: Extension must be a .csv file, current extension = '{0}'".format(save_to_csv.split(".")[1]))
+				exit()
 
 # Error Handling: getCoordinatesKML.py
 def errorHandlingExtractPointsToTextFile(left_kml=None, right_kml=None, text_output_name=None):
