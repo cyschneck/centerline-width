@@ -3,17 +3,17 @@ import centerline_width
 
 if __name__ == "__main__":
 	#print("original data: leftbank/rightbank.kml")
-	centerline_width.extractPointsToTextFile(left_kml="data/leftbank.kml",
-											right_kml="data/rightbank.kml",
-											text_output_name="data/river_coords.txt")
+	#centerline_width.extractPointsToTextFile(left_kml="data/leftbank.kml",
+	#										right_kml="data/rightbank.kml",
+	#										text_output_name="data/river_coords.txt")
 	#print("new data with gap: N8_R1/N8_R2.kml")
-	#centerline_width.extractPointsToTextFile(left_kml="data/NA7_R1.kml",
-	#										right_kml="data/NA7_R2.kml",
-	#										text_output_name="data/N_output.txt")
-	#centerline_width.convertColumnsToCSV(text_file="data/N_output.txt", flipBankDirection=True)
+	centerline_width.extractPointsToTextFile(left_kml="data/N8_R1.kml",
+											right_kml="data/N8_R2.kml",
+											text_output_name="data/N_output.txt")
+	centerline_width.convertColumnsToCSV(text_file="data/N_output.txt", flipBankDirection=True)
 
 	# Valid Examples
-	#cutoff = None
+	cutoff = None
 	#cutoff = 10
 	#cutoff = 15 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
 	#cutoff = 30
@@ -28,13 +28,17 @@ if __name__ == "__main__":
 
 	river = centerline_width.riverCenterline(csv_data="data/river_coords.csv",
 											optional_cutoff=cutoff,
-											interpolate_data=False)
+											interpolate_data=False,
+											interpolate_n_centerpoints=200)
 	#print(river)
-	#print(river.__dict__.keys())
+	print(river.__dict__.keys())
 	print("Centerline Length = {0} km".format(river.centerlineLength))
 	print("Right Bank Length = {0} km".format(river.rightBankLength))
 	print("Left Bank Length = {0} km".format(river.leftBankLength))
-	#print(river.centerlineLatitudeLongtiude)
+	print("centerlineVoronoi = {0}".format(len(river.centerlineVoronoi)))
+	print("centerlineEvenlySpaced = {0}".format(len(river.centerlineEvenlySpaced)))
+	print("centerlineSmoothed = {0}".format(len(river.centerlineSmoothed)))
+	
 
 	# Plot river bank centerline
 	river.plotCenterline(save_plot_name=None, 
@@ -45,16 +49,15 @@ if __name__ == "__main__":
 
 	# Plot river bank width line
 	river.plotCenterlineWidth(save_plot_name=None, 
+							plot_title=None,
 							display_true_centerline=False,
-							n_interprolate_centerpoints=None,
 							transect_span_distance=transect,
 							apply_smoothing=True,
-							flag_intersections=True,
+							flag_intersections=False,
 							remove_intersections=True)
 
 	# Return width line for each centerline coordinates
-	river_width_dict = river.riverWidthFromCenterline(n_interprolate_centerpoints=None,
-													transect_span_distance=transect,
+	river_width_dict = river.riverWidthFromCenterline(transect_span_distance=transect,
 													apply_smoothing=True,
 													remove_intersections=True,
 													units="m",
