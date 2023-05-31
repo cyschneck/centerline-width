@@ -1,4 +1,7 @@
 # Centerline-Width
+ <p align="center">
+  <img src="https://raw.githubusercontent.com/cyschneck/centerline-width/main/assets/centerline_logo.png" />
+</p>
 ![PyPi](https://img.shields.io/pypi/v/centerline-width)
 ![license](https://img.shields.io/github/license/cyschneck/centerline-width)
 [![NSF-2141064](https://img.shields.io/badge/NSF-2141064-blue)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2141064&HistoricalAwards=false)
@@ -64,7 +67,7 @@ To plot the centerline, run the `plotCenterline()` function from `river_object` 
 ```python
 river_object.plotCenterline()
 ```
-![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/river_coords_centerline.png)
+![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_centerline.png)
 
 To plot the width of the river at intervals along the bank, run `plotCenterlineWidth`
 
@@ -72,7 +75,7 @@ While `apply_smoothing`, `remove_intersections`, and `display_true_centerline` a
 ```python
 river.plotCenterlineWidth(apply_smoothing=True, remove_intersections=True, display_true_centerline=False)
 ```
-![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/river_coords_width.png)
+![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width.png)
 
 ## Preprocessing
 ### Convert KML files to Text File
@@ -212,11 +215,11 @@ Return the latitude/longitude coordinates of the centerline based on the left an
 There are three types of centerline coordinates formed from the riverbank data. Each are built off of each other and are used to clean and smooth data
 
 - **Voronoi centerline**: centerline generated from where Voronoi vertices intersect within the river
-![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/voronoi_centerline.png)
+![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/voronoi_centerline.png)
 - **Evenly Spaced Centerline**: centerline based on Voronoi centerline but evenly spaced with a fixed number of points
-![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/evenly_spaced_centerline.png)
+![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/evenly_spaced_centerline.png)
 - **Smoothed Centerline**: centerline generated from the evenly spaced centerline but smoothed by a b-spline
-![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/smoothed_centerline.png)
+![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/smoothed_centerline.png)
 
 Centerline coordinates are formed by the Voronoi vertices
 ```
@@ -291,7 +294,7 @@ river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv"
 river_object.plotCenterline(display_all_possible_paths=False, display_voronoi=False)
 ```
 Output:
-![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/river_coords_centerline.png)
+![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_centerline.png)
 
 ## Plot Centerline Width Lines in Matplotlib
 ### Plot the Centerline Width Lines
@@ -347,7 +350,7 @@ import centerline_width
 river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
 river_object.plotCenterlineWidth(apply_smoothing=True, remove_intersections=True, display_true_centerline=False)
 ```
-![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/river_coords_width.png)
+![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width.png)
 
 ### Return Width of River
 
@@ -383,61 +386,61 @@ Width dictionary = `{(-92.86792084788995, 30.037769672351182): 0.109691635570870
 The centerline is defined by the greatest distance from the right and left bank, created from a Voronoi Diagram. The remaining paths within the river are filtered through Dijkstra's algorithm to find the shortest path that is the centerline
 
 ### Right and Left bank points are plotted (X-Axis for Latitude, Y-Axis for Longitude)
-![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example1.png)
+![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/example1.png)
 
 ### Generate a polygon to encapsulate the river between the right and left banks to define in and outside of river
-![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example2.png)
+![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/example2.png)
 
 ### Generate a Voronoi based on the points along the riverbanks
-![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example3.png)
+![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/example3.png)
 
 ### Display Voronoi ridge vertices that lie within the polygon (within the riverbanks)
-![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example4.png)
+![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/example4.png)
 
 ### Filter out any point pairs that only have one connection to filter out the short dead end paths and find the starting and ending node based on distance from the top and bottom of polygon
 With the vertices removed, it is possible to form multiple unconnected graphs within the polygon. The largest subgraph is assumed to contain the centerline and the other subgraphs are filtered out
-![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example6.png)
-![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example7.png)
+![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/example6.png)
+![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/example7.png)
 
 ### Find the shortest path from the starting node to the ending node ([Dijkstra's Algorithm](https://networkx.org/documentation/stable/reference/algorithms/generated/networkx.algorithms.shortest_paths.generic.shortest_path.html#networkx.algorithms.shortest_paths.generic.shortest_path))
 | Points on River Bank | NetworkX Graph of Points on River Bank |
 | ------------- | ------------- |
-| ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example10.png) | ![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example9.png) |
+| ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/example10.png) | ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/example9.png) |
 
 ### Display the centerline found by connecting the starting/ending node with the shortest path
-![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example8.png)
+![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/example8.png)
 
 This is an attempt at a more robust algorithm working from raw data to ensure that all dead ends are removed, and no gaps exist in the centerline
 
 Points that only have one connection are removed, but limiting the number of connections for a point to just two will create gaps. The Voronoi vertices connect to other vertex values, but some connect to more and some only connect to one other point. Removing additional values will create gaps, so this is avoided in this code by not applying additional filters.
 
 **All vertices:**
-![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example4.png)
+![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/example4.png)
 
 **Vertices that have at least two connections (that would create gaps):**
-![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/example5.png)
+![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/example5.png)
 
 ## Debugging, Error Handling, and Edge Cases
 ### Wide Start/End of River
 If the data starts or ends with a large width, it is possible for the starting/ending nodes to end up in the wrong position
-![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example3.png)
+![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/invalid_example3.png)
 Currently, the starting node is determined by the closest node to the top of the bank (in green) and the ending node is determined by the closest node to the bottom of the bank (in red) that sits along the longest path
 
 ### Invalid Polygon
 A polygon is formed to encapsulate the river with the given data (to determine the inside and outside of the river). The top and bottom are connected by a straight line from the start/end of the available data. As a result, it is possible for this straight line to overlap and create an invalid polygon.
 
 A polygon is invalid if it overlaps within itself:
-![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example1.png)
+![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/invalid_example1.png)
 In this example, the polygon is invalid, but with such a small overlap it is still able to find a valid path
 
 With limited data, the polygon will overlap more dramatically and will struggle to find a valid centerline:
-![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example4.png)
+![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/invalid_example4.png)
 
 ### Invalid Centerline
 If the data is too small, a centerline and its coordinates cannot not be found (since only a single Voronoi vertex exists within the polygon and after dead ends are filtered)
 
 `CRITICAL ERROR, Polygon too short for the Voronoi diagram generated (no starting node found), unable to plot centerline. Set displayVoronoi=True to view vertices. Can typically be fixed by adding more data to expand range.`
-![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/invalid_example2.png)
+![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/invalid_example2.png)
 Can be fixed by expanding the data until the polygon is large enough to contain at least two different vertex points
 
 ### Invalid Top and Bottom Bank Postions (flipBankDirection = True)
@@ -448,7 +451,7 @@ If the data for the left and right riverbanks are generated in reverse order, th
 If the latitude/longitude of the banks are generated in reverse order, flip the final values so left/right bank are in order
 
 This can be fixed by using the flipBankDirection optional argument `centerline_width.convertColumnsToCSV(text_file="data_example.txt", flipBankDirection=True)`
-![example+png](https://raw.githubusercontent.com/cyschneck/river-geometry/main/data/doc_examples/flipDirection_example.png)
+![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/flipDirection_example.png)
 
 ### Fix Gaps and Jagged Centerlines
 Gaps formed can cause part of the centerline to be skipped due to sparse data. As a result, the start and end of the centerline can skip parts at the beginning or end of a river
