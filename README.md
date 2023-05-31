@@ -2,6 +2,7 @@
  <p align="center">
   <img src="https://raw.githubusercontent.com/cyschneck/centerline-width/main/assets/centerline_logo.png" />
 </p>
+
 ![PyPi](https://img.shields.io/pypi/v/centerline-width)
 ![license](https://img.shields.io/github/license/cyschneck/centerline-width)
 [![NSF-2141064](https://img.shields.io/badge/NSF-2141064-blue)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2141064&HistoricalAwards=false)
@@ -32,6 +33,13 @@ Python implementation of [R-Code CMGO](https://github.com/AntoniusGolly/cmgo) (w
 
 NOTE: This is Beta quality software that is being actively developed, use at your own risk. This project is not supported or endorsed by either JPL or NASA. The code is provided “as is”, use at your own risk.
 
+## Install
+PyPi pip install at [pypi.org/project/centerline-width/](https://pypi.org/project/centerline-width/)
+
+```
+pip install centerline-width
+```
+
 ## Requirements
 Currently running on Python 3.7+
 
@@ -40,12 +48,6 @@ pip install -r requirements.txt
 ```
 Requirements will also be downloaded as part of the pip download
 
-## Install
-PyPi pip install at [pypi.org/project/centerline-width/](https://pypi.org/project/centerline-width/)
-
-```
-pip install centerline-width
-```
 ## Quickstart: centerline-width
 
 The core of centerline-width works with a .csv file of the left and right bank latitude/longitudes. Starting with Google Earth Pro, two .kml must first be translated to a single .csv file
@@ -283,15 +285,15 @@ plotCenterline(display_all_possible_paths=False,
 		save_plot_name=None, 
 		display_voronoi=False)
 ```
-* [OPTIONAL] display_all_possible_paths (boolean): Display all possible paths, not just the centerline (useful for debugging)
+* [OPTIONAL] display_all_possible_paths (boolean): Display all possible paths, not just the centerline (useful for debugging), defaults to False
 * [OPTIONAL] plot_title (string): Change plot title, defaults to "River Coordinates: Valid Centerline = True/False, Valid Polygon = True/False"
 * [OPTIONAL] save_plot_name (string): Save the plot with a given name and location
-* [OPTIONAL] display_voronoi (boolean): Overlay Voronoi diagram used to generate centerline
+* [OPTIONAL] display_voronoi (boolean): Overlay Voronoi diagram used to generate centerline, defaults to False
 
 ```python
 import centerline_width
 river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
-river_object.plotCenterline(display_all_possible_paths=False, display_voronoi=False)
+river_object.plotCenterline()
 ```
 Output:
 ![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_centerline.png)
