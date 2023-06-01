@@ -1,6 +1,6 @@
 # Centerline-Width
  <p align="center">
-  <img src="https://raw.githubusercontent.com/cyschneck/centerline-width/main/assets/centerline_logo.png" />
+  <img src="https://raw.githubusercontent.com/cyschneck/centerline-width/main/assets/centerline_logo.jpg" />
 </p>
 
 ![PyPi](https://img.shields.io/pypi/v/centerline-width)
