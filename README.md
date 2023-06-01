@@ -466,7 +466,7 @@ By default, `interpolate_n_centerpoints` is set to None and not additional point
 
 | interpolate_n_centerpoints = None | interpolate_n_centerpoints = 65 |
 | ------------- | ------------- |
-| ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/invalid_smoothed_centerline.png.png) | ![river_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/invalid_smoothed_centerline.png_fixed.png) |
+| [![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/invalid_smoothed_centerline.png) | ![river_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/invalid_smoothed_centerline_fixed.png) |
 
 
 ### Fix Gaps and Jagged Centerlines
