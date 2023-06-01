@@ -73,28 +73,34 @@ def centerlinePath(river_voronoi, river_polygon, top_polygon_line, bottom_polygo
 	starting_node = None # starting position at the top of the river
 	ending_node = None # ending position at the bottom of the river
 	for start_point, end_point_list in start_end_points_dict.items():
-			if len(end_point_list) > 0: # TESTING TESTING: Show only the end points that have multiple connections (set to 0 during production)
-				# Find the starting and ending node based on distance from the top and bottom of the polygon
-				if starting_node is None: 
-					starting_node = start_point
-				else:
-					if start_point in largest_subgraph_nodes: # Only include if node is on the largest subgraph (that represents the centerline)
-						if Point(start_point).distance(top_polygon_line) <= Point(starting_node).distance(top_polygon_line):
-							starting_node = start_point
-				for end_point in end_point_list:
-					if start_point in largest_subgraph_nodes: # Only include if node is on the largest subgraph (that represents the centerline)
-						if Point(end_point).distance(top_polygon_line) <= Point(starting_node).distance(top_polygon_line):
-							starting_node = end_point
-						if ending_node is None: 
+		if len(end_point_list) > 0: # TESTING TESTING: Show only the end points that have multiple connections (set to 0 during production)
+			# Find the starting and ending node based on distance from the top and bottom of the polygon
+			if starting_node is None: 
+				starting_node = start_point
+			else:
+				# Only include if starting point node is on the largest subgraph (that represents the centerline)
+				if start_point in largest_subgraph_nodes: 
+					# if start_point is closer to the top of the polygon than the current starting_node
+					if Point(start_point).distance(top_polygon_line) <= Point(starting_node).distance(top_polygon_line):
+						starting_node = start_point
+			for end_point in end_point_list:
+				if ending_node is None: 
+					ending_node = end_point
+				# Only include if starting point node is on the largest subgraph (that represents the centerline)
+				if start_point in largest_subgraph_nodes:
+					# if the end_point is closer to the top of the polygon than the current starting_node
+					if Point(end_point).distance(top_polygon_line) <= Point(starting_node).distance(top_polygon_line):
+						starting_node = end_point
+					else:
+						# if start_point is closer to the bottom than current ending_node
+						if Point(start_point).distance(bottom_polygon_line) <= Point(ending_node).distance(bottom_polygon_line):
+							ending_node = start_point
+						# if end_point is closer to the bottom than current ending_node
+						if Point(end_point).distance(bottom_polygon_line) <= Point(ending_node).distance(bottom_polygon_line):
 							ending_node = end_point
-						else:
-							if Point(start_point).distance(bottom_polygon_line) <= Point(ending_node).distance(bottom_polygon_line):
-								ending_node = start_point
-							if Point(end_point).distance(bottom_polygon_line) <= Point(ending_node).distance(bottom_polygon_line):
-								ending_node = end_point
-					# Save all starting and end positions for all possible paths
-					x_ridge_point.append((start_point[0], end_point[0]))
-					y_ridge_point.append((start_point[1], end_point[1]))
+				# Save all starting and end positions for all possible paths
+				x_ridge_point.append((start_point[0], end_point[0]))
+				y_ridge_point.append((start_point[1], end_point[1]))
 
 	if starting_node is None:
 		logger.critical("\nCRITICAL ERROR, Polygon too short for the Voronoi diagram generated (no starting node found), unable to plot centerline. Set displayVoronoi=True to view vertices. Can typically be fixed by adding more data to expand range.")
@@ -122,7 +128,7 @@ def evenlySpacedCenterline(centerline_coordinates=None, number_of_fixed_points=N
 
 	return interpolated_centerline_coordinates
 
-def smoothedCoordinates(centerline_coordinates=None, interprolate_num=None):
+def smoothedCoordinates(river_object=None, centerline_coordinates=None, interprolate_num=None):
 	# return a list coordinates after applying b-spline (smoothing)
 	if centerline_coordinates is None:
 		return None
@@ -143,6 +149,14 @@ def smoothedCoordinates(centerline_coordinates=None, interprolate_num=None):
 
 	x_smoothed, y_smoothed = x_smoothed.tolist(), y_smoothed.tolist() # convert array to list
 	smoothed_coordinates = list(zip(x_smoothed, y_smoothed))
+
+	# Check if smoothed centerline lies outside polygon
+	points_outside_polygon = 0
+	for centerline_point in smoothed_coordinates:
+		if not river_object.bank_polygon.contains(Point(centerline_point)):
+			points_outside_polygon += 1
+	if points_outside_polygon > 2:
+		logger.critical("\nWARNING: Partially invalid smoothed centerline due to sparse centerline data ({0} points lie outside the polygon), fix recommendation: rerun riverCenterline to create river object with interpolate_n_centerpoints set to {1}+\n".format(points_outside_polygon, round(len(centerline_coordinates)*2.5)))
 
 	return smoothed_coordinates
 

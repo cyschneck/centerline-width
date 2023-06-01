@@ -53,7 +53,7 @@ class riverCenterline:
 		self.centerlineVoronoi = shortest_path_coordinates
 		self.centerlineEvenlySpaced = centerline_width.evenlySpacedCenterline(centerline_coordinates=self.centerlineVoronoi,
 																						number_of_fixed_points=self.interpolate_n_centerpoints)
-		self.centerlineSmoothed = centerline_width.smoothedCoordinates(centerline_coordinates=self.centerlineEvenlySpaced,
+		self.centerlineSmoothed = centerline_width.smoothedCoordinates(river_object=self, centerline_coordinates=self.centerlineEvenlySpaced,
 																						interprolate_num=self.interpolate_n_centerpoints)
 
 		# Right/Length Bank Length

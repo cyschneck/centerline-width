@@ -77,7 +77,7 @@ def generatePolygon(left_bank_lst, right_bank_lst, recursion_check=False):
 		logger.critical("[FAILED]  Invalid Polygon may need to be corrected")
 		polygon_check, _, _ = generatePolygon(left_bank_lst, right_bank_lst[::-1], recursion_check=True) # only run once with recursion_check set (just to check if reverse banks fixes issue)
 		if polygon_check.is_valid:
-			logger.critical("\nInvalid Polygon Due to Flipped Banks, fix recommendation: rerun convertColumnsToCSV() and set flipBankDirection=True (or reset to default 'False' if currently set to flipBankDirection=True)\n")
+			logger.critical("\nWARNING: Invalid Polygon Due to Flipped Banks, fix recommendation: rerun convertColumnsToCSV() and set flipBankDirection=True (or reset to default 'False' if currently set to flipBankDirection=True)\n")
 	if river_polygon.is_valid and not recursion_check:
 		logger.info("[SUCCESS] Valid polygon generated")
 
