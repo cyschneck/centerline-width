@@ -341,7 +341,8 @@ def riverWidthFromCenterline(river_object=None,
 	defined_centerline_coordinates = centerline_width.evenlySpacedCenterline(centerline_coordinates=river_object.centerlineVoronoi,
 																			number_of_fixed_points=river_object.interpolate_n_centerpoints)
 	if apply_smoothing:
-		defined_centerline_coordinates = centerline_width.smoothedCoordinates(centerline_coordinates=river_object.centerlineVoronoi,
+		defined_centerline_coordinates = centerline_width.smoothedCoordinates(river_object=river_object,
+																				centerline_coordinates=river_object.centerlineVoronoi,
 																				interprolate_num=river_object.interpolate_n_centerpoints)
 	# if using smoothing, replace left/right coordinates with the smoothed variation
 	right_width_coord, left_width_coord, _ = centerline_width.riverWidthFromCenterlineCoordinates(river_object=river_object, 
