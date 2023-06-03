@@ -164,7 +164,7 @@ centerline_width.riverCenterline(csv_data=None,
 * [OPTIONAL] optional_cutoff (int): Include only the first x number of the data to chart (useful for debugging)
 * [OPTIONAL] interpolate_data (bool): Interpolate between existing data by adding additional points
 * [OPTIONAL] interpolate_n (int): Number of additional points to add between existing data, defaults to 5 (note: larger numbers will take exponentially longer to run, recommends less than 15)
-* [OPTIONAL] interpolate_n_centerpoints (int): Number of points used to interpolate the Voronoi centerline, defaults to the the length of the dataframe (df_len)
+* [OPTIONAL] interpolate_n_centerpoints (int): Number of points used to interpolate the Voronoi centerline, defaults to the the length of the data frame (df_len)
 
 **Solutions for sparse data:**
 
@@ -190,7 +190,7 @@ centerline_width.riverCenterline(csv_data=None,
 * river_name (string): name of object, set to the csv_data string
 * left_bank_coordinates (list of tuples): list of coordinates of the left bank generated from the csv file (`[(x, y), (x, y)]`)
 * right_bank_coordinates (list of tuples) list of coordinates of the right bank generated from the csv file (`[(x, y), (x, y)]`)
-* df_len (int): Length of the dataframe of the csv data (spliced by the optional_cutoff)
+* df_len (int): Length of the data frame of the csv data (spliced by the optional_cutoff)
 * bank_polygon (Shapley Polygon): Multi-sided polygon generated to encapsulate river bank (used to define an inside and an outside of the river)
 * top_bank (Shapley Linestring): Linestring that represents the top of the river/polygon
 * bottom_bank (Shapley Linestring): Linestring that represents the bottom of the river/polygon
@@ -201,7 +201,7 @@ centerline_width.riverCenterline(csv_data=None,
 * y_voronoi_ridge_point (list of tuples): Y position on Voronoi ridge (starting Longitude position to ending Longitude position)
 * interpolate_data (bool): if interpolating between existing data, defaults to False
 * interpolate_n (int): specifies how many additional points will be added between points along the river bank when interpolating data, defaults to 5
-* interpolate_n_centerpoints (int): specifies how many points will be used to interpolate the Voronoi centerline, defaults to the length of the dataframe (df_len)
+* interpolate_n_centerpoints (int): specifies how many points will be used to interpolate the Voronoi centerline, defaults to the length of the data frame (df_len)
 
 
 ```python
@@ -460,13 +460,13 @@ The smoothed centerline can end up lying outside the river if the centerline dat
 
 Example Error: `WARNING: Partially invalid smoothed centerline due to sparse centerline data (6 points lie outside the polygon), fix recommendation: rerun riverCenterline to create river object with interpolate_n_centerpoints set to 62+`
 
-By default, `interpolate_n_centerpoints` is set to None and not additional points will be added between the existing points along the centerline. By adding additional points between the existing centerline, the smoothed centerline can be fixed. Set river object created by `centerline_width.riverCenterline` to `interpolate_n_centerpoints=65` to fix for centerline coordinates that lie outside the polyogon
+By default, `interpolate_n_centerpoints` is set to None and not additional points will be added between the existing points along the centerline. By adding additional points between the existing centerline, the smoothed centerline can be fixed to stay within the polygon. This fix is set by creating a river object, `centerline_width.riverCenterline`, with `interpolate_n_centerpoints=65` (with the recommended 62+) to fix for centerline coordinates that lie outside the polyogon
 
-`interpolate_n_centerpoints = None` does not interpolate data points, so the size will be set to the number of fixed points when creating the evenly spaced coordinates (equal to the size of the dataframe)
+`interpolate_n_centerpoints = None` does not interpolate data points, so the size will be set to the number of fixed points when creating the evenly spaced coordinates (equal to the size of the data frame)
 
 | interpolate_n_centerpoints = None | interpolate_n_centerpoints = 65 |
 | ------------- | ------------- |
-| [![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/invalid_smoothed_centerline.png) | ![river_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/invalid_smoothed_centerline_fixed.png) |
+| ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/invalid_smoothed_centerline.png) | ![river_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/invalid_smoothed_centerline_fixed.png) |
 
 
 ### Fix Gaps and Jagged Centerlines
@@ -482,8 +482,6 @@ river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv"
 | ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/interpolate_false_gaps_2.png) | ![river_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/interpolate_true_no_gaps_2.png) |
 
 The amount of additional points added by interpolating can be adjusted with `interpolate_n`, but defaults to add 5 additional points between values
-
-
 
 ## Developer Notes: Tech Debt and Bug Fixes
 * Fix legend overlapping on graph, replace doc_examples that have an overlapping
