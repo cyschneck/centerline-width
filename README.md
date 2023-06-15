@@ -79,6 +79,8 @@ river.plotCenterlineWidth(apply_smoothing=True, remove_intersections=True, displ
 ```
 ![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width.png)
 
+For more details to fix unexpected behavior or error code: [Debugging, Error Handling, and Edge Cases](#debugging-error-handling-and-edge-cases)
+
 ## Preprocessing
 ### Convert KML files to Text File
 
@@ -485,7 +487,6 @@ The amount of additional points added by interpolating can be adjusted with `int
 
 ## Developer Notes: Tech Debt and Bug Fixes
 * Fix legend overlapping on graph, replace doc_examples that have an overlapping
-* Verify that smoothing filter option does not produce a line that goes outside of the polygon
 
 ## Citations
 Based on work written in R (Golly et al. 2017):
