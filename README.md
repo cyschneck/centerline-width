@@ -50,7 +50,7 @@ Requirements will also be downloaded as part of the pip download
 
 ## Quickstart: centerline-width
 
-The core of centerline-width works with a .csv file of the left and right bank latitude/longitudes. Starting with Google Earth Pro, two .kml must first be translated to a single .csv file
+The core of centerline-width works with a .csv file of the left and right bank latitude/longitudes. So, if starting from Google Earth Pro, two .kml must first be translated to a single .csv file
 
 ```python
 import centerline_width
@@ -59,7 +59,7 @@ centerline_width.extractPointsToTextFile(left_kml="left_bank.kml",
 					text_output_name="river_coordinates_output.txt")
 centerline_width.convertColumnsToCSV(text_file="river_coordinates_output.txt")
 ```
-Then, to run the centerline-width functions, generate a river object from the `river_coordinates_output.csv`
+Then once the .csv file is created, in order to run the centerline-width functions, generate a river object from the `river_coordinates_output.csv`
 
 ```python
 river_object = centerline_width.riverCenterline(csv_data="river_coordinates_output.csv")
@@ -114,7 +114,7 @@ Example:
 
 ### Converted Text File to CSV
 
-Convert a text file with coordinates for a left and right bank's latitude/longitude to a csv file
+Convert a text file with coordinates for a left and right bank's latitude and longitude to a csv file with columns for the left bank latitude (llat), left bank longitude (llon), right bank latitude (rlat), right bank longitude (rlon)
 
 ```
 convertColumnsToCSV(text_file=None, flipBankDirection=False)
