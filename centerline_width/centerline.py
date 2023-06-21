@@ -397,5 +397,8 @@ def saveCenterlineCSV(river_object=None, save_to_csv=None, centerline_type="Voro
 	with open(save_to_csv, "w") as csv_file_output:
 		writer = csv.writer(csv_file_output)
 		writer.writerow(["{0} Centerline Latitude (Deg)".format(centerline_type), "{0} Centerline Longitude (Deg)".format(centerline_type)])
-		for latitude_longitude in centerline_coordinates_by_type:
-			writer.writerow([latitude_longitude[1], latitude_longitude[0]])
+		if centerline_coordinates_by_type is not None:
+			for latitude_longitude in centerline_coordinates_by_type:
+				writer.writerow([latitude_longitude[1], latitude_longitude[0]])
+		else:
+			logger.warn("\nWARNING, no {0} centerline coordinates found, {1} file generated will be empty".format(centerline_type, save_to_csv))
