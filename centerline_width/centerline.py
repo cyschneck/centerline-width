@@ -57,7 +57,7 @@ def networkXGraphShortestPath(nx_graph, starting_node, ending_node):
 			shortest_path = nx.shortest_path(nx_graph, source=starting_node, target=ending_node)
 			logger.info("[SUCCESS] Valid centerline path found")
 		except nx.NetworkXNoPath: # no direct path found
-			logger.info("[FAILED]  No direct path found from starting node to ending node")
+			logger.info("[FAILED]  No direct path found from starting node to ending node. To view gaps, plotCenterline(display_all_possible_paths=True). Recommended fix, rerun riverCenterline: set interpolate_data=True or (if interpolate_data=True) increase interpolate_n")
 			return None
 		#nx.draw(graph_connections, with_labels=True, font_size=10)
 		return shortest_path
@@ -423,9 +423,10 @@ def saveCenterlineMAT(river_object=None, save_to_mat=None, latitude_header=None,
 	if longitude_header is None:
 		longitude_header = "{0}_Centerline_Longitude_Deg".format(centerline_type.replace(" ", "_"))
 
+	latitude_lst = []
+	longtiude_lst = []
+
 	if centerline_coordinates_by_type is not None:
-		latitude_lst = []
-		longtiude_lst = []
 		for latitude_longitude in centerline_coordinates_by_type:
 			longtiude_lst.append(latitude_longitude[0])
 			latitude_lst.append(latitude_longitude[1])
