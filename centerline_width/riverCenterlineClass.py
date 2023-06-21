@@ -108,3 +108,8 @@ class riverCenterline:
 		return centerline_width.saveCenterlineCSV(river_object=self,
 												save_to_csv=save_to_csv,
 												centerline_type=centerline_type)
+
+	def saveCenterlineMAT(self, save_to_mat=None, centerline_type="Voronoi"):
+		return centerline_width.saveCenterlineMAT(river_object=self,
+												save_to_mat=save_to_mat,
+												centerline_type=centerline_type)
