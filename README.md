@@ -20,6 +20,7 @@ Find the centerline and width of rivers based on the latitude and longitude posi
 	* saveCenterlineCSV()
 	* saveCenterlineMAT()
 	* centerlineVoronoi
+	* centerlineEqualDistance 
 	* centerlineEvenlySpaced
 	* centerlineSmoothed
 	* centerlineLength
@@ -226,7 +227,7 @@ There are four types of centerline coordinates formed from the riverbank data
 - **Voronoi centerline**: centerline generated from where Voronoi vertices intersect within the river
 ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/voronoi_centerline.png)
 - **Equal Distance Centerline**: centerline based on Voronoi centerline but each point is equally spaced out from the previous (in meters)
-![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/evenly_spaced_centerline.png)
+![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/equal_distance_centerline.png)
 - **Evenly Spaced Centerline**: centerline based on Voronoi centerline but evenly spaced with a fixed number of points
 ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/evenly_spaced_centerline.png)
 - **Smoothed Centerline**: centerline generated from the evenly spaced centerline but smoothed by a b-spline

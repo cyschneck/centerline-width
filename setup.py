@@ -38,12 +38,14 @@ setup(
 											'centerline_width.*']),
 	include_package_data=True,
 	install_requires=[
+		"geopy>=2.3.0",
 		"haversine>=2.8.0",
 		"matplotlib>=3.1.0",
 		"networkx>=3.0",
 		"numpy>=1.24.1",
 		"pandas>=1.3.5",
 		"pykml>=0.2.0",
+		"pyproj>=3.4.1",
 		"pytest>=7.2.2",
 		"scipy>=1.10.1",
 		"shapely>=2.0.1"

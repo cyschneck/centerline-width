@@ -88,7 +88,7 @@ def plotCenterline(river_object=None,
 	for k, v in river_object.centerlineEqualDistance:
 			x.append(k)
 			y.append(v)
-	#plt.scatter(x, y, c="magenta", label="Equal Distance", s=8)
+	#plt.scatter(x, y, c="darkorchid", label="Equal Distance Centerline Coordinates", s=8)
 
 	# Plot Title, Legends, and Axis Labels
 	if not plot_title:
