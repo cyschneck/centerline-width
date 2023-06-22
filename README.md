@@ -162,14 +162,14 @@ centerline_width.riverCenterline(csv_data=None,
 				interpolate_data=False,
 				interpolate_n=5,
 				interpolate_n_centerpoints=None,
-				distance_m=None)
+				equal_distance=None)
 ```
 * **[REQUIRED]** csv_data (string): File location of the text file to convert
 * [OPTIONAL] optional_cutoff (int): Include only the first x number of the data to chart (useful for debugging)
 * [OPTIONAL] interpolate_data (bool): Interpolate between existing data by adding additional points
 * [OPTIONAL] interpolate_n (int): Number of additional points to add between existing data, defaults to 5 (note: larger numbers will take exponentially longer to run, recommends less than 15)
 * [OPTIONAL] interpolate_n_centerpoints (int): Number of points used to interpolate the Voronoi centerline, defaults to the the length of the data frame (df_len)
-* [OPTIONAL] distance_m (int): Distance between points (in meters) used to interpolate the Voronoi centerline, defaults 1/10th the length fo the Voronoi centerline
+* [OPTIONAL] equal_distance (int): Equal distance between points (in meters) used to interpolate the Voronoi centerline, defaults 1/10th the length fo the Voronoi centerline
 
 **Solutions for sparse data:**
 
@@ -197,7 +197,7 @@ centerline_width.riverCenterline(csv_data=None,
 * left_bank_coordinates (list of tuples): list of coordinates of the left bank generated from the csv file (`[(x, y), (x, y)]`)
 * right_bank_coordinates (list of tuples) list of coordinates of the right bank generated from the csv file (`[(x, y), (x, y)]`)
 * df_len (int): Length of the data frame of the csv data (spliced by the optional_cutoff)
-* distance_m (int): Distance between points (in meters) used in centerlineEqualDistance, defaults to 1/10th the length of the centerline
+* equal_distance (int): Distance between points (in meters) used in centerlineEqualDistance, defaults to 1/10th the length of the centerline
 * bank_polygon (Shapley Polygon): Multi-sided polygon generated to encapsulate river bank (used to define an inside and an outside of the river)
 * top_bank (Shapley Linestring): Linestring that represents the top of the river/polygon
 * bottom_bank (Shapley Linestring): Linestring that represents the bottom of the river/polygon
@@ -221,10 +221,12 @@ Return the latitude/longitude coordinates of the centerline based on the left an
 
 **Types of Centerlines**
 
-There are three types of centerline coordinates formed from the riverbank data. Each are built off of each other and are used to clean and smooth data
+There are four types of centerline coordinates formed from the riverbank data
 
 - **Voronoi centerline**: centerline generated from where Voronoi vertices intersect within the river
 ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/voronoi_centerline.png)
+- **Equal Distance Centerline**: centerline based on Voronoi centerline but each point is equally spaced out from the previous (in meters)
+![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/evenly_spaced_centerline.png)
 - **Evenly Spaced Centerline**: centerline based on Voronoi centerline but evenly spaced with a fixed number of points
 ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/evenly_spaced_centerline.png)
 - **Smoothed Centerline**: centerline generated from the evenly spaced centerline but smoothed by a b-spline
@@ -235,12 +237,17 @@ Centerline coordinates are formed by the Voronoi vertices
 river_object.centerlineVoronoi
 ```
 
-Centerline coordinates are formed by Evenly Spaced Voronoi vertices
+Centerline coordinates are formed by Equally Distanced vertices, set by `equal_distance`
+```
+river_object.centerlineEqualDistance
+```
+
+Centerline coordinates are formed by Evenly Spaced vertices
 ```
 river_object.centerlineEvenlySpaced
 ```
 
-Centerline coordinates are formed from Smoothed Voronoi vertices
+Centerline coordinates are formed from Smoothed vertices
 ```
 river_object.centerlineSmoothed
 ```

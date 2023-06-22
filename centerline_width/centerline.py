@@ -10,6 +10,8 @@ import networkx as nx
 from scipy import interpolate
 from scipy.io import savemat
 from shapely.geometry import Point, LineString
+import pyproj
+import geopy.distance
 
 # Internal centerline_width reference to access functions, global variables, and error handling
 import centerline_width
@@ -111,14 +113,39 @@ def centerlinePath(river_voronoi, river_polygon, top_polygon_line, bottom_polygo
 
 	return starting_node, ending_node, x_ridge_point, y_ridge_point, shortest_path_points
 
-def equalDistanceCenterline(centerline_coordinates=None, distance_m=None):
+def equalDistanceCenterline(centerline_coordinates=None, equal_distance=None):
 	# Interpolate centerline to space out coordinates an equal physical distance from the next (in meters)
-	print("distance in meters = {0} m".format(distance_m))
 	if centerline_coordinates is None:
 		return None
 
+	centerline_line = LineString(centerline_coordinates)
+	equal_distance_between_centerline_coordinates=[]
 
-	equal_distance_between_centerline_coordinates = centerline_coordinates
+	geodesic = pyproj.Geod(ellps='WGS84')
+
+	# Iterate through coordinates based on a set distance (distance_m)
+	lon_start, lat_start = centerline_coordinates[0]
+	equal_distance_between_centerline_coordinates.append((lon_start, lat_start))
+	for i, centerline_coord in enumerate(centerline_coordinates):
+		if i+1 < len(centerline_coordinates):
+			lon_end, lat_end = centerline_coordinates[i+1]
+			# move to next point when distance between points is less than the equal distance
+			move_to_next_point = False 
+			while (not move_to_next_point):
+				# forward_bearing: direction towards the next point
+				forward_bearing, reverse_bearing, distance_between_meters = geodesic.inv(lon_start, lat_start, lon_end, lat_end)
+				if distance_between_meters < equal_distance:
+					# if the distance to the next point is less than the equal distance, reorient to bearing to next latitude
+					move_to_next_point = True
+				else:
+					start_point = geopy.Point(lat_start, lon_start)
+					distance_to_move = geopy.distance.distance(kilometers=equal_distance/1000) # distance to move towards the next point
+					final_position = distance_to_move.destination(start_point, bearing=forward_bearing)
+					equal_distance_between_centerline_coordinates.append((final_position.longitude, final_position.latitude))
+					# set new starting point to current newly generated destination
+					lon_start = final_position.longitude
+					lat_start = final_position.latitude
+
 	return equal_distance_between_centerline_coordinates
 
 def evenlySpacedCenterline(centerline_coordinates=None, number_of_fixed_points=None):

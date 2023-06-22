@@ -71,7 +71,7 @@ def plotCenterline(river_object=None,
 												save_plot_name=save_plot_name,
 												display_voronoi=display_voronoi)
 
-	fig, ax, valid_path_through = plotCenterlineBackend(river_object=river_object)
+	fig, ax, valid_path_through = plotCenterlineBackend(river_object=river_object, display_true_centerline=True)
 
 	# Display the Voronoi Diagram
 	if display_voronoi:
@@ -81,6 +81,14 @@ def plotCenterline(river_object=None,
 	if display_all_possible_paths:
 		for i in range(len(river_object.x_voronoi_ridge_point)):
 			plt.plot(river_object.x_voronoi_ridge_point[i], river_object.y_voronoi_ridge_point[i], 'cyan', linewidth=1)
+
+	# Plot Equally Spaced Points
+	x = []
+	y = []
+	for k, v in river_object.centerlineEqualDistance:
+			x.append(k)
+			y.append(v)
+	#plt.scatter(x, y, c="magenta", label="Equal Distance", s=8)
 
 	# Plot Title, Legends, and Axis Labels
 	if not plot_title:
@@ -112,8 +120,6 @@ def plotCenterlineWidth(river_object=None,
 													remove_intersections=remove_intersections)
 
 	fig, ax, valid_path_through = plotCenterlineBackend(river_object=river_object, display_true_centerline=display_true_centerline)
-
-	# Plot river
 
 	# Determine the Width of River
 	number_of_evenly_spaced_points = ""
