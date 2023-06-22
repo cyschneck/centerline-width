@@ -163,14 +163,14 @@ centerline_width.riverCenterline(csv_data=None,
 				interpolate_data=False,
 				interpolate_n=5,
 				interpolate_n_centerpoints=None,
-				equal_distance=None)
+				equal_distance=10)
 ```
 * **[REQUIRED]** csv_data (string): File location of the text file to convert
 * [OPTIONAL] optional_cutoff (int): Include only the first x number of the data to chart (useful for debugging)
 * [OPTIONAL] interpolate_data (bool): Interpolate between existing data by adding additional points
 * [OPTIONAL] interpolate_n (int): Number of additional points to add between existing data, defaults to 5 (note: larger numbers will take exponentially longer to run, recommends less than 15)
 * [OPTIONAL] interpolate_n_centerpoints (int): Number of points used to interpolate the Voronoi centerline, defaults to the the length of the data frame (df_len)
-* [OPTIONAL] equal_distance (int): Equal distance between points (in meters) used to interpolate the Voronoi centerline, defaults 1/10th the length fo the Voronoi centerline
+* [OPTIONAL] equal_distance (int): Equal distance between points (in meters) used to interpolate the Voronoi centerline, defaults 10 meters
 
 **Solutions for sparse data:**
 
@@ -198,7 +198,7 @@ centerline_width.riverCenterline(csv_data=None,
 * left_bank_coordinates (list of tuples): list of coordinates of the left bank generated from the csv file (`[(x, y), (x, y)]`)
 * right_bank_coordinates (list of tuples) list of coordinates of the right bank generated from the csv file (`[(x, y), (x, y)]`)
 * df_len (int): Length of the data frame of the csv data (spliced by the optional_cutoff)
-* equal_distance (int): Distance between points (in meters) used in centerlineEqualDistance, defaults to 1/10th the length of the centerline
+* equal_distance (int): Distance between points (in meters) used in centerlineEqualDistance, defaults to points every 10 meters
 * bank_polygon (Shapley Polygon): Multi-sided polygon generated to encapsulate river bank (used to define an inside and an outside of the river)
 * top_bank (Shapley Linestring): Linestring that represents the top of the river/polygon
 * bottom_bank (Shapley Linestring): Linestring that represents the bottom of the river/polygon
@@ -243,7 +243,7 @@ Centerline coordinates are formed by Equally Distanced vertices, set by `equal_d
 river_object.centerlineEqualDistance
 ```
 
-Centerline coordinates are formed by Evenly Spaced vertices
+Centerline coordinates are formed by Evenly Spaced vertices, set by `interpolate_n_centerpoints`
 ```
 river_object.centerlineEvenlySpaced
 ```
@@ -268,7 +268,7 @@ Save the centerline coordinates to a csv file with columns for latitude and long
 saveCenterlineCSV(save_to_csv=None, centerline_type="Voronoi")
 ```
 * **[REQUIRED]** save_to_csv (str): CSV filename, requires a .csv extension
-* [OPTIONAL] centerline_type (str): Centerline type to save to CSV (not case-sensitive), options: ["Voronoi", "Evenly Spaced", "Smoothed"], defaults to "Voronoi"
+* [OPTIONAL] centerline_type (str): Centerline type to save to CSV (not case-sensitive), options: ["Voronoi", "Evenly Spaced", "Smoothed", "Equal Distance"], defaults to "Voronoi"
 * [OPTIONAL] latitude_header (str): Column header for latitude values, defaults to `<centerline_type> Centerline Latitude (Deg)`
 * [OPTIONAL] longitude_header (str): Column header for Longitude values, defaults to `<centerline_type> Centerline Longitude (Deg)`
 
@@ -286,7 +286,7 @@ Save the centerline coordinates to a .mat file with columns for latitude and lon
 saveCenterlineMAT(save_to_mat=None, centerline_type="Voronoi")
 ```
 * **[REQUIRED]** save_to_mat (str): MAT filename, requires a .mat extension
-* [OPTIONAL] centerline_type (str): Centerline type to save to MAT (not case-sensitive), options: ["Voronoi", "Evenly Spaced", "Smoothed"], defaults to "Voronoi"
+* [OPTIONAL] centerline_type (str): Centerline type to save to MAT (not case-sensitive), options: ["Voronoi", "Evenly Spaced", "Smoothed", "Equal Distance"], defaults to "Voronoi"
 * [OPTIONAL] latitude_header (str): Column header for latitude values, defaults to `<centerline_type>_Centerline_Latitude_(Deg)` (will remove spaces and special characters and replaces with underscores)
 * [OPTIONAL] longitude_header (str): Column header for Longitude values, defaults to `<centerline_type>_Centerline_Longitude_(Deg)` (will remove spaces and special characters and replaces with underscores)
 

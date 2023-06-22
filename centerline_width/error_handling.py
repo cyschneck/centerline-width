@@ -188,7 +188,7 @@ def errorHandlingSaveCenterlineCSV(river_object=None, save_to_csv=None, centerli
 				logger.critical("\nCRITICAL ERROR, [save_to_csv]: Extension must be a .csv file, current extension = '{0}'".format(save_to_csv.split(".")[1]))
 				exit()
 
-	centerline_type_options = ["Voronoi", "Evenly Spaced", "Smoothed"]
+	centerline_type_options = ["Voronoi", "Evenly Spaced", "Smoothed", "Equal Distance"]
 	if type(centerline_type) != str:
 		logger.critical("\nCRITICAL ERROR, [centerline_type]: Must be a str, current type = '{0}'".format(type(centerline_type)))
 		exit()

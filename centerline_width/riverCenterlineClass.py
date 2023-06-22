@@ -13,7 +13,7 @@ class riverCenterline:
 				interpolate_data=False,
 				interpolate_n=5,
 				interpolate_n_centerpoints=None, 
-				equal_distance=None):
+				equal_distance=10):
 		centerline_width.errorHandlingRiverCenterlineClass(csv_data=csv_data,
 															optional_cutoff=optional_cutoff,
 															interpolate_data=interpolate_data,
@@ -64,8 +64,7 @@ class riverCenterline:
 
 		# Centerline length
 		self.centerlineLength = centerline_width.centerlineLength(centerline_coordinates=shortest_path_coordinates)
-		self.equal_distance = equal_distance 
-		if self.equal_distance is None: self.equal_distance = self.centerlineLength * 0.1 # set to 1/10th the length of the centerline
+		self.equal_distance = equal_distance
 
 		# The different types of Centerline coordinates
 		self.centerlineEqualDistance = centerline_width.equalDistanceCenterline(centerline_coordinates=self.centerlineVoronoi,
