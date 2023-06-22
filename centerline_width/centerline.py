@@ -111,6 +111,16 @@ def centerlinePath(river_voronoi, river_polygon, top_polygon_line, bottom_polygo
 
 	return starting_node, ending_node, x_ridge_point, y_ridge_point, shortest_path_points
 
+def equalDistanceCenterline(centerline_coordinates=None, distance_m=None):
+	# Interpolate centerline to space out coordinates an equal physical distance from the next (in meters)
+	print("distance in meters = {0} m".format(distance_m))
+	if centerline_coordinates is None:
+		return None
+
+
+	equal_distance_between_centerline_coordinates = centerline_coordinates
+	return equal_distance_between_centerline_coordinates
+
 def evenlySpacedCenterline(centerline_coordinates=None, number_of_fixed_points=None):
 	# Interpolate to evenly space points along the centerline coordinates (effectively smoothing with fewer points)
 	if centerline_coordinates is None:

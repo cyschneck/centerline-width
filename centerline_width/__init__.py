@@ -16,6 +16,7 @@ from .riverCenterlineClass import riverCenterline
 from .centerline import centerlinePath
 from .centerline import networkXGraphShortestPath
 from .centerline import centerlineLength
+from .centerline import equalDistanceCenterline
 from .centerline import evenlySpacedCenterline
 from .centerline import smoothedCoordinates
 from .centerline import riverWidthFromCenterlineCoordinates

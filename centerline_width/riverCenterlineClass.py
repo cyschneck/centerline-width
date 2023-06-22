@@ -7,7 +7,13 @@ import pandas as pd
 import centerline_width
 
 class riverCenterline:
-	def __init__(self, csv_data=None, optional_cutoff=None, interpolate_data=False, interpolate_n=5, interpolate_n_centerpoints=None):
+	def __init__(self,
+				csv_data=None,
+				optional_cutoff=None,
+				interpolate_data=False,
+				interpolate_n=5,
+				interpolate_n_centerpoints=None, 
+				distance_m=None):
 		centerline_width.errorHandlingRiverCenterlineClass(csv_data=csv_data,
 															optional_cutoff=optional_cutoff,
 															interpolate_data=interpolate_data,
@@ -32,6 +38,10 @@ class riverCenterline:
 		self.left_bank_coordinates = left_bank_coordinates
 		self.right_bank_coordinates = right_bank_coordinates
 
+		# Right/Length Bank Length
+		self.rightBankLength = centerline_width.centerlineLength(centerline_coordinates=right_bank_coordinates)
+		self.leftBankLength = centerline_width.centerlineLength(centerline_coordinates=left_bank_coordinates)
+
 		# River polygon, position of the top/bottom polygon
 		river_bank_polygon, top_bank, bottom_bank = centerline_width.generatePolygon(self.left_bank_coordinates, self.right_bank_coordinates)
 		self.bank_polygon = river_bank_polygon
@@ -49,19 +59,23 @@ class riverCenterline:
 		self.x_voronoi_ridge_point = x_ridge_point # Voronoi x positions
 		self.y_voronoi_ridge_point = y_ridge_point # Voronoi y postions
 
-		# Centerline coordinates
+		# Voronoi Centerline Coordinates
 		self.centerlineVoronoi = shortest_path_coordinates
-		self.centerlineEvenlySpaced = centerline_width.evenlySpacedCenterline(centerline_coordinates=self.centerlineVoronoi,
-																						number_of_fixed_points=self.interpolate_n_centerpoints)
-		self.centerlineSmoothed = centerline_width.smoothedCoordinates(river_object=self, centerline_coordinates=self.centerlineEvenlySpaced,
-																						interprolate_num=self.interpolate_n_centerpoints)
-
-		# Right/Length Bank Length
-		self.rightBankLength = centerline_width.centerlineLength(centerline_coordinates=right_bank_coordinates)
-		self.leftBankLength = centerline_width.centerlineLength(centerline_coordinates=left_bank_coordinates)
 
 		# Centerline length
 		self.centerlineLength = centerline_width.centerlineLength(centerline_coordinates=shortest_path_coordinates)
+		self.distance_m = distance_m 
+		if self.distance_m is None: self.distance_m = self.centerlineLength * 0.1 # set to 1/10th the length of the centerline
+
+		# The different types of Centerline coordinates
+		self.centerlineEqualDistance = centerline_width.equalDistanceCenterline(centerline_coordinates=self.centerlineVoronoi,
+																				distance_m=self.distance_m)
+		self.centerlineEvenlySpaced = centerline_width.evenlySpacedCenterline(centerline_coordinates=self.centerlineVoronoi,
+																				number_of_fixed_points=self.interpolate_n_centerpoints)
+		self.centerlineSmoothed = centerline_width.smoothedCoordinates(river_object=self, centerline_coordinates=self.centerlineEvenlySpaced,
+																		interprolate_num=self.interpolate_n_centerpoints)
+
+
 
 	def plotCenterline(self,
 						display_all_possible_paths=False,
