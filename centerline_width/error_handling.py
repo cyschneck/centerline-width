@@ -166,7 +166,7 @@ def errorHandlingRiverWidthFromCenterline(river_object=None,
 			logger.critical("\nCRITICAL ERROR, [save_to_csv]: Extension must be a .csv file, current extension = '{0}'".format(save_to_csv.split(".")[1]))
 			exit()
 
-def errorHandlingSaveCenterlineCSV(river_object=None, save_to_csv=None, centerline_type=None):
+def errorHandlingSaveCenterlineCSV(river_object=None, latitude_header=None, longitude_header=None, save_to_csv=None, centerline_type=None):
 	# Error Handling for saveCenterlineCSV()
 	if river_object is None:
 		logger.critical("\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.riverCenterline)")
@@ -175,6 +175,14 @@ def errorHandlingSaveCenterlineCSV(river_object=None, save_to_csv=None, centerli
 		if not isinstance(river_object, centerline_width.riverCenterline):
 			logger.critical("\nCRITICAL ERROR, [river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{0}'".format(type(river_object)))
 			exit()
+
+	if latitude_header is not None and type(latitude_header) != str:
+		logger.critical("\nCRITICAL ERROR, [latitude_header]: Must be a str, current type = '{0}'".format(type(latitude_header)))
+		exit()
+
+	if longitude_header is not None and type(longitude_header) != str:
+		logger.critical("\nCRITICAL ERROR, [longitude_header]: Must be a str, current type = '{0}'".format(type(longitude_header)))
+		exit()
 
 	if save_to_csv is None:
 		logger.critical("\nCRITICAL ERROR, [save_to_csv]: Requires csv filename")
@@ -186,6 +194,53 @@ def errorHandlingSaveCenterlineCSV(river_object=None, save_to_csv=None, centerli
 		else:
 			if not save_to_csv.lower().endswith(".csv"):
 				logger.critical("\nCRITICAL ERROR, [save_to_csv]: Extension must be a .csv file, current extension = '{0}'".format(save_to_csv.split(".")[1]))
+				exit()
+
+	centerline_type_options = ["Voronoi", "Evenly Spaced", "Smoothed", "Equal Distance"]
+	if type(centerline_type) != str:
+		logger.critical("\nCRITICAL ERROR, [centerline_type]: Must be a str, current type = '{0}'".format(type(centerline_type)))
+		exit()
+	else:
+		if centerline_type.title() not in centerline_type_options:
+			logger.critical("\nCRITICAL ERROR, [centerline_type]: Must be an available option in {0}, current option = '{1}'".format(centerline_type_options, centerline_type))
+			exit()
+
+def errorHandlingSaveCenterlineMAT(river_object=None, latitude_header=None, longitude_header=None, save_to_mat=None, centerline_type=None):
+	# Error Handling for saveCenterlineMAT()
+	if river_object is None:
+		logger.critical("\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.riverCenterline)")
+		exit()
+	else:
+		if not isinstance(river_object, centerline_width.riverCenterline):
+			logger.critical("\nCRITICAL ERROR, [river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{0}'".format(type(river_object)))
+			exit()
+
+	if latitude_header is not None:
+		if type(latitude_header) != str:
+			logger.critical("\nCRITICAL ERROR, [latitude_header]: Must be a str, current type = '{0}'".format(type(latitude_header)))
+			exit()
+		if any(not character.isalnum() for character in latitude_header):
+			logger.critical("\nCRITICAL ERROR, [latitude_header]: Column names cannot contain any whitespace or non-alphanumeric characters, currently = '{0}'".format(latitude_header))
+			exit()
+
+	if longitude_header is not None:
+		if type(longitude_header) != str:
+			logger.critical("\nCRITICAL ERROR, [longitude_header]: Must be a str, current type = '{0}'".format(type(longitude_header)))
+			exit()
+		if any(not character.isalnum() for character in longitude_header):
+			logger.critical("\nCRITICAL ERROR, [longitude_header]: Column names cannot contain any whitespace or non-alphanumeric characters, currently = '{0}'".format(longitude_header))
+			exit()
+
+	if save_to_mat is None:
+		logger.critical("\nCRITICAL ERROR, [save_to_mat]: Requires mat filename")
+		exit()
+	else:
+		if type(save_to_mat) != str:
+			logger.critical("\nCRITICAL ERROR, [save_to_mat]: Must be a str, current type = '{0}'".format(type(save_to_mat)))
+			exit()
+		else:
+			if not save_to_mat.lower().endswith(".mat"):
+				logger.critical("\nCRITICAL ERROR, [save_to_mat]: Extension must be a .mat file, current extension = '{0}'".format(save_to_mat.split(".")[1]))
 				exit()
 
 	centerline_type_options = ["Voronoi", "Evenly Spaced", "Smoothed", "Equal Distance"]
@@ -239,7 +294,8 @@ def errorHandlingRiverCenterlineClass(csv_data=None,
 									optional_cutoff=None,
 									interpolate_data=None,
 									interpolate_n=None,
-									interpolate_n_centerpoints=None):
+									interpolate_n_centerpoints=None,
+									equal_distance=None):
 	# Error Handling for riverCenterlineClass()
 	if csv_data is None:
 		logger.critical("\nCRITICAL ERROR, [csv_data]: Requires csv_data location")
@@ -273,3 +329,10 @@ def errorHandlingRiverCenterlineClass(csv_data=None,
 			if interpolate_n_centerpoints < 2:
 				logger.critical("\nCRITICAL ERROR, [interpolate_n_centerpoints]: Must be a greater than 1, currently = '{0}'".format(interpolate_n_centerpoints))
 				exit()
+
+	if type(equal_distance) != int and type(equal_distance) != float:
+		logger.critical("\nCRITICAL ERROR, [equal_distance]: Must be a int or float, current type = '{0}'".format(type(equal_distance)))
+		exit()
+		if equal_distance <= 0:
+			logger.critical("WARNING, [equal_distance]: Must be a postive value, greater than 0, currently = '{0}'".format(equal_distance))
+			exit()

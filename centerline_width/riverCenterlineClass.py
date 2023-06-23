@@ -18,7 +18,8 @@ class riverCenterline:
 															optional_cutoff=optional_cutoff,
 															interpolate_data=interpolate_data,
 															interpolate_n=interpolate_n,
-															interpolate_n_centerpoints=interpolate_n_centerpoints)
+															interpolate_n_centerpoints=interpolate_n_centerpoints,
+															equal_distance=equal_distance)
 
 		# Description and dataframe
 		self.river_name = csv_data

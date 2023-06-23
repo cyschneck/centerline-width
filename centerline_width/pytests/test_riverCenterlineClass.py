@@ -19,6 +19,10 @@ invalid_non_int_options = [("testing_string", "<class 'str'>"),
 						([], "<class 'list'>"),
 						(False, "<class 'bool'>")]
 
+invalid_non_num_options = [("testing_string", "<class 'str'>"),
+						([], "<class 'list'>"),
+						(False, "<class 'bool'>")]
+
 invalid_non_str_options = [(1961, "<class 'int'>"),
 						(3.1415, "<class 'float'>"),
 						([], "<class 'list'>"),
@@ -63,3 +67,11 @@ def test_riverCenterline_interpolateNInvalidTypes(caplog, interpolate_n_invalid,
 	log_record = caplog.records[0]
 	assert log_record.levelno == logging.CRITICAL
 	assert log_record.message == "\nCRITICAL ERROR, [interpolate_n]: Must be a int, current type = '{0}'".format(interpolate_n_error_output)
+
+@pytest.mark.parametrize("equal_distance_invalid, equal_distance_error_output", invalid_non_num_options)
+def test_riverCenterline_equalDistanceInvalidTypes(caplog, equal_distance_invalid, equal_distance_error_output):
+	with pytest.raises(SystemExit):
+		centerline_width.riverCenterline(csv_data="csv_example.csv", equal_distance=equal_distance_invalid)
+	log_record = caplog.records[0]
+	assert log_record.levelno == logging.CRITICAL
+	assert log_record.message == "\nCRITICAL ERROR, [equal_distance]: Must be a int or float, current type = '{0}'".format(equal_distance_error_output)

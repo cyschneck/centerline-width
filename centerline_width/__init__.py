@@ -34,5 +34,6 @@ from .error_handling import errorHandlingPlotCenterline
 from .error_handling import errorHandlingPlotCenterlineWidth
 from .error_handling import errorHandlingRiverWidthFromCenterline
 from .error_handling import errorHandlingSaveCenterlineCSV
+from .error_handling import errorHandlingSaveCenterlineMAT
 from .error_handling import errorHandlingExtractPointsToTextFile
 from .error_handling import errorHandlingRiverCenterlineClass
