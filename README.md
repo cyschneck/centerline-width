@@ -522,8 +522,8 @@ river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv"
 The amount of additional points added by interpolating can be adjusted with `interpolate_n`, but defaults to add 5 additional points between values
 
 ## Developer Notes: Tech Debt and Bug Fixes
-* Option to set the distance between centerline points (a sub version of evenly spaced) (distance seperating = 1m)
 * option to turn off verbose (no logs printed)
+* option to specify Geod type (defaults to pyproj.Geod(ellps='WGS84'))
 * Fix legend overlapping on graph, replace doc_examples that have an overlapping
 
 ## Citations
