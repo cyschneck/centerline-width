@@ -40,6 +40,7 @@ def errrorHandlingConvertColumnsToCSV(text_file=None,
 ## Error Handling: plotDiagrams.py
 def errorHandlingPlotCenterline(river_object=None,
 								centerline_type=None,
+								marker_type=None,
 								display_all_possible_paths=None,
 								plot_title=None,
 								save_plot_name=None,
@@ -59,6 +60,15 @@ def errorHandlingPlotCenterline(river_object=None,
 	else:
 		if centerline_type.title() not in centerline_type_options:
 			logger.critical("\nCRITICAL ERROR, [centerline_type]: Must be an available option in {0}, current option = '{1}'".format(centerline_type_options, centerline_type))
+			exit()
+
+	if type(marker_type) != str:
+		logger.critical("\nCRITICAL ERROR, [marker_type]: Must be a str, current type = '{0}'".format(type(marker_type)))
+		exit()
+	else:
+		marker_type_options = ["Line", "Scatter"]
+		if marker_type.title() not in marker_type_options:
+			logger.critical("\nCRITICAL ERROR, [marker_type]: Must be an available option in {0}, current option = '{1}'".format(marker_type_options, marker_type))
 			exit()
 
 	if type(display_all_possible_paths) != bool:

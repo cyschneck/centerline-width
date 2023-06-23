@@ -316,12 +316,14 @@ Plot the centerline created from a list of right and left banks with Voronoi ver
 
 ```
 plotCenterline(centerline_type="Voronoi",
+		marker_type="Line",
 		display_all_possible_paths=False, 
 		plot_title=None, 
 		save_plot_name=None, 
 		display_voronoi=False)
 ```
 * [OPTIONAL] centerline_type (string): Centerline type graph within river (not case-sensitive), options: ["Voronoi", "Evenly Spaced", "Smoothed", "Equal Distance"], defaults to "Voronoi"
+* [OPTIONAL] marker_type (string): Graph type (not case-sensitive), options: ["Line", "Scatter"], defaults to "Line"
 * [OPTIONAL] display_all_possible_paths (boolean): Display all possible paths, not just the centerline (useful for debugging), defaults to False
 * [OPTIONAL] plot_title (string): Change plot title, defaults to "River Coordinates: Valid Centerline = True/False, Valid Polygon = True/False"
 * [OPTIONAL] save_plot_name (string): Save the plot with a given name and location
