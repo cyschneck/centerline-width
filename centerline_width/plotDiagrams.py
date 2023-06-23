@@ -15,7 +15,7 @@ logger.setLevel(logging.INFO)
 stream_handler = logging.StreamHandler()
 logger.addHandler(stream_handler)
 
-def plotCenterlineBackend(river_object=None, display_true_centerline=True):
+def plotCenterlineBackend(river_object=None, display_true_centerline=True, centerline_type="Voronoi"):
 	# Shared components between plotCenterline and plotCenterlineWidth
 	fig = plt.figure(figsize=(10,10))
 	ax = fig.add_subplot(111)
@@ -41,16 +41,32 @@ def plotCenterlineBackend(river_object=None, display_true_centerline=True):
 
 	# Plot centerline found from NetworkX
 	valid_path_through = False
-	if river_object.centerlineVoronoi: # shortest path through points
+
+	centerline_type = centerline_type.title()
+
+	if centerline_type == "Voronoi": 
+		centerline_coordinates_by_type = river_object.centerlineVoronoi
+		centerline_legend = "Voronoi Centerline Coordinates"
+	if centerline_type == "Equal Distance": 
+		centerline_coordinates_by_type = river_object.centerlineEqualDistance
+		centerline_legend = "Equal Distance Centerline Coordinates"
+	if centerline_type == "Evenly Spaced": 
+		centerline_coordinates_by_type = river_object.centerlineEvenlySpaced
+		centerline_legend = "Evenly Spaced Centerline Coordiantes"
+	if centerline_type == "Smoothed": 
+		centerline_coordinates_by_type = river_object.centerlineSmoothed
+		centerline_legend = "Smoothed Centerlined Coordiantes"
+
+	if centerline_coordinates_by_type:
 		valid_path_through = True
-		x = []
-		y = []
-		for k, v in river_object.centerlineVoronoi:
-			x.append(k)
-			y.append(v)
-		#plt.scatter(x, y, c="black", label="Centerline Coordinates", s=8)
 		if display_true_centerline:
-			plt.plot(*zip(*river_object.centerlineVoronoi), c="black", label="Centerline")
+			plt.plot(*zip(*centerline_coordinates_by_type), c="black", label=centerline_legend)
+			x = []
+			y = []
+			for k, v in centerline_coordinates_by_type:
+				x.append(k)
+				y.append(v)
+			#plt.scatter(x, y, c="black", label=centerline_legend, s=8)
 
 	# Dynamically assign the starting and ending
 	if river_object.starting_node is not None: # error handling for when data is too small to generate centerline coordiantes
@@ -60,18 +76,22 @@ def plotCenterlineBackend(river_object=None, display_true_centerline=True):
 	return fig, ax, valid_path_through
 
 def plotCenterline(river_object=None,
+					centerline_type="Voronoi",
 					display_all_possible_paths=False, 
 					plot_title=None, 
 					save_plot_name=None, 
 					display_voronoi=False):
 	# Plot Centerline of River
 	centerline_width.errorHandlingPlotCenterline(river_object=river_object,
+												centerline_type=centerline_type,
 												display_all_possible_paths=display_all_possible_paths,
 												plot_title=plot_title,
 												save_plot_name=save_plot_name,
 												display_voronoi=display_voronoi)
 
-	fig, ax, valid_path_through = plotCenterlineBackend(river_object=river_object, display_true_centerline=True)
+	fig, ax, valid_path_through = plotCenterlineBackend(river_object=river_object,
+														display_true_centerline=True,
+														centerline_type=centerline_type)
 
 	# Display the Voronoi Diagram
 	if display_voronoi:
@@ -81,14 +101,6 @@ def plotCenterline(river_object=None,
 	if display_all_possible_paths:
 		for i in range(len(river_object.x_voronoi_ridge_point)):
 			plt.plot(river_object.x_voronoi_ridge_point[i], river_object.y_voronoi_ridge_point[i], 'cyan', linewidth=1)
-
-	# Plot Equally Spaced Points
-	x = []
-	y = []
-	for k, v in river_object.centerlineEqualDistance:
-			x.append(k)
-			y.append(v)
-	#plt.scatter(x, y, c="darkorchid", label="Equal Distance Centerline Coordinates", s=8)
 
 	# Plot Title, Legends, and Axis Labels
 	if not plot_title:

@@ -17,8 +17,6 @@ Find the centerline and width of rivers based on the latitude and longitude posi
 	* plotCenterline()
 	* plotCenterlineWidth()
 	* riverWidthFromCenterline()
-	* saveCenterlineCSV()
-	* saveCenterlineMAT()
 	* centerlineVoronoi
 	* centerlineEqualDistance 
 	* centerlineEvenlySpaced
@@ -26,6 +24,9 @@ Find the centerline and width of rivers based on the latitude and longitude posi
 	* centerlineLength
 	* rightBankLength
 	* leftBankLength
+* **Export centerline to CSV and MAT files**
+	* saveCenterlineCSV()
+	* saveCenterlineMAT()
 
 | River Outlined in Google Earth Pro | Generated Centerline for the Riverbank |
 | ------------- | ------------- |
@@ -287,8 +288,8 @@ saveCenterlineMAT(save_to_mat=None, centerline_type="Voronoi")
 ```
 * **[REQUIRED]** save_to_mat (str): MAT filename, requires a .mat extension
 * [OPTIONAL] centerline_type (str): Centerline type to save to MAT (not case-sensitive), options: ["Voronoi", "Evenly Spaced", "Smoothed", "Equal Distance"], defaults to "Voronoi"
-* [OPTIONAL] latitude_header (str): Column header for latitude values, defaults to `<centerline_type>_Centerline_Latitude_(Deg)` (will remove spaces and special characters and replaces with underscores)
-* [OPTIONAL] longitude_header (str): Column header for Longitude values, defaults to `<centerline_type>_Centerline_Longitude_(Deg)` (will remove spaces and special characters and replaces with underscores)
+* [OPTIONAL] latitude_header (str): Column header for latitude values, defaults to `<centerline_type>_Centerline_Latitude_(Deg)` (cannot include spaces or special characters)
+* [OPTIONAL] longitude_header (str): Column header for Longitude values, defaults to `<centerline_type>_Centerline_Longitude_(Deg)` (cannot include spaces or special characters)
 
 ```python
 import centerline_width
@@ -314,11 +315,13 @@ The length of the river centerline returns `215.34700589636674` km
 Plot the centerline created from a list of right and left banks with Voronoi vertices
 
 ```
-plotCenterline(display_all_possible_paths=False, 
+plotCenterline(centerline_type="Voronoi",
+		display_all_possible_paths=False, 
 		plot_title=None, 
 		save_plot_name=None, 
 		display_voronoi=False)
 ```
+* [OPTIONAL] centerline_type (string): Centerline type graph within river (not case-sensitive), options: ["Voronoi", "Evenly Spaced", "Smoothed", "Equal Distance"], defaults to "Voronoi"
 * [OPTIONAL] display_all_possible_paths (boolean): Display all possible paths, not just the centerline (useful for debugging), defaults to False
 * [OPTIONAL] plot_title (string): Change plot title, defaults to "River Coordinates: Valid Centerline = True/False, Valid Polygon = True/False"
 * [OPTIONAL] save_plot_name (string): Save the plot with a given name and location

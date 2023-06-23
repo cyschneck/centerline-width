@@ -78,11 +78,13 @@ class riverCenterline:
 
 
 	def plotCenterline(self,
+						centerline_type="Voronoi",
 						display_all_possible_paths=False,
 						plot_title=None,
 						save_plot_name=None,
 						display_voronoi=False):
 		centerline_width.plotCenterline(river_object=self,
+										centerline_type=centerline_type,
 										display_all_possible_paths=display_all_possible_paths, 
 										plot_title=plot_title, 
 										save_plot_name=save_plot_name, 

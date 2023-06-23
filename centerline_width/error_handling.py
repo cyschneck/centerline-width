@@ -15,6 +15,8 @@ logger.setLevel(logging.CRITICAL)
 stream_handler = logging.StreamHandler()
 logger.addHandler(stream_handler)
 
+centerline_type_options = ["Voronoi", "Evenly Spaced", "Smoothed", "Equal Distance"]
+
 ## Error Handling: preprocessing.py
 def errrorHandlingConvertColumnsToCSV(text_file=None,
 									flipBankDirection=None):
@@ -37,6 +39,7 @@ def errrorHandlingConvertColumnsToCSV(text_file=None,
 
 ## Error Handling: plotDiagrams.py
 def errorHandlingPlotCenterline(river_object=None,
+								centerline_type=None,
 								display_all_possible_paths=None,
 								plot_title=None,
 								save_plot_name=None,
@@ -48,6 +51,14 @@ def errorHandlingPlotCenterline(river_object=None,
 	else:
 		if not isinstance(river_object, centerline_width.riverCenterline):
 			logger.critical("\nCRITICAL ERROR, [river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{0}'".format(type(river_object)))
+			exit()
+
+	if type(centerline_type) != str:
+		logger.critical("\nCRITICAL ERROR, [centerline_type]: Must be a str, current type = '{0}'".format(type(centerline_type)))
+		exit()
+	else:
+		if centerline_type.title() not in centerline_type_options:
+			logger.critical("\nCRITICAL ERROR, [centerline_type]: Must be an available option in {0}, current option = '{1}'".format(centerline_type_options, centerline_type))
 			exit()
 
 	if type(display_all_possible_paths) != bool:
@@ -196,7 +207,6 @@ def errorHandlingSaveCenterlineCSV(river_object=None, latitude_header=None, long
 				logger.critical("\nCRITICAL ERROR, [save_to_csv]: Extension must be a .csv file, current extension = '{0}'".format(save_to_csv.split(".")[1]))
 				exit()
 
-	centerline_type_options = ["Voronoi", "Evenly Spaced", "Smoothed", "Equal Distance"]
 	if type(centerline_type) != str:
 		logger.critical("\nCRITICAL ERROR, [centerline_type]: Must be a str, current type = '{0}'".format(type(centerline_type)))
 		exit()
@@ -243,7 +253,6 @@ def errorHandlingSaveCenterlineMAT(river_object=None, latitude_header=None, long
 				logger.critical("\nCRITICAL ERROR, [save_to_mat]: Extension must be a .mat file, current extension = '{0}'".format(save_to_mat.split(".")[1]))
 				exit()
 
-	centerline_type_options = ["Voronoi", "Evenly Spaced", "Smoothed", "Equal Distance"]
 	if type(centerline_type) != str:
 		logger.critical("\nCRITICAL ERROR, [centerline_type]: Must be a str, current type = '{0}'".format(type(centerline_type)))
 		exit()
