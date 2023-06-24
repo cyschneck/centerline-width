@@ -24,15 +24,13 @@ Find the centerline and width of rivers based on the latitude and longitude posi
 	* centerlineLength
 	* rightBankLength
 	* leftBankLength
-* **Export centerline to CSV and MAT files**
+* **Export centerline to .CSV and .MAT files**
 	* saveCenterlineCSV()
 	* saveCenterlineMAT()
 
 | River Outlined in Google Earth Pro | Generated Centerline for the Riverbank |
 | ------------- | ------------- |
 | ![river_google_earth+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_example_google_earth.png) | ![river_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_example.png) |
-
-Python implementation of [R-Code CMGO](https://github.com/AntoniusGolly/cmgo) (with modification)
 
 NOTE: This is Beta quality software that is being actively developed, use at your own risk. This project is not supported or endorsed by either JPL or NASA. The code is provided “as is”, use at your own risk.
 
@@ -173,7 +171,7 @@ centerline_width.riverCenterline(csv_data=None,
 * [OPTIONAL] interpolate_n (int): Number of additional points to add between existing data, defaults to 5 (note: larger numbers will take exponentially longer to run, recommends less than 15)
 * [OPTIONAL] interpolate_n_centerpoints (int): Number of points used to interpolate the Voronoi centerline, defaults to the the length of the data frame (df_len)
 * [OPTIONAL] equal_distance (int): Equal distance between points (in meters) used to interpolate the Voronoi centerline, defaults 10 meters
-* [OPTIONAL] ellipsoid (str): Ellipsoid definition of Earth to provide size and shape for built-in functions to convert degrees to meters, options include (is sensitive to case): ["GRS80", "airy", "bessel", "clrk66", "intl", "WGS60", "WGS66", "WGS72", "WGS84", "sphere"] for more details: [pyproj.Geod "Built-in ellpsoid defintions"](https://proj.org/en/9.2/usage/ellipsoids.html#built-in-ellipsoid-definitions), defaults to "WGS84"
+* [OPTIONAL] ellipsoid (string): Ellipsoid definition of Earth to provide size and shape for built-in functions to convert degrees to meters, options include (is sensitive to case): ["GRS80", "airy", "bessel", "clrk66", "intl", "WGS60", "WGS66", "WGS72", "WGS84", "sphere"] for more details: [pyproj.Geod "Built-in ellpsoid defintions"](https://proj.org/en/9.2/usage/ellipsoids.html#built-in-ellipsoid-definitions), defaults to "WGS84"
 
 **Solutions for sparse data:**
 
@@ -202,7 +200,7 @@ centerline_width.riverCenterline(csv_data=None,
 * right_bank_coordinates (list of tuples) list of coordinates of the right bank generated from the csv file (`[(x, y), (x, y)]`)
 * df_len (int): Length of the data frame of the csv data (spliced by the optional_cutoff)
 * equal_distance (int): Distance between points (in meters) used in centerlineEqualDistance, defaults to points every 10 meters
-* ellipsoid (str): Built-in ellipsoid defintion of Earth to determine how degrees are converted to meters used by centerlineEqualDistance, defaults to "WGS84"
+* ellipsoid (string): Built-in ellipsoid defintion of Earth to determine how degrees are converted to meters used by centerlineEqualDistance, defaults to "WGS84"
 * bank_polygon (Shapley Polygon): Multi-sided polygon generated to encapsulate river bank (used to define an inside and an outside of the river)
 * top_bank (Shapley Linestring): Linestring that represents the top of the river/polygon
 * bottom_bank (Shapley Linestring): Linestring that represents the bottom of the river/polygon
@@ -270,10 +268,10 @@ Save the centerline coordinates to a csv file with columns for latitude and long
 ```
 saveCenterlineCSV(save_to_csv=None, centerline_type="Voronoi")
 ```
-* **[REQUIRED]** save_to_csv (str): CSV filename, requires a .csv extension
-* [OPTIONAL] centerline_type (str): Centerline type to save to CSV (not case-sensitive), options: ["Voronoi", "Evenly Spaced", "Smoothed", "Equal Distance"], defaults to "Voronoi"
-* [OPTIONAL] latitude_header (str): Column header for latitude values, defaults to `<centerline_type> Centerline Latitude (Deg)`
-* [OPTIONAL] longitude_header (str): Column header for Longitude values, defaults to `<centerline_type> Centerline Longitude (Deg)`
+* **[REQUIRED]** save_to_csv (string): CSV filename, requires a .csv extension
+* [OPTIONAL] centerline_type (string): Centerline type to save to CSV (not case-sensitive), options: ["Voronoi", "Evenly Spaced", "Smoothed", "Equal Distance"], defaults to "Voronoi"
+* [OPTIONAL] latitude_header (string): Column header for latitude values, defaults to `<centerline_type> Centerline Latitude (Deg)`
+* [OPTIONAL] longitude_header (string): Column header for Longitude values, defaults to `<centerline_type> Centerline Longitude (Deg)`
 
 ```python
 import centerline_width
@@ -288,10 +286,10 @@ Save the centerline coordinates to a .mat file with columns for latitude and lon
 ```
 saveCenterlineMAT(save_to_mat=None, centerline_type="Voronoi")
 ```
-* **[REQUIRED]** save_to_mat (str): MAT filename, requires a .mat extension
-* [OPTIONAL] centerline_type (str): Centerline type to save to MAT (not case-sensitive), options: ["Voronoi", "Evenly Spaced", "Smoothed", "Equal Distance"], defaults to "Voronoi"
-* [OPTIONAL] latitude_header (str): Column header for latitude values, defaults to `<centerline_type>_Centerline_Latitude_(Deg)` (cannot include spaces or special characters)
-* [OPTIONAL] longitude_header (str): Column header for Longitude values, defaults to `<centerline_type>_Centerline_Longitude_(Deg)` (cannot include spaces or special characters)
+* **[REQUIRED]** save_to_mat (string): MAT filename, requires a .mat extension
+* [OPTIONAL] centerline_type (string): Centerline type to save to MAT (not case-sensitive), options: ["Voronoi", "Evenly Spaced", "Smoothed", "Equal Distance"], defaults to "Voronoi"
+* [OPTIONAL] latitude_header (string): Column header for latitude values, defaults to `<centerline_type>_Centerline_Latitude_(Deg)` (cannot include spaces or special characters)
+* [OPTIONAL] longitude_header (string): Column header for Longitude values, defaults to `<centerline_type>_Centerline_Longitude_(Deg)` (cannot include spaces or special characters)
 
 ```python
 import centerline_width
@@ -532,11 +530,10 @@ The amount of additional points added by interpolating can be adjusted with `int
 
 ## Developer Notes: Tech Debt and Bug Fixes
 * option to turn off verbose (no logs printed)
-* option to specify Geod type (defaults to pyproj.Geod(ellps='WGS84'))
 * Fix legend overlapping on graph, replace doc_examples that have an overlapping
 
 ## Citations
-Based on work written in R (Golly et al. 2017):
+Python implementation of [R-Code CMGO](https://github.com/AntoniusGolly/cmgo) with modification (Golly et al. 2017):
 
 >Golly, A. and Turowski, J. M.: Deriving principal channel metrics from bank and long-profile geometry with the R package cmgo, Earth Surf. Dynam., 5, 557-570, https://doi.org/10.5194/esurf-5-557-2017, 2017.
 

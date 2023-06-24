@@ -75,3 +75,18 @@ def test_riverCenterline_equalDistanceInvalidTypes(caplog, equal_distance_invali
 	log_record = caplog.records[0]
 	assert log_record.levelno == logging.CRITICAL
 	assert log_record.message == "\nCRITICAL ERROR, [equal_distance]: Must be a int or float, current type = '{0}'".format(equal_distance_error_output)
+
+@pytest.mark.parametrize("ellipsoid_invalid, ellipsoid_error_output", invalid_non_str_options)
+def test_riverCenterline_ellipsoidInvalidTypes(caplog, ellipsoid_invalid, ellipsoid_error_output):
+	with pytest.raises(SystemExit):
+		centerline_width.riverCenterline(csv_data="csv_example.csv", ellipsoid=ellipsoid_invalid)
+	log_record = caplog.records[0]
+	assert log_record.levelno == logging.CRITICAL
+	assert log_record.message == "\nCRITICAL ERROR, [ellipsoid]: Must be a str, current type = '{0}'".format(ellipsoid_error_output)
+
+def test_riverCenterline_ellipsoidInvalidOptions(caplog):
+	with pytest.raises(SystemExit):
+		centerline_width.riverCenterline(csv_data="csv_example.csv", ellipsoid="invalid")
+	log_record = caplog.records[0]
+	assert log_record.levelno == logging.CRITICAL
+	assert log_record.message == "\nCRITICAL ERROR, [ellipsoid]: Must be an available option in ['GRS80', 'airy', 'bessel', 'clrk66', 'intl', 'WGS60', 'WGS66', 'WGS72', 'WGS84', 'sphere'], current option = 'invalid'"

@@ -58,6 +58,49 @@ def test_plotCenterline_riverObjectInvalidTypes(caplog, river_object_invalid, ri
 	assert log_record.levelno == logging.CRITICAL
 	assert log_record.message == "\nCRITICAL ERROR, [river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{0}'".format(river_object_error_output)
 
+@pytest.mark.parametrize("centerline_type_invalid, centerline_type_error_output", invalid_non_str_options)
+def test_plotCenterline_centerlineTypeInvalidTypes(caplog, centerline_type_invalid, centerline_type_error_output):
+	with pytest.raises(SystemExit):
+		centerline_width.plotCenterline(river_object=river_class_example,
+										centerline_type=centerline_type_invalid)
+	log_record = caplog.records[0]
+	assert log_record.levelno == logging.CRITICAL
+	assert log_record.message == "\nCRITICAL ERROR, [centerline_type]: Must be a str, current type = '{0}'".format(centerline_type_error_output)
+
+def test_plotCenterline_centerlineTypeInvalidOption(caplog):
+	with pytest.raises(SystemExit):
+		centerline_width.plotCenterline(river_object=river_class_example,
+										centerline_type="invalid centerline")
+	log_record = caplog.records[0]
+	assert log_record.levelno == logging.CRITICAL
+	assert log_record.message == "\nCRITICAL ERROR, [centerline_type]: Must be an available option in ['Voronoi', 'Evenly Spaced', 'Smoothed', 'Equal Distance'], current option = 'invalid centerline'"
+
+@pytest.mark.parametrize("marker_type_invalid, marker_type_error_output", invalid_non_str_options)
+def test_plotCenterline_markerTypeInvalidTypes(caplog, marker_type_invalid, marker_type_error_output):
+	with pytest.raises(SystemExit):
+		centerline_width.plotCenterline(river_object=river_class_example,
+										marker_type=marker_type_invalid)
+	log_record = caplog.records[0]
+	assert log_record.levelno == logging.CRITICAL
+	assert log_record.message == "\nCRITICAL ERROR, [marker_type]: Must be a str, current type = '{0}'".format(marker_type_error_output)
+
+def test_plotCenterline_markerTypeInvalidOption(caplog):
+	with pytest.raises(SystemExit):
+		centerline_width.plotCenterline(river_object=river_class_example,
+										marker_type="invalid marker")
+	log_record = caplog.records[0]
+	assert log_record.levelno == logging.CRITICAL
+	assert log_record.message == "\nCRITICAL ERROR, [marker_type]: Must be an available option in ['Line', 'Scatter'], current option = 'invalid marker'"
+
+@pytest.mark.parametrize("centerline_color_invalid, centerline_color_error_output", invalid_non_str_options)
+def test_plotCenterline_centerlineColorInvalidTypes(caplog, centerline_color_invalid, centerline_color_error_output):
+	with pytest.raises(SystemExit):
+		centerline_width.plotCenterline(river_object=river_class_example,
+										centerline_color=centerline_color_invalid)
+	log_record = caplog.records[0]
+	assert log_record.levelno == logging.CRITICAL
+	assert log_record.message == "\nCRITICAL ERROR, [centerline_color]: Must be a str, current type = '{0}'".format(centerline_color_error_output)
+
 @pytest.mark.parametrize("display_all_possible_paths_invalid, display_all_possible_paths_error_output", invalid_non_bool_options)
 def test_plotCenterline_displayAllPossiblePathsInvalidTypes(caplog, display_all_possible_paths_invalid, display_all_possible_paths_error_output):
 	with pytest.raises(SystemExit):
