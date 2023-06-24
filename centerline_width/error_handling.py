@@ -319,7 +319,8 @@ def errorHandlingRiverCenterlineClass(csv_data=None,
 									interpolate_data=None,
 									interpolate_n=None,
 									interpolate_n_centerpoints=None,
-									equal_distance=None):
+									equal_distance=None,
+									ellipsoid=None):
 	# Error Handling for riverCenterlineClass()
 	if csv_data is None:
 		logger.critical("\nCRITICAL ERROR, [csv_data]: Requires csv_data location")
@@ -359,4 +360,13 @@ def errorHandlingRiverCenterlineClass(csv_data=None,
 		exit()
 		if equal_distance <= 0:
 			logger.critical("WARNING, [equal_distance]: Must be a postive value, greater than 0, currently = '{0}'".format(equal_distance))
+			exit()
+
+	ellipsoid_options = ["GRS80", "airy", "bessel", "clrk66", "intl", "WGS60", "WGS66", "WGS72", "WGS84", "sphere"]
+	if type(ellipsoid) != str:
+		logger.critical("\nCRITICAL ERROR, [ellipsoid]: Must be a str, current type = '{0}'".format(type(ellipsoid)))
+		exit()
+	else:
+		if ellipsoid not in ellipsoid_options:
+			logger.critical("\nCRITICAL ERROR, [ellipsoid]: Must be an available option in {0}, current option = '{1}'".format(ellipsoid_options, ellipsoid))
 			exit()

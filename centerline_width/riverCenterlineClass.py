@@ -13,13 +13,15 @@ class riverCenterline:
 				interpolate_data=False,
 				interpolate_n=5,
 				interpolate_n_centerpoints=None, 
-				equal_distance=10):
+				equal_distance=10,
+				ellipsoid="WGS84"):
 		centerline_width.errorHandlingRiverCenterlineClass(csv_data=csv_data,
 															optional_cutoff=optional_cutoff,
 															interpolate_data=interpolate_data,
 															interpolate_n=interpolate_n,
 															interpolate_n_centerpoints=interpolate_n_centerpoints,
-															equal_distance=equal_distance)
+															equal_distance=equal_distance,
+															ellipsoid=ellipsoid)
 
 		# Description and dataframe
 		self.river_name = csv_data
@@ -66,10 +68,12 @@ class riverCenterline:
 		# Centerline length
 		self.centerlineLength = centerline_width.centerlineLength(centerline_coordinates=shortest_path_coordinates)
 		self.equal_distance = equal_distance
+		self.ellipsoid = ellipsoid
 
 		# The different types of Centerline coordinates
 		self.centerlineEqualDistance = centerline_width.equalDistanceCenterline(centerline_coordinates=self.centerlineVoronoi,
-																				equal_distance=self.equal_distance)
+																				equal_distance=self.equal_distance,
+																				ellipsoid=self.ellipsoid)
 		self.centerlineEvenlySpaced = centerline_width.evenlySpacedCenterline(centerline_coordinates=self.centerlineVoronoi,
 																				number_of_fixed_points=self.interpolate_n_centerpoints)
 		self.centerlineSmoothed = centerline_width.smoothedCoordinates(river_object=self, centerline_coordinates=self.centerlineEvenlySpaced,

@@ -113,7 +113,7 @@ def centerlinePath(river_voronoi, river_polygon, top_polygon_line, bottom_polygo
 
 	return starting_node, ending_node, x_ridge_point, y_ridge_point, shortest_path_points
 
-def equalDistanceCenterline(centerline_coordinates=None, equal_distance=None):
+def equalDistanceCenterline(centerline_coordinates=None, equal_distance=None, ellipsoid="WGS84"):
 	# Interpolate centerline to space out coordinates an equal physical distance from the next (in meters)
 	if centerline_coordinates is None:
 		return None
@@ -121,7 +121,7 @@ def equalDistanceCenterline(centerline_coordinates=None, equal_distance=None):
 	centerline_line = LineString(centerline_coordinates)
 	equal_distance_between_centerline_coordinates=[]
 
-	geodesic = pyproj.Geod(ellps='WGS84')
+	geodesic = pyproj.Geod(ellps=ellipsoid)
 
 	# Iterate through coordinates based on a set distance (distance_m)
 	lon_start, lat_start = centerline_coordinates[0]

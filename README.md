@@ -164,7 +164,8 @@ centerline_width.riverCenterline(csv_data=None,
 				interpolate_data=False,
 				interpolate_n=5,
 				interpolate_n_centerpoints=None,
-				equal_distance=10)
+				equal_distance=10,
+				ellipsoid="WGS84")
 ```
 * **[REQUIRED]** csv_data (string): File location of the text file to convert
 * [OPTIONAL] optional_cutoff (int): Include only the first x number of the data to chart (useful for debugging)
@@ -172,6 +173,7 @@ centerline_width.riverCenterline(csv_data=None,
 * [OPTIONAL] interpolate_n (int): Number of additional points to add between existing data, defaults to 5 (note: larger numbers will take exponentially longer to run, recommends less than 15)
 * [OPTIONAL] interpolate_n_centerpoints (int): Number of points used to interpolate the Voronoi centerline, defaults to the the length of the data frame (df_len)
 * [OPTIONAL] equal_distance (int): Equal distance between points (in meters) used to interpolate the Voronoi centerline, defaults 10 meters
+* [OPTIONAL] ellipsoid (str): Ellipsoid definition of Earth to provide size and shape for built-in functions to convert degrees to meters, options include (is sensitive to case): ["GRS80", "airy", "bessel", "clrk66", "intl", "WGS60", "WGS66", "WGS72", "WGS84", "sphere"] for more details: [pyproj.Geod "Built-in ellpsoid defintions"](https://proj.org/en/9.2/usage/ellipsoids.html#built-in-ellipsoid-definitions), defaults to "WGS84"
 
 **Solutions for sparse data:**
 
@@ -200,6 +202,7 @@ centerline_width.riverCenterline(csv_data=None,
 * right_bank_coordinates (list of tuples) list of coordinates of the right bank generated from the csv file (`[(x, y), (x, y)]`)
 * df_len (int): Length of the data frame of the csv data (spliced by the optional_cutoff)
 * equal_distance (int): Distance between points (in meters) used in centerlineEqualDistance, defaults to points every 10 meters
+* ellipsoid (str): Built-in ellipsoid defintion of Earth to determine how degrees are converted to meters used by centerlineEqualDistance, defaults to "WGS84"
 * bank_polygon (Shapley Polygon): Multi-sided polygon generated to encapsulate river bank (used to define an inside and an outside of the river)
 * top_bank (Shapley Linestring): Linestring that represents the top of the river/polygon
 * bottom_bank (Shapley Linestring): Linestring that represents the bottom of the river/polygon
@@ -211,7 +214,6 @@ centerline_width.riverCenterline(csv_data=None,
 * interpolate_data (bool): if interpolating between existing data, defaults to False
 * interpolate_n (int): specifies how many additional points will be added between points along the river bank when interpolating data, defaults to 5
 * interpolate_n_centerpoints (int): specifies how many points will be used to interpolate the Voronoi centerline, defaults to the length of the data frame (df_len)
-
 
 ```python
 import centerline_width
