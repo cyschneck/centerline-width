@@ -10,6 +10,7 @@ import networkx as nx
 from scipy import interpolate
 from scipy.io import savemat
 from shapely.geometry import Point, LineString
+from shapely.ops import split
 import pyproj
 import geopy.distance
 
@@ -257,36 +258,24 @@ def riverWidthFromCenterlineCoordinates(river_object=None,
 				left_width_coordinates[centerline_point] = (line_intersection_points.geoms[0].x, line_intersection_points.geoms[0].y)
 				right_width_coordinates[centerline_point] = (line_intersection_points.geoms[1].x, line_intersection_points.geoms[1].y)
 		else:
-			# line intersects to polygon at multiple points, by default, find the closest two points to chart
-			distances_between_centerline_and_point = []
-			for i in range(len(line_intersection_points.geoms)):
-				point_intersection = Point(line_intersection_points.geoms[i].x, line_intersection_points.geoms[i].y)
-				distance_between = Point(centerline_point).distance(point_intersection)
-				distances_between_centerline_and_point.append(distance_between)
-
-			# collect the two closest points
-			index_of_sorted_list = sorted(range(len(distances_between_centerline_and_point)),key=distances_between_centerline_and_point.__getitem__)
-			smallest_point = line_intersection_points.geoms[index_of_sorted_list[0]]
-			second_smallest_point = line_intersection_points.geoms[index_of_sorted_list[1]]
-			if not intersectsTopOrBottomOfBank(smallest_point, second_smallest_point): # only save width lines that do not touch the artifical top/bottom
-
-				# Verify linestring contains the centerline (avoid making connections outside of polygon)
-				linestring_generated = LineString([Point(smallest_point.x, smallest_point.y), Point(second_smallest_point.x, second_smallest_point.y)])
-				if not linestring_generated.distance(Point(centerline_point)) < 1e-8: 
-					# linestring does not contains the centerline
-					# find a new second_smallest_point that falls on the centerline
-					for i in index_of_sorted_list: # search for new point in order of distance (smallest -> greatest)
-						second_smallest_point = line_intersection_points.geoms[index_of_sorted_list[i]]
-						linestring_generated = LineString([Point(smallest_point.x, smallest_point.y), Point(second_smallest_point.x, second_smallest_point.y)])
-						if smallest_point != second_smallest_point: # ignore current smallest_point (make a unique pair)
-							if linestring_generated.distance(Point(centerline_point)) < 1e-8: # if point is within a small distance of a line it is considered to intersect
-								break # once a linestring is found that lies within polygon, break out of search early
+			# line intersects to polygon at multiple points
+			if river_object.bank_polygon.contains(Point(centerline_point)): # width line made by centering centerline point, skip this width line if the centerline is outside of the polygon due to smoothing
+				all_linestring = split(sloped_line, river_object.bank_polygon) # split linestring where it intersects the polygon
+				left_point = None
+				right_point = None
+				for i, possible_linestring in enumerate(all_linestring.geoms): # iterate through all linestrings
+					if possible_linestring.distance(Point(centerline_point)) < 1e-8: # select linestring that contains the centerline point
+						# TODO: save based on which bank it is sitting on, right now is random
+						left_point = Point(possible_linestring.coords[0])
+						right_point = Point(possible_linestring.coords[1])
 
 				# linestring contains the centerline, save coordinates
-				left_width_coordinates[centerline_point] = (smallest_point.x, smallest_point.y)
-				right_width_coordinates[centerline_point] = (second_smallest_point.x, second_smallest_point.y)
+				if left_point is not None and right_point is not None:
+					if not intersectsTopOrBottomOfBank(left_point, right_point): # remove linestring that touch the artifical top or bottom of the river
+						left_width_coordinates[centerline_point] = (left_point.x, left_point.y)
+						right_width_coordinates[centerline_point] = (right_point.x, right_point.y)
 
-	# Determine lines that intersect with other lines in mulitple places to flag/remove
+	# Determine lines that intersect with other lines in multiple places to flag/remove
 	all_linestrings = []
 	linestring_with_centerlines = {} # linestring with associated centerline: {linestring : centerline coordinate}
 	linestring_with_linestrings_that_intersect = {} # dictionary of all the linestrings that a linestring intersects with

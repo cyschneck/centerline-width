@@ -537,8 +537,6 @@ Python implementation of [R-Code CMGO](https://github.com/AntoniusGolly/cmgo) wi
 
 >Golly, A. and Turowski, J. M.: Deriving principal channel metrics from bank and long-profile geometry with the R package cmgo, Earth Surf. Dynam., 5, 557-570, https://doi.org/10.5194/esurf-5-557-2017, 2017.
 
-[Github - CMGO](https://github.com/AntoniusGolly/cmgo)
-
  <p align="center">
   <img src="https://user-images.githubusercontent.com/22159116/222872092-e0b579cc-4f84-4f49-aa53-397785fb9bf2.png" />
   <img src="https://user-images.githubusercontent.com/22159116/222872119-7c485ee2-4ffd-413a-9e4f-b043b122d2bb.png" />
