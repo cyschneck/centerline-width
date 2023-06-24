@@ -41,6 +41,7 @@ def errrorHandlingConvertColumnsToCSV(text_file=None,
 def errorHandlingPlotCenterline(river_object=None,
 								centerline_type=None,
 								marker_type=None,
+								centerline_color=None,
 								display_all_possible_paths=None,
 								plot_title=None,
 								save_plot_name=None,
@@ -70,6 +71,10 @@ def errorHandlingPlotCenterline(river_object=None,
 		if marker_type.title() not in marker_type_options:
 			logger.critical("\nCRITICAL ERROR, [marker_type]: Must be an available option in {0}, current option = '{1}'".format(marker_type_options, marker_type))
 			exit()
+
+	if type(centerline_color) != str:
+		logger.critical("\nCRITICAL ERROR, [centerline_color]: Must be a str, current type = '{0}'".format(type(centerline_color)))
+		exit()
 
 	if type(display_all_possible_paths) != bool:
 		logger.critical("\nCRITICAL ERROR, [display_all_possible_paths]: Must be a bool, current type = '{0}'".format(type(display_all_possible_paths)))

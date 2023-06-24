@@ -15,7 +15,11 @@ logger.setLevel(logging.INFO)
 stream_handler = logging.StreamHandler()
 logger.addHandler(stream_handler)
 
-def plotCenterlineBackend(river_object=None, display_true_centerline=True, centerline_type="Voronoi", marker_type="Line"):
+def plotCenterlineBackend(river_object=None,
+						display_true_centerline=True,
+						centerline_type="Voronoi",
+						marker_type="line",
+						centerline_color="black"):
 	# Shared components between plotCenterline and plotCenterlineWidth
 	fig = plt.figure(figsize=(10,10))
 	ax = fig.add_subplot(111)
@@ -62,14 +66,14 @@ def plotCenterlineBackend(river_object=None, display_true_centerline=True, cente
 		valid_path_through = True
 		if display_true_centerline:
 			if marker_type == "Line":
-				plt.plot(*zip(*centerline_coordinates_by_type), c="black", label=centerline_legend)
+				plt.plot(*zip(*centerline_coordinates_by_type), c=centerline_color, label=centerline_legend)
 			if marker_type == "Scatter":
 				x = []
 				y = []
 				for k, v in centerline_coordinates_by_type:
 					x.append(k)
 					y.append(v)
-				plt.scatter(x, y, c="black", label=centerline_legend, s=8)
+				plt.scatter(x, y, c=centerline_color, label=centerline_legend, s=8)
 
 	# Dynamically assign the starting and ending
 	if river_object.starting_node is not None: # error handling for when data is too small to generate centerline coordiantes
@@ -80,7 +84,8 @@ def plotCenterlineBackend(river_object=None, display_true_centerline=True, cente
 
 def plotCenterline(river_object=None,
 					centerline_type="Voronoi",
-					marker_type="Line",
+					marker_type="line",
+					centerline_color="black",
 					display_all_possible_paths=False, 
 					plot_title=None, 
 					save_plot_name=None, 
@@ -89,6 +94,7 @@ def plotCenterline(river_object=None,
 	centerline_width.errorHandlingPlotCenterline(river_object=river_object,
 												centerline_type=centerline_type,
 												marker_type=marker_type,
+												centerline_color=centerline_color,
 												display_all_possible_paths=display_all_possible_paths,
 												plot_title=plot_title,
 												save_plot_name=save_plot_name,
@@ -97,7 +103,8 @@ def plotCenterline(river_object=None,
 	fig, ax, valid_path_through = plotCenterlineBackend(river_object=river_object,
 														display_true_centerline=True,
 														centerline_type=centerline_type,
-														marker_type=marker_type)
+														marker_type=marker_type,
+														centerline_color=centerline_color)
 
 	# Display the Voronoi Diagram
 	if display_voronoi:
@@ -140,7 +147,8 @@ def plotCenterlineWidth(river_object=None,
 	fig, ax, valid_path_through = plotCenterlineBackend(river_object=river_object, 
 														display_true_centerline=display_true_centerline,
 														centerline_type="Voronoi",
-														marker_type="Line")
+														marker_type="line",
+														centerline_color="black")
 
 	# Determine the Width of River
 	number_of_evenly_spaced_points = ""
@@ -166,15 +174,6 @@ def plotCenterlineWidth(river_object=None,
 																														centerline_coordinates=river_object.centerlineEvenlySpaced,
 																														transect_span_distance=transect_span_distance,
 																														remove_intersections=remove_intersections)
-
-			# Display the evenly spaced centerline
-			#x = []
-			#y = []
-			#for k, v in river_object.centerlineEvenlySpaced:
-			#	x.append(k)
-			#	y.append(v)
-			#plt.scatter(x, y, c="plum", label="Evenly Spaced Centerline Coordinates", s=8)
-			#plt.plot(*zip(*evenly_spaced_centerline_coordinates), "--", c="thistle", label="Evenly Spaced Centerline")
 
 			for center_coord, edge_coord in right_width_coordinates.items():
 				x_points = (right_width_coordinates[center_coord][0], left_width_coordinates[center_coord][0])
