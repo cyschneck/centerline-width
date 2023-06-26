@@ -4,7 +4,6 @@ import logging
 import csv
 
 # External Python libraries (installed via pip install)
-from haversine import haversine
 import numpy as np
 import networkx as nx
 from scipy import interpolate
@@ -242,6 +241,7 @@ def riverWidthFromCenterlineCoordinates(river_object=None,
 		return points_intersect_false_edges
 
 	# Generate a list of lines from the centerline point with its normal
+	logger.info("[PROCESSING] Calculating and positioning width lines, may takes a few minutes...")
 	min_x, min_y, max_x, max_y = river_object.bank_polygon.bounds
 	for centerline_point, slope in centerline_slope.items():
 		# draw a max line that extends the entire distance of the available space, will be trimmed below to just within polygon
@@ -265,13 +265,13 @@ def riverWidthFromCenterlineCoordinates(river_object=None,
 				right_point = None
 				for i, possible_linestring in enumerate(all_linestring.geoms): # iterate through all linestrings
 					if possible_linestring.distance(Point(centerline_point)) < 1e-8: # select linestring that contains the centerline point
-						# TODO: save based on which bank it is sitting on, right now is random
 						left_point = Point(possible_linestring.coords[0])
 						right_point = Point(possible_linestring.coords[1])
 
 				# linestring contains the centerline, save coordinates
 				if left_point is not None and right_point is not None:
-					if not intersectsTopOrBottomOfBank(left_point, right_point): # remove linestring that touch the artifical top or bottom of the river
+					 # only save width lines that do not touch the artifical top/bottom
+					if not intersectsTopOrBottomOfBank(left_point, right_point):
 						left_width_coordinates[centerline_point] = (left_point.x, left_point.y)
 						right_width_coordinates[centerline_point] = (right_point.x, right_point.y)
 
@@ -347,7 +347,6 @@ def riverWidthFromCenterline(river_object=None,
 							transect_span_distance=3,
 							apply_smoothing=True,
 							remove_intersections=False,
-							units="km",
 							save_to_csv=None):
 	# Return river width: centerline and width at centerline
 	# Width is measured to the bank, relative to the center point (normal of the centerline)
@@ -357,7 +356,6 @@ def riverWidthFromCenterline(river_object=None,
 															transect_span_distance=transect_span_distance,
 															apply_smoothing=apply_smoothing,
 															remove_intersections=remove_intersections,
-															units=units,
 															save_to_csv=save_to_csv)
 
 	if river_object.centerlineVoronoi is None:
@@ -378,29 +376,34 @@ def riverWidthFromCenterline(river_object=None,
 																								remove_intersections=remove_intersections)
 
 	width_dict = {}
+
+	geodesic = pyproj.Geod(ellps=river_object.ellipsoid)
+
 	for centerline_coord, _ in right_width_coord.items():
-		# store the haversine distance between the lat/lon position of the right/left bank
+		# store the distance between the lat/lon position of the right/left bank
 		lon1, lat1 = right_width_coord[centerline_coord]
 		lon2, lat2 = left_width_coord[centerline_coord]
-		haversine_distance_between_right_and_left = haversine((lat1, lon1), (lat2, lon2), unit=units)
-		width_dict[centerline_coord] = haversine_distance_between_right_and_left
+		_, _, distance_between_right_and_left_m = geodesic.inv(lon1, lat1, lon2, lat2)
+		width_dict[centerline_coord] = distance_between_right_and_left_m/1000
 
 	# Save width dictionary to a csv file (Latitude, Longtiude, Width)
 	if save_to_csv:
 		with open(save_to_csv, "w") as csv_file_output:
 			writer = csv.writer(csv_file_output)
-			writer.writerow(["Centerline Latitude (Deg)", "Centerline Longitude (Deg)", "Width ({0})".format(units)])
+			writer.writerow(["Centerline Latitude (Deg)", "Centerline Longitude (Deg)", "Width (km)"])
 			for coordinate_key, width_value in width_dict.items():
 				writer.writerow([coordinate_key[1], coordinate_key[0], width_value])
 
 	return width_dict
 
-def centerlineLength(centerline_coordinates=None):
-	# Return the length/distance for all the centerline coordaintes in km
+def centerlineLength(centerline_coordinates=None, ellipsoid="WGS84"):
+	# Return the length/distance for all the centerline coordinates in km
 	total_length = 0
 	previous_pair = None
 	if centerline_coordinates is None:
 		return 0
+
+	geodesic = pyproj.Geod(ellps=ellipsoid)
 
 	for xy_pair in centerline_coordinates:
 		if previous_pair is None:
@@ -408,9 +411,9 @@ def centerlineLength(centerline_coordinates=None):
 		else:
 			lon1, lon2 = previous_pair[0], xy_pair[0]
 			lat1, lat2 = previous_pair[1], xy_pair[1]
-			distance_to_add = haversine((lat1, lon1), (lat2, lon2), unit="km")
-			total_length += distance_to_add
-	return total_length
+			_, _, distance_between_meters = geodesic.inv(lon1, lat1, lon2, lat2)
+			total_length += distance_between_meters
+	return total_length/1000
 
 def saveCenterlineCSV(river_object=None, save_to_csv=None, latitude_header=None, longitude_header=None, centerline_type="Voronoi"):
 	# Save Centerline Coordinates generated by Voronoi Diagram to .CSV

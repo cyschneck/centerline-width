@@ -33,6 +33,7 @@ class riverCenterline:
 		self.df_len = len(df)
 		self.interpolate_n_centerpoints = interpolate_n_centerpoints
 		if self.interpolate_n_centerpoints is None: self.interpolate_n_centerpoints = self.df_len
+		self.ellipsoid = ellipsoid
 
 		# Left and Right Coordinates from the given csv data and data cutoff
 		left_bank_coordinates, right_bank_coordinates = centerline_width.leftRightCoordinates(df)
@@ -42,8 +43,8 @@ class riverCenterline:
 		self.right_bank_coordinates = right_bank_coordinates
 
 		# Right/Length Bank Length
-		self.rightBankLength = centerline_width.centerlineLength(centerline_coordinates=right_bank_coordinates)
-		self.leftBankLength = centerline_width.centerlineLength(centerline_coordinates=left_bank_coordinates)
+		self.rightBankLength = centerline_width.centerlineLength(centerline_coordinates=right_bank_coordinates, ellipsoid=self.ellipsoid)
+		self.leftBankLength = centerline_width.centerlineLength(centerline_coordinates=left_bank_coordinates, ellipsoid=self.ellipsoid)
 
 		# River polygon, position of the top/bottom polygon
 		river_bank_polygon, top_bank, bottom_bank = centerline_width.generatePolygon(self.left_bank_coordinates, self.right_bank_coordinates)
@@ -66,9 +67,8 @@ class riverCenterline:
 		self.centerlineVoronoi = shortest_path_coordinates
 
 		# Centerline length
-		self.centerlineLength = centerline_width.centerlineLength(centerline_coordinates=shortest_path_coordinates)
+		self.centerlineLength = centerline_width.centerlineLength(centerline_coordinates=shortest_path_coordinates, ellipsoid=self.ellipsoid)
 		self.equal_distance = equal_distance
-		self.ellipsoid = ellipsoid
 
 		# The different types of Centerline coordinates
 		self.centerlineEqualDistance = centerline_width.equalDistanceCenterline(centerline_coordinates=self.centerlineVoronoi,
@@ -119,13 +119,11 @@ class riverCenterline:
 								transect_span_distance=3,
 								apply_smoothing=True,
 								remove_intersections=False,
-								units="km",
 								save_to_csv=None):
 		return centerline_width.riverWidthFromCenterline(river_object=self,
 														transect_span_distance=transect_span_distance,
 														apply_smoothing=apply_smoothing,
 														remove_intersections=remove_intersections,
-														units=units,
 														save_to_csv=save_to_csv)
 
 	def saveCenterlineCSV(self, 

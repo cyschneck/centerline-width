@@ -147,7 +147,6 @@ def errorHandlingRiverWidthFromCenterline(river_object=None,
 										transect_span_distance=None,
 										apply_smoothing=None,
 										remove_intersections=None,
-										units=None,
 										save_to_csv=None):
 	# Error Handling for riverWidthFromCenterline()
 	if river_object is None:
@@ -174,15 +173,6 @@ def errorHandlingRiverWidthFromCenterline(river_object=None,
 	if type(remove_intersections) != bool:
 		logger.critical("\nCRITICAL ERROR, [remove_intersections]: Must be a bool, current type = '{0}'".format(type(remove_intersections)))
 		exit()
-
-	units_options = ["km","m","mi","nmi","ft","in","rad","deg"]
-	if units is not None and type(units) != str:
-			logger.critical("\nCRITICAL ERROR, [units]: Must be a str, current type = '{0}'".format(type(units)))
-			exit()
-	else:
-		if units not in units_options:
-			logger.critical("\nCRITICAL ERROR, [units]: Must be an option available ({0}), current given option = '{1}'".format(units_options, units))
-			exit()
 
 	if save_to_csv is not None:
 		if type(save_to_csv) != str:
