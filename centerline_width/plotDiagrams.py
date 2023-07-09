@@ -175,6 +175,9 @@ def plotCenterlineWidth(river_object=None,
 																														transect_span_distance=transect_span_distance,
 																														remove_intersections=remove_intersections)
 
+			invalid_label_added = False # prevent legend for width lines from being generated more than once (because is inside a loop)
+			valid_label_added = False  # prevent legend for width lines from being generated more than once (because is inside a loop)
+			# plot width lines
 			for center_coord, edge_coord in right_width_coordinates.items():
 				x_points = (right_width_coordinates[center_coord][0], left_width_coordinates[center_coord][0])
 				y_points = (right_width_coordinates[center_coord][1], left_width_coordinates[center_coord][1])
@@ -182,11 +185,23 @@ def plotCenterlineWidth(river_object=None,
 					if num_intersection_coordinates[center_coord] > 0:
 						if remove_intersections:
 							logger.error("\nERROR: Unable to completely resolve all intersections lines to be removed")
-						plt.plot(x_points, y_points, 'red', linewidth=1)
+						if not invalid_label_added: 
+							plt.plot(x_points, y_points, 'red', label="Intersecting Width", linewidth=1)
+							invalid_label_added = True
+						else:
+							plt.plot(x_points, y_points, 'red', linewidth=1)
+					else:
+						if not valid_label_added:
+							plt.plot(x_points, y_points, 'green', label="Non-Intersecting Width", linewidth=1)
+							valid_label_added = True
+						else:
+							plt.plot(x_points, y_points, 'green', linewidth=1)
+				else:
+					if not valid_label_added:
+						plt.plot(x_points, y_points, 'green', label="Width", linewidth=1)
+						valid_label_added = True
 					else:
 						plt.plot(x_points, y_points, 'green', linewidth=1)
-				else:
-					plt.plot(x_points, y_points, 'green', linewidth=1)
 
 	# Plot Title, Legends, and Axis Labels
 	if not plot_title:
