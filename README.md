@@ -551,7 +551,7 @@ Python implementation of [R-Code CMGO](https://github.com/AntoniusGolly/cmgo) wi
 Please acknowledge the use of this software in any publications:
 
 ```
-"River centerline/width extraction software was provided by C. Schneck and U.Schneck, and is available at URL: https://github.com/cyschneck/centerline-width."
+"River centerline/width extraction software was provided by C. Y. Schneck and U. G. Schneck, and is available at URL: https://github.com/cyschneck/centerline-width."
 ```
 
 Please send a copy of such publications to:
