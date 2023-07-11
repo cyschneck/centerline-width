@@ -264,7 +264,7 @@ river_centerline_coordinates = river_object.centerlineVoronoi
 Output is a list of tuples: (example) `[(-92.86788596499872, 30.03786596717931), (-92.86789573751797, 30.037834641974108), (-92.8679141386283, 30.037789636848878), (-92.8679251193248, 30.037756853899904), (-92.86796903819089, 30.03765423778148), (-92.86797335733262, 30.037643336049054), (-92.8679920356456, 30.037592224469797), (-92.86800576063828, 30.037555441489403), (-92.86800841510367, 30.037546512833107), (-92.8680119498663, 30.03753043193875)]`
 
 ### Save Centerline Coordinates to a .CSV File
-Save the centerline coordinates to a csv file with columns for latitude and longitude. This is the file format accepted by ![Google Earth Pro for importing](https://www.youtube.com/watch?v=l8ZsvukCv6o&ab_channel=GeoDeltaLabs).
+Save the centerline coordinates to a csv file with columns for latitude and longitude. This is the file format for a table of (latitude,longitude) pairs accepted to import back into Google Earth Pro.
 
 ```
 saveCenterlineCSV(save_to_csv=None, centerline_type="Voronoi")
