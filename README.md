@@ -220,7 +220,7 @@ river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv"
 ```
 
 ### Return Latitude/Longitude Coordinates of Centerline
-Return the latitude/longitude coordinates of the centerline based on the left and right banks
+Return the latitude/longitude coordinates in units of decimal-degrees of the centerline based on the left and right banks
 
 **Types of Centerlines**
 
