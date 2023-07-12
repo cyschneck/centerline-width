@@ -66,7 +66,7 @@ def plotCenterlineBackend(river_object=None,
 		valid_path_through = True
 		if display_true_centerline:
 			if marker_type == "Line":
-				plt.plot(*zip(*centerline_coordinates_by_type), c=centerline_color, label=centerline_legend)
+				plt.plot(*zip(*centerline_coordinates_by_type), c=centerline_color, label=centerline_legend, zorder=10)
 			if marker_type == "Scatter":
 				x = []
 				y = []
@@ -113,7 +113,7 @@ def plotCenterline(river_object=None,
 	# Plot all possible paths with text for positions
 	if display_all_possible_paths:
 		for i in range(len(river_object.x_voronoi_ridge_point)):
-			plt.plot(river_object.x_voronoi_ridge_point[i], river_object.y_voronoi_ridge_point[i], 'cyan', linewidth=1)
+			plt.plot(river_object.x_voronoi_ridge_point[i], river_object.y_voronoi_ridge_point[i], 'cyan', linewidth=1, zorder=1)
 
 	# Plot Title, Legends, and Axis Labels
 	if not plot_title:
