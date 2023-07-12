@@ -94,7 +94,7 @@ Step 1.) Map the left bank using the path tool. You can zoom into the river usin
 
 Step 2.) Save the path to a .kml file by right clicking on the path in Places and selecting 'save as'. Be sure to save as a .kml and not .kmz file. It is generally good practice to do this for each new path to ensure that no work is lost if Google Earth Pro crashes. 
 
-Step 3.) Repeat (1) for the right bank by starting a new path. 
+Step 3.) Repeat (1) and (2) for the right bank by starting a new path. 
 
 ### Convert KML files to Text File
 
