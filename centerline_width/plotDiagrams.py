@@ -73,7 +73,7 @@ def plotCenterlineBackend(river_object=None,
 				for k, v in centerline_coordinates_by_type:
 					x.append(k)
 					y.append(v)
-				plt.scatter(x, y, c=centerline_color, label=centerline_legend, s=8)
+				plt.scatter(x, y, c=centerline_color, label=centerline_legend, s=8, zorder=10)
 
 	# Dynamically assign the starting and ending
 	if river_object.starting_node is not None: # error handling for when data is too small to generate centerline coordiantes
