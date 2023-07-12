@@ -92,9 +92,9 @@ We will be mapping the riverbank, which we define here as the high-contrast boun
 Step 1.) Map the left bank using the path tool. You can zoom into the river using the scroll-wheel. Flatten the mapping projection by pressing 'u'. Leave the pop-up window open while you are mapping. You can erase the last point placed in a path by left clicking. To erase a different point on the path, select the point with a right-click and then erase with a left-click and then select the last point to continue mapping downstream. To move a point, select it with a right-click. The selected point is highlighted blue, other points in the current path are highlighted red. The mapped distance downstream is shown in the measurements tab in the path tool pop-up window. When done mapping the left bank, close the pop-up window for the path. 
 ![image](https://github.com/cyschneck/centerline-width/assets/24469269/c117305b-b233-4f93-bedc-a7ae843fd62d)
 
-Step 2.) Save the path to a .kml file by right clicking on the path in Places and selecting 'save as'. Be sure to save as a kml and not kmz file. It is generally good practice to do this for each new path to ensure that no work is lost if Google Earth Pro crashes. 
+Step 2.) Save the path to a .kml file by right clicking on the path in Places and selecting 'save as'. Be sure to save as a .kml and not .kmz file. It is generally good practice to do this for each new path to ensure that no work is lost if Google Earth Pro crashes. 
 
-Step 2.) Repeat (1) for the right bank by starting a new path. 
+Step 3.) Repeat (1) for the right bank by starting a new path. 
 
 ### Convert KML files to Text File
 
