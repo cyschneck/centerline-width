@@ -180,11 +180,13 @@ centerline_width.riverCenterline(csv_data=None,
 
 **Equal Distance - Equal linear distance between points**
 
-`equal_distance` will generate points along the centerline that are an equal linear distance from one another in meters. For example, this will generate points that each 5 meters or 20 meters from eachotther
+`equal_distance` will generate points along the centerline that are an equal linear distance from one another in meters. For example, this will generate points that each 5 meters or 20 meters from eachother
 
 | equal_distance=5 | equal_distance=20 |
 | ------------- | ------------- |
-| ![example+png]() | ![example+png]() |
+| ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/equal_distance_5_m.jpg) | ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/equal_distance_20_m.jpg) |
+
+The red pins represent the equal distance centerline coordinates produced by centerline-width. The yellow line is the distance measured in Google Earth Pro between the points and the river banks are in purple.
 
 **Interpolation - A solution for sparse data:**
 
