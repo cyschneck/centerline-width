@@ -87,7 +87,7 @@ For a complete example script to run centerline-width: [centerline_width_example
 
 ## Preprocessing
 ### Generating KML files from Google Earth Pro
-Riverbanks can be defined here as the high-contrast boundary between active/recently-active flow and the surrounding landscape. We will be mapping the right and left bank separately and for this example, we will use a road in the place of a river to increase constrast between boundaries
+Riverbanks can be defined here as the high-contrast boundary between active/recently-active flow and the surrounding landscape. We will be mapping the right and left bank separately
 
 **Step 1**
 
