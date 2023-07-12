@@ -87,7 +87,7 @@ For a complete example script to run centerline-width: [centerline_width_example
 
 ## Preprocessing
 ### Generating KML files from Google Earth Pro
-We will be mapping the riverbank, which we define here as the high-contrast boundary between active/recently-active flow and the surronding landscape. We will be mapping the right and left bank seperately. 
+We will be mapping the riverbank, which we define here as the high-contrast boundary between active/recently-active flow and the surrounding landscape. We will be mapping the right and left bank separately. 
 
 Step 1.) Map the left bank using the path tool. You can zoom into the river using the scroll-wheel. Flatten the mapping projection by pressing 'u'. Leave the pop-up window open while you are mapping. You can erase the last point placed in a path by left clicking. To erase a different point on the path, select the point with a right-click and then erase with a left-click and then select the last point to continue mapping downstream. To move a point, select it with a right-click. The selected point is highlighted blue, other points in the current path are highlighted red. The mapped distance downstream is shown in the measurements tab in the path tool pop-up window. When done mapping the left bank, close the pop-up window for the path. 
 ![image](https://github.com/cyschneck/centerline-width/assets/24469269/c117305b-b233-4f93-bedc-a7ae843fd62d)
@@ -188,13 +188,13 @@ centerline_width.riverCenterline(csv_data=None,
 
 **Equal Distance - Equal linear distance between points**
 
-`equal_distance` will generate points along the centerline that are an equal linear distance from one another in meters. For example, this will generate points that each 5 meters or 20 meters from eachother
+`equal_distance` will generate points along the centerline that are an equal linear distance from one another in meters. For example, this will generate points that each 5 meters or 20 meters from each other
 
 | equal_distance=5 | equal_distance=20 |
 | ------------- | ------------- |
 | ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/equal_distance_5_m.jpg) | ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/equal_distance_20_m.jpg) |
 
-The red pins represent the equal distance centerline coordinates produced by centerline-width. The yellow line is the distance measured in Google Earth Pro between the points and the river banks are in purple.
+The red pins represent the equal distance centerline coordinates produced by centerline-width. The yellow line is the distance measured in Google Earth Pro between the points. The mapped river banks are in purple.
 
 **Interpolation - A solution for sparse data:**
 
