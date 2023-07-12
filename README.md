@@ -83,7 +83,11 @@ river.plotCenterlineWidth(apply_smoothing=True, remove_intersections=True, displ
 
 For more details to fix unexpected behavior or error code: [Debugging, Error Handling, and Edge Cases](#debugging-error-handling-and-edge-cases)
 
+For a complete example script to run centerline-width: [centerline_width_example_script.py](https://github.com/cyschneck/centerline-width/blob/main/data/example_script_outputs/centerline_width_example_script.py) with [example outputs](https://github.com/cyschneck/centerline-width/tree/main/data/example_script_outputs)
+
 ## Preprocessing
+### Generating KML files from Google Earth Pro
+
 ### Convert KML files to Text File
 
 Convert two .kml files from Google Earth Pro (for the left and right bank) and export the coordinates into a text file
@@ -174,7 +178,15 @@ centerline_width.riverCenterline(csv_data=None,
 * [OPTIONAL] equal_distance (int): Equal distance between points (in meters) used to interpolate the Voronoi centerline, defaults 10 meters
 * [OPTIONAL] ellipsoid (string): Ellipsoid definition of Earth to provide size and shape for built-in functions to convert degrees to meters, options include (is sensitive to case): ["GRS80", "airy", "bessel", "clrk66", "intl", "WGS60", "WGS66", "WGS72", "WGS84", "sphere"] for more details: ["Built-in ellipsoid defintions"](https://proj.org/en/9.2/usage/ellipsoids.html#built-in-ellipsoid-definitions), defaults to "WGS84"
 
-**Solutions for sparse data:**
+**Equal Distance - Equal linear distance between points**
+
+`equal_distance` will generate points along the centerline that are an equal linear distance from one another in meters. For example, this will generate points that each 5 meters or 20 meters from eachotther
+
+| equal_distance=5 | equal_distance=20 |
+| ------------- | ------------- |
+| ![example+png]() | ![example+png]() |
+
+**Interpolation - A solution for sparse data:**
 
 `interpolate_data` is an option that can be used to find a centerline when the existing data generates a Voronoi graph that is jagged or contains gaps due to the combination of sparse data and a narrow river (See: Debugging, Error Handling, and Edge Cases - Fix Gaps and Jagged Centerlines). By default, `interpolate_data=True` will add 5 additional points between each existing point but can be increased or decreased by modifying the `interpolate_n` option
 
@@ -553,8 +565,7 @@ Please acknowledge the use of this software in any publications:
 ```
 "River centerline/width extraction software was provided by C. Y. Schneck and U. G. Schneck, and is available at URL: https://github.com/cyschneck/centerline-width."
 ```
-
-Please send a copy of such publications to: cyschneck@gmail.com & ugschneck@gmail.com
+Please send a copy of such publications to: cyschneck@gmail.com and ugschneck@gmail.com
 
 
 This material is based upon work supported by the National Science Foundation Graduate Fellowship under Grant No. 2141064. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the National Science Foundation.
