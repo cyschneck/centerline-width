@@ -194,7 +194,7 @@ centerline_width.riverCenterline(csv_data=None,
 
 **Equal Distance - Equal linear distance between points**
 
-`equal_distance` will generate points along the centerline that are an equal linear distance from one another in meters. For example, this will generate points that each 5 meters or 20 meters from each other
+`equal_distance` will generate points along the centerline that are an equal linear distance from one another in meters. When `equal_distance=5` each point will be 5 meters apart
 
 | equal_distance=5 | equal_distance=20 |
 | ------------- | ------------- |
@@ -202,7 +202,7 @@ centerline_width.riverCenterline(csv_data=None,
 
 The red pins represent the equal distance centerline coordinates produced by centerline-width. The yellow line is the distance measured in Google Earth Pro between the points. The mapped river banks are in purple.
 
-**Interpolation - A solution for sparse data:**
+**Interpolation - A solution for sparse data**
 
 `interpolate_data` is an option that can be used to find a centerline when the existing data generates a Voronoi graph that is jagged or contains gaps due to the combination of sparse data and a narrow river (See: Debugging, Error Handling, and Edge Cases - Fix Gaps and Jagged Centerlines). By default, `interpolate_data=True` will add 5 additional points between each existing point but can be increased or decreased by modifying the `interpolate_n` option
 
@@ -256,9 +256,9 @@ There are four types of centerline coordinates formed from the riverbank data
 
 - **Voronoi centerline**: centerline generated from where Voronoi vertices intersect within the river
 ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/voronoi_centerline.png)
-- **Equal Distance Centerline**: centerline based on Voronoi centerline but each point is equally spaced out from the previous (in meters) and takes into account the radius of the Earth to convert degrees to meters
+- **Equal Distance Centerline**: centerline based on Voronoi centerline but each point is equally spaced out from the previous (in meters) and takes into account the radius of the Earth to convert degrees to meters (example below: `equal_distance=10`)
 ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/equal_distance_centerline.png)
-- **Evenly Spaced Centerline**: centerline based on Voronoi centerline but evenly spaced with a fixed number of points
+- **Evenly Spaced Centerline**: centerline based on Voronoi centerline but evenly spaced with a fixed number of points (example: `interpolate_n_centerpoints=200`)
 ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/evenly_spaced_centerline.png)
 - **Smoothed Centerline**: centerline generated from the evenly spaced centerline but smoothed by a b-spline
 ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/smoothed_centerline.png)
@@ -286,7 +286,7 @@ river_object.centerlineSmoothed
 Example:
 ```python
 import centerline_width
-river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv", optional_cutoff=15)
+river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
 river_centerline_coordinates = river_object.centerlineVoronoi
 ```
 Output is a list of tuples: (example) `[(-92.86788596499872, 30.03786596717931), (-92.86789573751797, 30.037834641974108), (-92.8679141386283, 30.037789636848878), (-92.8679251193248, 30.037756853899904), (-92.86796903819089, 30.03765423778148), (-92.86797335733262, 30.037643336049054), (-92.8679920356456, 30.037592224469797), (-92.86800576063828, 30.037555441489403), (-92.86800841510367, 30.037546512833107), (-92.8680119498663, 30.03753043193875)]`
@@ -339,7 +339,7 @@ river_object.centerlineLength
 Length returned in kilometers
 ```python
 import centerline_width
-river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv", optional_cutoff=550)
+river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
 river_centerline_length = river_object.centerlineLength
 ```
 The length of the river centerline returns `215.34700589636674` km
@@ -441,7 +441,7 @@ riverWidthFromCenterline(transect_span_distance=3,
 * [OPTIONAL] transect_span_distance (int): Sum up n number of points around a center point to determine the slope (increase to decrease the impact of sudden changes), defaults to 6, must be greater than 2 (since the slope is found from the difference in position between two points), measured orthogonal to the centerline
 * [OPTIONAL] apply_smoothing (boolean): Apply a B-spline smoothing to centerline
 * [OPTIONAL] remove_intersections (boolean): Iterative remove intersecting lines, to maintain the most width lines, but return only non-intersecting width lines, defaults to True
-* [OPTIONAL] save_to_csv (string): CSV filename to output width, defaults to None (no file is saved), requires a .csv extension (Column Headers: `Centerline Latitude (Deg)", "Centerline Longitude (Deg)", "Width (<units specified>)`)
+* [OPTIONAL] save_to_csv (string): CSV filename to output width, defaults to None (no file is saved), requires a .csv extension (Column Headers: `Centerline Latitude (Deg)", "Centerline Longitude (Deg)", "Width (km)`)
 
 Important note, when using `apply_smoothing=True`, the centerline generated is the result of evenly spaced coordinates generated from the original Voronoi coordinates, so the smoothed coordinates may not match exactly to the original centerline coordinates. When `apply_smoothing=False`, width lines are generated from the evenly spaced centerline coordinates
 
@@ -466,15 +466,18 @@ The centerline is defined by the greatest distance from the right and left bank,
 ### Generate a polygon to encapsulate the river between the right and left banks to define in and outside of river
 ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/example2.png)
 
-### Generate a Voronoi based on the points along the riverbanks
+### Generate a Voronoi diagram based on the points along the riverbanks
 ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/example3.png)
 
 ### Display Voronoi ridge vertices that lie within the polygon (within the riverbanks)
 ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/example4.png)
 
-### Filter out any point pairs that only have one connection to filter out the short dead end paths and find the starting and ending node based on distance from the top and bottom of polygon
+### Filter out any point pairs that only have one connection to filter out the short dead end paths
 With the vertices removed, it is possible to form multiple unconnected graphs within the polygon. The largest subgraph is assumed to contain the centerline and the other subgraphs are filtered out
 ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/example6.png)
+
+### Find the starting and ending node based on distance from the top and bottom of polygon
+The starting/ending node is defined by the vertice closest to the top/bottom of the polygon along the longest path
 ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/example7.png)
 
 ### Find the shortest path from the starting node to the ending node ([Dijkstra's Algorithm](https://networkx.org/documentation/stable/reference/algorithms/generated/networkx.algorithms.shortest_paths.generic.shortest_path.html#networkx.algorithms.shortest_paths.generic.shortest_path))
