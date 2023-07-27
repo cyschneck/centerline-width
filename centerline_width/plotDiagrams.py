@@ -19,7 +19,8 @@ def plotCenterlineBackend(river_object=None,
 						display_true_centerline=True,
 						centerline_type="Voronoi",
 						marker_type="line",
-						centerline_color="black"):
+						centerline_color="black",
+						coordinate_type="Relative Distance"):
 	# Shared components between plotCenterline and plotCenterlineWidth
 	fig = plt.figure(figsize=(10,10))
 	ax = fig.add_subplot(111)
@@ -30,15 +31,24 @@ def plotCenterlineBackend(river_object=None,
 	plt.plot(*river_object.bottom_bank.xy, c="lightcoral")
 
 	scatter_plot_size = 4
+
+	# Choose between Decimal Degrees and Relative Distances for X, Y coordinates
+	if coordinate_type == "Decimal Degrees":
+		right_coords =  river_object.right_bank_coordinates
+		left_coords =  river_object.left_bank_coordinates
+	if coordinate_type == "Relative Distance":
+		right_coords =  river_object.right_bank_relative_coordinates
+		left_coords =  river_object.left_bank_relative_coordinates
+
 	x = []
 	y = []
-	for i in river_object.right_bank_coordinates: 
+	for i in right_coords: 
 		x.append(i[0])
 		y.append(i[1])
 	plt.scatter(x, y, c="dodgerblue", s=scatter_plot_size, label="Right Bank")
 	x = []
 	y = []
-	for i in river_object.left_bank_coordinates:
+	for i in left_coords:
 		x.append(i[0])
 		y.append(i[1])
 	plt.scatter(x, y, c="orange", s=scatter_plot_size, label="Left Bank")

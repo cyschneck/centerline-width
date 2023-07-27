@@ -41,6 +41,7 @@ class riverCenterline:
 			right_bank_coordinates, left_bank_coordinates = centerline_width.interpolateBetweenPoints(left_bank_coordinates, right_bank_coordinates, interpolate_n)
 		self.left_bank_coordinates = left_bank_coordinates
 		self.right_bank_coordinates = right_bank_coordinates
+		self.left_bank_relative_coordinates, self.right_bank_relative_coordinates = centerline_width.relativeBankCoordinates(self.left_bank_coordinates, self.right_bank_coordinates, self.ellipsoid)
 
 		# Right/Length Bank Length
 		self.rightBankLength = centerline_width.centerlineLength(centerline_coordinates=right_bank_coordinates, ellipsoid=self.ellipsoid)
@@ -78,8 +79,6 @@ class riverCenterline:
 																				number_of_fixed_points=self.interpolate_n_centerpoints)
 		self.centerlineSmoothed = centerline_width.smoothedCoordinates(river_object=self, centerline_coordinates=self.centerlineEvenlySpaced,
 																		interprolate_num=self.interpolate_n_centerpoints)
-
-
 
 	def plotCenterline(self,
 						centerline_type="Voronoi",

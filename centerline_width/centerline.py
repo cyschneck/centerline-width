@@ -22,6 +22,28 @@ logger.setLevel(logging.INFO)
 stream_handler = logging.StreamHandler()
 logger.addHandler(stream_handler)
 
+def relativeBankCoordinates(left_lon_lat_coordinates, right_lon_lat_coordinates, ellipsoid):
+	# Convert bank latitude/longtiude coordinates to relative coordinates
+	# First point is the bottom left most point
+	first_point = left_lon_lat_coordinates[0]
+	geodesic = pyproj.Geod(ellps=ellipsoid)
+
+	left_relative_coordinates = []
+	for left_point in left_lon_lat_coordinates[1:]: # skip the bottom left most value
+		forward_bearing, _, distance_between_meters = geodesic.inv(first_point[0], first_point[1], left_point[0], left_point[1])
+		x = distance_between_meters*math.cos(np.deg2rad(forward_bearing))
+		y = distance_between_meters*math.sin(np.deg2rad(forward_bearing))
+		left_relative_coordinates.append([x, y])
+
+	right_relative_coordinates = []
+	for right_point in right_lon_lat_coordinates:
+		forward_bearing, _, distance_between_meters = geodesic.inv(first_point[0], first_point[1], left_point[0], left_point[1])
+		x = distance_between_meters*math.cos(np.deg2rad(forward_bearing))
+		y = distance_between_meters*math.sin(np.deg2rad(forward_bearing))
+		right_relative_coordinates.append([x, y])
+
+	return left_relative_coordinates, right_relative_coordinates
+
 def generateNXGraph(all_points_dict):
 	# Generate a NetworkX graph to find the largest graph
 	def distanceBetween(start, end):

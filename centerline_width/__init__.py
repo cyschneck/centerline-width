@@ -13,6 +13,7 @@ from .preprocessing import interpolateBetweenPoints
 from .riverCenterlineClass import riverCenterline
 
 # centerline.py function calls
+from .centerline import relativeBankCoordinates
 from .centerline import centerlinePath
 from .centerline import networkXGraphShortestPath
 from .centerline import centerlineLength
