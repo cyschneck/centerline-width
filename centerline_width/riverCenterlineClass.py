@@ -145,11 +145,13 @@ class riverCenterline:
 								transect_span_distance=3,
 								apply_smoothing=True,
 								remove_intersections=False,
+								coordinate_type="Decimal Degrees",
 								save_to_csv=None):
 		return centerline_width.riverWidthFromCenterline(river_object=self,
 														transect_span_distance=transect_span_distance,
 														apply_smoothing=apply_smoothing,
 														remove_intersections=remove_intersections,
+														coordinate_type=coordinate_type,
 														save_to_csv=save_to_csv)
 
 	def saveCenterlineCSV(self, 

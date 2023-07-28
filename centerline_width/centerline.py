@@ -99,7 +99,7 @@ def relativeWidthCoordinates(first_point, width_dictionary, ellipsoid):
 		k_x = distance_between_meters*math.cos(np.deg2rad(forward_bearing))
 		k_y = distance_between_meters*math.sin(np.deg2rad(forward_bearing))
 		# Setup relative distance for value
-		if type(v) != int:
+		if type(v) == tuple:
 			# converting a coordinate -> coordinate dictionary
 			forward_bearing, _, distance_between_meters = geodesic.inv(first_point[0],
 																	first_point[1],
@@ -442,6 +442,7 @@ def riverWidthFromCenterline(river_object=None,
 							transect_span_distance=3,
 							apply_smoothing=True,
 							remove_intersections=False,
+							coordinate_type="Decimal Degrees",
 							save_to_csv=None):
 	# Return river width: centerline and width at centerline
 	# Width is measured to the bank, relative to the center point (normal of the centerline)
@@ -481,11 +482,21 @@ def riverWidthFromCenterline(river_object=None,
 		_, _, distance_between_right_and_left_m = geodesic.inv(lon1, lat1, lon2, lat2)
 		width_dict[centerline_coord] = distance_between_right_and_left_m/1000
 
+	# Set headers and conver to Relative Distance if needed
+	if coordinate_type == "Decimal Degrees":
+		latitude_header= "Centerline Latitude (Deg)"
+		longitude_header = "Centerline Longitude (Deg)"
+	if coordinate_type == "Relative Distance":
+		latitude_header= "Relative Distance Y (from Latitude) (m)"
+		longitude_header = "Relative Distance X (from Longitude) (m)"
+		# Convert from Decimal Degrees to Relative Distance
+		width_dict = centerline_width.relativeWidthCoordinates(river_object.left_bank_coordinates[0], width_dict, river_object.ellipsoid)
+
 	# Save width dictionary to a csv file (Latitude, Longtiude, Width)
 	if save_to_csv:
 		with open(save_to_csv, "w") as csv_file_output:
 			writer = csv.writer(csv_file_output)
-			writer.writerow(["Centerline Latitude (Deg)", "Centerline Longitude (Deg)", "Width (km)"])
+			writer.writerow([latitude_header,longitude_header, "Width (km)"])
 			for coordinate_key, width_value in width_dict.items():
 				writer.writerow([coordinate_key[1], coordinate_key[0], width_value])
 
