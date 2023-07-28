@@ -156,20 +156,24 @@ class riverCenterline:
 						save_to_csv=None,
 						latitude_header=None,
 						longitude_header=None, 
-						centerline_type="Voronoi"):
+						centerline_type="Voronoi",
+						coordinate_type="Decimal Degrees"):
 		return centerline_width.saveCenterlineCSV(river_object=self,
 												save_to_csv=save_to_csv,
 												latitude_header=latitude_header, 
 												longitude_header=longitude_header, 
-												centerline_type=centerline_type)
+												centerline_type=centerline_type,
+												coordinate_type=coordinate_type)
 
 	def saveCenterlineMAT(self,
 						save_to_mat=None, 
 						latitude_header=None,
 						longitude_header=None, 
-						centerline_type="Voronoi"):
+						centerline_type="Voronoi",
+						coordinate_type="Decimal Degrees"):
 		return centerline_width.saveCenterlineMAT(river_object=self,
 												save_to_mat=save_to_mat,
 												latitude_header=latitude_header,
 												longitude_header=longitude_header,
-												centerline_type=centerline_type)
+												centerline_type=centerline_type,
+												coordinate_type=coordinate_type)

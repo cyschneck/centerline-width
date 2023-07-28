@@ -156,8 +156,8 @@ def plotCenterline(river_object=None,
 		plt.xlabel("Longitude (°)")
 		plt.ylabel("Latitude (°)")
 	if coordinate_type == "Relative Distance":
-		plt.xlabel("Distance (m)")
-		plt.ylabel("Distance (m)")
+		plt.xlabel("Relative Distance X (m)")
+		plt.ylabel("Relative Distance Y (m)")
 
 	plt.legend(loc="upper right")
 	plt.show()
@@ -204,7 +204,7 @@ def plotCenterlineWidth(river_object=None,
 																																					remove_intersections=remove_intersections)
 				x = []
 				y = []
-				if coordinate_type == "Decimal Degree":
+				if coordinate_type == "Decimal Degrees":
 					smoothed_coords = river_object.centerlineSmoothed
 				if coordinate_type == "Relative Distance":
 					smoothed_coords = river_object.centerlineSmoothedRelative
@@ -263,8 +263,8 @@ def plotCenterlineWidth(river_object=None,
 		plt.xlabel("Longitude (°)")
 		plt.ylabel("Latitude (°)")
 	if coordinate_type == "Relative Distance":
-		plt.xlabel("Distance (m)")
-		plt.ylabel("Distance (m)")
+		plt.xlabel("Relative Distance X (m)")
+		plt.ylabel("Distance Distance Y (m)")
 
 	plt.legend(loc="upper right")
 	plt.show()
