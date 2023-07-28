@@ -16,6 +16,7 @@ from .riverCenterlineClass import riverCenterline
 from .centerline import relativeBankCoordinates
 from .centerline import relativeCenterlineCoordinates
 from .centerline import relativeRidgeCoordinates
+from .centerline import relativeWidthCoordinates
 from .centerline import centerlinePath
 from .centerline import networkXGraphShortestPath
 from .centerline import centerlineLength

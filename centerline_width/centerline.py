@@ -33,14 +33,14 @@ def relativeBankCoordinates(left_lon_lat_coordinates, right_lon_lat_coordinates,
 		forward_bearing, _, distance_between_meters = geodesic.inv(first_point[0], first_point[1], left_point[0], left_point[1])
 		x = distance_between_meters*math.cos(np.deg2rad(forward_bearing))
 		y = distance_between_meters*math.sin(np.deg2rad(forward_bearing))
-		left_relative_coordinates.append([x, y])
+		left_relative_coordinates.append((x, y))
 
 	right_relative_coordinates = []
 	for right_point in right_lon_lat_coordinates:
 		forward_bearing, _, distance_between_meters = geodesic.inv(first_point[0], first_point[1], right_point[0], right_point[1])
 		x = distance_between_meters*math.cos(np.deg2rad(forward_bearing))
 		y = distance_between_meters*math.sin(np.deg2rad(forward_bearing))
-		right_relative_coordinates.append([x, y])
+		right_relative_coordinates.append((x, y))
 
 	return left_relative_coordinates, right_relative_coordinates
 
@@ -56,13 +56,14 @@ def relativeCenterlineCoordinates(first_point, centerline_coordinates, ellipsoid
 																centerline_coords[1])
 		x = distance_between_meters*math.cos(np.deg2rad(forward_bearing))
 		y = distance_between_meters*math.sin(np.deg2rad(forward_bearing))
-		centerline_relative_coordinates.append([x, y])
+		centerline_relative_coordinates.append((x, y))
 
 	return centerline_relative_coordinates
 
 def relativeRidgeCoordinates(first_point, x_ridge, y_ridge, ellipsoid):
 	# Convert Voronoi ridges from Decimal Degree to Relative Distance
 	geodesic = pyproj.Geod(ellps=ellipsoid)
+
 	x_relative_ridges = []
 	y_relative_ridges = []
 	for i in range(len(x_ridge)):
@@ -83,6 +84,35 @@ def relativeRidgeCoordinates(first_point, x_ridge, y_ridge, ellipsoid):
 		y_relative_ridges.append((y1, y2))
 
 	return x_relative_ridges, y_relative_ridges
+
+def relativeWidthCoordinates(first_point, width_dictionary, ellipsoid):
+	# Convert width dictionary from Decimal Degree to Relative Distance
+	geodesic = pyproj.Geod(ellps=ellipsoid)
+
+	relative_width_dictionary = {}
+	for k, v in width_dictionary.items():
+		# Setup relative distance for key
+		forward_bearing, _, distance_between_meters = geodesic.inv(first_point[0],
+																first_point[1],
+																k[0],
+																k[1])
+		k_x = distance_between_meters*math.cos(np.deg2rad(forward_bearing))
+		k_y = distance_between_meters*math.sin(np.deg2rad(forward_bearing))
+		# Setup relative distance for value
+		if type(v) != int:
+			# converting a coordinate -> coordinate dictionary
+			forward_bearing, _, distance_between_meters = geodesic.inv(first_point[0],
+																	first_point[1],
+																	v[0],
+																	v[1])
+			v_x = distance_between_meters*math.cos(np.deg2rad(forward_bearing))
+			v_y= distance_between_meters*math.sin(np.deg2rad(forward_bearing))
+			relative_width_dictionary[(k_x, k_y)] = (v_x, v_y)
+		else:
+			# converting a coordinate -> int dictionary
+			relative_width_dictionary[(k_x, k_y)] = v
+
+	return relative_width_dictionary
 
 def generateNXGraph(all_points_dict):
 	# Generate a NetworkX graph to find the largest graph
@@ -264,6 +294,7 @@ def riverWidthFromCenterlineCoordinates(river_object=None,
 										centerline_coordinates=None,
 										transect_span_distance=3,
 										remove_intersections=False,
+										coordinate_type="Decimal Degrees",
 										save_to_csv=None):
 	# Return the left/right coordinates of width centerlines
 	right_width_coordinates = {}
@@ -294,6 +325,7 @@ def riverWidthFromCenterlineCoordinates(river_object=None,
 	def intersectsTopOrBottomOfBank(point1, point2):
 		# returns True/False if the points lie on the 'false' top/bottom of the river
 		points_intersect_false_edges = False
+
 		# avoiding floating point precession errors when determining if point lies within the line
 		# if point is within a small distance of a line it is considered to intersect
 		if river_object.top_bank.distance(point1) < 1e-8 or river_object.bottom_bank.distance(point1) < 1e-8:
@@ -304,6 +336,7 @@ def riverWidthFromCenterlineCoordinates(river_object=None,
 
 	# Generate a list of lines from the centerline point with its normal
 	logger.info("[PROCESSING] Calculating and positioning width lines, may takes a few minutes...")
+
 	min_x, min_y, max_x, max_y = river_object.bank_polygon.bounds
 	for centerline_point, slope in centerline_slope.items():
 		# draw a max line that extends the entire distance of the available space, will be trimmed below to just within polygon

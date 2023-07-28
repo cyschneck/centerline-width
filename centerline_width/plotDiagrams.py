@@ -195,15 +195,20 @@ def plotCenterlineWidth(river_object=None,
 	if river_object.centerlineVoronoi is not None:
 		number_of_evenly_spaced_points = "\nCenterline made of {0} Fixed Points, width lines generated every {1} points".format(river_object.interpolate_n_centerpoints, transect_span_distance)
 		if river_object.starting_node is not None: # error handling for when data is too small to generate centerline coordiantes
+
+			# if using smoothing, replace left/right coordinates with the smoothed variation
 			if apply_smoothing:
-				# if using smoothing, replace left/right coordinates with the smoothed variation
 				right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(river_object=river_object,
 																																					centerline_coordinates=river_object.centerlineSmoothed,
 																																					transect_span_distance=transect_span_distance,
 																																					remove_intersections=remove_intersections)
 				x = []
 				y = []
-				for k, v in river_object.centerlineSmoothed:
+				if coordinate_type == "Decimal Degree":
+					smoothed_coords = river_object.centerlineSmoothed
+				if coordinate_type == "Relative Distance":
+					smoothed_coords = river_object.centerlineSmoothedRelative
+				for k, v in smoothed_coords:
 					x.append(k)
 					y.append(v)
 				plt.scatter(x, y, c="blue", label="Smoothed Centerline Coordinates", s=5)
@@ -213,6 +218,12 @@ def plotCenterlineWidth(river_object=None,
 																														centerline_coordinates=river_object.centerlineEvenlySpaced,
 																														transect_span_distance=transect_span_distance,
 																														remove_intersections=remove_intersections)
+
+			if coordinate_type == "Relative Distance":
+				# by default, sets up width with Decimal Degree, convert to Relative Distance
+				right_width_coordinates = centerline_width.relativeWidthCoordinates(river_object.left_bank_coordinates[0], right_width_coordinates, river_object.ellipsoid)
+				left_width_coordinates = centerline_width.relativeWidthCoordinates(river_object.left_bank_coordinates[0], left_width_coordinates, river_object.ellipsoid)
+				num_intersection_coordinates = centerline_width.relativeWidthCoordinates(river_object.left_bank_coordinates[0], num_intersection_coordinates, river_object.ellipsoid)
 
 			invalid_label_added = False # prevent legend for width lines from being generated more than once (because is inside a loop)
 			valid_label_added = False  # prevent legend for width lines from being generated more than once (because is inside a loop)
