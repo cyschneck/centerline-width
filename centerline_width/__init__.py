@@ -14,6 +14,8 @@ from .riverCenterlineClass import riverCenterline
 
 # centerline.py function calls
 from .centerline import relativeBankCoordinates
+from .centerline import relativeCenterlineCoordinates
+from .centerline import relativeRidgeCoordinates
 from .centerline import centerlinePath
 from .centerline import networkXGraphShortestPath
 from .centerline import centerlineLength

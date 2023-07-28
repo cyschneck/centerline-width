@@ -37,12 +37,52 @@ def relativeBankCoordinates(left_lon_lat_coordinates, right_lon_lat_coordinates,
 
 	right_relative_coordinates = []
 	for right_point in right_lon_lat_coordinates:
-		forward_bearing, _, distance_between_meters = geodesic.inv(first_point[0], first_point[1], left_point[0], left_point[1])
+		forward_bearing, _, distance_between_meters = geodesic.inv(first_point[0], first_point[1], right_point[0], right_point[1])
 		x = distance_between_meters*math.cos(np.deg2rad(forward_bearing))
 		y = distance_between_meters*math.sin(np.deg2rad(forward_bearing))
 		right_relative_coordinates.append([x, y])
 
 	return left_relative_coordinates, right_relative_coordinates
+
+def relativeCenterlineCoordinates(first_point, centerline_coordinates, ellipsoid):
+	# Convert centerline coordinates to relative distance from the first point on the left bank
+	geodesic = pyproj.Geod(ellps=ellipsoid)
+
+	centerline_relative_coordinates = []
+	for i, centerline_coords in enumerate(centerline_coordinates):
+		forward_bearing, _, distance_between_meters = geodesic.inv(first_point[0],
+																first_point[1],
+																centerline_coords[0],
+																centerline_coords[1])
+		x = distance_between_meters*math.cos(np.deg2rad(forward_bearing))
+		y = distance_between_meters*math.sin(np.deg2rad(forward_bearing))
+		centerline_relative_coordinates.append([x, y])
+
+	return centerline_relative_coordinates
+
+def relativeRidgeCoordinates(first_point, x_ridge, y_ridge, ellipsoid):
+	# Convert Voronoi ridges from Decimal Degree to Relative Distance
+	geodesic = pyproj.Geod(ellps=ellipsoid)
+	x_relative_ridges = []
+	y_relative_ridges = []
+	for i in range(len(x_ridge)):
+		# Coordinates are saved as a pair (x1, x2) and (y1, y2)
+		forward_bearing, _, distance_between_meters = geodesic.inv(first_point[0],
+																first_point[1],
+																x_ridge[i][0],
+																y_ridge[i][0])
+		x1 = distance_between_meters*math.cos(np.deg2rad(forward_bearing))
+		y1 = distance_between_meters*math.sin(np.deg2rad(forward_bearing))
+		forward_bearing, _, distance_between_meters = geodesic.inv(first_point[0],
+																first_point[1],
+																x_ridge[i][1],
+																y_ridge[i][1])
+		x2 = distance_between_meters*math.cos(np.deg2rad(forward_bearing))
+		y2 = distance_between_meters*math.sin(np.deg2rad(forward_bearing))
+		x_relative_ridges.append((x1, x2))
+		y_relative_ridges.append((y1, y2))
+
+	return x_relative_ridges, y_relative_ridges
 
 def generateNXGraph(all_points_dict):
 	# Generate a NetworkX graph to find the largest graph

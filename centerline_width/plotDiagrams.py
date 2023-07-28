@@ -20,17 +20,21 @@ def plotCenterlineBackend(river_object=None,
 						centerline_type="Voronoi",
 						marker_type="line",
 						centerline_color="black",
-						coordinate_type="Relative Distance"):
+						coordinate_type=None):
 	# Shared components between plotCenterline and plotCenterlineWidth
 	fig = plt.figure(figsize=(10,10))
 	ax = fig.add_subplot(111)
+	scatter_plot_size = 4
 	
 	# Plot River as a Polygon
-	plt.plot(*river_object.bank_polygon.exterior.xy, c="gainsboro")
-	plt.plot(*river_object.top_bank.xy, c="forestgreen")
-	plt.plot(*river_object.bottom_bank.xy, c="lightcoral")
-
-	scatter_plot_size = 4
+	if coordinate_type == "Decimal Degrees":
+		plt.plot(*river_object.bank_polygon.exterior.xy, c="gainsboro")
+		plt.plot(*river_object.top_bank.xy, c="forestgreen")
+		plt.plot(*river_object.bottom_bank.xy, c="lightcoral")
+	if coordinate_type == "Relative Distance":
+		plt.plot(*river_object.bank_polygon_relative.exterior.xy, c="gainsboro")
+		plt.plot(*river_object.top_bank_relative.xy, c="forestgreen")
+		plt.plot(*river_object.bottom_bank_relative.xy, c="lightcoral")
 
 	# Choose between Decimal Degrees and Relative Distances for X, Y coordinates
 	if coordinate_type == "Decimal Degrees":
@@ -40,17 +44,11 @@ def plotCenterlineBackend(river_object=None,
 		right_coords =  river_object.right_bank_relative_coordinates
 		left_coords =  river_object.left_bank_relative_coordinates
 
-	x = []
-	y = []
-	for i in right_coords: 
-		x.append(i[0])
-		y.append(i[1])
+	x = [i[0] for i in right_coords]
+	y = [i[1] for i in right_coords]
 	plt.scatter(x, y, c="dodgerblue", s=scatter_plot_size, label="Right Bank")
-	x = []
-	y = []
-	for i in left_coords:
-		x.append(i[0])
-		y.append(i[1])
+	x = [i[0] for i in left_coords]
+	y = [i[1] for i in left_coords]
 	plt.scatter(x, y, c="orange", s=scatter_plot_size, label="Left Bank")
 
 	# Plot centerline found from NetworkX
@@ -59,19 +57,28 @@ def plotCenterlineBackend(river_object=None,
 	centerline_type = centerline_type.title()
 	marker_type = marker_type.title()
 
+	# Choose btween Decimal Degrees and Centerline Type
 	if centerline_type == "Voronoi": 
-		centerline_coordinates_by_type = river_object.centerlineVoronoi
 		centerline_legend = "Voronoi Centerline Coordinates"
-	if centerline_type == "Equal Distance": 
-		centerline_coordinates_by_type = river_object.centerlineEqualDistance
-		centerline_legend = "Equal Distance Centerline Coordinates"
-	if centerline_type == "Evenly Spaced": 
-		centerline_coordinates_by_type = river_object.centerlineEvenlySpaced
-		centerline_legend = "Evenly Spaced Centerline Coordiantes"
-	if centerline_type == "Smoothed": 
-		centerline_coordinates_by_type = river_object.centerlineSmoothed
-		centerline_legend = "Smoothed Centerlined Coordiantes"
+		if coordinate_type == "Decimal Degrees": centerline_coordinates_by_type = river_object.centerlineVoronoi
+		if coordinate_type == "Relative Distance": centerline_coordinates_by_type = river_object.centerlineVoronoiRelative
 
+	if centerline_type == "Equal Distance": 
+		centerline_legend = "Equal Distance Centerline Coordinates"
+		if coordinate_type == "Decimal Degrees": centerline_coordinates_by_type = river_object.centerlineEqualDistance
+		if coordinate_type == "Relative Distance": centerline_coordinates_by_type = river_object.centerlineEqualDistanceRelative
+
+	if centerline_type == "Evenly Spaced": 
+		centerline_legend = "Evenly Spaced Centerline Coordiantes"
+		if coordinate_type == "Decimal Degrees": centerline_coordinates_by_type = river_object.centerlineEvenlySpaced
+		if coordinate_type == "Relative Distance": centerline_coordinates_by_type = river_object.centerlineEvenlySpacedRelative
+
+	if centerline_type == "Smoothed": 
+		centerline_legend = "Smoothed Centerlined Coordiantes"
+		if coordinate_type == "Decimal Degrees": centerline_coordinates_by_type = river_object.centerlineSmoothed
+		if coordinate_type == "Relative Distance": centerline_coordinates_by_type = river_object.centerlineSmoothedRelative
+
+	# Plot the centerline coordinates
 	if centerline_coordinates_by_type:
 		valid_path_through = True
 		if display_true_centerline:
@@ -87,8 +94,13 @@ def plotCenterlineBackend(river_object=None,
 
 	# Dynamically assign the starting and ending
 	if river_object.starting_node is not None: # error handling for when data is too small to generate centerline coordiantes
-		plt.scatter(river_object.starting_node[0], river_object.starting_node[1], c="green", label="Starting Node", s=45)
-		plt.scatter(river_object.ending_node[0], river_object.ending_node[1], c="red", label="Ending Node", s=45)
+		ss = 45 # scatter size
+		if coordinate_type == "Decimal Degrees":
+			plt.scatter(river_object.starting_node[0], river_object.starting_node[1], c="green", label="Starting Node", s=ss)
+			plt.scatter(river_object.ending_node[0], river_object.ending_node[1], c="red", label="Ending Node", s=ss)
+		if coordinate_type == "Relative Distance":
+			plt.scatter(river_object.starting_node_relative[0], river_object.starting_node_relative[1], c="green", label="Starting Node", s=ss)
+			plt.scatter(river_object.ending_node_relative[0], river_object.ending_node_relative[1], c="red", label="Ending Node", s=ss)
 
 	return fig, ax, valid_path_through
 
@@ -99,7 +111,8 @@ def plotCenterline(river_object=None,
 					display_all_possible_paths=False, 
 					plot_title=None, 
 					save_plot_name=None, 
-					display_voronoi=False):
+					display_voronoi=False,
+					coordinate_type="Decimal Degrees"):
 	# Plot Centerline of River
 	centerline_width.errorHandlingPlotCenterline(river_object=river_object,
 												centerline_type=centerline_type,
@@ -114,24 +127,38 @@ def plotCenterline(river_object=None,
 														display_true_centerline=True,
 														centerline_type=centerline_type,
 														marker_type=marker_type,
-														centerline_color=centerline_color)
+														centerline_color=centerline_color,
+														coordinate_type=coordinate_type)
 
 	# Display the Voronoi Diagram
 	if display_voronoi:
-		voronoi_plot_2d(river_object.bank_voronoi, show_points=True, point_size=1, ax=ax)
+		if coordinate_type == "Decimal Degrees":
+			voronoi_plot_2d(river_object.bank_voronoi, show_points=True, point_size=1, ax=ax)
+		if coordinate_type == "Relative Distance":
+			voronoi_plot_2d(river_object.bank_voronoi_relative, show_points=True, point_size=1, ax=ax)
 
 	# Plot all possible paths with text for positions
 	if display_all_possible_paths:
-		for i in range(len(river_object.x_voronoi_ridge_point)):
-			plt.plot(river_object.x_voronoi_ridge_point[i], river_object.y_voronoi_ridge_point[i], 'cyan', linewidth=1, zorder=1)
+		if coordinate_type == "Decimal Degrees":
+			for i in range(len(river_object.x_voronoi_ridge_point)):
+				plt.plot(river_object.x_voronoi_ridge_point[i], river_object.y_voronoi_ridge_point[i], 'cyan', linewidth=1, zorder=1)
+		if coordinate_type == "Relative Distance":
+			for i in range(len(river_object.x_voronoi_ridge_point_relative)):
+				plt.plot(river_object.x_voronoi_ridge_point_relative[i], river_object.y_voronoi_ridge_point_relative[i], 'cyan', linewidth=1, zorder=1)
 
 	# Plot Title, Legends, and Axis Labels
 	if not plot_title:
 		plt.title("River Coordinates: Valid Centerline = {0}, Valid Polygon = {1}, Interpolated = {2}".format(valid_path_through, river_object.bank_polygon.is_valid, river_object.interpolate_data))
 	else:
 		plt.title(plot_title)
-	plt.xlabel("Longitude (°)")
-	plt.ylabel("Latitude (°)")
+
+	if coordinate_type == "Decimal Degrees":
+		plt.xlabel("Longitude (°)")
+		plt.ylabel("Latitude (°)")
+	if coordinate_type == "Relative Distance":
+		plt.xlabel("Distance (m)")
+		plt.ylabel("Distance (m)")
+
 	plt.legend(loc="upper right")
 	plt.show()
 	if save_plot_name: fig.savefig(save_plot_name)
@@ -143,7 +170,8 @@ def plotCenterlineWidth(river_object=None,
 						transect_span_distance=3,
 						apply_smoothing=False,
 						flag_intersections=True,
-						remove_intersections=False):
+						remove_intersections=False,
+						coordinate_type="Decimal Degrees"):
 	# Plot Width Lines based on Centerline
 	centerline_width.errorHandlingPlotCenterlineWidth(river_object=river_object,
 													plot_title=plot_title, 
@@ -158,7 +186,8 @@ def plotCenterlineWidth(river_object=None,
 														display_true_centerline=display_true_centerline,
 														centerline_type="Voronoi",
 														marker_type="line",
-														centerline_color="black")
+														centerline_color="black",
+														coordinate_type=coordinate_type)
 
 	# Determine the Width of River
 	number_of_evenly_spaced_points = ""
@@ -218,8 +247,14 @@ def plotCenterlineWidth(river_object=None,
 		plt.title("River Width Coordinates: Valid Centerline = {0}, Valid Polygon = {1}{2}, Interpolated = {3}".format(valid_path_through, river_object.bank_polygon.is_valid, number_of_evenly_spaced_points, river_object.interpolate_data))
 	else:
 		plt.title(plot_title)
-	plt.xlabel("Longitude (°)")
-	plt.ylabel("Latitude (°)")
+
+	if coordinate_type == "Decimal Degrees":
+		plt.xlabel("Longitude (°)")
+		plt.ylabel("Latitude (°)")
+	if coordinate_type == "Relative Distance":
+		plt.xlabel("Distance (m)")
+		plt.ylabel("Distance (m)")
+
 	plt.legend(loc="upper right")
 	plt.show()
 	if save_plot_name: fig.savefig(save_plot_name)
