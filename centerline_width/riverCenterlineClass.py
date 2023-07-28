@@ -75,8 +75,8 @@ class riverCenterline:
 		self.y_voronoi_ridge_point = y_ridge_point # Voronoi y postions
 
 		# Relative Distances all possible paths: starting/ending node, all possible paths (ridges), paths dictionary
-		self.starting_node_relative = centerline_width.relativeCenterlineCoordinates(self.left_bank_coordinates[0], [starting_node], self.ellipsoid)[0] # starting position for centerline
-		self.ending_node_relative = centerline_width.relativeCenterlineCoordinates(self.left_bank_coordinates[0], [ending_node], self.ellipsoid)[0] # ending position for centerline
+		self.starting_node_relative = centerline_width.relativeSingleCoordinate(self.left_bank_coordinates[0], self.starting_node, self.ellipsoid) # starting position for centerline
+		self.ending_node_relative = centerline_width.relativeSingleCoordinate(self.left_bank_coordinates[0], self.ending_node, self.ellipsoid) # ending position for centerline
 		x_relative_ridges, y_relative_ridges = centerline_width.relativeRidgeCoordinates(self.left_bank_coordinates[0], self.x_voronoi_ridge_point, self.y_voronoi_ridge_point, self.ellipsoid)
 		self.x_voronoi_ridge_point_relative = x_relative_ridges # Voronoi relative x positions
 		self.y_voronoi_ridge_point_relative = y_relative_ridges # Voronoi relative y postions

@@ -12,11 +12,14 @@ from .preprocessing import interpolateBetweenPoints
 # riverObject.py function calls
 from .riverCenterlineClass import riverCenterline
 
+# relativeDistance.py function calls
+from .relativeDistance import relativeSingleCoordinate
+from .relativeDistance import relativeBankCoordinates
+from .relativeDistance import relativeCenterlineCoordinates
+from .relativeDistance import relativeRidgeCoordinates
+from .relativeDistance import relativeWidthCoordinates
+
 # centerline.py function calls
-from .centerline import relativeBankCoordinates
-from .centerline import relativeCenterlineCoordinates
-from .centerline import relativeRidgeCoordinates
-from .centerline import relativeWidthCoordinates
 from .centerline import centerlinePath
 from .centerline import networkXGraphShortestPath
 from .centerline import centerlineLength

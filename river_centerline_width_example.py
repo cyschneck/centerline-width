@@ -50,7 +50,7 @@ if __name__ == "__main__":
 
 	#coord_type = "Decimal Degrees"
 	coord_type = "Relative Distance"
-	center_type = "Smoothed"
+	center_type = "Voronoi"
 	
 	#river.saveCenterlineCSV(save_to_csv="centerline_for_csv.csv", centerline_type=center_type, coordinate_type=coord_type)
 	#river.saveCenterlineMAT(save_to_mat="centerline_for_matlab.mat", centerline_type=center_type, coordinate_type=coord_type)
