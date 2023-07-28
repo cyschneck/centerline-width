@@ -45,7 +45,8 @@ def errorHandlingPlotCenterline(river_object=None,
 								display_all_possible_paths=None,
 								plot_title=None,
 								save_plot_name=None,
-								display_voronoi=None):
+								display_voronoi=None,
+								coordinate_type=None):
 	# Error handling for plotCenterline()
 	if river_object is None:
 		logger.critical("\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.riverCenterline)")
@@ -92,6 +93,15 @@ def errorHandlingPlotCenterline(river_object=None,
 		logger.critical("\nCRITICAL ERROR, [display_voronoi]: Must be a bool, current type = '{0}'".format(type(display_voronoi)))
 		exit()
 
+	if type(coordinate_type) != str:
+		logger.critical("\nCRITICAL ERROR, [coordinate_type]: Must be a str, current type = '{0}'".format(type(coordinate_type)))
+		exit()
+	else:
+		coordinate_type_options = ["Decimal Degrees", "Relative Distance"]
+		if coordinate_type.title() not in coordinate_type_options:
+			logger.critical("\nCRITICAL ERROR, [coordinate_type]: Must be an available option in {0}, current option = '{1}'".format(coordinate_type_options, coordinate_type))
+			exit()
+
 def errorHandlingPlotCenterlineWidth(river_object=None,
 									plot_title=None,
 									save_plot_name=None,
@@ -99,7 +109,8 @@ def errorHandlingPlotCenterlineWidth(river_object=None,
 									transect_span_distance=None,
 									apply_smoothing=None,
 									flag_intersections=None,
-									remove_intersections=None):
+									remove_intersections=None,
+									coordinate_type=None):
 	# Error handling for plotCenterlineWidth()
 	if river_object is None:
 		logger.critical("\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.riverCenterline)")
@@ -142,11 +153,21 @@ def errorHandlingPlotCenterlineWidth(river_object=None,
 		logger.critical("\nCRITICAL ERROR, [remove_intersections]: Must be a bool, current type = '{0}'".format(type(remove_intersections)))
 		exit()
 
+	if type(coordinate_type) != str:
+		logger.critical("\nCRITICAL ERROR, [coordinate_type]: Must be a str, current type = '{0}'".format(type(coordinate_type)))
+		exit()
+	else:
+		coordinate_type_options = ["Decimal Degrees", "Relative Distance"]
+		if coordinate_type.title() not in coordinate_type_options:
+			logger.critical("\nCRITICAL ERROR, [coordinate_type]: Must be an available option in {0}, current option = '{1}'".format(coordinate_type_options, coordinate_type))
+			exit()
+
 ## Error Handling: centerline.py
 def errorHandlingRiverWidthFromCenterline(river_object=None,
 										transect_span_distance=None,
 										apply_smoothing=None,
 										remove_intersections=None,
+										coordinate_type=None,
 										save_to_csv=None):
 	# Error Handling for riverWidthFromCenterline()
 	if river_object is None:
@@ -174,6 +195,15 @@ def errorHandlingRiverWidthFromCenterline(river_object=None,
 		logger.critical("\nCRITICAL ERROR, [remove_intersections]: Must be a bool, current type = '{0}'".format(type(remove_intersections)))
 		exit()
 
+	if type(coordinate_type) != str:
+		logger.critical("\nCRITICAL ERROR, [coordinate_type]: Must be a str, current type = '{0}'".format(type(coordinate_type)))
+		exit()
+	else:
+		coordinate_type_options = ["Decimal Degrees", "Relative Distance"]
+		if coordinate_type.title() not in coordinate_type_options:
+			logger.critical("\nCRITICAL ERROR, [coordinate_type]: Must be an available option in {0}, current option = '{1}'".format(coordinate_type_options, coordinate_type))
+			exit()
+
 	if save_to_csv is not None:
 		if type(save_to_csv) != str:
 			logger.critical("\nCRITICAL ERROR, [save_to_csv]: Must be a str, current type = '{0}'".format(type(save_to_csv)))
@@ -182,7 +212,12 @@ def errorHandlingRiverWidthFromCenterline(river_object=None,
 			logger.critical("\nCRITICAL ERROR, [save_to_csv]: Extension must be a .csv file, current extension = '{0}'".format(save_to_csv.split(".")[1]))
 			exit()
 
-def errorHandlingSaveCenterlineCSV(river_object=None, latitude_header=None, longitude_header=None, save_to_csv=None, centerline_type=None):
+def errorHandlingSaveCenterlineCSV(river_object=None,
+								latitude_header=None,
+								longitude_header=None,
+								save_to_csv=None,
+								centerline_type=None,
+								coordinate_type=None):
 	# Error Handling for saveCenterlineCSV()
 	if river_object is None:
 		logger.critical("\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.riverCenterline)")
@@ -220,7 +255,21 @@ def errorHandlingSaveCenterlineCSV(river_object=None, latitude_header=None, long
 			logger.critical("\nCRITICAL ERROR, [centerline_type]: Must be an available option in {0}, current option = '{1}'".format(centerline_type_options, centerline_type))
 			exit()
 
-def errorHandlingSaveCenterlineMAT(river_object=None, latitude_header=None, longitude_header=None, save_to_mat=None, centerline_type=None):
+	if type(coordinate_type) != str:
+		logger.critical("\nCRITICAL ERROR, [coordinate_type]: Must be a str, current type = '{0}'".format(type(coordinate_type)))
+		exit()
+	else:
+		coordinate_type_options = ["Decimal Degrees", "Relative Distance"]
+		if coordinate_type.title() not in coordinate_type_options:
+			logger.critical("\nCRITICAL ERROR, [coordinate_type]: Must be an available option in {0}, current option = '{1}'".format(coordinate_type_options, coordinate_type))
+			exit()
+
+def errorHandlingSaveCenterlineMAT(river_object=None,
+								latitude_header=None,
+								longitude_header=None,
+								save_to_mat=None,
+								centerline_type=None,
+								coordinate_type=None):
 	# Error Handling for saveCenterlineMAT()
 	if river_object is None:
 		logger.critical("\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.riverCenterline)")
@@ -264,6 +313,15 @@ def errorHandlingSaveCenterlineMAT(river_object=None, latitude_header=None, long
 	else:
 		if centerline_type.title() not in centerline_type_options:
 			logger.critical("\nCRITICAL ERROR, [centerline_type]: Must be an available option in {0}, current option = '{1}'".format(centerline_type_options, centerline_type))
+			exit()
+
+	if type(coordinate_type) != str:
+		logger.critical("\nCRITICAL ERROR, [coordinate_type]: Must be a str, current type = '{0}'".format(type(coordinate_type)))
+		exit()
+	else:
+		coordinate_type_options = ["Decimal Degrees", "Relative Distance"]
+		if coordinate_type.title() not in coordinate_type_options:
+			logger.critical("\nCRITICAL ERROR, [coordinate_type]: Must be an available option in {0}, current option = '{1}'".format(coordinate_type_options, coordinate_type))
 			exit()
 
 # Error Handling: getCoordinatesKML.py

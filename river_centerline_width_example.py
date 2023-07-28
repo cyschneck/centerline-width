@@ -48,12 +48,11 @@ if __name__ == "__main__":
 	#print("centerlineEvenlySpaced = {0}".format(len(river.centerlineEvenlySpaced)))
 	#print("centerlineSmoothed = {0}".format(len(river.centerlineSmoothed)))
 
-	#coord_type = "Decimal Degrees"
-	coord_type = "Relative Distance"
+	coord_type = "reLATIVE DiSTANCE"
 	center_type = "Voronoi"
 	
-	#river.saveCenterlineCSV(save_to_csv="centerline_for_csv.csv", centerline_type=center_type, coordinate_type=coord_type)
-	#river.saveCenterlineMAT(save_to_mat="centerline_for_matlab.mat", centerline_type=center_type, coordinate_type=coord_type)
+	river.saveCenterlineCSV(save_to_csv="centerline_for_csv.csv", centerline_type=center_type, coordinate_type=coord_type)
+	river.saveCenterlineMAT(save_to_mat="centerline_for_matlab.mat", centerline_type=center_type, coordinate_type=coord_type)
 	#river.saveCenterlineCSV(save_to_csv="centerline_for_csv.csv", latitude_header="lat", longitude_header="long", centerline_type="Equal Distance")
 	#river.saveCenterlineMAT(save_to_mat="centerline_for_matlab.mat", latitude_header="lat", longitude_header="long", centerline_type="Evenly Spaced")
 
@@ -66,7 +65,6 @@ if __name__ == "__main__":
 						display_voronoi=False,
 						plot_title=None,
 						coordinate_type=coord_type)
-
 	transect = 3
 
 	# Plot river bank width line

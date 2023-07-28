@@ -26,6 +26,7 @@ def plotCenterlineBackend(river_object=None,
 	ax = fig.add_subplot(111)
 	scatter_plot_size = 4
 	
+	coordinate_type = coordinate_type.title()
 	# Plot River as a Polygon
 	if coordinate_type == "Decimal Degrees":
 		plt.plot(*river_object.bank_polygon.exterior.xy, c="gainsboro")
@@ -121,7 +122,8 @@ def plotCenterline(river_object=None,
 												display_all_possible_paths=display_all_possible_paths,
 												plot_title=plot_title,
 												save_plot_name=save_plot_name,
-												display_voronoi=display_voronoi)
+												display_voronoi=display_voronoi,
+												coordinate_type=coordinate_type)
 
 	fig, ax, valid_path_through = plotCenterlineBackend(river_object=river_object,
 														display_true_centerline=True,
@@ -129,6 +131,8 @@ def plotCenterline(river_object=None,
 														marker_type=marker_type,
 														centerline_color=centerline_color,
 														coordinate_type=coordinate_type)
+
+	coordinate_type = coordinate_type.title()
 
 	# Display the Voronoi Diagram
 	if display_voronoi:
@@ -180,7 +184,8 @@ def plotCenterlineWidth(river_object=None,
 													transect_span_distance=transect_span_distance,
 													apply_smoothing=apply_smoothing,
 													flag_intersections=flag_intersections,
-													remove_intersections=remove_intersections)
+													remove_intersections=remove_intersections,
+													coordinate_type=coordinate_type)
 
 	fig, ax, valid_path_through = plotCenterlineBackend(river_object=river_object, 
 														display_true_centerline=display_true_centerline,
@@ -189,6 +194,7 @@ def plotCenterlineWidth(river_object=None,
 														centerline_color="black",
 														coordinate_type=coordinate_type)
 
+	coordinate_type = coordinate_type.title()
 	# Determine the Width of River
 	number_of_evenly_spaced_points = ""
 

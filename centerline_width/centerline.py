@@ -360,7 +360,10 @@ def riverWidthFromCenterline(river_object=None,
 															transect_span_distance=transect_span_distance,
 															apply_smoothing=apply_smoothing,
 															remove_intersections=remove_intersections,
+															coordinate_type=coordinate_type,
 															save_to_csv=save_to_csv)
+
+	coordinate_type = coordinate_type.title()
 
 	if river_object.centerlineVoronoi is None:
 		logger.critical("\nCRITICAL ERROR, unable to find width without a valid centerline")
@@ -440,8 +443,10 @@ def saveCenterlineCSV(river_object=None,
 													save_to_csv=save_to_csv, 
 													latitude_header=latitude_header,
 													longitude_header=longitude_header,
-													centerline_type=centerline_type)
+													centerline_type=centerline_type,
+													coordinate_type=coordinate_type)
 	centerline_type = centerline_type.title()
+	coordinate_type = coordinate_type.title()
 
 	if coordinate_type == "Decimal Degrees":
 		if centerline_type == "Voronoi": centerline_coordinates_by_type = river_object.centerlineVoronoi
@@ -485,8 +490,10 @@ def saveCenterlineMAT(river_object=None,
 													save_to_mat=save_to_mat, 
 													latitude_header=latitude_header,
 													longitude_header=longitude_header,
-													centerline_type=centerline_type)
+													centerline_type=centerline_type,
+													coordinate_type=coordinate_type)
 	centerline_type = centerline_type.title()
+	coordinate_type = coordinate_type.title()
 
 	if coordinate_type == "Decimal Degrees":
 		if centerline_type == "Voronoi": centerline_coordinates_by_type = river_object.centerlineVoronoi
