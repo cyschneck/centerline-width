@@ -101,6 +101,24 @@ def test_riverWidthFromCenterline_csvInvalidExtension(caplog):
 	assert log_record.levelno == logging.CRITICAL
 	assert log_record.message == "\nCRITICAL ERROR, [save_to_csv]: Extension must be a .csv file, current extension = 'txt'"
 
+def test_riverWidthFromCenterline_coordinateTypeInvalidOption(caplog):
+	with pytest.raises(SystemExit):
+		centerline_width.riverWidthFromCenterline(river_object=river_class_example,
+										coordinate_type="Invalid Option")
+	log_record = caplog.records[0]
+	assert log_record.levelno == logging.CRITICAL
+	assert log_record.message == "\nCRITICAL ERROR, [coordinate_type]: Must be an available option in ['Decimal Degrees', 'Relative Distance'], current option = 'Invalid Option'"
+
+@pytest.mark.parametrize("coordinate_type_name_invalid, coordinate_type_error_output", invalid_non_str_options)
+def test_riverWidthFromCenterline_coordinateTypeInvalidTypes(caplog, coordinate_type_name_invalid, coordinate_type_error_output):
+	with pytest.raises(SystemExit):
+		centerline_width.riverWidthFromCenterline(river_object=river_class_example,
+										coordinate_type=coordinate_type_name_invalid)
+	log_record = caplog.records[0]
+	assert log_record.levelno == logging.CRITICAL
+	assert log_record.message == "\nCRITICAL ERROR, [coordinate_type]: Must be a str, current type = '{0}'".format(coordinate_type_error_output)
+
+
 ## saveCenterlineCSV() #####################################################
 def test_saveCenterlineCSV_riverObjectRequired(caplog):
 	with pytest.raises(SystemExit):
@@ -161,6 +179,25 @@ def test_saveCenterlineCSV_centerlineTypeInvalidOptions(caplog):
 	log_record = caplog.records[0]
 	assert log_record.levelno == logging.CRITICAL
 	assert log_record.message == "\nCRITICAL ERROR, [centerline_type]: Must be an available option in ['Voronoi', 'Evenly Spaced', 'Smoothed', 'Equal Distance'], current option = 'not valid'"
+
+def test_saveCenterlineCSV_coordinateTypeInvalidOption(caplog):
+	with pytest.raises(SystemExit):
+		centerline_width.saveCenterlineCSV(river_object=river_class_example,
+										save_to_csv="testing.csv",
+										coordinate_type="Invalid Option")
+	log_record = caplog.records[0]
+	assert log_record.levelno == logging.CRITICAL
+	assert log_record.message == "\nCRITICAL ERROR, [coordinate_type]: Must be an available option in ['Decimal Degrees', 'Relative Distance'], current option = 'Invalid Option'"
+
+@pytest.mark.parametrize("coordinate_type_name_invalid, coordinate_type_error_output", invalid_non_str_options)
+def test_saveCenterlineCSV_coordinateTypeInvalidTypes(caplog, coordinate_type_name_invalid, coordinate_type_error_output):
+	with pytest.raises(SystemExit):
+		centerline_width.saveCenterlineCSV(river_object=river_class_example,
+										save_to_csv="testing.csv",
+										coordinate_type=coordinate_type_name_invalid)
+	log_record = caplog.records[0]
+	assert log_record.levelno == logging.CRITICAL
+	assert log_record.message == "\nCRITICAL ERROR, [coordinate_type]: Must be a str, current type = '{0}'".format(coordinate_type_error_output)
 
 ## saveCenterlineMAT() #####################################################
 def test_saveCenterlineMAT_riverObjectRequired(caplog):
@@ -240,3 +277,22 @@ def test_saveCenterlineMAT_centerlineTypeInvalidOptions(caplog):
 	log_record = caplog.records[0]
 	assert log_record.levelno == logging.CRITICAL
 	assert log_record.message == "\nCRITICAL ERROR, [centerline_type]: Must be an available option in ['Voronoi', 'Evenly Spaced', 'Smoothed', 'Equal Distance'], current option = 'not valid'"
+
+def test_saveCenterlineMAT_coordinateTypeInvalidOption(caplog):
+	with pytest.raises(SystemExit):
+		centerline_width.saveCenterlineMAT(river_object=river_class_example,
+										save_to_mat="testing.mat",
+										coordinate_type="Invalid Option")
+	log_record = caplog.records[0]
+	assert log_record.levelno == logging.CRITICAL
+	assert log_record.message == "\nCRITICAL ERROR, [coordinate_type]: Must be an available option in ['Decimal Degrees', 'Relative Distance'], current option = 'Invalid Option'"
+
+@pytest.mark.parametrize("coordinate_type_name_invalid, coordinate_type_error_output", invalid_non_str_options)
+def test_saveCenterlineMAT_coordinateTypeInvalidTypes(caplog, coordinate_type_name_invalid, coordinate_type_error_output):
+	with pytest.raises(SystemExit):
+		centerline_width.saveCenterlineMAT(river_object=river_class_example,
+										save_to_mat="testing.mat",
+										coordinate_type=coordinate_type_name_invalid)
+	log_record = caplog.records[0]
+	assert log_record.levelno == logging.CRITICAL
+	assert log_record.message == "\nCRITICAL ERROR, [coordinate_type]: Must be a str, current type = '{0}'".format(coordinate_type_error_output)
