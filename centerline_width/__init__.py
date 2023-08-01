@@ -28,8 +28,10 @@ from .centerline import evenlySpacedCenterline
 from .centerline import smoothedCoordinates
 from .centerline import riverWidthFromCenterlineCoordinates
 from .centerline import riverWidthFromCenterline
-from .centerline import saveCenterlineCSV
-from .centerline import saveCenterlineMAT
+
+# saveOutput.py function calls
+from .saveOutput import saveCenterlineCSV
+from .saveOutput import saveCenterlineMAT
 
 # plotDiagrams.py function calls
 from .plotDiagrams import plotCenterline
