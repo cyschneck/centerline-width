@@ -33,9 +33,15 @@ def main():
 							equal_distance=5,
 							ellipsoid="WGS84")
 
-	# plot the centerline
+	# plot the centerline with Decimal Degrees (by default)
 	ro.plotCenterline(centerline_type="Equal Distance",
 					display_all_possible_paths=False,
+					save_plot_name="43deg44_18dot23_N_101deg27_7dot61_W_centerline.png")
+
+	# plot the centerline with Relative Distance
+	ro.plotCenterline(centerline_type="Equal Distance",
+					display_all_possible_paths=False,
+					coordinate_type="Relative Distance",
 					save_plot_name="43deg44_18dot23_N_101deg27_7dot61_W_centerline.png")
 
 	# save to csv to import back into google earth pro
@@ -47,7 +53,6 @@ def main():
 	ro.saveCenterlineMAT(save_to_mat="equal_distance_coordinates.mat",
 						centerline_type="Equal Distance",
 						latitude_header="lat",longitude_header="lon")
-
 
 	# plot width lines
 	ro.plotCenterlineWidth(display_true_centerline=True,

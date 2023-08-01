@@ -67,7 +67,7 @@ Then once the .csv file is created, in order to run the centerline-width functio
 river_object = centerline_width.riverCenterline(csv_data="river_coordinates_output.csv")
 ```
 
-To plot the centerline, run the `plotCenterline()` function from `river_object` created
+To plot the centerline, run the `plotCenterline()` function from `river_object` created. By default, will display with `Decimal Degrees` (latitude/longitude) coordinates
 ```python
 river_object.plotCenterline()
 ```
@@ -80,6 +80,12 @@ While `apply_smoothing`, `remove_intersections`, and `display_true_centerline` a
 river.plotCenterlineWidth(apply_smoothing=True, remove_intersections=True, display_true_centerline=False)
 ```
 ![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width.png)
+
+It is possible to also display all the coordinates as a `Relative Distance`, where all the coordinates are converted to a relative distance (in meterse) from the first point on the left bank
+```python
+river_object.plotCenterline(coordinate_type="Relative Distance")
+```
+![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_relative_distance_coords_centerline.png)
 
 For more details to fix unexpected behavior or error code: [Debugging, Error Handling, and Edge Cases](#debugging-error-handling-and-edge-cases)
 
