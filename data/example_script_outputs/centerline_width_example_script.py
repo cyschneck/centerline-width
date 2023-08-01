@@ -41,7 +41,7 @@ def main():
 	# plot the centerline with Relative Distance
 	ro.plotCenterline(centerline_type="Equal Distance",
 					display_all_possible_paths=False,
-					coordinate_type="Relative Distance",
+					coordinate_unit="Relative Distance",
 					save_plot_name="43deg44_18dot23_N_101deg27_7dot61_W_centerline.png")
 
 	# save to csv to import back into google earth pro

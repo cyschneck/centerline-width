@@ -6,7 +6,6 @@ import logging
 import numpy as np
 import networkx as nx
 from scipy import interpolate
-from scipy.io import savemat
 from shapely.geometry import Point, LineString
 from shapely.ops import split
 import pyproj
@@ -201,7 +200,7 @@ def riverWidthFromCenterlineCoordinates(river_object=None,
 										centerline_coordinates=None,
 										transect_span_distance=3,
 										remove_intersections=False,
-										coordinate_type="Decimal Degrees",
+										coordinate_unit="Decimal Degrees",
 										save_to_csv=None):
 	# Return the left/right coordinates of width centerlines
 	right_width_coordinates = {}
@@ -228,7 +227,7 @@ def riverWidthFromCenterlineCoordinates(river_object=None,
 			normal_of_slope = -1 / slope_avg
 			middle_of_list = len(group_points) // 2 # set centerline point to be the middle point being averaged
 			centerline_slope[group_points[middle_of_list]] = normal_of_slope
-
+	
 	def intersectsTopOrBottomOfBank(point1, point2):
 		# returns True/False if the points lie on the 'false' top/bottom of the river
 		points_intersect_false_edges = False
@@ -276,7 +275,7 @@ def riverWidthFromCenterlineCoordinates(river_object=None,
 					if not intersectsTopOrBottomOfBank(left_point, right_point):
 						left_width_coordinates[centerline_point] = (left_point.x, left_point.y)
 						right_width_coordinates[centerline_point] = (right_point.x, right_point.y)
-
+	
 	# Determine lines that intersect with other lines in multiple places to flag/remove
 	all_linestrings = []
 	linestring_with_centerlines = {} # linestring with associated centerline: {linestring : centerline coordinate}
@@ -349,7 +348,7 @@ def riverWidthFromCenterline(river_object=None,
 							transect_span_distance=3,
 							apply_smoothing=True,
 							remove_intersections=False,
-							coordinate_type="Decimal Degrees",
+							coordinate_unit="Decimal Degrees",
 							save_to_csv=None):
 	# Return river width: centerline and width at centerline
 	# Width is measured to the bank, relative to the center point (normal of the centerline)
@@ -359,10 +358,10 @@ def riverWidthFromCenterline(river_object=None,
 															transect_span_distance=transect_span_distance,
 															apply_smoothing=apply_smoothing,
 															remove_intersections=remove_intersections,
-															coordinate_type=coordinate_type,
+															coordinate_unit=coordinate_unit,
 															save_to_csv=save_to_csv)
 
-	coordinate_type = coordinate_type.title()
+	coordinate_unit = coordinate_unit.title()
 
 	if river_object.centerlineVoronoi is None:
 		logger.critical("\nCRITICAL ERROR, unable to find width without a valid centerline")
@@ -382,6 +381,8 @@ def riverWidthFromCenterline(river_object=None,
 																								remove_intersections=remove_intersections)
 
 	width_dict = {}
+	print(right_width_coord)
+	exit()
 
 	geodesic = pyproj.Geod(ellps=river_object.ellipsoid)
 
@@ -393,14 +394,14 @@ def riverWidthFromCenterline(river_object=None,
 		width_dict[centerline_coord] = distance_between_right_and_left_m/1000
 
 	# Set headers and conver to Relative Distance if needed
-	if coordinate_type == "Decimal Degrees":
+	if coordinate_unit == "Decimal Degrees":
 		latitude_header= "Centerline Latitude (Deg)"
 		longitude_header = "Centerline Longitude (Deg)"
-	if coordinate_type == "Relative Distance":
+	if coordinate_unit == "Relative Distance":
 		latitude_header= "Relative Distance Y (from Latitude) (m)"
 		longitude_header = "Relative Distance X (from Longitude) (m)"
 		# Convert from Decimal Degrees to Relative Distance
-		width_dict = centerline_width.relativeWidthCoordinates(river_object.left_bank_coordinates[0], width_dict, river_object.ellipsoid)
+		#width_dict = centerline_width.relativeWidthCoordinates(river_object.left_bank_coordinates[0], width_dict, river_object.ellipsoid)
 
 	# Save width dictionary to a csv file (Latitude, Longtiude, Width)
 	if save_to_csv:

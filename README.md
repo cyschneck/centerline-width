@@ -81,9 +81,9 @@ river.plotCenterlineWidth(apply_smoothing=True, remove_intersections=True, displ
 ```
 ![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width.png)
 
-It is possible to also display all the coordinates as a `Relative Distance`, where all the coordinates are converted to a relative distance (in meterse) from the first point on the left bank
+It is possible to also display all the coordinates as a `Relative Distance`, where all the coordinates are converted to a relative distance (in meters) from the first point on the left bank
 ```python
-river_object.plotCenterline(coordinate_type="Relative Distance")
+river_object.plotCenterline(coordinate_unit="Relative Distance")
 ```
 ![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_relative_distance_coords_centerline.png)
 
@@ -329,13 +329,13 @@ Output is a list of tuples: (example) `[(-92.86788596499872, 30.03786596717931),
 Save the centerline coordinates to a csv file with columns for latitude and longitude. This is the file format for a table of (latitude,longitude) pairs accepted to import back into Google Earth Pro.
 
 ```
-saveCenterlineCSV(save_to_csv=None, centerline_type="Voronoi", coordinate_type="Decimal Degrees")
+saveCenterlineCSV(save_to_csv=None, centerline_type="Voronoi", coordinate_unit="Decimal Degrees")
 ```
 * **[REQUIRED]** save_to_csv (string): CSV filename, requires a .csv extension
 * [OPTIONAL] centerline_type (string): Centerline type to save to CSV (not case-sensitive), options: ["Voronoi", "Evenly Spaced", "Smoothed", "Equal Distance"], defaults to "Voronoi"
 * [OPTIONAL] latitude_header (string): Column header for latitude values, defaults to `<centerline_type> Centerline Latitude (Deg)` or `<centerline_type> Relative Distance Y (from Latitude) (m)`
 * [OPTIONAL] longitude_header (string): Column header for Longitude values, defaults to `<centerline_type> Centerline Longitude (Deg)` or `<centerline_type> Relative Distance X (from Longitude) (m)`
-* [OPTIONAL] coordinate_type (string): Coordinates of the river are return as "Decimal Degrees" (latitude/longtidue) or converted to a distance from the first point on the left bank as "Relative Distance", defaults to "Decimal Degree"
+* [OPTIONAL] coordinate_unit (string): Coordinates of the river are return as "Decimal Degrees" (latitude/longtidue) or converted to a distance from the first point on the left bank as "Relative Distance", defaults to "Decimal Degree"
 
 ```python
 import centerline_width
@@ -350,13 +350,13 @@ Note: it is best practice to plot the centerline with `plotCenterline()` to ensu
 Save the centerline coordinates to a .mat file with columns for latitude and longitude
 
 ```
-saveCenterlineMAT(save_to_mat=None, centerline_type="Voronoi", coordinate_type="Decimal Degrees")
+saveCenterlineMAT(save_to_mat=None, centerline_type="Voronoi", coordinate_unit="Decimal Degrees")
 ```
 * **[REQUIRED]** save_to_mat (string): MAT filename, requires a .mat extension
 * [OPTIONAL] centerline_type (string): Centerline type to save to MAT (not case-sensitive), options: ["Voronoi", "Evenly Spaced", "Smoothed", "Equal Distance"], defaults to "Voronoi"
 * [OPTIONAL] latitude_header (string): Column header for latitude values, defaults to `<centerline_type>_Centerline_Latitude_(Deg)` or `<centerline_type>_Relative_Distance_Y_From_Latitude_m` (cannot include spaces or special characters)
 * [OPTIONAL] longitude_header (string): Column header for Longitude values, defaults to `<centerline_type>_Centerline_Longitude_(Deg)` or `<centerline_type>_Relative_Distance_X_From_Longitude_m` (cannot include spaces or special characters)
-* [OPTIONAL] coordinate_type (string): Coordinates of the river are return as "Decimal Degrees" (latitude/longtidue) or converted to a distance from the first point on the left bank as "Relative Distance", defaults to "Decimal Degree"
+* [OPTIONAL] coordinate_unit (string): Coordinates of the river are return as "Decimal Degrees" (latitude/longtidue) or converted to a distance from the first point on the left bank as "Relative Distance", defaults to "Decimal Degree"
 
 ```python
 import centerline_width
@@ -391,7 +391,7 @@ plotCenterline(centerline_type="Voronoi",
 		plot_title=None, 
 		save_plot_name=None, 
 		display_voronoi=False,
-		coordinate_type="Decimal Degrees")
+		coordinate_unit="Decimal Degrees")
 ```
 * [OPTIONAL] centerline_type (string): Centerline type graph within river (not case-sensitive), options: ["Voronoi", "Evenly Spaced", "Smoothed", "Equal Distance"], defaults to "Voronoi"
 * [OPTIONAL] marker_type (string): Graph type (not case-sensitive), options: ["Line", "Scatter"], defaults to "Line"
@@ -400,7 +400,7 @@ plotCenterline(centerline_type="Voronoi",
 * [OPTIONAL] plot_title (string): Change plot title, defaults to "River Coordinates: Valid Centerline = True/False, Valid Polygon = True/False"
 * [OPTIONAL] save_plot_name (string): Save the plot with a given name and location
 * [OPTIONAL] display_voronoi (boolean): Overlay Voronoi diagram used to generate centerline, defaults to False
-* [OPTIONAL] coordinate_type (string): Coordinates of the river are return as "Decimal Degrees" (latitude/longtidue) or converted to a distance from the first point on the left bank as "Relative Distance", defaults to "Decimal Degree"
+* [OPTIONAL] coordinate_unit (string): Coordinates of the river are return as "Decimal Degrees" (latitude/longtidue) or converted to a distance from the first point on the left bank as "Relative Distance", defaults to "Decimal Degree"
 
 ```python
 import centerline_width
@@ -423,7 +423,7 @@ plotCenterlineWidth(plot_title=None,
 		apply_smoothing=False,
 		flag_intersections=True,
 		remove_intersections=False,
-		coordinate_type="Decimal Degrees")
+		coordinate_unit="Decimal Degrees")
 ```
 * [OPTIONAL] plot_title (string): Change plot title, defaults to "River Coordinates: Valid Centerline = True/False, Valid Polygon = True/False"
 * [OPTIONAL] save_plot_name (string): Save the plot with a given name and location
@@ -432,7 +432,7 @@ plotCenterlineWidth(plot_title=None,
 * [OPTIONAL] apply_smoothing (boolean): Apply a B-spline smoothing to centerline
 * [OPTIONAL] flag_intersections (boolean): Display intersecting width lines as red in graph, defaults to True
 * [OPTIONAL] remove_intersections (boolean): Remove intersecting lines (but maintain the most width lines as possible) and only return non-intersecting width lines, defaults to False
-* [OPTIONAL] coordinate_type (string): Coordinates of the river are return as "Decimal Degrees" (latitude/longtidue) or converted to a distance from the first point on the left bank as "Relative Distance", defaults to "Decimal Degree"
+* [OPTIONAL] coordinate_unit (string): Coordinates of the river are return as "Decimal Degrees" (latitude/longtidue) or converted to a distance from the first point on the left bank as "Relative Distance", defaults to "Decimal Degree"
 
 **apply_smoothing**
 
@@ -461,11 +461,11 @@ Intersecting lines are flagged in red by default (flag_intersections=True)
 | ------------- | ------------- |
 | ![river_keep+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_keep_intersections.png) | ![river_remove+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_remove_intersections.png)|
 
-**coordinate_type**
+**coordinate_unit**
 
 Two options for measuring and displaying coordinates. The two options are "Decimal Degrees" and "Relative Distance". "Decimal Degrees" is the default option that uses the original data coordinate system with latitude/longitude. "Relative Distance" changes the coordinates of each point to be the distance (in meters) from the first point on the left bank
 
-| coordinate_type="Decimal Degrees" | remove_intersections="Relative Distance" |
+| coordinate_unit="Decimal Degrees" | remove_intersections="Relative Distance" |
 | ------------- | ------------- |
 | ![dd_coords+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_decimal_degrees.png) | ![rd_coords+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_relative_distance.png)|
 
@@ -484,13 +484,13 @@ Return the width of the river at each (evenly spaced or smoothed) centerline coo
 riverWidthFromCenterline(transect_span_distance=3,
 			apply_smoothing=True,
 			remove_intersections=False,
-			coordinate_type="Decimal Degrees",
+			coordinate_unit="Decimal Degrees",
 			save_to_csv=None)
 ```
 * [OPTIONAL] transect_span_distance (int): Sum up n number of points around a center point to determine the slope (increase to decrease the impact of sudden changes), defaults to 6, must be greater than 2 (since the slope is found from the difference in position between two points), measured orthogonal to the centerline
 * [OPTIONAL] apply_smoothing (boolean): Apply a B-spline smoothing to centerline
 * [OPTIONAL] remove_intersections (boolean): Iterative remove intersecting lines, to maintain the most width lines, but return only non-intersecting width lines, defaults to True
-* [OPTIONAL] coordinate_type (string): Coordinates of the river are return as "Decimal Degrees" (latitude/longtidue) or converted to a distance from the first point on the left bank as "Relative Distance", defaults to "Decimal Degree"
+* [OPTIONAL] coordinate_unit (string): Coordinates of the river are return as "Decimal Degrees" (latitude/longtidue) or converted to a distance from the first point on the left bank as "Relative Distance", defaults to "Decimal Degree"
 * [OPTIONAL] save_to_csv (string): CSV filename to output width, defaults to None (no file is saved), requires a .csv extension (Column Headers: `Centerline Latitude (Deg)", "Centerline Longitude (Deg)", "Width (km)`)
 
 Important note, when using `apply_smoothing=True`, the centerline generated is the result of evenly spaced coordinates generated from the original Voronoi coordinates, so the smoothed coordinates may not match exactly to the original centerline coordinates. When `apply_smoothing=False`, width lines are generated from the evenly spaced centerline coordinates

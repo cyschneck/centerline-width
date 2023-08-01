@@ -111,7 +111,7 @@ class riverCenterline:
 						plot_title=None,
 						save_plot_name=None,
 						display_voronoi=False,
-						coordinate_type="Decimal Degrees"):
+						coordinate_unit="Decimal Degrees"):
 		centerline_width.plotCenterline(river_object=self,
 										centerline_type=centerline_type,
 										marker_type=marker_type,
@@ -120,7 +120,7 @@ class riverCenterline:
 										plot_title=plot_title, 
 										save_plot_name=save_plot_name, 
 										display_voronoi=display_voronoi,
-										coordinate_type=coordinate_type)
+										coordinate_unit=coordinate_unit)
 
 	def plotCenterlineWidth(self,
 							plot_title=None, 
@@ -130,7 +130,7 @@ class riverCenterline:
 							apply_smoothing=False,
 							flag_intersections=True,
 							remove_intersections=False,
-							coordinate_type="Decimal Degrees"):
+							coordinate_unit="Decimal Degrees"):
 		centerline_width.plotCenterlineWidth(river_object=self,
 											plot_title=plot_title, 
 											save_plot_name=save_plot_name, 
@@ -139,19 +139,19 @@ class riverCenterline:
 											apply_smoothing=apply_smoothing,
 											flag_intersections=flag_intersections,
 											remove_intersections=remove_intersections,
-											coordinate_type=coordinate_type)
+											coordinate_unit=coordinate_unit)
 
 	def riverWidthFromCenterline(self,
 								transect_span_distance=3,
 								apply_smoothing=True,
 								remove_intersections=False,
-								coordinate_type="Decimal Degrees",
+								coordinate_unit="Decimal Degrees",
 								save_to_csv=None):
 		return centerline_width.riverWidthFromCenterline(river_object=self,
 														transect_span_distance=transect_span_distance,
 														apply_smoothing=apply_smoothing,
 														remove_intersections=remove_intersections,
-														coordinate_type=coordinate_type,
+														coordinate_unit=coordinate_unit,
 														save_to_csv=save_to_csv)
 
 	def saveCenterlineCSV(self, 
@@ -159,23 +159,23 @@ class riverCenterline:
 						latitude_header=None,
 						longitude_header=None, 
 						centerline_type="Voronoi",
-						coordinate_type="Decimal Degrees"):
+						coordinate_unit="Decimal Degrees"):
 		return centerline_width.saveCenterlineCSV(river_object=self,
 												save_to_csv=save_to_csv,
 												latitude_header=latitude_header, 
 												longitude_header=longitude_header, 
 												centerline_type=centerline_type,
-												coordinate_type=coordinate_type)
+												coordinate_unit=coordinate_unit)
 
 	def saveCenterlineMAT(self,
 						save_to_mat=None, 
 						latitude_header=None,
 						longitude_header=None, 
 						centerline_type="Voronoi",
-						coordinate_type="Decimal Degrees"):
+						coordinate_unit="Decimal Degrees"):
 		return centerline_width.saveCenterlineMAT(river_object=self,
 												save_to_mat=save_to_mat,
 												latitude_header=latitude_header,
 												longitude_header=longitude_header,
 												centerline_type=centerline_type,
-												coordinate_type=coordinate_type)
+												coordinate_unit=coordinate_unit)

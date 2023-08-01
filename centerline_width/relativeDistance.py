@@ -28,8 +28,11 @@ def relativeBankCoordinates(left_lon_lat_coordinates, right_lon_lat_coordinates,
 		return None, None
 
 	left_relative_coordinates = []
-	for left_point in left_lon_lat_coordinates[1:]: # skip the bottom left most value
-		coord_pair = relativeSingleCoordinate(first_point, left_point, ellipsoid)
+	for left_point in left_lon_lat_coordinates:
+		if left_point == first_point:
+			coord_pair = (0.0, 0.0)
+		else:
+			coord_pair = relativeSingleCoordinate(first_point, left_point, ellipsoid)
 		left_relative_coordinates.append(coord_pair)
 
 	right_relative_coordinates = []

@@ -20,28 +20,28 @@ def plotCenterlineBackend(river_object=None,
 						centerline_type="Voronoi",
 						marker_type="line",
 						centerline_color="black",
-						coordinate_type=None):
+						coordinate_unit=None):
 	# Shared components between plotCenterline and plotCenterlineWidth
 	fig = plt.figure(figsize=(10,10))
 	ax = fig.add_subplot(111)
 	scatter_plot_size = 4
 	
-	coordinate_type = coordinate_type.title()
+	coordinate_unit = coordinate_unit.title()
 	# Plot River as a Polygon
-	if coordinate_type == "Decimal Degrees":
+	if coordinate_unit == "Decimal Degrees":
 		plt.plot(*river_object.bank_polygon.exterior.xy, c="gainsboro")
 		plt.plot(*river_object.top_bank.xy, c="forestgreen")
 		plt.plot(*river_object.bottom_bank.xy, c="lightcoral")
-	if coordinate_type == "Relative Distance":
+	if coordinate_unit == "Relative Distance":
 		plt.plot(*river_object.bank_polygon_relative.exterior.xy, c="gainsboro")
 		plt.plot(*river_object.top_bank_relative.xy, c="forestgreen")
 		plt.plot(*river_object.bottom_bank_relative.xy, c="lightcoral")
 
 	# Choose between Decimal Degrees and Relative Distances for X, Y coordinates
-	if coordinate_type == "Decimal Degrees":
+	if coordinate_unit == "Decimal Degrees":
 		right_coords =  river_object.right_bank_coordinates
 		left_coords =  river_object.left_bank_coordinates
-	if coordinate_type == "Relative Distance":
+	if coordinate_unit == "Relative Distance":
 		right_coords =  river_object.right_bank_relative_coordinates
 		left_coords =  river_object.left_bank_relative_coordinates
 
@@ -61,23 +61,23 @@ def plotCenterlineBackend(river_object=None,
 	# Choose btween Decimal Degrees and Centerline Type
 	if centerline_type == "Voronoi": 
 		centerline_legend = "Voronoi Centerline Coordinates"
-		if coordinate_type == "Decimal Degrees": centerline_coordinates_by_type = river_object.centerlineVoronoi
-		if coordinate_type == "Relative Distance": centerline_coordinates_by_type = river_object.centerlineVoronoiRelative
+		if coordinate_unit == "Decimal Degrees": centerline_coordinates_by_type = river_object.centerlineVoronoi
+		if coordinate_unit == "Relative Distance": centerline_coordinates_by_type = river_object.centerlineVoronoiRelative
 
 	if centerline_type == "Equal Distance": 
 		centerline_legend = "Equal Distance Centerline Coordinates"
-		if coordinate_type == "Decimal Degrees": centerline_coordinates_by_type = river_object.centerlineEqualDistance
-		if coordinate_type == "Relative Distance": centerline_coordinates_by_type = river_object.centerlineEqualDistanceRelative
+		if coordinate_unit == "Decimal Degrees": centerline_coordinates_by_type = river_object.centerlineEqualDistance
+		if coordinate_unit == "Relative Distance": centerline_coordinates_by_type = river_object.centerlineEqualDistanceRelative
 
 	if centerline_type == "Evenly Spaced": 
 		centerline_legend = "Evenly Spaced Centerline Coordiantes"
-		if coordinate_type == "Decimal Degrees": centerline_coordinates_by_type = river_object.centerlineEvenlySpaced
-		if coordinate_type == "Relative Distance": centerline_coordinates_by_type = river_object.centerlineEvenlySpacedRelative
+		if coordinate_unit == "Decimal Degrees": centerline_coordinates_by_type = river_object.centerlineEvenlySpaced
+		if coordinate_unit == "Relative Distance": centerline_coordinates_by_type = river_object.centerlineEvenlySpacedRelative
 
 	if centerline_type == "Smoothed": 
 		centerline_legend = "Smoothed Centerlined Coordiantes"
-		if coordinate_type == "Decimal Degrees": centerline_coordinates_by_type = river_object.centerlineSmoothed
-		if coordinate_type == "Relative Distance": centerline_coordinates_by_type = river_object.centerlineSmoothedRelative
+		if coordinate_unit == "Decimal Degrees": centerline_coordinates_by_type = river_object.centerlineSmoothed
+		if coordinate_unit == "Relative Distance": centerline_coordinates_by_type = river_object.centerlineSmoothedRelative
 
 	# Plot the centerline coordinates
 	if centerline_coordinates_by_type:
@@ -96,10 +96,10 @@ def plotCenterlineBackend(river_object=None,
 	# Dynamically assign the starting and ending
 	if river_object.starting_node is not None: # error handling for when data is too small to generate centerline coordiantes
 		ss = 45 # scatter size
-		if coordinate_type == "Decimal Degrees":
+		if coordinate_unit == "Decimal Degrees":
 			plt.scatter(river_object.starting_node[0], river_object.starting_node[1], c="green", label="Starting Node", s=ss)
 			plt.scatter(river_object.ending_node[0], river_object.ending_node[1], c="red", label="Ending Node", s=ss)
-		if coordinate_type == "Relative Distance":
+		if coordinate_unit == "Relative Distance":
 			plt.scatter(river_object.starting_node_relative[0], river_object.starting_node_relative[1], c="green", label="Starting Node", s=ss)
 			plt.scatter(river_object.ending_node_relative[0], river_object.ending_node_relative[1], c="red", label="Ending Node", s=ss)
 
@@ -113,7 +113,7 @@ def plotCenterline(river_object=None,
 					plot_title=None, 
 					save_plot_name=None, 
 					display_voronoi=False,
-					coordinate_type="Decimal Degrees"):
+					coordinate_unit="Decimal Degrees"):
 	# Plot Centerline of River
 	centerline_width.errorHandlingPlotCenterline(river_object=river_object,
 												centerline_type=centerline_type,
@@ -123,30 +123,30 @@ def plotCenterline(river_object=None,
 												plot_title=plot_title,
 												save_plot_name=save_plot_name,
 												display_voronoi=display_voronoi,
-												coordinate_type=coordinate_type)
+												coordinate_unit=coordinate_unit)
 
 	fig, ax, valid_path_through = plotCenterlineBackend(river_object=river_object,
 														display_true_centerline=True,
 														centerline_type=centerline_type,
 														marker_type=marker_type,
 														centerline_color=centerline_color,
-														coordinate_type=coordinate_type)
+														coordinate_unit=coordinate_unit)
 
-	coordinate_type = coordinate_type.title()
+	coordinate_unit = coordinate_unit.title()
 
 	# Display the Voronoi Diagram
 	if display_voronoi:
-		if coordinate_type == "Decimal Degrees":
+		if coordinate_unit == "Decimal Degrees":
 			voronoi_plot_2d(river_object.bank_voronoi, show_points=True, point_size=1, ax=ax)
-		if coordinate_type == "Relative Distance":
+		if coordinate_unit == "Relative Distance":
 			voronoi_plot_2d(river_object.bank_voronoi_relative, show_points=True, point_size=1, ax=ax)
 
 	# Plot all possible paths with text for positions
 	if display_all_possible_paths:
-		if coordinate_type == "Decimal Degrees":
+		if coordinate_unit == "Decimal Degrees":
 			for i in range(len(river_object.x_voronoi_ridge_point)):
 				plt.plot(river_object.x_voronoi_ridge_point[i], river_object.y_voronoi_ridge_point[i], 'cyan', linewidth=1, zorder=1)
-		if coordinate_type == "Relative Distance":
+		if coordinate_unit == "Relative Distance":
 			for i in range(len(river_object.x_voronoi_ridge_point_relative)):
 				plt.plot(river_object.x_voronoi_ridge_point_relative[i], river_object.y_voronoi_ridge_point_relative[i], 'cyan', linewidth=1, zorder=1)
 
@@ -156,10 +156,10 @@ def plotCenterline(river_object=None,
 	else:
 		plt.title(plot_title)
 
-	if coordinate_type == "Decimal Degrees":
+	if coordinate_unit == "Decimal Degrees":
 		plt.xlabel("Longitude (°)")
 		plt.ylabel("Latitude (°)")
-	if coordinate_type == "Relative Distance":
+	if coordinate_unit == "Relative Distance":
 		plt.xlabel("Relative Distance X (m)")
 		plt.ylabel("Relative Distance Y (m)")
 
@@ -175,7 +175,7 @@ def plotCenterlineWidth(river_object=None,
 						apply_smoothing=False,
 						flag_intersections=True,
 						remove_intersections=False,
-						coordinate_type="Decimal Degrees"):
+						coordinate_unit="Decimal Degrees"):
 	# Plot Width Lines based on Centerline
 	centerline_width.errorHandlingPlotCenterlineWidth(river_object=river_object,
 													plot_title=plot_title, 
@@ -185,16 +185,16 @@ def plotCenterlineWidth(river_object=None,
 													apply_smoothing=apply_smoothing,
 													flag_intersections=flag_intersections,
 													remove_intersections=remove_intersections,
-													coordinate_type=coordinate_type)
+													coordinate_unit=coordinate_unit)
 
 	fig, ax, valid_path_through = plotCenterlineBackend(river_object=river_object, 
 														display_true_centerline=display_true_centerline,
 														centerline_type="Voronoi",
 														marker_type="line",
 														centerline_color="black",
-														coordinate_type=coordinate_type)
+														coordinate_unit=coordinate_unit)
 
-	coordinate_type = coordinate_type.title()
+	coordinate_unit = coordinate_unit.title()
 	# Determine the Width of River
 	number_of_evenly_spaced_points = ""
 
@@ -210,9 +210,9 @@ def plotCenterlineWidth(river_object=None,
 																																					remove_intersections=remove_intersections)
 				x = []
 				y = []
-				if coordinate_type == "Decimal Degrees":
+				if coordinate_unit == "Decimal Degrees":
 					smoothed_coords = river_object.centerlineSmoothed
-				if coordinate_type == "Relative Distance":
+				if coordinate_unit == "Relative Distance":
 					smoothed_coords = river_object.centerlineSmoothedRelative
 				for k, v in smoothed_coords:
 					x.append(k)
@@ -225,7 +225,7 @@ def plotCenterlineWidth(river_object=None,
 																														transect_span_distance=transect_span_distance,
 																														remove_intersections=remove_intersections)
 
-			if coordinate_type == "Relative Distance":
+			if coordinate_unit == "Relative Distance":
 				# by default, sets up width with Decimal Degree, convert to Relative Distance
 				right_width_coordinates = centerline_width.relativeWidthCoordinates(river_object.left_bank_coordinates[0], right_width_coordinates, river_object.ellipsoid)
 				left_width_coordinates = centerline_width.relativeWidthCoordinates(river_object.left_bank_coordinates[0], left_width_coordinates, river_object.ellipsoid)
@@ -265,10 +265,10 @@ def plotCenterlineWidth(river_object=None,
 	else:
 		plt.title(plot_title)
 
-	if coordinate_type == "Decimal Degrees":
+	if coordinate_unit == "Decimal Degrees":
 		plt.xlabel("Longitude (°)")
 		plt.ylabel("Latitude (°)")
-	if coordinate_type == "Relative Distance":
+	if coordinate_unit == "Relative Distance":
 		plt.xlabel("Relative Distance X (m)")
 		plt.ylabel("Distance Distance Y (m)")
 

@@ -137,22 +137,22 @@ def test_plotCenterline_displayVoronoiInvalidTypes(caplog, display_voronoi_name_
 	assert log_record.levelno == logging.CRITICAL
 	assert log_record.message == "\nCRITICAL ERROR, [display_voronoi]: Must be a bool, current type = '{0}'".format(display_voronoi_error_output)
 
-def test_plotCenterline_coordinateTypeInvalidOption(caplog):
+def test_plotCenterline_coordinateUnitInvalidOption(caplog):
 	with pytest.raises(SystemExit):
 		centerline_width.plotCenterline(river_object=river_class_example,
-										coordinate_type="Invalid Option")
+										coordinate_unit="Invalid Option")
 	log_record = caplog.records[0]
 	assert log_record.levelno == logging.CRITICAL
-	assert log_record.message == "\nCRITICAL ERROR, [coordinate_type]: Must be an available option in ['Decimal Degrees', 'Relative Distance'], current option = 'Invalid Option'"
+	assert log_record.message == "\nCRITICAL ERROR, [coordinate_unit]: Must be an available option in ['Decimal Degrees', 'Relative Distance'], current option = 'Invalid Option'"
 
-@pytest.mark.parametrize("coordinate_type_name_invalid, coordinate_type_error_output", invalid_non_str_options)
-def test_plotCenterline_coordinateTypeInvalidTypes(caplog, coordinate_type_name_invalid, coordinate_type_error_output):
+@pytest.mark.parametrize("coordinate_unit_name_invalid, coordinate_unit_error_output", invalid_non_str_options)
+def test_plotCenterline_coordinateUnitInvalidTypes(caplog, coordinate_unit_name_invalid, coordinate_unit_error_output):
 	with pytest.raises(SystemExit):
 		centerline_width.plotCenterline(river_object=river_class_example,
-										coordinate_type=coordinate_type_name_invalid)
+										coordinate_unit=coordinate_unit_name_invalid)
 	log_record = caplog.records[0]
 	assert log_record.levelno == logging.CRITICAL
-	assert log_record.message == "\nCRITICAL ERROR, [coordinate_type]: Must be a str, current type = '{0}'".format(coordinate_type_error_output)
+	assert log_record.message == "\nCRITICAL ERROR, [coordinate_unit]: Must be a str, current type = '{0}'".format(coordinate_unit_error_output)
 
 ## plotCenterlineWidth() #####################################################
 def test_plotCenterlineWidth_riverObjectRequired(caplog):
@@ -233,19 +233,19 @@ def test_plotCenterlineWidth_removeIntersectionsInvalidTypes(caplog, remove_inte
 	assert log_record.levelno == logging.CRITICAL
 	assert log_record.message == "\nCRITICAL ERROR, [remove_intersections]: Must be a bool, current type = '{0}'".format(remove_intersections_error_output)
 
-def test_plotCenterlineWidth_coordinateTypeInvalidOption(caplog):
+def test_plotCenterlineWidth_coordinateUnitInvalidOption(caplog):
 	with pytest.raises(SystemExit):
 		centerline_width.plotCenterlineWidth(river_object=river_class_example,
-										coordinate_type="Invalid Option")
+										coordinate_unit="Invalid Option")
 	log_record = caplog.records[0]
 	assert log_record.levelno == logging.CRITICAL
-	assert log_record.message == "\nCRITICAL ERROR, [coordinate_type]: Must be an available option in ['Decimal Degrees', 'Relative Distance'], current option = 'Invalid Option'"
+	assert log_record.message == "\nCRITICAL ERROR, [coordinate_unit]: Must be an available option in ['Decimal Degrees', 'Relative Distance'], current option = 'Invalid Option'"
 
-@pytest.mark.parametrize("coordinate_type_name_invalid, coordinate_type_error_output", invalid_non_str_options)
-def test_plotCenterlineWidth_coordinateTypeInvalidTypes(caplog, coordinate_type_name_invalid, coordinate_type_error_output):
+@pytest.mark.parametrize("coordinate_unit_name_invalid, coordinate_unit_error_output", invalid_non_str_options)
+def test_plotCenterlineWidth_coordinateUnitInvalidTypes(caplog, coordinate_unit_name_invalid, coordinate_unit_error_output):
 	with pytest.raises(SystemExit):
 		centerline_width.plotCenterlineWidth(river_object=river_class_example,
-										coordinate_type=coordinate_type_name_invalid)
+										coordinate_unit=coordinate_unit_name_invalid)
 	log_record = caplog.records[0]
 	assert log_record.levelno == logging.CRITICAL
-	assert log_record.message == "\nCRITICAL ERROR, [coordinate_type]: Must be a str, current type = '{0}'".format(coordinate_type_error_output)
+	assert log_record.message == "\nCRITICAL ERROR, [coordinate_unit]: Must be a str, current type = '{0}'".format(coordinate_unit_error_output)

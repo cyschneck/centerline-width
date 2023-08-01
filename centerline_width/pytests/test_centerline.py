@@ -101,19 +101,19 @@ def test_riverWidthFromCenterline_csvInvalidExtension(caplog):
 	assert log_record.levelno == logging.CRITICAL
 	assert log_record.message == "\nCRITICAL ERROR, [save_to_csv]: Extension must be a .csv file, current extension = 'txt'"
 
-def test_riverWidthFromCenterline_coordinateTypeInvalidOption(caplog):
+def test_riverWidthFromCenterline_coordinateUnitInvalidOption(caplog):
 	with pytest.raises(SystemExit):
 		centerline_width.riverWidthFromCenterline(river_object=river_class_example,
-										coordinate_type="Invalid Option")
+										coordinate_unit="Invalid Option")
 	log_record = caplog.records[0]
 	assert log_record.levelno == logging.CRITICAL
-	assert log_record.message == "\nCRITICAL ERROR, [coordinate_type]: Must be an available option in ['Decimal Degrees', 'Relative Distance'], current option = 'Invalid Option'"
+	assert log_record.message == "\nCRITICAL ERROR, [coordinate_unit]: Must be an available option in ['Decimal Degrees', 'Relative Distance'], current option = 'Invalid Option'"
 
-@pytest.mark.parametrize("coordinate_type_name_invalid, coordinate_type_error_output", invalid_non_str_options)
-def test_riverWidthFromCenterline_coordinateTypeInvalidTypes(caplog, coordinate_type_name_invalid, coordinate_type_error_output):
+@pytest.mark.parametrize("coordinate_unit_name_invalid, coordinate_unit_error_output", invalid_non_str_options)
+def test_riverWidthFromCenterline_coordinateUnitInvalidTypes(caplog, coordinate_unit_name_invalid, coordinate_unit_error_output):
 	with pytest.raises(SystemExit):
 		centerline_width.riverWidthFromCenterline(river_object=river_class_example,
-										coordinate_type=coordinate_type_name_invalid)
+										coordinate_unit=coordinate_unit_name_invalid)
 	log_record = caplog.records[0]
 	assert log_record.levelno == logging.CRITICAL
-	assert log_record.message == "\nCRITICAL ERROR, [coordinate_type]: Must be a str, current type = '{0}'".format(coordinate_type_error_output)
+	assert log_record.message == "\nCRITICAL ERROR, [coordinate_unit]: Must be a str, current type = '{0}'".format(coordinate_unit_error_output)
