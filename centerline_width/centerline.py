@@ -374,19 +374,20 @@ def riverWidthFromCenterline(river_object=None,
 		logger.critical("\nCRITICAL ERROR, unable to find width without a valid centerline")
 		return None
 
+	# Run all as "Decimal Degrees" to be able to calculate width below
 	if apply_smoothing:
 		# if using smoothing, replace left/right coordinates with the smoothed variation
 		right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(river_object=river_object,
 																																			centerline_coordinates=river_object.centerlineSmoothed,
 																																			transect_span_distance=transect_span_distance,
 																																			remove_intersections=remove_intersections,
-																																			coordinate_unit=coordinate_unit)
+																																			coordinate_unit="Decimal Degrees")
 	else:
 		right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(river_object=river_object,
 																																			centerline_coordinates=river_object.centerlineEvenlySpaced,
 																																			transect_span_distance=transect_span_distance,
 																																			remove_intersections=remove_intersections,
-																																			coordinate_unit=coordinate_unit)
+																																			coordinate_unit="Decimal Degrees")
 	width_dict = {}
 
 	geodesic = pyproj.Geod(ellps=river_object.ellipsoid)
@@ -397,6 +398,12 @@ def riverWidthFromCenterline(river_object=None,
 		lon2, lat2 = left_width_coordinates[centerline_coord]
 		_, _, distance_between_right_and_left_m = geodesic.inv(lon1, lat1, lon2, lat2)
 		width_dict[centerline_coord] = distance_between_right_and_left_m/1000
+
+	# Convert to Relative Distance after accounting for the width dictionary
+	if coordinate_unit == "Relative Distance":
+		right_width_coordinates = centerline_width.relativeWidthCoordinates(river_object.left_bank_coordinates[0], right_width_coordinates, river_object.ellipsoid)
+		left_width_coordinates = centerline_width.relativeWidthCoordinates(river_object.left_bank_coordinates[0], left_width_coordinates, river_object.ellipsoid)
+		width_dict = centerline_width.relativeWidthCoordinates(river_object.left_bank_coordinates[0], width_dict, river_object.ellipsoid)
 
 	# Set headers and conver to Relative Distance if needed
 	if coordinate_unit == "Decimal Degrees":
