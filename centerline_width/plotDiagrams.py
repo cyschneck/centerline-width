@@ -207,7 +207,8 @@ def plotCenterlineWidth(river_object=None,
 				right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(river_object=river_object,
 																																					centerline_coordinates=river_object.centerlineSmoothed,
 																																					transect_span_distance=transect_span_distance,
-																																					remove_intersections=remove_intersections)
+																																					remove_intersections=remove_intersections,
+																																					coordinate_unit=coordinate_unit)
 				x = []
 				y = []
 				if coordinate_unit == "Decimal Degrees":
@@ -223,13 +224,8 @@ def plotCenterlineWidth(river_object=None,
 				right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(river_object=river_object, 
 																														centerline_coordinates=river_object.centerlineEvenlySpaced,
 																														transect_span_distance=transect_span_distance,
-																														remove_intersections=remove_intersections)
-
-			if coordinate_unit == "Relative Distance":
-				# by default, sets up width with Decimal Degree, convert to Relative Distance
-				right_width_coordinates = centerline_width.relativeWidthCoordinates(river_object.left_bank_coordinates[0], right_width_coordinates, river_object.ellipsoid)
-				left_width_coordinates = centerline_width.relativeWidthCoordinates(river_object.left_bank_coordinates[0], left_width_coordinates, river_object.ellipsoid)
-				num_intersection_coordinates = centerline_width.relativeWidthCoordinates(river_object.left_bank_coordinates[0], num_intersection_coordinates, river_object.ellipsoid)
+																														remove_intersections=remove_intersections,
+																														coordinate_unit=coordinate_unit)
 
 			invalid_label_added = False # prevent legend for width lines from being generated more than once (because is inside a loop)
 			valid_label_added = False  # prevent legend for width lines from being generated more than once (because is inside a loop)

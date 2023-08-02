@@ -252,30 +252,32 @@ def riverWidthFromCenterlineCoordinates(river_object=None,
 		# Save the points where they intersect the polygon
 		sloped_line = LineString([(min_x, left_y), (max_x, right_y)]) # sloped line from the centerpoint
 		line_intersection_points = river_object.bank_polygon.exterior.intersection(sloped_line) # points where the line intersects the polygon
-		# if the line only intersects in two places (does not intersect polygon any additional times)
-		if len(line_intersection_points.geoms) == 2:
-			 # only save width lines that do not touch the artifical top/bottom
-			if not intersectsTopOrBottomOfBank(line_intersection_points.geoms[0], line_intersection_points.geoms[1]):
-				left_width_coordinates[centerline_point] = (line_intersection_points.geoms[0].x, line_intersection_points.geoms[0].y)
-				right_width_coordinates[centerline_point] = (line_intersection_points.geoms[1].x, line_intersection_points.geoms[1].y)
-		else:
-			# line intersects to polygon at multiple points
-			if river_object.bank_polygon.contains(Point(centerline_point)): # width line made by centering centerline point, skip this width line if the centerline is outside of the polygon due to smoothing
-				all_linestring = split(sloped_line, river_object.bank_polygon) # split linestring where it intersects the polygon
-				left_point = None
-				right_point = None
-				for i, possible_linestring in enumerate(all_linestring.geoms): # iterate through all linestrings
-					if possible_linestring.distance(Point(centerline_point)) < 1e-8: # select linestring that contains the centerline point
-						left_point = Point(possible_linestring.coords[0])
-						right_point = Point(possible_linestring.coords[1])
 
-				# linestring contains the centerline, save coordinates
-				if left_point is not None and right_point is not None:
-					 # only save width lines that do not touch the artifical top/bottom
-					if not intersectsTopOrBottomOfBank(left_point, right_point):
-						left_width_coordinates[centerline_point] = (left_point.x, left_point.y)
-						right_width_coordinates[centerline_point] = (right_point.x, right_point.y)
-	
+		# if the line only intersects in two places (does not intersect polygon any additional times)
+		if str(line_intersection_points) != "LINESTRING Z EMPTY": # if linestring has intersect (not empty)
+			if len(line_intersection_points.geoms) == 2:
+				 # only save width lines that do not touch the artifical top/bottom
+				if not intersectsTopOrBottomOfBank(line_intersection_points.geoms[0], line_intersection_points.geoms[1]):
+					left_width_coordinates[centerline_point] = (line_intersection_points.geoms[0].x, line_intersection_points.geoms[0].y)
+					right_width_coordinates[centerline_point] = (line_intersection_points.geoms[1].x, line_intersection_points.geoms[1].y)
+			else:
+				# line intersects to polygon at multiple points
+				if river_object.bank_polygon.contains(Point(centerline_point)): # width line made by centering centerline point, skip this width line if the centerline is outside of the polygon due to smoothing
+					all_linestring = split(sloped_line, river_object.bank_polygon) # split linestring where it intersects the polygon
+					left_point = None
+					right_point = None
+					for i, possible_linestring in enumerate(all_linestring.geoms): # iterate through all linestrings
+						if possible_linestring.distance(Point(centerline_point)) < 1e-8: # select linestring that contains the centerline point
+							left_point = Point(possible_linestring.coords[0])
+							right_point = Point(possible_linestring.coords[1])
+
+					# linestring contains the centerline, save coordinates
+					if left_point is not None and right_point is not None:
+						 # only save width lines that do not touch the artifical top/bottom
+						if not intersectsTopOrBottomOfBank(left_point, right_point):
+							left_width_coordinates[centerline_point] = (left_point.x, left_point.y)
+							right_width_coordinates[centerline_point] = (right_point.x, right_point.y)
+
 	# Determine lines that intersect with other lines in multiple places to flag/remove
 	all_linestrings = []
 	linestring_with_centerlines = {} # linestring with associated centerline: {linestring : centerline coordinate}
@@ -342,6 +344,11 @@ def riverWidthFromCenterlineCoordinates(river_object=None,
 			del left_width_coordinates[centerline_coord]
 		logger.info("[SUCCESS] Intersection lines removed")
 
+	if coordinate_unit == "Relative Distance":
+		right_width_coordinates = centerline_width.relativeWidthCoordinates(river_object.left_bank_coordinates[0], right_width_coordinates, river_object.ellipsoid)
+		left_width_coordinates = centerline_width.relativeWidthCoordinates(river_object.left_bank_coordinates[0], left_width_coordinates, river_object.ellipsoid)
+		num_intersection_coordinates = centerline_width.relativeWidthCoordinates(river_object.left_bank_coordinates[0], num_intersection_coordinates, river_object.ellipsoid)
+	
 	return right_width_coordinates, left_width_coordinates, num_intersection_coordinates
 
 def riverWidthFromCenterline(river_object=None,
@@ -367,29 +374,27 @@ def riverWidthFromCenterline(river_object=None,
 		logger.critical("\nCRITICAL ERROR, unable to find width without a valid centerline")
 		return None
 
-	# recreate the centerline with evenly spaced points
-	defined_centerline_coordinates = centerline_width.evenlySpacedCenterline(centerline_coordinates=river_object.centerlineVoronoi,
-																			number_of_fixed_points=river_object.interpolate_n_centerpoints)
 	if apply_smoothing:
-		defined_centerline_coordinates = centerline_width.smoothedCoordinates(river_object=river_object,
-																				centerline_coordinates=river_object.centerlineVoronoi,
-																				interprolate_num=river_object.interpolate_n_centerpoints)
-	# if using smoothing, replace left/right coordinates with the smoothed variation
-	right_width_coord, left_width_coord, _ = centerline_width.riverWidthFromCenterlineCoordinates(river_object=river_object, 
-																								centerline_coordinates=defined_centerline_coordinates,
-																								transect_span_distance=transect_span_distance,
-																								remove_intersections=remove_intersections)
-
+		# if using smoothing, replace left/right coordinates with the smoothed variation
+		right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(river_object=river_object,
+																																			centerline_coordinates=river_object.centerlineSmoothed,
+																																			transect_span_distance=transect_span_distance,
+																																			remove_intersections=remove_intersections,
+																																			coordinate_unit=coordinate_unit)
+	else:
+		right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(river_object=river_object,
+																																			centerline_coordinates=river_object.centerlineEvenlySpaced,
+																																			transect_span_distance=transect_span_distance,
+																																			remove_intersections=remove_intersections,
+																																			coordinate_unit=coordinate_unit)
 	width_dict = {}
-	print(right_width_coord)
-	exit()
 
 	geodesic = pyproj.Geod(ellps=river_object.ellipsoid)
 
-	for centerline_coord, _ in right_width_coord.items():
+	for centerline_coord, _ in right_width_coordinates.items():
 		# store the distance between the lat/lon position of the right/left bank
-		lon1, lat1 = right_width_coord[centerline_coord]
-		lon2, lat2 = left_width_coord[centerline_coord]
+		lon1, lat1 = right_width_coordinates[centerline_coord]
+		lon2, lat2 = left_width_coordinates[centerline_coord]
 		_, _, distance_between_right_and_left_m = geodesic.inv(lon1, lat1, lon2, lat2)
 		width_dict[centerline_coord] = distance_between_right_and_left_m/1000
 
@@ -400,8 +405,6 @@ def riverWidthFromCenterline(river_object=None,
 	if coordinate_unit == "Relative Distance":
 		latitude_header= "Relative Distance Y (from Latitude) (m)"
 		longitude_header = "Relative Distance X (from Longitude) (m)"
-		# Convert from Decimal Degrees to Relative Distance
-		#width_dict = centerline_width.relativeWidthCoordinates(river_object.left_bank_coordinates[0], width_dict, river_object.ellipsoid)
 
 	# Save width dictionary to a csv file (Latitude, Longtiude, Width)
 	if save_to_csv:
