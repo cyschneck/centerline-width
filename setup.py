@@ -18,7 +18,7 @@ setup(
 	url="https://github.com/cyschneck/centerline-width",
 	download_url="https://github.com/cyschneck/centerline-width/archive/refs/tags/v{0}.tar.gz".format(VERSION),
 	author="Una Schneck (unaschneck), Cora Schneck (cyschneck)",
-	keywords=["geophysics", "python", "voronoi", "networkx", "centerline", "centerline-extraction", "centerline-detection", "rivers", "river-bank-length", "river-bank", "limnology", "hydrology"],
+	keywords=["geophysics", "python", "voronoi", "networkx", "centerline", "centerline-extraction", "centerline-detection", "rivers", "river-bank-length", "river-bank", "limnology", "hydrology", "fluvial", "geomorphology"],
 	license="MIT",
 	classifiers=[
 		"Development Status :: 3 - Alpha",
