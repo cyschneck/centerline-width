@@ -22,20 +22,16 @@ def errrorHandlingConvertColumnsToCSV(text_file=None,
 									flipBankDirection=None):
 	# Error handling for convertColumnsToCSV()
 	if text_file is None:
-		logger.critical("\nCRITICAL ERROR, [text_file]: Requires text file")
-		exit()
+		raise ValueError("[text_file]: Requires text file")
 	else:
 		if type(text_file) != str:
-			logger.critical("\nCRITICAL ERROR, [text_file]: Must be a str, current type = '{0}'".format(type(text_file)))
-			exit()
+			raise ValueError("[text_file]: Must be a str, current type = '{0}'".format(type(text_file)))
 		else:
 			if not text_file.lower().endswith(".txt"):
-				logger.critical("\nCRITICAL ERROR, [text_file]: Extension must be a .txt file, current extension = '{0}'".format(text_file.split(".")[1]))
-				exit()
+				raise ValueError("[text_file]: Extension must be a .txt file, current extension = '{0}'".format(text_file.split(".")[1]))
 
 	if type(flipBankDirection) != bool:
-		logger.critical("\nCRITICAL ERROR, [flipBankDirection]: Must be a bool, current type = '{0}'".format(type(flipBankDirection)))
-		exit()
+		raise ValueError("[flipBankDirection]: Must be a bool, current type = '{0}'".format(type(flipBankDirection)))
 
 ## Error Handling: plotDiagrams.py
 def errorHandlingPlotCenterline(river_object=None,
@@ -49,58 +45,45 @@ def errorHandlingPlotCenterline(river_object=None,
 								coordinate_unit=None):
 	# Error handling for plotCenterline()
 	if river_object is None:
-		logger.critical("\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.riverCenterline)")
-		exit()
+		raise ValueError("[river_object]: Requires a river object (see: centerline_width.riverCenterline)")
 	else:
 		if not isinstance(river_object, centerline_width.riverCenterline):
-			logger.critical("\nCRITICAL ERROR, [river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{0}'".format(type(river_object)))
-			exit()
+			raise ValueError("[river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{0}'".format(type(river_object)))
 
 	if type(centerline_type) != str:
-		logger.critical("\nCRITICAL ERROR, [centerline_type]: Must be a str, current type = '{0}'".format(type(centerline_type)))
-		exit()
+		raise ValueError("[centerline_type]: Must be a str, current type = '{0}'".format(type(centerline_type)))
 	else:
 		if centerline_type.title() not in centerline_type_options:
-			logger.critical("\nCRITICAL ERROR, [centerline_type]: Must be an available option in {0}, current option = '{1}'".format(centerline_type_options, centerline_type))
-			exit()
+			raise ValueError("[centerline_type]: Must be an available option in {0}, current option = '{1}'".format(centerline_type_options, centerline_type))
 
 	if type(marker_type) != str:
-		logger.critical("\nCRITICAL ERROR, [marker_type]: Must be a str, current type = '{0}'".format(type(marker_type)))
-		exit()
+		raise ValueError("[marker_type]: Must be a str, current type = '{0}'".format(type(marker_type)))
 	else:
 		marker_type_options = ["Line", "Scatter"]
 		if marker_type.title() not in marker_type_options:
-			logger.critical("\nCRITICAL ERROR, [marker_type]: Must be an available option in {0}, current option = '{1}'".format(marker_type_options, marker_type))
-			exit()
+			raise ValueError("[marker_type]: Must be an available option in {0}, current option = '{1}'".format(marker_type_options, marker_type))
 
 	if type(centerline_color) != str:
-		logger.critical("\nCRITICAL ERROR, [centerline_color]: Must be a str, current type = '{0}'".format(type(centerline_color)))
-		exit()
+		raise ValueError("[centerline_color]: Must be a str, current type = '{0}'".format(type(centerline_color)))
 
 	if type(display_all_possible_paths) != bool:
-		logger.critical("\nCRITICAL ERROR, [display_all_possible_paths]: Must be a bool, current type = '{0}'".format(type(display_all_possible_paths)))
-		exit()
+		raise ValueError("[display_all_possible_paths]: Must be a bool, current type = '{0}'".format(type(display_all_possible_paths)))
 
 	if plot_title is not None and type(plot_title) != str:
-		logger.critical("\nCRITICAL ERROR, [plot_title]: Must be a str, current type = '{0}'".format(type(plot_title)))
-		exit()
+		raise ValueError("[plot_title]: Must be a str, current type = '{0}'".format(type(plot_title)))
 
 	if save_plot_name is not None and type(save_plot_name) != str:
-		logger.critical("\nCRITICAL ERROR, [save_plot_name]: Must be a str, current type = '{0}'".format(type(save_plot_name)))
-		exit()
+		raise ValueError("[save_plot_name]: Must be a str, current type = '{0}'".format(type(save_plot_name)))
 
 	if type(display_voronoi) != bool:
-		logger.critical("\nCRITICAL ERROR, [display_voronoi]: Must be a bool, current type = '{0}'".format(type(display_voronoi)))
-		exit()
+		raise ValueError("[display_voronoi]: Must be a bool, current type = '{0}'".format(type(display_voronoi)))
 
 	if type(coordinate_unit) != str:
-		logger.critical("\nCRITICAL ERROR, [coordinate_unit]: Must be a str, current type = '{0}'".format(type(coordinate_unit)))
-		exit()
+		raise ValueError("[coordinate_unit]: Must be a str, current type = '{0}'".format(type(coordinate_unit)))
 	else:
 		coordinate_unit_options = ["Decimal Degrees", "Relative Distance"]
 		if coordinate_unit.title() not in coordinate_unit_options:
-			logger.critical("\nCRITICAL ERROR, [coordinate_unit]: Must be an available option in {0}, current option = '{1}'".format(coordinate_unit_options, coordinate_unit))
-			exit()
+			raise ValueError("[coordinate_unit]: Must be an available option in {0}, current option = '{1}'".format(coordinate_unit_options, coordinate_unit))
 
 def errorHandlingPlotCenterlineWidth(river_object=None,
 									plot_title=None,
@@ -113,54 +96,42 @@ def errorHandlingPlotCenterlineWidth(river_object=None,
 									coordinate_unit=None):
 	# Error handling for plotCenterlineWidth()
 	if river_object is None:
-		logger.critical("\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.riverCenterline)")
-		exit()
+		raise ValueError("[river_object]: Requires a river object (see: centerline_width.riverCenterline)")
 	else:
 		if not isinstance(river_object, centerline_width.riverCenterline):
-			logger.critical("\nCRITICAL ERROR, [river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{0}'".format(type(river_object)))
-			exit()
+			raise ValueError("[river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{0}'".format(type(river_object)))
 
 	if plot_title is not None and type(plot_title) != str:
-		logger.critical("\nCRITICAL ERROR, [plot_title]: Must be a str, current type = '{0}'".format(type(plot_title)))
-		exit()
+		raise ValueError("[plot_title]: Must be a str, current type = '{0}'".format(type(plot_title)))
 
 	if save_plot_name is not None and type(save_plot_name) != str:
-		logger.critical("\nCRITICAL ERROR, [save_plot_name]: Must be a str, current type = '{0}'".format(type(save_plot_name)))
-		exit()
+		raise ValueError("[save_plot_name]: Must be a str, current type = '{0}'".format(type(save_plot_name)))
 
 	if type(display_true_centerline) != bool:
-		logger.critical("\nCRITICAL ERROR, [display_true_centerline]: Must be a bool, current type = '{0}'".format(type(display_true_centerline)))
-		exit()
+		raise ValueError("[display_true_centerline]: Must be a bool, current type = '{0}'".format(type(display_true_centerline)))
 
 	if type(transect_span_distance) != int:
-		logger.critical("\nCRITICAL ERROR, [transect_span_distance]: Must be a int, current type = '{0}'".format(type(transect_span_distance)))
-		exit()
+		raise ValueError("[transect_span_distance]: Must be a int, current type = '{0}'".format(type(transect_span_distance)))
 	else:
 		if transect_span_distance < 3:
-			logger.critical("\nCRITICAL ERROR, [transect_span_distance]: Must be a greater than 2 to find the slope between at least two points, currently = '{0}'".format(transect_span_distance))
-			exit()
+			raise ValueError("[transect_span_distance]: Must be a greater than 2 to find the slope between at least two points, currently = '{0}'".format(transect_span_distance))
 
 	if apply_smoothing is not None:
 		if type(apply_smoothing) != bool:
-			logger.critical("\nCRITICAL ERROR, [apply_smoothing]: Must be a bool, current type = '{0}'".format(type(apply_smoothing)))
-			exit()
-	
+			raise ValueError("[apply_smoothing]: Must be a bool, current type = '{0}'".format(type(apply_smoothing)))
+
 	if type(flag_intersections) != bool:
-		logger.critical("\nCRITICAL ERROR, [flag_intersections]: Must be a bool, current type = '{0}'".format(type(flag_intersections)))
-		exit()
+		raise ValueError("[flag_intersections]: Must be a bool, current type = '{0}'".format(type(flag_intersections)))
 
 	if type(remove_intersections) != bool:
-		logger.critical("\nCRITICAL ERROR, [remove_intersections]: Must be a bool, current type = '{0}'".format(type(remove_intersections)))
-		exit()
+		raise ValueError("[remove_intersections]: Must be a bool, current type = '{0}'".format(type(remove_intersections)))
 
 	if type(coordinate_unit) != str:
-		logger.critical("\nCRITICAL ERROR, [coordinate_unit]: Must be a str, current type = '{0}'".format(type(coordinate_unit)))
-		exit()
+		raise ValueError("[coordinate_unit]: Must be a str, current type = '{0}'".format(type(coordinate_unit)))
 	else:
 		coordinate_unit_options = ["Decimal Degrees", "Relative Distance"]
 		if coordinate_unit.title() not in coordinate_unit_options:
-			logger.critical("\nCRITICAL ERROR, [coordinate_unit]: Must be an available option in {0}, current option = '{1}'".format(coordinate_unit_options, coordinate_unit))
-			exit()
+			raise ValueError("[coordinate_unit]: Must be an available option in {0}, current option = '{1}'".format(coordinate_unit_options, coordinate_unit))
 
 ## Error Handling: centerline.py
 def errorHandlingRiverWidthFromCenterline(river_object=None,
@@ -171,46 +142,37 @@ def errorHandlingRiverWidthFromCenterline(river_object=None,
 										save_to_csv=None):
 	# Error Handling for riverWidthFromCenterline()
 	if river_object is None:
-		logger.critical("\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.riverCenterline)")
-		exit()
+		raise ValueError("[river_object]: Requires a river object (see: centerline_width.riverCenterline)")
 	else:
 		if not isinstance(river_object, centerline_width.riverCenterline):
-			logger.critical("\nCRITICAL ERROR, [river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{0}'".format(type(river_object)))
-			exit()
+			raise ValueError("[river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{0}'".format(type(river_object)))
 
 	if transect_span_distance is not None:
 		if type(transect_span_distance) != int:
-			logger.critical("\nCRITICAL ERROR, [transect_span_distance]: Must be a int, current type = '{0}'".format(type(transect_span_distance)))
-			exit()
+			raise ValueError("[transect_span_distance]: Must be a int, current type = '{0}'".format(type(transect_span_distance)))
 		else:
 			if transect_span_distance < 3:
-				logger.critical("\nCRITICAL ERROR, [transect_span_distance]: Must be greater than 2, currently = '{0}'".format(transect_span_distance))
-				exit()
+				raise ValueError("[transect_span_distance]: Must be greater than 2, currently = '{0}'".format(transect_span_distance))
 
 	if type(apply_smoothing) != bool:
-		logger.critical("\nCRITICAL ERROR, [apply_smoothing]: Must be a bool, current type = '{0}'".format(type(apply_smoothing)))
-		exit()
+		raise ValueError("[apply_smoothing]: Must be a bool, current type = '{0}'".format(type(apply_smoothing)))
 
 	if type(remove_intersections) != bool:
-		logger.critical("\nCRITICAL ERROR, [remove_intersections]: Must be a bool, current type = '{0}'".format(type(remove_intersections)))
-		exit()
+		raise ValueError("[remove_intersections]: Must be a bool, current type = '{0}'".format(type(remove_intersections)))
 
 	if type(coordinate_unit) != str:
-		logger.critical("\nCRITICAL ERROR, [coordinate_unit]: Must be a str, current type = '{0}'".format(type(coordinate_unit)))
+		raise ValueError("[coordinate_unit]: Must be a str, current type = '{0}'".format(type(coordinate_unit)))
 		exit()
 	else:
 		coordinate_unit_options = ["Decimal Degrees", "Relative Distance"]
 		if coordinate_unit.title() not in coordinate_unit_options:
-			logger.critical("\nCRITICAL ERROR, [coordinate_unit]: Must be an available option in {0}, current option = '{1}'".format(coordinate_unit_options, coordinate_unit))
-			exit()
+			raise ValueError("[coordinate_unit]: Must be an available option in {0}, current option = '{1}'".format(coordinate_unit_options, coordinate_unit))
 
 	if save_to_csv is not None:
 		if type(save_to_csv) != str:
-			logger.critical("\nCRITICAL ERROR, [save_to_csv]: Must be a str, current type = '{0}'".format(type(save_to_csv)))
-			exit()
+			raise ValueError("[save_to_csv]: Must be a str, current type = '{0}'".format(type(save_to_csv)))
 		if not save_to_csv.lower().endswith(".csv"):
-			logger.critical("\nCRITICAL ERROR, [save_to_csv]: Extension must be a .csv file, current extension = '{0}'".format(save_to_csv.split(".")[1]))
-			exit()
+			raise ValueError("[save_to_csv]: Extension must be a .csv file, current extension = '{0}'".format(save_to_csv.split(".")[1]))
 
 def errorHandlingSaveCenterlineCSV(river_object=None,
 								latitude_header=None,
@@ -220,49 +182,38 @@ def errorHandlingSaveCenterlineCSV(river_object=None,
 								coordinate_unit=None):
 	# Error Handling for saveCenterlineCSV()
 	if river_object is None:
-		logger.critical("\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.riverCenterline)")
-		exit()
+		raise ValueError("[river_object]: Requires a river object (see: centerline_width.riverCenterline)")
 	else:
 		if not isinstance(river_object, centerline_width.riverCenterline):
-			logger.critical("\nCRITICAL ERROR, [river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{0}'".format(type(river_object)))
-			exit()
+			raise ValueError("[river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{0}'".format(type(river_object)))
 
 	if latitude_header is not None and type(latitude_header) != str:
-		logger.critical("\nCRITICAL ERROR, [latitude_header]: Must be a str, current type = '{0}'".format(type(latitude_header)))
-		exit()
+		raise ValueError("[latitude_header]: Must be a str, current type = '{0}'".format(type(latitude_header)))
 
 	if longitude_header is not None and type(longitude_header) != str:
-		logger.critical("\nCRITICAL ERROR, [longitude_header]: Must be a str, current type = '{0}'".format(type(longitude_header)))
-		exit()
+		raise ValueError("[longitude_header]: Must be a str, current type = '{0}'".format(type(longitude_header)))
 
 	if save_to_csv is None:
-		logger.critical("\nCRITICAL ERROR, [save_to_csv]: Requires csv filename")
-		exit()
+		raise ValueError("[save_to_csv]: Requires csv filename")
 	else:
 		if type(save_to_csv) != str:
-			logger.critical("\nCRITICAL ERROR, [save_to_csv]: Must be a str, current type = '{0}'".format(type(save_to_csv)))
-			exit()
+			raise ValueError("[save_to_csv]: Must be a str, current type = '{0}'".format(type(save_to_csv)))
 		else:
 			if not save_to_csv.lower().endswith(".csv"):
-				logger.critical("\nCRITICAL ERROR, [save_to_csv]: Extension must be a .csv file, current extension = '{0}'".format(save_to_csv.split(".")[1]))
-				exit()
+				raise ValueError("[save_to_csv]: Extension must be a .csv file, current extension = '{0}'".format(save_to_csv.split(".")[1]))
 
 	if type(centerline_type) != str:
-		logger.critical("\nCRITICAL ERROR, [centerline_type]: Must be a str, current type = '{0}'".format(type(centerline_type)))
-		exit()
+		raise ValueError("[centerline_type]: Must be a str, current type = '{0}'".format(type(centerline_type)))
 	else:
 		if centerline_type.title() not in centerline_type_options:
-			logger.critical("\nCRITICAL ERROR, [centerline_type]: Must be an available option in {0}, current option = '{1}'".format(centerline_type_options, centerline_type))
-			exit()
+			raise ValueError("[centerline_type]: Must be an available option in {0}, current option = '{1}'".format(centerline_type_options, centerline_type))
 
 	if type(coordinate_unit) != str:
-		logger.critical("\nCRITICAL ERROR, [coordinate_unit]: Must be a str, current type = '{0}'".format(type(coordinate_unit)))
-		exit()
+		raise ValueError("[coordinate_unit]: Must be a str, current type = '{0}'".format(type(coordinate_unit)))
 	else:
 		coordinate_unit_options = ["Decimal Degrees", "Relative Distance"]
 		if coordinate_unit.title() not in coordinate_unit_options:
-			logger.critical("\nCRITICAL ERROR, [coordinate_unit]: Must be an available option in {0}, current option = '{1}'".format(coordinate_unit_options, coordinate_unit))
-			exit()
+			raise ValueError("[coordinate_unit]: Must be an available option in {0}, current option = '{1}'".format(coordinate_unit_options, coordinate_unit))
 
 def errorHandlingSaveCenterlineMAT(river_object=None,
 								latitude_header=None,
@@ -272,94 +223,72 @@ def errorHandlingSaveCenterlineMAT(river_object=None,
 								coordinate_unit=None):
 	# Error Handling for saveCenterlineMAT()
 	if river_object is None:
-		logger.critical("\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.riverCenterline)")
-		exit()
+		raise ValueError("[river_object]: Requires a river object (see: centerline_width.riverCenterline)")
 	else:
 		if not isinstance(river_object, centerline_width.riverCenterline):
-			logger.critical("\nCRITICAL ERROR, [river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{0}'".format(type(river_object)))
-			exit()
+			raise ValueError("[river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{0}'".format(type(river_object)))
 
 	if latitude_header is not None:
 		if type(latitude_header) != str:
-			logger.critical("\nCRITICAL ERROR, [latitude_header]: Must be a str, current type = '{0}'".format(type(latitude_header)))
-			exit()
+			raise ValueError("[latitude_header]: Must be a str, current type = '{0}'".format(type(latitude_header)))
 		if any(not character.isalnum() for character in latitude_header):
-			logger.critical("\nCRITICAL ERROR, [latitude_header]: Column names cannot contain any whitespace or non-alphanumeric characters, currently = '{0}'".format(latitude_header))
-			exit()
+			raise ValueError("[latitude_header]: Column names cannot contain any whitespace or non-alphanumeric characters, currently = '{0}'".format(latitude_header))
 
 	if longitude_header is not None:
 		if type(longitude_header) != str:
-			logger.critical("\nCRITICAL ERROR, [longitude_header]: Must be a str, current type = '{0}'".format(type(longitude_header)))
-			exit()
+			raise ValueError("[longitude_header]: Must be a str, current type = '{0}'".format(type(longitude_header)))
 		if any(not character.isalnum() for character in longitude_header):
-			logger.critical("\nCRITICAL ERROR, [longitude_header]: Column names cannot contain any whitespace or non-alphanumeric characters, currently = '{0}'".format(longitude_header))
-			exit()
+			raise ValueError("[longitude_header]: Column names cannot contain any whitespace or non-alphanumeric characters, currently = '{0}'".format(longitude_header))
 
 	if save_to_mat is None:
-		logger.critical("\nCRITICAL ERROR, [save_to_mat]: Requires mat filename")
-		exit()
+		raise ValueError("\nCRITICAL ERROR, [save_to_mat]: Requires mat filename")
 	else:
 		if type(save_to_mat) != str:
-			logger.critical("\nCRITICAL ERROR, [save_to_mat]: Must be a str, current type = '{0}'".format(type(save_to_mat)))
-			exit()
+			raise ValueError("[save_to_mat]: Must be a str, current type = '{0}'".format(type(save_to_mat)))
 		else:
 			if not save_to_mat.lower().endswith(".mat"):
-				logger.critical("\nCRITICAL ERROR, [save_to_mat]: Extension must be a .mat file, current extension = '{0}'".format(save_to_mat.split(".")[1]))
-				exit()
+				raise ValueError("[save_to_mat]: Extension must be a .mat file, current extension = '{0}'".format(save_to_mat.split(".")[1]))
 
 	if type(centerline_type) != str:
-		logger.critical("\nCRITICAL ERROR, [centerline_type]: Must be a str, current type = '{0}'".format(type(centerline_type)))
-		exit()
+		raise ValueError("[centerline_type]: Must be a str, current type = '{0}'".format(type(centerline_type)))
 	else:
 		if centerline_type.title() not in centerline_type_options:
-			logger.critical("\nCRITICAL ERROR, [centerline_type]: Must be an available option in {0}, current option = '{1}'".format(centerline_type_options, centerline_type))
-			exit()
+			raise ValueError("[centerline_type]: Must be an available option in {0}, current option = '{1}'".format(centerline_type_options, centerline_type))
 
 	if type(coordinate_unit) != str:
-		logger.critical("\nCRITICAL ERROR, [coordinate_unit]: Must be a str, current type = '{0}'".format(type(coordinate_unit)))
-		exit()
+		raise ValueError("[coordinate_unit]: Must be a str, current type = '{0}'".format(type(coordinate_unit)))
 	else:
 		coordinate_unit_options = ["Decimal Degrees", "Relative Distance"]
 		if coordinate_unit.title() not in coordinate_unit_options:
-			logger.critical("\nCRITICAL ERROR, [coordinate_unit]: Must be an available option in {0}, current option = '{1}'".format(coordinate_unit_options, coordinate_unit))
-			exit()
+			raise ValueError("[coordinate_unit]: Must be an available option in {0}, current option = '{1}'".format(coordinate_unit_options, coordinate_unit))
 
 # Error Handling: getCoordinatesKML.py
 def errorHandlingExtractPointsToTextFile(left_kml=None, right_kml=None, text_output_name=None):
 	# Error Handling for extractPointsToTextFile()
 	if left_kml is None:
-		logger.critical("\nCRITICAL ERROR, [left_kml]: Requires left_kml file")
-		exit()
+		raise ValueError("[left_kml]: Requires left_kml file")
 	else:
 		if type(left_kml) != str:
-			logger.critical("\nCRITICAL ERROR, [left_kml]: Must be a str, current type = '{0}'".format(type(left_kml)))
-			exit()
+			raise ValueError("[left_kml]: Must be a str, current type = '{0}'".format(type(left_kml)))
 		if not left_kml.lower().endswith(".kml"):
-			logger.critical("\nCRITICAL ERROR, [left_kml]: Extension must be a .kml file, current extension = '{0}'".format(left_kml.split(".")[1]))
-			exit()
+			raise ValueError("[left_kml]: Extension must be a .kml file, current extension = '{0}'".format(left_kml.split(".")[1]))
 
 	if right_kml is None:
-		logger.critical("\nCRITICAL ERROR, [right_kml]: Requires right_kml file")
-		exit()
+		raise ValueError("[right_kml]: Requires right_kml file")
 	else:
 		if type(right_kml) != str:
-			logger.critical("\nCRITICAL ERROR, [right_kml]: Must be a str, current type = '{0}'".format(type(right_kml)))
-			exit()
+			raise ValueError("[right_kml]: Must be a str, current type = '{0}'".format(type(right_kml)))
 		if not right_kml.lower().endswith(".kml"):
-			logger.critical("\nCRITICAL ERROR, [right_kml]: Extension must be a .kml file, current extension = '{0}'".format(right_kml.split(".")[1]))
-			exit()
+			raise ValueError("[right_kml]: Extension must be a .kml file, current extension = '{0}'".format(right_kml.split(".")[1]))
 
 	if right_kml == left_kml:
-			logger.critical("\nCRITICAL ERROR, right_kml and left_kml are set to the same file (needs a seperate left and right bank): right_kml='{0}' and left_kml='{1}'".format(right_kml, left_kml))
-			exit()
+		raise ValueError("right_kml and left_kml are set to the same file (needs a seperate left and right bank): right_kml='{0}' and left_kml='{1}'".format(right_kml, left_kml))
 
 	if text_output_name is None:
-		logger.critical("\nCRITICAL ERROR, [text_output_name]: Requires output file name")
-		exit()
+		raise ValueError("[text_output_name]: Requires output file name")
 	else:
 		if type(text_output_name) != str:
-			logger.critical("\nCRITICAL ERROR, [text_output_name]: Must be a str, current type = '{0}'".format(type(text_output_name)))
-			exit()
+			raise ValueError("[text_output_name]: Must be a str, current type = '{0}'".format(type(text_output_name)))
 
 ## Error Handling: riverCenterlineClass.py
 def errorHandlingRiverCenterlineClass(csv_data=None,
@@ -371,50 +300,39 @@ def errorHandlingRiverCenterlineClass(csv_data=None,
 									ellipsoid=None):
 	# Error Handling for riverCenterlineClass()
 	if csv_data is None:
-		logger.critical("\nCRITICAL ERROR, [csv_data]: Requires csv_data location")
-		exit()
+		raise ValueError("[csv_data]: Requires csv_data location")
 	else:
 		if type(csv_data) != str and not isinstance(csv_data, StringIO): 
 			# StringIO accounts for testing against a StringIO instead of a CSV (used in pytests)
-			logger.critical("\nCRITICAL ERROR, [csv_data]: Must be a str, current type = '{0}'".format(type(csv_data)))
-			exit()
+			raise ValueError("[csv_data]: Must be a str, current type = '{0}'".format(type(csv_data)))
 
 	if optional_cutoff is not None:
 		if type(optional_cutoff) != int:
-			logger.critical("\nCRITICAL ERROR, [optional_cutoff]: Must be a int, current type = '{0}'".format(type(optional_cutoff)))
-			exit()
+			raise ValueError("[optional_cutoff]: Must be a int, current type = '{0}'".format(type(optional_cutoff)))
 
 	if type(interpolate_data) != bool:
-		logger.critical("\nCRITICAL ERROR, [interpolate_data]: Must be a bool, current type = '{0}'".format(type(interpolate_data)))
-		exit()
+		raise ValueError("[interpolate_data]: Must be a bool, current type = '{0}'".format(type(interpolate_data)))
 
 	if type(interpolate_n) != int:
-		logger.critical("\nCRITICAL ERROR, [interpolate_n]: Must be a int, current type = '{0}'".format(type(interpolate_n)))
-		exit()
+		raise ValueError("[interpolate_n]: Must be a int, current type = '{0}'".format(type(interpolate_n)))
 		if interpolate_n > 15:
 			logger.warn("WARNING, [interpolate_n]: Setting interpolate_n above 15 will cause the code to execute exponentially slower")
 
 	if interpolate_n_centerpoints is not None:
 		if type(interpolate_n_centerpoints) != int:
-			logger.critical("\nCRITICAL ERROR, [interpolate_n_centerpoints]: Must be a int, current type = '{0}'".format(type(interpolate_n_centerpoints)))
-			exit()
+			raise ValueError("[interpolate_n_centerpoints]: Must be a int, current type = '{0}'".format(type(interpolate_n_centerpoints)))
 		else:
 			if interpolate_n_centerpoints < 2:
-				logger.critical("\nCRITICAL ERROR, [interpolate_n_centerpoints]: Must be a greater than 1, currently = '{0}'".format(interpolate_n_centerpoints))
-				exit()
+				raise ValueError("[interpolate_n_centerpoints]: Must be a greater than 1, currently = '{0}'".format(interpolate_n_centerpoints))
 
 	if type(equal_distance) != int and type(equal_distance) != float:
-		logger.critical("\nCRITICAL ERROR, [equal_distance]: Must be a int or float, current type = '{0}'".format(type(equal_distance)))
-		exit()
+		raise ValueError("[equal_distance]: Must be a int or float, current type = '{0}'".format(type(equal_distance)))
 		if equal_distance <= 0:
-			logger.critical("WARNING, [equal_distance]: Must be a postive value, greater than 0, currently = '{0}'".format(equal_distance))
-			exit()
+			raise ValueError("[equal_distance]: Must be a postive value, greater than 0, currently = '{0}'".format(equal_distance))
 
 	ellipsoid_options = ["GRS80", "airy", "bessel", "clrk66", "intl", "WGS60", "WGS66", "WGS72", "WGS84", "sphere"]
 	if type(ellipsoid) != str:
-		logger.critical("\nCRITICAL ERROR, [ellipsoid]: Must be a str, current type = '{0}'".format(type(ellipsoid)))
-		exit()
+		raise ValueError("[ellipsoid]: Must be a str, current type = '{0}'".format(type(ellipsoid)))
 	else:
 		if ellipsoid not in ellipsoid_options:
-			logger.critical("\nCRITICAL ERROR, [ellipsoid]: Must be an available option in {0}, current option = '{1}'".format(ellipsoid_options, ellipsoid))
-			exit()
+			raise ValueError("[ellipsoid]: Must be an available option in {0}, current option = '{1}'".format(ellipsoid_options, ellipsoid))

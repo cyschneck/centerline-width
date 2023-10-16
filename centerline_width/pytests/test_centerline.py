@@ -1,7 +1,7 @@
 # Pytest for preprocessing.py
 # centerline-width/: python3 -m pytest -v
-import logging
 from io import StringIO
+import re
 
 # External Python libraries (installed via pip install)
 import pytest
@@ -42,78 +42,51 @@ def river_class_object():
 river_class_example = river_class_object()
 
 ## riverWidthFromCenterlineCoordinates() #####################################################
-def test_riverWidthFromCenterline_riverObjectRequired(caplog):
-	with pytest.raises(SystemExit):
+def test_riverWidthFromCenterline_riverObjectRequired():
+	with pytest.raises(ValueError, match=re.escape("[river_object]: Requires a river object (see: centerline_width.riverCenterline)")):
 		centerline_width.riverWidthFromCenterline(river_object=None)
-	log_record = caplog.records[0]
-	assert log_record.levelno == logging.CRITICAL
-	assert log_record.message == "\nCRITICAL ERROR, [river_object]: Requires a river object (see: centerline_width.riverCenterline)"
 
-@pytest.mark.parametrize("river_object_invalid, river_object_error_output", invalid_non_class_options)
-def test_riverWidthFromCenterline_riverObjectInvalidTypes(caplog, river_object_invalid, river_object_error_output):
-	with pytest.raises(SystemExit):
-		centerline_width.riverWidthFromCenterline(river_object=river_object_invalid)
-	log_record = caplog.records[0]
-	assert log_record.levelno == logging.CRITICAL
-	assert log_record.message == "\nCRITICAL ERROR, [river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{0}'".format(river_object_error_output)
+@pytest.mark.parametrize("invalid_input, error_output", invalid_non_class_options)
+def test_riverWidthFromCenterline_riverObjectInvalidTypes(invalid_input, error_output):
+	with pytest.raises(ValueError, match=re.escape("[river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{0}'".format(error_output))):
+		centerline_width.riverWidthFromCenterline(river_object=invalid_input)
 
-@pytest.mark.parametrize("transect_span_distance_invalid, transect_span_distance_error_output", invalid_non_int_options)
-def test_riverWidthFromCenterline_transectSpanDistanceInvalidTypes(caplog, transect_span_distance_invalid, transect_span_distance_error_output):
-	with pytest.raises(SystemExit):
+@pytest.mark.parametrize("invalid_input, error_output", invalid_non_int_options)
+def test_riverWidthFromCenterline_transectSpanDistanceInvalidTypes(invalid_input, error_output):
+	with pytest.raises(ValueError, match=re.escape("[transect_span_distance]: Must be a int, current type = '{0}'".format(error_output))):
 		centerline_width.riverWidthFromCenterline(river_object=river_class_example,
-											transect_span_distance=transect_span_distance_invalid)
-	log_record = caplog.records[0]
-	assert log_record.levelno == logging.CRITICAL
-	assert log_record.message == "\nCRITICAL ERROR, [transect_span_distance]: Must be a int, current type = '{0}'".format(transect_span_distance_error_output)
+											transect_span_distance=invalid_input)
 
-@pytest.mark.parametrize("apply_smoothing_invalid, apply_smoothing_error_output", invalid_non_bool_options)
-def test_riverWidthFromCenterline_applySmoothingInvalidTypes(caplog, apply_smoothing_invalid, apply_smoothing_error_output):
-	with pytest.raises(SystemExit):
+@pytest.mark.parametrize("invalid_input, error_output", invalid_non_bool_options)
+def test_riverWidthFromCenterline_applySmoothingInvalidTypes(invalid_input, error_output):
+	with pytest.raises(ValueError, match=re.escape("[apply_smoothing]: Must be a bool, current type = '{0}'".format(error_output))):
 		centerline_width.riverWidthFromCenterline(river_object=river_class_example,
-											apply_smoothing=apply_smoothing_invalid)
-	log_record = caplog.records[0]
-	assert log_record.levelno == logging.CRITICAL
-	assert log_record.message == "\nCRITICAL ERROR, [apply_smoothing]: Must be a bool, current type = '{0}'".format(apply_smoothing_error_output)
+											apply_smoothing=invalid_input)
 
-@pytest.mark.parametrize("remove_intersections_invalid, remove_intersections_error_output", invalid_non_bool_options)
-def test_riverWidthFromCenterline_removeIntersectionsInvalidTypes(caplog, remove_intersections_invalid, remove_intersections_error_output):
-	with pytest.raises(SystemExit):
+@pytest.mark.parametrize("invalid_input, error_output", invalid_non_bool_options)
+def test_riverWidthFromCenterline_removeIntersectionsInvalidTypes(invalid_input, error_output):
+	with pytest.raises(ValueError, match=re.escape("[remove_intersections]: Must be a bool, current type = '{0}'".format(error_output))):
 		centerline_width.riverWidthFromCenterline(river_object=river_class_example,
-											remove_intersections=remove_intersections_invalid)
-	log_record = caplog.records[0]
-	assert log_record.levelno == logging.CRITICAL
-	assert log_record.message == "\nCRITICAL ERROR, [remove_intersections]: Must be a bool, current type = '{0}'".format(remove_intersections_error_output)
+											remove_intersections=invalid_input)
 
-@pytest.mark.parametrize("save_to_csv_invalid, save_to_csv_error_output", invalid_non_str_options)
-def test_riverWidthFromCenterline_saveToCSVInvalidTypes(caplog, save_to_csv_invalid, save_to_csv_error_output):
-	with pytest.raises(SystemExit):
+@pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
+def test_riverWidthFromCenterline_saveToCSVInvalidTypes(invalid_input, error_output):
+	with pytest.raises(ValueError, match=re.escape("[save_to_csv]: Must be a str, current type = '{0}'".format(error_output))):
 		centerline_width.riverWidthFromCenterline(river_object=river_class_example,
-											save_to_csv=save_to_csv_invalid)
-	log_record = caplog.records[0]
-	assert log_record.levelno == logging.CRITICAL
-	assert log_record.message == "\nCRITICAL ERROR, [save_to_csv]: Must be a str, current type = '{0}'".format(save_to_csv_error_output)
+											save_to_csv=invalid_input)
 
-def test_riverWidthFromCenterline_csvInvalidExtension(caplog):
-	with pytest.raises(SystemExit):
+def test_riverWidthFromCenterline_csvInvalidExtension():
+	with pytest.raises(ValueError, match=re.escape("[save_to_csv]: Extension must be a .csv file, current extension = 'txt'")):
 		centerline_width.riverWidthFromCenterline(river_object=river_class_example,
 												save_to_csv="filename.txt")
-	log_record = caplog.records[0]
-	assert log_record.levelno == logging.CRITICAL
-	assert log_record.message == "\nCRITICAL ERROR, [save_to_csv]: Extension must be a .csv file, current extension = 'txt'"
 
-def test_riverWidthFromCenterline_coordinateUnitInvalidOption(caplog):
-	with pytest.raises(SystemExit):
+def test_riverWidthFromCenterline_coordinateUnitInvalidOption():
+	with pytest.raises(ValueError, match=re.escape("[coordinate_unit]: Must be an available option in ['Decimal Degrees', 'Relative Distance'], current option = 'Invalid Option'")):
 		centerline_width.riverWidthFromCenterline(river_object=river_class_example,
 										coordinate_unit="Invalid Option")
-	log_record = caplog.records[0]
-	assert log_record.levelno == logging.CRITICAL
-	assert log_record.message == "\nCRITICAL ERROR, [coordinate_unit]: Must be an available option in ['Decimal Degrees', 'Relative Distance'], current option = 'Invalid Option'"
 
-@pytest.mark.parametrize("coordinate_unit_name_invalid, coordinate_unit_error_output", invalid_non_str_options)
-def test_riverWidthFromCenterline_coordinateUnitInvalidTypes(caplog, coordinate_unit_name_invalid, coordinate_unit_error_output):
-	with pytest.raises(SystemExit):
+@pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
+def test_riverWidthFromCenterline_coordinateUnitInvalidTypes(invalid_input, error_output):
+	with pytest.raises(ValueError, match=re.escape("[coordinate_unit]: Must be a str, current type = '{0}'".format(error_output))):
 		centerline_width.riverWidthFromCenterline(river_object=river_class_example,
-										coordinate_unit=coordinate_unit_name_invalid)
-	log_record = caplog.records[0]
-	assert log_record.levelno == logging.CRITICAL
-	assert log_record.message == "\nCRITICAL ERROR, [coordinate_unit]: Must be a str, current type = '{0}'".format(coordinate_unit_error_output)
+										coordinate_unit=invalid_input)
