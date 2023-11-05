@@ -28,6 +28,8 @@ setup(
 		"License :: OSI Approved :: MIT License",
 		"Programming Language :: Python",
 		"Programming Language :: Python :: 3.9",
+		"Programming Language :: Python :: 3.10",
+		"Programming Language :: Python :: 3.11",
 		"Intended Audience :: Education",
 		"Intended Audience :: Science/Research",
 		"Topic :: Scientific/Engineering :: Physics",

@@ -616,6 +616,8 @@ The number of additional points added by interpolating can be adjusted with `int
 ## Developer Notes: Tech Debt and Bug Fixes
 * option to turn off verbose (no logs printed)
 * Fix legend overlapping on graph, replace doc_examples that have an overlapping
+* Conda env
+* Python 3.12.0 compatibility
 
 ## Citations
 Python implementation of [R-Code CMGO](https://github.com/AntoniusGolly/cmgo) with modification (Golly et al. 2017):
