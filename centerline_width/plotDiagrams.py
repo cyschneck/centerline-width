@@ -152,7 +152,7 @@ def plotCenterline(river_object=None,
 
 	# Plot Title, Legends, and Axis Labels
 	if not plot_title:
-		plt.title("River Coordinates: Valid Centerline = {0}, Valid Polygon = {1}, Interpolated = {2}".format(valid_path_through, river_object.bank_polygon.is_valid, river_object.interpolate_data))
+		plt.title(f"River Coordinates: Valid Centerline = {valid_path_through}, Valid Polygon = {river_object.bank_polygon.is_valid}, Interpolated = {river_object.interpolate_data}")
 	else:
 		plt.title(plot_title)
 
@@ -199,7 +199,7 @@ def plotCenterlineWidth(river_object=None,
 	number_of_evenly_spaced_points = ""
 
 	if river_object.centerlineVoronoi is not None:
-		number_of_evenly_spaced_points = "\nCenterline made of {0} Fixed Points, width lines generated every {1} points".format(river_object.interpolate_n_centerpoints, transect_span_distance)
+		number_of_evenly_spaced_points = f"\nCenterline made of {river_object.interpolate_n_centerpoints} Fixed Points, width lines generated every {transect_span_distance} points"
 		if river_object.starting_node is not None: # error handling for when data is too small to generate centerline coordiantes
 
 			# if using smoothing, replace left/right coordinates with the smoothed variation
@@ -257,7 +257,7 @@ def plotCenterlineWidth(river_object=None,
 
 	# Plot Title, Legends, and Axis Labels
 	if not plot_title:
-		plt.title("River Width Coordinates: Valid Centerline = {0}, Valid Polygon = {1}{2}, Interpolated = {3}".format(valid_path_through, river_object.bank_polygon.is_valid, number_of_evenly_spaced_points, river_object.interpolate_data))
+		plt.title(f"River Width Coordinates: Valid Centerline = {valid_path_through}, Valid Polygon = {river_object.bank_polygon.is_valid}{number_of_evenly_spaced_points}, Interpolated = {river_object.interpolate_data}")
 	else:
 		plt.title(plot_title)
 

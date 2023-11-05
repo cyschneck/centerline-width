@@ -1,5 +1,6 @@
 # Built in Python functions
 import csv
+import logging
 
 # External Python libraries (installed via pip install)
 import numpy as np
@@ -7,6 +8,12 @@ from scipy.io import savemat
 
 # Internal centerline_width reference to access functions, global variables, and error handling
 import centerline_width
+
+## Logging set up for .CRITICAL
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.WARNING)
+stream_handler = logging.StreamHandler()
+logger.addHandler(stream_handler)
 
 def saveCenterlineCSV(river_object=None,
 					save_to_csv=None,
@@ -37,14 +44,14 @@ def saveCenterlineCSV(river_object=None,
 
 	if coordinate_unit == "Decimal Degrees":
 		if latitude_header is None:
-			latitude_header = "{0} Centerline Latitude (Deg)".format(centerline_type)
+			latitude_header = f"{centerline_type} Centerline Latitude (Deg)"
 		if longitude_header is None:
-			longitude_header = "{0} Centerline Longitude (Deg)".format(centerline_type)
+			longitude_header = f"{centerline_type} Centerline Longitude (Deg)"
 	if coordinate_unit == "Relative Distance":
 		if latitude_header is None:
-			latitude_header = "{0} Relative Distance Y (from Latitude) (m)".format(centerline_type)
+			latitude_header = f"{centerline_type} Relative Distance Y (from Latitude) (m)"
 		if longitude_header is None:
-			longitude_header = "{0} Relative Distance X (from Longitude) (m)".format(centerline_type)
+			longitude_header = f"{centerline_type} Relative Distance X (from Longitude) (m)"
 
 	with open(save_to_csv, "w") as csv_file_output:
 		writer = csv.writer(csv_file_output)
@@ -53,7 +60,7 @@ def saveCenterlineCSV(river_object=None,
 			for latitude_longitude in centerline_coordinates_by_type:
 				writer.writerow([latitude_longitude[1], latitude_longitude[0]])
 		else:
-			logger.warn("\nWARNING, no {0} centerline coordinates found, {1} file generated will be empty".format(centerline_type, save_to_csv))
+			logger.warn(f"\nWARNING, no {centerline_type} centerline coordinates found, {save_to_csv} file generated will be empty")
 
 def saveCenterlineMAT(river_object=None,
 					save_to_mat=None,
@@ -85,14 +92,14 @@ def saveCenterlineMAT(river_object=None,
 	# .mat files do not allow for spaces or special characters in the header
 	if coordinate_unit == "Decimal Degrees":
 		if latitude_header is None:
-			latitude_header = "{0}_Centerline_Latitude_Deg".format(centerline_type.replace(" ", "_"))
+			latitude_header = f"{centerline_type.replace(' ', '_')}_Centerline_Latitude_Deg"
 		if longitude_header is None:
-			longitude_header = "{0}_Centerline_Longitude_Deg".format(centerline_type.replace(" ", "_"))
+			longitude_header = f"{centerline_type.replace(' ', '_')}_Centerline_Longitude_Deg"
 	if coordinate_unit == "Relative Distance":
 		if latitude_header is None:
-			latitude_header = "{0}_Relative_Distance_Y_From_Latitude_m".format(centerline_type.replace(" ", "_"))
+			latitude_header = f"{centerline_type.replace(' ', '_')}_Relative_Distance_Y_From_Latitude_m"
 		if longitude_header is None:
-			longitude_header = "{0}_Relative_Distance_X_From_Longitude_m".format(centerline_type.replace(" ", "_"))		
+			longitude_header = f"{centerline_type.replace(' ', '_')}_Relative_Distance_X_From_Longitude_m"
 
 	latitude_lst = []
 	longtiude_lst = []
@@ -102,7 +109,7 @@ def saveCenterlineMAT(river_object=None,
 			longtiude_lst.append(latitude_longitude[0])
 			latitude_lst.append(latitude_longitude[1])
 	else:
-		logger.warn("\nWARNING, no {0} centerline coordinates found, {1} file generated will be empty".format(centerline_type, save_to_mat))
+		logger.warn(f"\nWARNING, no {centerline_type} centerline coordinates found, {save_to_mat} file generated will be empty")
 	
 	# Centerline dictionary of latitude and longtiude centerline coordinates
 	centerline_dict = {latitude_header: np.asarray(latitude_lst), longitude_header: np.asarray(longtiude_lst)}

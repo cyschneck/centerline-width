@@ -193,7 +193,7 @@ def smoothedCoordinates(river_object=None, centerline_coordinates=None, interpro
 		if not river_object.bank_polygon.contains(Point(centerline_point)):
 			points_outside_polygon += 1
 	if points_outside_polygon > 2:
-		logger.critical("\nWARNING: Partially invalid smoothed centerline due to sparse centerline data ({0} points lie outside the polygon), fix recommendation: rerun riverCenterline to create river object with interpolate_n_centerpoints set to {1}+\n".format(points_outside_polygon, round(len(centerline_coordinates)*2.5)))
+		logger.critical(f"\nWARNING: Partially invalid smoothed centerline due to sparse centerline data ({points_outside_polygon} points lie outside the polygon), fix recommendation: rerun riverCenterline to create river object with interpolate_n_centerpoints set to {round(len(centerline_coordinates)*2.5)}+\n")
 
 	return smoothed_coordinates
 
