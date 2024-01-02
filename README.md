@@ -478,7 +478,7 @@ river_object.plotCenterlineWidth(apply_smoothing=True, remove_intersections=True
 
 ### Return Width of River
 
-Return the width of the river at each (evenly spaced or smoothed) centerline coordinates as `(Longitude, Latitude) : width` in meters
+Return the width of the river at each (evenly spaced or smoothed) centerline coordinates as `(Longitude, Latitude) : width` in kilometers
 
 ```
 riverWidthFromCenterline(transect_span_distance=3,
