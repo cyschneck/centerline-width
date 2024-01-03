@@ -3,7 +3,7 @@
 # Python Package Setup
 from setuptools import setup, find_namespace_packages
 
-VERSION="1.2.1"
+VERSION="1.3.0"
 DESCRIPTION="A Python package to find the centerline and width of rivers based on the latitude and longitude of the right and left bank"
 
 with open("README.md", "r") as f:

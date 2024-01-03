@@ -2,21 +2,23 @@
 import centerline_width
 
 if __name__ == "__main__":
-	#centerline_width.extractPointsToTextFile(left_kml="data/leftbank.kml",
-	#										right_kml="data/rightbank.kml",
-	#										text_output_name="data/river_coords.txt")
-	centerline_width.extractPointsToTextFile(left_kml="data/59deg48_18dot87_N_69deg46_59dot57_E_lb.kml",
-											right_kml="data/59deg48_18dot87_N_69deg46_59dot57_E_rb.kml",
-											text_output_name="data/N_output.txt")
-	centerline_width.convertColumnsToCSV(text_file="data/N_output.txt", flipBankDirection=True)
+	centerline_width.convertColumnsToCSV(text_file="data/river_coords.txt", flipBankDirection=True)
+
+	centerline_width.extractPointsToTextFile(left_kml="data/leftbank.kml",
+											right_kml="data/rightbank.kml",
+											text_output_name="data/river_coords.txt")
+	#centerline_width.extractPointsToTextFile(left_kml="data/59deg48_18dot87_N_69deg46_59dot57_E_lb.kml",
+	#										right_kml="data/59deg48_18dot87_N_69deg46_59dot57_E_rb.kml",
+	#										text_output_name="data/N_output.txt")
+	centerline_width.convertColumnsToCSV(text_file="data/river_coords.txt", flipBankDirection=True)
 
 	# Valid Examples
 	cutoff = None
-	cutoff = 10
+	#cutoff = 10
 	#cutoff = 15 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
 	#cutoff = 30
 	#cutoff = 100 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
-	#cutoff = 550 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
+	cutoff = 550 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
 	# Invalid Examples
 	#cutoff = 5 # invalid centerline, invalid path, valid polygon, invalid starting node, invalid ending nodes
 	#cutoff = 250 # valid centerline, valid path, invalid polygon, valid starting node, valid ending nodes
@@ -50,40 +52,42 @@ if __name__ == "__main__":
 	#print(river.left_bank_relative_coordinates)
 
 	#coord_type = "relative DIStance"
-	coord_type = "Decimal Degrees"
+	coord_type = "decimal degrees"
 	center_type = "Voronoi"
-	
-	river.saveCenterlineCSV(save_to_csv="centerline_for_csv.csv", centerline_type=center_type, coordinate_unit=coord_type)
-	river.saveCenterlineMAT(save_to_mat="centerline_for_matlab.mat", centerline_type=center_type, coordinate_unit=coord_type)
+
+	#river.saveCenterlineCSV(save_to_csv="centerline_for_csv.csv", centerline_type=center_type, coordinate_unit=coord_type)
+	#river.saveCenterlineMAT(save_to_mat="centerline_for_matlab.mat", centerline_type=center_type, coordinate_unit=coord_type)
 	#river.saveCenterlineCSV(save_to_csv="centerline_for_csv.csv", latitude_header="lat", longitude_header="long", centerline_type="Equal Distance")
 	#river.saveCenterlineMAT(save_to_mat="centerline_for_matlab.mat", latitude_header="lat", longitude_header="long", centerline_type="Evenly Spaced")
 
 	# Plot river bank centerline
 	river.plotCenterline(save_plot_name=None,
 						centerline_type=center_type,
-						marker_type="scatter",
+						marker_type="line",
 						centerline_color="black",
-						display_all_possible_paths=False, 
+						display_all_possible_paths=True, 
 						display_voronoi=False,
 						plot_title=None,
 						coordinate_unit=coord_type)
+
 	transect = 3
 
 	# Plot river bank width line
 	river.plotCenterlineWidth(save_plot_name=None, 
 							plot_title=None,
-							display_true_centerline=False,
+							display_true_centerline=True,
 							transect_span_distance=transect,
 							apply_smoothing=True,
 							flag_intersections=True,
-							remove_intersections=False,
+							remove_intersections=True,
 							coordinate_unit=coord_type)
 
 	# Return width line for each centerline coordinates
 	river_width_dict = river.riverWidthFromCenterline(transect_span_distance=transect,
-													apply_smoothing=True,
+													apply_smoothing=False,
 													remove_intersections=False,
-													save_to_csv=None,
+													save_to_csv="testing.csv",
+													coordinate_reference="banks",
 													coordinate_unit=coord_type)
 
-	print("\nriver width dict = {0}\n".format(river_width_dict))
+	print(f"\nriver width dict = {river_width_dict}\n")
