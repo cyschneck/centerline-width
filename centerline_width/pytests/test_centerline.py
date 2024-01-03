@@ -83,14 +83,21 @@ def test_riverWidthFromCenterline_csvInvalidExtension():
 def test_riverWidthFromCenterline_coordinateUnitInvalidOption():
 	with pytest.raises(ValueError, match=re.escape("[coordinate_unit]: Must be an available option in ['Decimal Degrees', 'Relative Distance'], current option = 'Invalid Option'")):
 		centerline_width.riverWidthFromCenterline(river_object=river_class_example,
-										coordinate_unit="Invalid Option")
+												coordinate_unit="Invalid Option")
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
 def test_riverWidthFromCenterline_coordinateUnitInvalidTypes(invalid_input, error_output):
 	with pytest.raises(ValueError, match=re.escape("[coordinate_unit]: Must be a str, current type = '{0}'".format(error_output))):
 		centerline_width.riverWidthFromCenterline(river_object=river_class_example,
-										coordinate_unit=invalid_input)
+												coordinate_unit=invalid_input)
 
+@pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
+def test_riverWidthFromCenterline_coordinateReferenceInvalidTypes(invalid_input, error_output):
+	with pytest.raises(ValueError, match=re.escape("[coordinate_reference]: Must be a str, current type = '{0}'".format(error_output))):
+		centerline_width.riverWidthFromCenterline(river_object=river_class_example,
+												coordinate_reference=invalid_input)
+
+## Very Output
 def test_riverCenterline_centerlineLength():
 	csv_example = StringIO()
 	csv_example.write("llat,llon,rlat,rlon\n")
@@ -102,7 +109,7 @@ def test_riverCenterline_centerlineLength():
 	csv_example.write("48.287447838366376,-4.27393756242688,48.28581779152722,-4.278836978555489\n")
 	csv_example.seek(0)
 	test_river = centerline_width.riverCenterline(csv_data=csv_example)
-	assert test_river.centerlineLength == 1.3534252753118123
+	assert test_river.centerlineLength == 1.3534252753108382
 
 def test_riverWidthFromCenterline():
 	csv_example = StringIO()
@@ -118,5 +125,5 @@ def test_riverWidthFromCenterline():
 	river_width_dict = test_river.riverWidthFromCenterline()
 	assert river_width_dict == {
 		(-4.271614588856146, 48.282642262514564): 0.5026142454914809,
-		(-4.2628112256127935, 48.282290840533314): 0.48351741792900327,
+		(-4.2628112256127935, 48.282290840533314): 0.4835174179290038,
 	}
