@@ -357,6 +357,7 @@ def riverWidthFromCenterline(river_object=None,
 							apply_smoothing=True,
 							remove_intersections=False,
 							coordinate_unit="Decimal Degrees",
+							coordinate_reference="Centerline",
 							save_to_csv=None):
 	# Return river width: centerline and width at centerline
 	# Width is measured to the bank, relative to the center point (normal of the centerline)
@@ -367,9 +368,12 @@ def riverWidthFromCenterline(river_object=None,
 															apply_smoothing=apply_smoothing,
 															remove_intersections=remove_intersections,
 															coordinate_unit=coordinate_unit,
+															coordinate_reference=coordinate_reference,
 															save_to_csv=save_to_csv)
 
 	coordinate_unit = coordinate_unit.title()
+	coordinate_reference = coordinate_reference.title()
+	right_left_coords = {} # used to track left/right bank coordinates when coordinate_reference=="Banks"
 
 	if river_object.centerlineVoronoi is None:
 		logger.critical("\nCRITICAL ERROR, unable to find width without a valid centerline")
@@ -397,6 +401,9 @@ def riverWidthFromCenterline(river_object=None,
 		# store the distance between the lat/lon position of the right/left bank
 		lon1, lat1 = right_width_coordinates[centerline_coord]
 		lon2, lat2 = left_width_coordinates[centerline_coord]
+		if coordinate_reference == "Banks":
+			# store the coordinates of the right/left bank
+			right_left_coords[centerline_coord] = (right_width_coordinates[centerline_coord], left_width_coordinates[centerline_coord])
 		_, _, distance_between_right_and_left_m = geodesic.inv(lon1, lat1, lon2, lat2)
 		width_dict[centerline_coord] = distance_between_right_and_left_m/1000
 
@@ -404,23 +411,44 @@ def riverWidthFromCenterline(river_object=None,
 	if coordinate_unit == "Relative Distance":
 		right_width_coordinates = centerline_width.relativeWidthCoordinates(river_object.left_bank_coordinates[0], right_width_coordinates, river_object.ellipsoid)
 		left_width_coordinates = centerline_width.relativeWidthCoordinates(river_object.left_bank_coordinates[0], left_width_coordinates, river_object.ellipsoid)
+		if coordinate_reference == "Banks":
+			# store the coordinates of the right/left bank
+			for centerline_relative_coord, _ in right_width_coordinates.items():
+				right_left_coords[centerline_relative_coord] = (right_width_coordinates[centerline_relative_coord], left_width_coordinates[centerline_relative_coord])
 		width_dict = centerline_width.relativeWidthCoordinates(river_object.left_bank_coordinates[0], width_dict, river_object.ellipsoid)
 
-	# Set headers and conver to Relative Distance if needed
-	if coordinate_unit == "Decimal Degrees":
-		latitude_header= "Centerline Latitude (Deg)"
-		longitude_header = "Centerline Longitude (Deg)"
-	if coordinate_unit == "Relative Distance":
-		latitude_header= "Relative Distance Y (from Latitude) (m)"
-		longitude_header = "Relative Distance X (from Longitude) (m)"
+	# If width reference set to "Banks", convert from referencing the centerline to reference left/right banks
+	if coordinate_reference == "Banks":
+		width_dict = {right_left_coords[k]: v for k, v in width_dict.items()}
+
+	# Set headers and convert to Relative Distance if needed for output
+	if coordinate_reference == "Centerline":
+		if coordinate_unit == "Decimal Degrees":
+			latitude_header, longitude_header = "Centerline Latitude (Deg)", "Centerline Longitude (Deg)"
+		if coordinate_unit == "Relative Distance":
+			latitude_header, longitude_header = "Relative Distance Y (from Latitude) (m)", "Relative Distance X (from Longitude) (m)"
+	if coordinate_reference == "Banks":
+		if coordinate_unit == "Decimal Degrees":
+			right_latitude_header, right_longitude_header = "Right Latitude (Deg)", "Right Longitude (Deg)"
+			left_latitude_header, left_longitude_header = "Left Latitude (Deg)", "Left Longitude (Deg)"
+		if coordinate_unit == "Relative Distance":
+			right_latitude_header, right_longitude_header = "Right Relative Distance Y (from Latitude) (m)", "Right Relative Distance X (from Longitude) (m)"
+			left_latitude_header, left_longitude_header = "Left Relative Distance Y (from Latitude) (m)", "Left Relative Distance X (from Longitude) (m)"
 
 	# Save width dictionary to a csv file (Latitude, Longtiude, Width)
 	if save_to_csv:
 		with open(save_to_csv, "w") as csv_file_output:
 			writer = csv.writer(csv_file_output)
-			writer.writerow([latitude_header,longitude_header, "Width (km)"])
-			for coordinate_key, width_value in width_dict.items():
-				writer.writerow([coordinate_key[1], coordinate_key[0], width_value])
+			if coordinate_reference == "Centerline":
+				writer.writerow([latitude_header,longitude_header, "Width (km)"])
+				for coordinate_key, width_value in width_dict.items():
+					writer.writerow([coordinate_key[1], coordinate_key[0], width_value])
+			if coordinate_reference == "Banks":
+				writer.writerow([right_latitude_header,right_longitude_header,
+								left_latitude_header, left_longitude_header, "Width (km)"])
+				for coordinate_key, width_value in width_dict.items():
+					writer.writerow([coordinate_key[0][1], coordinate_key[0][0], 
+									coordinate_key[1][1], coordinate_key[1][0], width_value])
 
 	return width_dict
 

@@ -477,21 +477,22 @@ river_object.plotCenterlineWidth(apply_smoothing=True, remove_intersections=True
 ![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width.png)
 
 ### Return Width of River
-
-Return the width of the river at each (evenly spaced or smoothed) centerline coordinates as `(Longitude, Latitude) : width` in kilometers
+Return the width of the river at each (evenly spaced or smoothed) with coordinates where width line intersects either the centerline, `(Centerline Longitude, Centerline Latitude) : width`, or riverbanks, `((Right Bank Longitude, Right Bank Latitude), (Left Bank Longitude, Left Bank Latitude)) : width` in kilometers
 
 ```
 riverWidthFromCenterline(transect_span_distance=3,
 			apply_smoothing=True,
 			remove_intersections=False,
 			coordinate_unit="Decimal Degrees",
+			coordinate_reference="Centerline",
 			save_to_csv=None)
 ```
 * [OPTIONAL] transect_span_distance (int): Sum up n number of points around a center point to determine the slope (increase to decrease the impact of sudden changes), defaults to 6, must be greater than 2 (since the slope is found from the difference in position between two points), measured orthogonal to the centerline
 * [OPTIONAL] apply_smoothing (boolean): Apply a B-spline smoothing to centerline
 * [OPTIONAL] remove_intersections (boolean): Iterative remove intersecting lines, to maintain the most width lines, but return only non-intersecting width lines, defaults to True
 * [OPTIONAL] coordinate_unit (string): Coordinates of the river are return as "Decimal Degrees" (latitude/longtidue) or converted to a distance from the first point on the left bank as "Relative Distance", defaults to "Decimal Degrees"
-* [OPTIONAL] save_to_csv (string): CSV filename to output width, defaults to None (no file is saved), requires a .csv extension (Column Headers: `Centerline Latitude (Deg)", "Centerline Longitude (Deg)", "Width (km)`)
+* [OPTIONAL] coordinate_reference (string): Reference where the width line intersects the river, either along the centerline ("Centerline") as `(Centerline Longitude, Centerline Latitude) : width`, or riverbanks ("Banks") as `((Right Bank Longitude, Right Bank Latitude), (Left Bank Longitude, Left Bank Latitude)) : width`
+* [OPTIONAL] save_to_csv (string): CSV filename to output width dictionary, defaults to None (no file is saved), requires a .csv extension (Column Headers automatically generated based on `coordinate_unit` and `coordinate_reference`)
 
 Important note, when using `apply_smoothing=True`, the centerline generated is the result of evenly spaced coordinates generated from the original Voronoi coordinates, so the smoothed coordinates may not match exactly to the original centerline coordinates. When `apply_smoothing=False`, width lines are generated from the evenly spaced centerline coordinates
 
@@ -500,6 +501,7 @@ import centerline_width
 river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
 river_width_dict = river_object.riverWidthFromCenterline(transect_span_distance=3,
 							apply_smoothing=True,
+							coordinate_reference="Centerline",
 							remove_intersections=True)
 ```
 Width dictionary = `{(-92.86792084788995, 30.037769672351182): 0.10969163557087018, (-92.86795038641004, 30.03769867854198): 0.10794219579997719}`
