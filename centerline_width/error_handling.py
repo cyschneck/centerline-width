@@ -139,6 +139,7 @@ def errorHandlingRiverWidthFromCenterline(river_object=None,
 										apply_smoothing=None,
 										remove_intersections=None,
 										coordinate_unit=None,
+										coordinate_reference=None,
 										save_to_csv=None):
 	# Error Handling for riverWidthFromCenterline()
 	if river_object is None:
@@ -166,6 +167,13 @@ def errorHandlingRiverWidthFromCenterline(river_object=None,
 		coordinate_unit_options = ["Decimal Degrees", "Relative Distance"]
 		if coordinate_unit.title() not in coordinate_unit_options:
 			raise ValueError(f"[coordinate_unit]: Must be an available option in {coordinate_unit_options}, current option = '{coordinate_unit}'")
+
+	if type(coordinate_reference) != str:
+		raise ValueError(f"[coordinate_reference]: Must be a str, current type = '{type(coordinate_reference)}'")
+	else:
+		coordinate_reference_options = ["Centerline", "Banks"]
+		if coordinate_reference.title() not in coordinate_reference_options:
+			raise ValueError(f"[coordinate_reference]: Must be an available option in {coordinate_reference_options}, current option = '{coordinate_reference}'")
 
 	if save_to_csv is not None:
 		if type(save_to_csv) != str:
