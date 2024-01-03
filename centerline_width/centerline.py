@@ -242,7 +242,7 @@ def riverWidthFromCenterlineCoordinates(river_object=None,
 		return points_intersect_false_edges
 
 	# Generate a list of lines from the centerline point with its normal
-	logger.info("[PROCESSING] Calculating and positioning width lines, may takes a few minutes...")
+	logger.info("[PROCESSING] Calculating and positioning width lines, may take a few minutes...")
 
 	min_x, min_y, max_x, max_y = river_object.bank_polygon.bounds
 	for centerline_point, slope in centerline_slope.items():
@@ -469,4 +469,6 @@ def centerlineLength(centerline_coordinates=None, ellipsoid="WGS84"):
 			lat1, lat2 = previous_pair[1], xy_pair[1]
 			_, _, distance_between_meters = geodesic.inv(lon1, lat1, lon2, lat2)
 			total_length += distance_between_meters
+		# Set previous_pair to xy_pair for the next iteration.
+		previous_pair = xy_pair
 	return total_length/1000

@@ -477,8 +477,7 @@ river_object.plotCenterlineWidth(apply_smoothing=True, remove_intersections=True
 ![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width.png)
 
 ### Return Width of River
-
-Return the width of the river at each (evenly spaced or smoothed) with coordinates where width line intersects either the centerline, `(Centerline Longitude, Centerline Latitude) : width`, or riverbanks, `((Right Bank Longitude, Right Bank Latitude), (Left Bank Longitude, Left Bank Latitude)) : width` in meters
+Return the width of the river at each (evenly spaced or smoothed) with coordinates where width line intersects either the centerline, `(Centerline Longitude, Centerline Latitude) : width`, or riverbanks, `((Right Bank Longitude, Right Bank Latitude), (Left Bank Longitude, Left Bank Latitude)) : width` in kilometers
 
 ```
 riverWidthFromCenterline(transect_span_distance=3,
