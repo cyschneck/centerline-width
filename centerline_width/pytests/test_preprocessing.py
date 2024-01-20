@@ -25,7 +25,7 @@ def test_convertColumnsToCSV_textFileRequired():
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
 def test_convertColumnsToCSV_textFileInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[text_file]: Must be a str, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[text_file]: Must be a str, current type = '{error_output}'")):
 		centerline_width.convertColumnsToCSV(text_file=invalid_input)
 
 def test_convertColumnsToCSV_textFileInvalidExtensions():
@@ -34,5 +34,5 @@ def test_convertColumnsToCSV_textFileInvalidExtensions():
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_bool_options)
 def test_convertColumnsToCSV_flipBankDirectionInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[flipBankDirection]: Must be a bool, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[flipBankDirection]: Must be a bool, current type = '{error_output}'")):
 		centerline_width.convertColumnsToCSV(text_file="text_file.txt", flipBankDirection=invalid_input)

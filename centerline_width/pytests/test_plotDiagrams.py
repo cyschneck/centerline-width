@@ -54,7 +54,7 @@ def test_plotCenterline_riverObjectInvalidTypes(invalid_input, error_output):
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
 def test_plotCenterline_centerlineTypeInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[centerline_type]: Must be a str, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[centerline_type]: Must be a str, current type = '{error_output}'")):
 		centerline_width.plotCenterline(river_object=river_class_example,
 										centerline_type=invalid_input)
 
@@ -65,7 +65,7 @@ def test_plotCenterline_centerlineTypeInvalidOption():
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
 def test_plotCenterline_markerTypeInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[marker_type]: Must be a str, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[marker_type]: Must be a str, current type = '{error_output}'")):
 		centerline_width.plotCenterline(river_object=river_class_example,
 										marker_type=invalid_input)
 
@@ -76,37 +76,37 @@ def test_plotCenterline_markerTypeInvalidOption():
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
 def test_plotCenterline_centerlineColorInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[centerline_color]: Must be a str, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[centerline_color]: Must be a str, current type = '{error_output}'")):
 		centerline_width.plotCenterline(river_object=river_class_example,
 										centerline_color=invalid_input)
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_bool_options)
 def test_plotCenterline_darkModeInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[dark_mode]: Must be a bool, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[dark_mode]: Must be a bool, current type = '{error_output}'")):
 		centerline_width.plotCenterline(river_object=river_class_example,
 										dark_mode=invalid_input)
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_bool_options)
 def test_plotCenterline_displayAllPossiblePathsInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[display_all_possible_paths]: Must be a bool, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[display_all_possible_paths]: Must be a bool, current type = '{error_output}'")):
 		centerline_width.plotCenterline(river_object=river_class_example,
 											display_all_possible_paths=invalid_input)
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
 def test_plotCenterline_plotTitleInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[plot_title]: Must be a str, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[plot_title]: Must be a str, current type = '{error_output}'")):
 		centerline_width.plotCenterline(river_object=river_class_example,
 										plot_title=invalid_input)
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
 def test_plotCenterline_savePlotNameInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[save_plot_name]: Must be a str, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[save_plot_name]: Must be a str, current type = '{error_output}'")):
 		centerline_width.plotCenterline(river_object=river_class_example,
 										save_plot_name=invalid_input)
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_bool_options)
 def test_plotCenterline_displayVoronoiInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[display_voronoi]: Must be a bool, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[display_voronoi]: Must be a bool, current type = '{error_output}'")):
 		centerline_width.plotCenterline(river_object=river_class_example,
 										display_voronoi=invalid_input)
 
@@ -117,7 +117,7 @@ def test_plotCenterline_coordinateUnitInvalidOption():
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
 def test_plotCenterline_coordinateUnitInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[coordinate_unit]: Must be a str, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[coordinate_unit]: Must be a str, current type = '{error_output}'")):
 		centerline_width.plotCenterline(river_object=river_class_example,
 										coordinate_unit=invalid_input)
 
@@ -133,49 +133,49 @@ def test_plotCenterlineWidth_riverObjectInvalidTypes(invalid_input, error_output
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
 def test_plotCenterlineWidth_plotTitleInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[plot_title]: Must be a str, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[plot_title]: Must be a str, current type = '{error_output}'")):
 		centerline_width.plotCenterlineWidth(river_object=river_class_example,
 											plot_title=invalid_input)
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
 def test_plotCenterlineWidth_savePlotNameInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[save_plot_name]: Must be a str, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[save_plot_name]: Must be a str, current type = '{error_output}'")):
 		centerline_width.plotCenterlineWidth(river_object=river_class_example,
 											save_plot_name=invalid_input)
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_bool_options)
 def test_plotCenterlineWidth_displayTrueCenterlineInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[display_true_centerline]: Must be a bool, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[display_true_centerline]: Must be a bool, current type = '{error_output}'")):
 		centerline_width.plotCenterlineWidth(river_object=river_class_example,
 											display_true_centerline=invalid_input)
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_int_options)
 def test_plotCenterlineWidth_transectSpanDistanceInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[transect_span_distance]: Must be a int, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[transect_span_distance]: Must be a int, current type = '{error_output}'")):
 		centerline_width.plotCenterlineWidth(river_object=river_class_example,
 											transect_span_distance=invalid_input)
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_bool_options)
 def test_plotCenterlineWidth_applySmoothingInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[apply_smoothing]: Must be a bool, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[apply_smoothing]: Must be a bool, current type = '{error_output}'")):
 		centerline_width.plotCenterlineWidth(river_object=river_class_example,
 											apply_smoothing=invalid_input)
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_bool_options)
 def test_plotCenterlineWidth_flagIntersectionsInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[flag_intersections]: Must be a bool, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[flag_intersections]: Must be a bool, current type = '{error_output}'")):
 		centerline_width.plotCenterlineWidth(river_object=river_class_example,
 											flag_intersections=invalid_input)
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_bool_options)
 def test_plotCenterlineWidth_removeIntersectionsInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[remove_intersections]: Must be a bool, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[remove_intersections]: Must be a bool, current type = '{error_output}'")):
 		centerline_width.plotCenterlineWidth(river_object=river_class_example,
 											remove_intersections=invalid_input)
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_bool_options)
 def test_plotCenterlineWidth_darkModeInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[dark_mode]: Must be a bool, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[dark_mode]: Must be a bool, current type = '{error_output}'")):
 		centerline_width.plotCenterlineWidth(river_object=river_class_example,
 											dark_mode=invalid_input)
 
@@ -186,6 +186,6 @@ def test_plotCenterlineWidth_coordinateUnitInvalidOption():
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
 def test_plotCenterlineWidth_coordinateUnitInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[coordinate_unit]: Must be a str, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[coordinate_unit]: Must be a str, current type = '{error_output}'")):
 		centerline_width.plotCenterlineWidth(river_object=river_class_example,
 										coordinate_unit=invalid_input)

@@ -40,21 +40,21 @@ def test_saveCenterlineCSV_csvRequired():
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
 def test_saveCenterlineCSV_latitudeHeaderTypeInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[latitude_header]: Must be a str, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[latitude_header]: Must be a str, current type = '{error_output}'")):
 		centerline_width.saveCenterlineCSV(river_object=river_class_example,
 											save_to_csv="testing.csv",
 											latitude_header=invalid_input)
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
 def test_saveCenterlineCSV_longitudeHeaderTypeInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[longitude_header]: Must be a str, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[longitude_header]: Must be a str, current type = '{error_output}'")):
 		centerline_width.saveCenterlineCSV(river_object=river_class_example,
 											save_to_csv="testing.csv",
 											longitude_header=invalid_input)
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
 def test_saveCenterlineCSV_centerlineTypeInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[centerline_type]: Must be a str, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[centerline_type]: Must be a str, current type = '{error_output}'")):
 		centerline_width.saveCenterlineCSV(river_object=river_class_example,
 											save_to_csv="testing.csv",
 											centerline_type=invalid_input)
@@ -73,7 +73,7 @@ def test_saveCenterlineCSV_coordinateUnitInvalidOption():
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
 def test_saveCenterlineCSV_coordinateTypeInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("coordinate_unit]: Must be a str, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"coordinate_unit]: Must be a str, current type = '{error_output}'")):
 		centerline_width.saveCenterlineCSV(river_object=river_class_example,
 										save_to_csv="testing.csv",
 										coordinate_unit=invalid_input)
@@ -93,7 +93,7 @@ def test_saveCenterlineMAT_matRequired():
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
 def test_saveCenterlineMAT_latitudeHeaderTypeInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[latitude_header]: Must be a str, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[latitude_header]: Must be a str, current type = '{error_output}'")):
 		centerline_width.saveCenterlineMAT(river_object=river_class_example,
 											save_to_mat="testing.mat",
 											latitude_header=invalid_input)
@@ -106,7 +106,7 @@ def test_saveCenterlineMAT_latitudeHeaderTypeInvalidAlphanumeric():
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
 def test_saveCenterlineMAT_longitudeHeaderTypeInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[longitude_header]: Must be a str, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[longitude_header]: Must be a str, current type = '{error_output}'")):
 		centerline_width.saveCenterlineMAT(river_object=river_class_example,
 											save_to_mat="testing.mat",
 											longitude_header=invalid_input)
@@ -119,7 +119,7 @@ def test_saveCenterlineMAT_longitudeHeaderTypeInvalidAlphanumeric():
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
 def test_saveCenterlineMAT_centerlineTypeInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[centerline_type]: Must be a str, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[centerline_type]: Must be a str, current type = '{error_output}'")):
 		centerline_width.saveCenterlineMAT(river_object=river_class_example,
 											save_to_mat="testing.mat",
 											centerline_type=invalid_input)
@@ -138,7 +138,7 @@ def test_saveCenterlineMAT_coordinateUnitInvalidOption():
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
 def test_saveCenterlineMAT_coordinateUnitInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[coordinate_unit]: Must be a str, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[coordinate_unit]: Must be a str, current type = '{error_output}'")):
 		centerline_width.saveCenterlineMAT(river_object=river_class_example,
 										save_to_mat="testing.mat",
 										coordinate_unit=invalid_input)

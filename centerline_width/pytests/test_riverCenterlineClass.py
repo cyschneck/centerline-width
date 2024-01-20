@@ -35,32 +35,32 @@ def test_riverCenterline_csvDataRequired():
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
 def test_riverCenterline_csvDataInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[csv_data]: Must be a str, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[csv_data]: Must be a str, current type = '{error_output}'")):
 		centerline_width.riverCenterline(csv_data=invalid_input)
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_int_options)
 def test_riverCenterline_optionalCutoffInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[optional_cutoff]: Must be a int, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[optional_cutoff]: Must be a int, current type = '{error_output}'")):
 		centerline_width.riverCenterline(csv_data="csv_example.csv", optional_cutoff=invalid_input)
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_bool_options)
 def test_riverCenterline_interpolateDataInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[interpolate_data]: Must be a bool, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[interpolate_data]: Must be a bool, current type = '{error_output}'")):
 		centerline_width.riverCenterline(csv_data="csv_example.csv", interpolate_data=invalid_input)
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_int_options)
 def test_riverCenterline_interpolateNInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[interpolate_n]: Must be a int, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[interpolate_n]: Must be a int, current type = '{error_output}'")):
 		centerline_width.riverCenterline(csv_data="csv_example.csv", interpolate_n=invalid_input)
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_num_options)
 def test_riverCenterline_equalDistanceInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[equal_distance]: Must be a int or float, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[equal_distance]: Must be a int or float, current type = '{error_output}'")):
 		centerline_width.riverCenterline(csv_data="csv_example.csv", equal_distance=invalid_input)
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
 def test_riverCenterline_ellipsoidInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[ellipsoid]: Must be a str, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[ellipsoid]: Must be a str, current type = '{error_output}'")):
 		centerline_width.riverCenterline(csv_data="csv_example.csv", ellipsoid=invalid_input)
 
 def test_riverCenterline_ellipsoidInvalidOptions():

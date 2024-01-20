@@ -20,7 +20,7 @@ def test_extractPointsToTextFile_leftKMLRequired():
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
 def test_plotCenterline_leftKMLInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[left_kml]: Must be a str, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[left_kml]: Must be a str, current type = '{error_output}'")):
 			centerline_width.extractPointsToTextFile(left_kml=invalid_input)
 
 def test_extractPointsToTextFile_leftKMLInvalidExtension():
@@ -33,7 +33,7 @@ def test_extractPointsToTextFile_rightKMLRequired():
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
 def test_plotCenterline_rightKMLInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[right_kml]: Must be a str, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[right_kml]: Must be a str, current type = '{error_output}'")):
 			centerline_width.extractPointsToTextFile(left_kml="left_kml.kml", right_kml=invalid_input)
 
 def test_extractPointsToTextFile_rightKMLInvalidExtension():
@@ -46,7 +46,7 @@ def test_extractPointsToTextFile_textOutputNameRequired():
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
 def test_plotCenterline_textOutputNameInvalidTypes(invalid_input, error_output):
-	with pytest.raises(ValueError, match=re.escape("[text_output_name]: Must be a str, current type = '{0}'".format(error_output))):
+	with pytest.raises(ValueError, match=re.escape(f"[text_output_name]: Must be a str, current type = '{error_output}'")):
 			centerline_width.extractPointsToTextFile(left_kml="left_kml.kml", right_kml="right_kml.kml", text_output_name=invalid_input)
 
 def test_extractPointsToTextFile_rightAndLeftKMLMatchInvalid():
