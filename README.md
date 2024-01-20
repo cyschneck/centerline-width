@@ -43,7 +43,6 @@ pip install centerline-width
 ```
 
 ## Requirements
-Currently running on Python 3.7+
 
 ```
 pip install -r requirements.txt
@@ -77,7 +76,7 @@ To plot the width of the river at intervals along the bank, run `plotCenterlineW
 
 While `apply_smoothing`, `remove_intersections`, and `display_true_centerline` are optional, they are recommended to generate a minimal width diagram
 ```python
-river.plotCenterlineWidth(apply_smoothing=True, remove_intersections=True, display_true_centerline=False)
+river_object.plotCenterlineWidth(apply_smoothing=True, remove_intersections=True, display_true_centerline=False)
 ```
 ![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width.png)
 
@@ -414,7 +413,6 @@ Output:
 ### Plot the Centerline Width Lines
 Plot the width of the river based on the centerline
 
-Display Centerline at even intervals from the Voronoi generated centerline
 ```
 plotCenterlineWidth(plot_title=None, 
 		save_plot_name=None, 
@@ -428,7 +426,7 @@ plotCenterlineWidth(plot_title=None,
 * [OPTIONAL] plot_title (string): Change plot title, defaults to "River Coordinates: Valid Centerline = True/False, Valid Polygon = True/False"
 * [OPTIONAL] save_plot_name (string): Save the plot with a given name and location
 * [OPTIONAL] display_true_centerline (boolean): Display generated true centerline based on Voronoi diagrams
-* [OPTIONAL] transect_span_distance (int): Sum up n number of points around a center point to determine the slope (increase to decrease the impact of sudden changes), defaults to 6, must be greater than 2 (since the slope is found from the difference in position between two points), measured orthogonal to the centerline
+* [OPTIONAL] transect_span_distance (int): Sum up n number of points around a center point to determine the slope (increase to decrease the impact of sudden changes), defaults to 3, must be greater than 1 (since the slope is found from the difference in position between two points)
 * [OPTIONAL] apply_smoothing (boolean): Apply a B-spline smoothing to centerline
 * [OPTIONAL] flag_intersections (boolean): Display intersecting width lines as red in graph, defaults to True
 * [OPTIONAL] remove_intersections (boolean): Remove intersecting lines (but maintain the most width lines as possible) and only return non-intersecting width lines, defaults to False
@@ -444,7 +442,8 @@ apply_smoothing applies a spline to smooth the centerline points created by the 
 
 **transect_span_distance**
 
-Transect span describes the number of points that are averaged to generate a width line (example: transect_span_distance=3, average of three slopes)
+Transect span describes the number of points that are averaged to generate the slope of the width line (example: transect_span_distance=3, average of three slopes). The slope of the width line is  orthogonal to the average slopes measured along the transect span
+
 
 ![transect_span_distance](https://user-images.githubusercontent.com/22159116/227870492-69d105b2-0d3e-4d50-90d9-e938400a58fb.png)
 | transect_span_distance=6 | transect_span_distance=30 |
