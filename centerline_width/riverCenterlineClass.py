@@ -107,6 +107,7 @@ class riverCenterline:
 						centerline_type="Voronoi",
 						marker_type="line",
 						centerline_color="black",
+						dark_mode=False,
 						display_all_possible_paths=False,
 						plot_title=None,
 						save_plot_name=None,
@@ -116,6 +117,7 @@ class riverCenterline:
 										centerline_type=centerline_type,
 										marker_type=marker_type,
 										centerline_color=centerline_color,
+										dark_mode=dark_mode,
 										display_all_possible_paths=display_all_possible_paths, 
 										plot_title=plot_title, 
 										save_plot_name=save_plot_name, 
@@ -130,6 +132,7 @@ class riverCenterline:
 							apply_smoothing=False,
 							flag_intersections=True,
 							remove_intersections=False,
+							dark_mode=False,
 							coordinate_unit="Decimal Degrees"):
 		centerline_width.plotCenterlineWidth(river_object=self,
 											plot_title=plot_title, 
@@ -139,6 +142,7 @@ class riverCenterline:
 											apply_smoothing=apply_smoothing,
 											flag_intersections=flag_intersections,
 											remove_intersections=remove_intersections,
+											dark_mode=dark_mode,
 											coordinate_unit=coordinate_unit)
 
 	def riverWidthFromCenterline(self,

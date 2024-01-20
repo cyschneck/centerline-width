@@ -386,6 +386,7 @@ Plot the centerline created from a list of right and left banks with Voronoi ver
 plotCenterline(centerline_type="Voronoi",
 		marker_type="line",
 		centerline_color="black",
+		dark_mode=False,
 		display_all_possible_paths=False, 
 		plot_title=None, 
 		save_plot_name=None, 
@@ -395,6 +396,7 @@ plotCenterline(centerline_type="Voronoi",
 * [OPTIONAL] centerline_type (string): Centerline type graph within river (not case-sensitive), options: ["Voronoi", "Evenly Spaced", "Smoothed", "Equal Distance"], defaults to "Voronoi"
 * [OPTIONAL] marker_type (string): Graph type (not case-sensitive), options: ["Line", "Scatter"], defaults to "Line"
 * [OPTIONAL] centerline_color (string): Color of centerline coordinates on graph (not case-sensitive), options: [matplotlib named colors](https://matplotlib.org/stable/gallery/color/named_colors.html), defaults to "black"
+* [OPTIONAL] dark_mode (bool): Change plot to a black ground (and override if `centerline_color="black"` to `centerline_color="white"`), defaults to False
 * [OPTIONAL] display_all_possible_paths (boolean): Display all possible paths, not just the centerline (useful for debugging), defaults to False
 * [OPTIONAL] plot_title (string): Change plot title, defaults to "River Coordinates: Valid Centerline = True/False, Valid Polygon = True/False"
 * [OPTIONAL] save_plot_name (string): Save the plot with a given name and location
@@ -421,6 +423,7 @@ plotCenterlineWidth(plot_title=None,
 		apply_smoothing=False,
 		flag_intersections=True,
 		remove_intersections=False,
+		dark_mode=False,
 		coordinate_unit="Decimal Degrees")
 ```
 * [OPTIONAL] plot_title (string): Change plot title, defaults to "River Coordinates: Valid Centerline = True/False, Valid Polygon = True/False"
@@ -430,6 +433,7 @@ plotCenterlineWidth(plot_title=None,
 * [OPTIONAL] apply_smoothing (boolean): Apply a B-spline smoothing to centerline
 * [OPTIONAL] flag_intersections (boolean): Display intersecting width lines as red in graph, defaults to True
 * [OPTIONAL] remove_intersections (boolean): Remove intersecting lines (but maintain the most width lines as possible) and only return non-intersecting width lines, defaults to False
+* [OPTIONAL] dark_mode (bool): Change plot to a black ground (and override if `centerline_color="black"` to `centerline_color="white"`), defaults to False
 * [OPTIONAL] coordinate_unit (string): Coordinates of the river are return as "Decimal Degrees" (latitude/longtidue) or converted to a distance from the first point on the left bank as "Relative Distance", defaults to "Decimal Degrees"
 
 **apply_smoothing**
@@ -459,6 +463,14 @@ Intersecting lines are flagged in red by default (flag_intersections=True)
 | remove_intersections=False | remove_intersections=True |
 | ------------- | ------------- |
 | ![river_keep+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_keep_intersections.png) | ![river_remove+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_remove_intersections.png)|
+
+**dark_mode**
+
+dark_mode will change the default Matplotlib background black and swap the centerline_color from black to white
+
+| dark_mode=False | dark_mode=True |
+| ------------- | ------------- |
+| ![river_white+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_dark_mode_false.png) | ![river_black+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_dark_mode_true.png)|
 
 **coordinate_unit**
 

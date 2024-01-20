@@ -38,6 +38,7 @@ def errorHandlingPlotCenterline(river_object=None,
 								centerline_type=None,
 								marker_type=None,
 								centerline_color=None,
+								dark_mode=None,
 								display_all_possible_paths=None,
 								plot_title=None,
 								save_plot_name=None,
@@ -66,6 +67,9 @@ def errorHandlingPlotCenterline(river_object=None,
 	if type(centerline_color) != str:
 		raise ValueError(f"[centerline_color]: Must be a str, current type = '{type(centerline_color)}'")
 
+	if type(dark_mode) != bool:
+		raise ValueError(f"[dark_mode]: Must be a bool, current type = '{type(dark_mode)}'")
+
 	if type(display_all_possible_paths) != bool:
 		raise ValueError(f"[display_all_possible_paths]: Must be a bool, current type = '{type(display_all_possible_paths)}'")
 
@@ -93,6 +97,7 @@ def errorHandlingPlotCenterlineWidth(river_object=None,
 									apply_smoothing=None,
 									flag_intersections=None,
 									remove_intersections=None,
+									dark_mode=None,
 									coordinate_unit=None):
 	# Error handling for plotCenterlineWidth()
 	if river_object is None:
@@ -125,6 +130,9 @@ def errorHandlingPlotCenterlineWidth(river_object=None,
 
 	if type(remove_intersections) != bool:
 		raise ValueError(f"[remove_intersections]: Must be a bool, current type = '{type(remove_intersections)}'")
+
+	if type(dark_mode) != bool:
+		raise ValueError(f"[dark_mode]: Must be a bool, current type = '{type(dark_mode)}'")
 
 	if type(coordinate_unit) != str:
 		raise ValueError(f"[coordinate_unit]: Must be a str, current type = '{type(coordinate_unit)}'")

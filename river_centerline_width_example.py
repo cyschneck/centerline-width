@@ -53,7 +53,7 @@ if __name__ == "__main__":
 
 	#coord_type = "relative DIStance"
 	coord_type = "decimal degrees"
-	center_type = "Voronoi"
+	center_type = "VorOnoi"
 
 	#river.saveCenterlineCSV(save_to_csv="centerline_for_csv.csv", centerline_type=center_type, coordinate_unit=coord_type)
 	#river.saveCenterlineMAT(save_to_mat="centerline_for_matlab.mat", centerline_type=center_type, coordinate_unit=coord_type)
@@ -65,9 +65,10 @@ if __name__ == "__main__":
 						centerline_type=center_type,
 						marker_type="line",
 						centerline_color="black",
-						display_all_possible_paths=True, 
+						display_all_possible_paths=False, 
 						display_voronoi=False,
 						plot_title=None,
+						dark_mode=True,
 						coordinate_unit=coord_type)
 
 	transect = 3
@@ -77,9 +78,10 @@ if __name__ == "__main__":
 							plot_title=None,
 							display_true_centerline=True,
 							transect_span_distance=transect,
-							apply_smoothing=True,
+							apply_smoothing=False,
 							flag_intersections=True,
 							remove_intersections=True,
+							dark_mode=True,
 							coordinate_unit=coord_type)
 
 	# Return width line for each centerline coordinates

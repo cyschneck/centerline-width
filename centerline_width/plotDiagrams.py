@@ -20,8 +20,18 @@ def plotCenterlineBackend(river_object=None,
 						centerline_type="Voronoi",
 						marker_type="line",
 						centerline_color="black",
+						dark_mode=False,
 						coordinate_unit=None):
 	# Shared components between plotCenterline and plotCenterlineWidth
+
+	# set plot to dark background and alternate centerline color default
+	if dark_mode:
+		plt.style.use('dark_background')
+		if centerline_color == "black":
+			centerline_color = "white"
+	if not dark_mode:
+		plt.style.use('default') # revert to white background
+
 	fig = plt.figure(figsize=(10,10))
 	ax = fig.add_subplot(111)
 	scatter_plot_size = 4
@@ -58,7 +68,7 @@ def plotCenterlineBackend(river_object=None,
 	centerline_type = centerline_type.title()
 	marker_type = marker_type.title()
 
-	# Choose btween Decimal Degrees and Centerline Type
+	# Choose between Decimal Degrees and Centerline Type
 	if centerline_type == "Voronoi": 
 		centerline_legend = "Voronoi Centerline Coordinates"
 		if coordinate_unit == "Decimal Degrees": centerline_coordinates_by_type = river_object.centerlineVoronoi
@@ -109,6 +119,7 @@ def plotCenterline(river_object=None,
 					centerline_type="Voronoi",
 					marker_type="line",
 					centerline_color="black",
+					dark_mode=False,
 					display_all_possible_paths=False, 
 					plot_title=None, 
 					save_plot_name=None, 
@@ -119,6 +130,7 @@ def plotCenterline(river_object=None,
 												centerline_type=centerline_type,
 												marker_type=marker_type,
 												centerline_color=centerline_color,
+												dark_mode=dark_mode,
 												display_all_possible_paths=display_all_possible_paths,
 												plot_title=plot_title,
 												save_plot_name=save_plot_name,
@@ -130,6 +142,7 @@ def plotCenterline(river_object=None,
 														centerline_type=centerline_type,
 														marker_type=marker_type,
 														centerline_color=centerline_color,
+														dark_mode=dark_mode,
 														coordinate_unit=coordinate_unit)
 
 	coordinate_unit = coordinate_unit.title()
@@ -175,6 +188,7 @@ def plotCenterlineWidth(river_object=None,
 						apply_smoothing=False,
 						flag_intersections=True,
 						remove_intersections=False,
+						dark_mode=False,
 						coordinate_unit="Decimal Degrees"):
 	# Plot Width Lines based on Centerline
 	centerline_width.errorHandlingPlotCenterlineWidth(river_object=river_object,
@@ -185,13 +199,16 @@ def plotCenterlineWidth(river_object=None,
 													apply_smoothing=apply_smoothing,
 													flag_intersections=flag_intersections,
 													remove_intersections=remove_intersections,
+													dark_mode=dark_mode,
 													coordinate_unit=coordinate_unit)
+													
 
 	fig, ax, valid_path_through = plotCenterlineBackend(river_object=river_object, 
 														display_true_centerline=display_true_centerline,
 														centerline_type="Voronoi",
 														marker_type="line",
 														centerline_color="black",
+														dark_mode=dark_mode,
 														coordinate_unit=coordinate_unit)
 
 	coordinate_unit = coordinate_unit.title()
@@ -249,6 +266,7 @@ def plotCenterlineWidth(river_object=None,
 						else:
 							plt.plot(x_points, y_points, 'green', linewidth=1)
 				else:
+					# display all width lines as green since flag_instersection=False
 					if not valid_label_added:
 						plt.plot(x_points, y_points, 'green', label="Width", linewidth=1)
 						valid_label_added = True
