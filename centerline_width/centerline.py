@@ -223,12 +223,10 @@ def riverWidthFromCenterlineCoordinates(river_object=None,
 			total_slopes = 0
 			for i in range(len(group_points)):
 				if i+1 < len(group_points):
-					dx_i = group_points[0][0]
-					dy_i = group_points[0][1] 
-					dx_f = group_points[-1][0]
-					dy_f = group_points[-1][1]
-					if (dx_f - dx_i) != 0:
-						slope_sum += (dy_f - dy_i) / (dx_f - dx_i)
+					dy = group_points[i+1][1] - group_points[i][1]
+					dx = group_points[i+1][0] - group_points[i][0]
+					if dx != 0:
+						slope_sum += (dy / dx)
 						total_slopes += 1
 			if slope_sum != 0:
 				slope_avg = slope_sum / total_slopes
