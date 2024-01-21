@@ -15,10 +15,10 @@ if __name__ == "__main__":
 	# Valid Examples
 	cutoff = None
 	#cutoff = 10
-	#cutoff = 15 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
+	cutoff = 15 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
 	#cutoff = 30
 	#cutoff = 100 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
-	cutoff = 550 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
+	#cutoff = 550 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
 	# Invalid Examples
 	#cutoff = 5 # invalid centerline, invalid path, valid polygon, invalid starting node, invalid ending nodes
 	#cutoff = 250 # valid centerline, valid path, invalid polygon, valid starting node, valid ending nodes
@@ -61,18 +61,19 @@ if __name__ == "__main__":
 	#river.saveCenterlineMAT(save_to_mat="centerline_for_matlab.mat", latitude_header="lat", longitude_header="long", centerline_type="Evenly Spaced")
 
 	# Plot river bank centerline
-	#river.plotCenterline(save_plot_name=None,
-	#					centerline_type=center_type,
-	#					marker_type="line",
-	#					centerline_color="black",
-	#					display_all_possible_paths=False, 
-	#					display_voronoi=False,
-	#					plot_title=None,
-	#					dark_mode=True,
-	#					coordinate_unit=coord_type)
+	river.plotCenterline(save_plot_name=None,
+						centerline_type=center_type,
+						marker_type="line",
+						centerline_color="black",
+						display_all_possible_paths=False, 
+						display_voronoi=False,
+						plot_title=None,
+						dark_mode=True,
+						equal_axis=True,
+						coordinate_unit=coord_type)
 
-	transect = 6
-	slope_type = "direct"
+	transect = 2
+	slope_type = "average"
 
 	# Plot river bank width line
 	river.plotCenterlineWidth(save_plot_name=None, 
@@ -84,8 +85,9 @@ if __name__ == "__main__":
 							flag_intersections=True,
 							remove_intersections=True,
 							dark_mode=True,
+							equal_axis=False,
 							coordinate_unit=coord_type)
-
+	exit()
 	# Return width line for each centerline coordinates
 	river_width_dict = river.riverWidthFromCenterline(transect_span_distance=transect,
 													transect_slope=slope_type,
