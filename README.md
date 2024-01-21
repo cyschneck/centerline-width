@@ -454,7 +454,7 @@ apply_smoothing applies a spline to smooth the centerline points created by the 
 
 Transect span describes the number of points that are averaged to generate the slope of the width line (example: transect_span_distance=3, average of three slopes). The slope of the width line is  orthogonal to the average slopes measured along the transect span
 
-![transect_span_distance](https://user-images.githubusercontent.com/22159116/227870492-69d105b2-0d3e-4d50-90d9-e938400a58fb.png)
+![transect_span_distance](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/span_description.png)
 
 | transect_span_distance=6 | transect_span_distance=30 |
 | ------------- | ------------- |
@@ -464,6 +464,7 @@ Transect span describes the number of points that are averaged to generate the s
 
 The width lines are generated as perpendicular to the slopes of the points across `transect_span_distance`. By default, `transect_slope="Average"` where the width lines are perpendicular to the average slopes of the across span distance (for example: [A, B, C, D] = avg(slope([A, B]) + slope([B, C]) + slope([C+D]))). Optionally, if `transect_slope="Direct"` then the width lines will be perpendicular to slope of the first and last point (for example: [A, B, C, D] = slope([A, D])) to avoid being susceptible to rapid small changes along the centerline
 
+![transect_span_distance](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/slope_description.png)
 | transect_slope="Average" | transect_slope="Direct" |
 | ------------- | ------------- |
 | ![river_transect_avg+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_transect_avg.png) | ![river_transect_direct+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_transect_direct.png) |
