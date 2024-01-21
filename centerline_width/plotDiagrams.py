@@ -185,6 +185,7 @@ def plotCenterlineWidth(river_object=None,
 						save_plot_name=None, 
 						display_true_centerline=True,
 						transect_span_distance=3,
+						transect_slope="Average",
 						apply_smoothing=False,
 						flag_intersections=True,
 						remove_intersections=False,
@@ -196,6 +197,7 @@ def plotCenterlineWidth(river_object=None,
 													save_plot_name=save_plot_name, 
 													display_true_centerline=display_true_centerline,
 													transect_span_distance=transect_span_distance,
+													transect_slope=transect_slope,
 													apply_smoothing=apply_smoothing,
 													flag_intersections=flag_intersections,
 													remove_intersections=remove_intersections,
@@ -212,6 +214,7 @@ def plotCenterlineWidth(river_object=None,
 														coordinate_unit=coordinate_unit)
 
 	coordinate_unit = coordinate_unit.title()
+	transect_slope = transect_slope.title()
 	# Determine the Width of River
 	number_of_evenly_spaced_points = ""
 
@@ -224,6 +227,7 @@ def plotCenterlineWidth(river_object=None,
 				right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(river_object=river_object,
 																																					centerline_coordinates=river_object.centerlineSmoothed,
 																																					transect_span_distance=transect_span_distance,
+																																					transect_slope=transect_slope,
 																																					remove_intersections=remove_intersections,
 																																					coordinate_unit=coordinate_unit)
 				x = []
@@ -241,6 +245,7 @@ def plotCenterlineWidth(river_object=None,
 				right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(river_object=river_object, 
 																														centerline_coordinates=river_object.centerlineEvenlySpaced,
 																														transect_span_distance=transect_span_distance,
+																														transect_slope=transect_slope,
 																														remove_intersections=remove_intersections,
 																														coordinate_unit=coordinate_unit)
 

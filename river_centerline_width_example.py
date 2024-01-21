@@ -30,7 +30,7 @@ if __name__ == "__main__":
 											optional_cutoff=cutoff,
 											interpolate_data=False,
 											interpolate_n=200,
-											interpolate_n_centerpoints=200,
+											interpolate_n_centerpoints=None,
 											equal_distance=10,
 											ellipsoid="WGS84")
 
@@ -61,24 +61,26 @@ if __name__ == "__main__":
 	#river.saveCenterlineMAT(save_to_mat="centerline_for_matlab.mat", latitude_header="lat", longitude_header="long", centerline_type="Evenly Spaced")
 
 	# Plot river bank centerline
-	river.plotCenterline(save_plot_name=None,
-						centerline_type=center_type,
-						marker_type="line",
-						centerline_color="black",
-						display_all_possible_paths=False, 
-						display_voronoi=False,
-						plot_title=None,
-						dark_mode=True,
-						coordinate_unit=coord_type)
+	#river.plotCenterline(save_plot_name=None,
+	#					centerline_type=center_type,
+	#					marker_type="line",
+	#					centerline_color="black",
+	#					display_all_possible_paths=False, 
+	#					display_voronoi=False,
+	#					plot_title=None,
+	#					dark_mode=True,
+	#					coordinate_unit=coord_type)
 
-	transect = 3
+	transect = 6
+	slope_type = "direct"
 
 	# Plot river bank width line
 	river.plotCenterlineWidth(save_plot_name=None, 
 							plot_title=None,
-							display_true_centerline=True,
+							display_true_centerline=False,
 							transect_span_distance=transect,
-							apply_smoothing=False,
+							transect_slope=slope_type,
+							apply_smoothing=True,
 							flag_intersections=True,
 							remove_intersections=True,
 							dark_mode=True,
@@ -86,9 +88,10 @@ if __name__ == "__main__":
 
 	# Return width line for each centerline coordinates
 	river_width_dict = river.riverWidthFromCenterline(transect_span_distance=transect,
+													transect_slope=slope_type,
 													apply_smoothing=False,
 													remove_intersections=False,
-													save_to_csv="testing.csv",
+													save_to_csv="testing_new.csv",
 													coordinate_reference="banks",
 													coordinate_unit=coord_type)
 

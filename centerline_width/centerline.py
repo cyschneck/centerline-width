@@ -200,35 +200,58 @@ def smoothedCoordinates(river_object=None, centerline_coordinates=None, interpro
 def riverWidthFromCenterlineCoordinates(river_object=None,
 										centerline_coordinates=None,
 										transect_span_distance=3,
+										transect_slope="Average",
 										remove_intersections=False,
 										coordinate_unit="Decimal Degrees",
 										save_to_csv=None):
 	# Return the left/right coordinates of width centerlines
-	right_width_coordinates = {}
-	left_width_coordinates = {}
-	num_intersection_coordinates = {}
-	x = []
-	y = []
 
-	# Average slopes for every n points to chart
+	# Group the centerline coordiantes into groups of length n
 	centerline_slope = {}
-	groups_of_n_points = [centerline_coordinates[i:i+transect_span_distance] for i in range(0, len(centerline_coordinates), transect_span_distance)]
-	for group_points in groups_of_n_points:
-		slope_sum = 0
-		total_slopes = 0
-		for i in range(len(group_points)):
-			if i+1 < len(group_points):
-				dy = group_points[i+1][1] - group_points[i][1]
-				dx = group_points[i+1][0] - group_points[i][0]
-				if dx != 0:
-					slope_sum += (dy / dx)
-					total_slopes += 1
-		if slope_sum != 0:
-			slope_avg = slope_sum / total_slopes
-			normal_of_slope = -1 / slope_avg
-			middle_of_list = len(group_points) // 2 # set centerline point to be the middle point being averaged
-			centerline_slope[group_points[middle_of_list]] = normal_of_slope
-	
+	# group points inclusive of previous point: [A, B, C, D] = [A, B], [B, C], [C, D]
+	groups_of_n_points = []
+	for i in range(0, len(centerline_coordinates), transect_span_distance):
+		if i == 0:
+			groups_of_n_points.append(centerline_coordinates[0:transect_span_distance])
+		else:
+			groups_of_n_points.append(centerline_coordinates[i-1:i+transect_span_distance])
+
+	# Average all slopes for every n points to chart (slope of A->B + B->C)
+	if transect_slope == "Average":
+		for group_points in groups_of_n_points:
+			slope_sum = 0
+			total_slopes = 0
+			for i in range(len(group_points)):
+				if i+1 < len(group_points):
+					dx_i = group_points[0][0]
+					dy_i = group_points[0][1] 
+					dx_f = group_points[-1][0]
+					dy_f = group_points[-1][1]
+					if (dx_f - dx_i) != 0:
+						slope_sum += (dy_f - dy_i) / (dx_f - dx_i)
+						total_slopes += 1
+			if slope_sum != 0:
+				slope_avg = slope_sum / total_slopes
+				normal_of_slope = -1 / slope_avg
+				middle_of_list = (len(group_points) + 1) // 2  # set centerline point to be the middle point being averaged
+				centerline_slope[group_points[middle_of_list]] = normal_of_slope
+
+	# Direct slope across n points (slope of A->C)
+	if transect_slope == "Direct":
+		for group_points in groups_of_n_points:
+			if len(group_points) > 1:
+				dx_i = group_points[0][0]
+				dy_i = group_points[0][1] 
+				dx_f = group_points[-1][0]
+				dy_f = group_points[-1][1]
+				slope = 0
+				if (dx_f - dx_i) != 0:
+					slope = (dy_f - dy_i) / (dx_f - dx_i)
+				if slope != 0:
+					normal_of_slope = -1 / slope
+					middle_of_list = (len(group_points) + 1) // 2  # set centerline point to be the middle point being averaged
+					centerline_slope[group_points[0]] = normal_of_slope
+
 	def intersectsTopOrBottomOfBank(point1, point2):
 		# returns True/False if the points lie on the 'false' top/bottom of the river
 		points_intersect_false_edges = False
@@ -243,6 +266,12 @@ def riverWidthFromCenterlineCoordinates(river_object=None,
 
 	# Generate a list of lines from the centerline point with its normal
 	logger.info("[PROCESSING] Calculating and positioning width lines, may take a few minutes...")
+
+	right_width_coordinates = {}
+	left_width_coordinates = {}
+	num_intersection_coordinates = {}
+	x = []
+	y = []
 
 	min_x, min_y, max_x, max_y = river_object.bank_polygon.bounds
 	for centerline_point, slope in centerline_slope.items():
@@ -354,6 +383,7 @@ def riverWidthFromCenterlineCoordinates(river_object=None,
 
 def riverWidthFromCenterline(river_object=None,
 							transect_span_distance=3,
+							transect_slope="Average",
 							apply_smoothing=True,
 							remove_intersections=False,
 							coordinate_unit="Decimal Degrees",
@@ -365,12 +395,14 @@ def riverWidthFromCenterline(river_object=None,
 
 	centerline_width.errorHandlingRiverWidthFromCenterline(river_object=river_object,
 															transect_span_distance=transect_span_distance,
+															transect_slope=transect_slope,
 															apply_smoothing=apply_smoothing,
 															remove_intersections=remove_intersections,
 															coordinate_unit=coordinate_unit,
 															coordinate_reference=coordinate_reference,
 															save_to_csv=save_to_csv)
 
+	transect_slope = transect_slope.title()
 	coordinate_unit = coordinate_unit.title()
 	coordinate_reference = coordinate_reference.title()
 	right_left_coords = {} # used to track left/right bank coordinates when coordinate_reference=="Banks"

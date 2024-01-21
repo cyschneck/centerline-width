@@ -94,6 +94,7 @@ def errorHandlingPlotCenterlineWidth(river_object=None,
 									save_plot_name=None,
 									display_true_centerline=None,
 									transect_span_distance=None,
+									transect_slope=None,
 									apply_smoothing=None,
 									flag_intersections=None,
 									remove_intersections=None,
@@ -118,8 +119,15 @@ def errorHandlingPlotCenterlineWidth(river_object=None,
 	if type(transect_span_distance) != int:
 		raise ValueError(f"[transect_span_distance]: Must be a int, current type = '{type(transect_span_distance)}'")
 	else:
-		if transect_span_distance < 3:
-			raise ValueError(f"[transect_span_distance]: Must be a greater than 2 to find the slope between at least two points, currently = '{transect_span_distance}'")
+		if transect_span_distance < 2:
+			raise ValueError(f"[transect_span_distance]: Must be a greater than 1 to find the slope between at least two points, currently = '{transect_span_distance}'")
+
+	if type(transect_slope) != str:
+		raise ValueError(f"[transect_slope]: Must be a str, current type = '{type(transect_slope)}'")
+	else:
+		transect_slope_options = ["Average", "Direct"]
+		if transect_slope.title() not in transect_slope_options:
+			raise ValueError(f"[transect_slope]: Must be an available option in {transect_slope_options}, current option = '{transect_slope}'")
 
 	if apply_smoothing is not None:
 		if type(apply_smoothing) != bool:
@@ -144,6 +152,7 @@ def errorHandlingPlotCenterlineWidth(river_object=None,
 ## Error Handling: centerline.py
 def errorHandlingRiverWidthFromCenterline(river_object=None,
 										transect_span_distance=None,
+										transect_slope=None,
 										apply_smoothing=None,
 										remove_intersections=None,
 										coordinate_unit=None,
@@ -160,8 +169,15 @@ def errorHandlingRiverWidthFromCenterline(river_object=None,
 		if type(transect_span_distance) != int:
 			raise ValueError(f"[transect_span_distance]: Must be a int, current type = '{type(transect_span_distance)}'")
 		else:
-			if transect_span_distance < 3:
+			if transect_span_distance < 2:
 				raise ValueError(f"[transect_span_distance]: Must be greater than 2, currently = '{transect_span_distance}'")
+
+	if type(transect_slope) != str:
+		raise ValueError(f"[transect_slope]: Must be a str, current type = '{type(transect_slope)}'")
+	else:
+		transect_slope_options = ["Average", "Direct"]
+		if transect_slope.title() not in transect_slope_options:
+			raise ValueError(f"[transect_slope]: Must be an available option in {transect_slope_options}, current option = '{transect_slope}'")
 
 	if type(apply_smoothing) != bool:
 		raise ValueError(f"[apply_smoothing]: Must be a bool, current type = '{type(apply_smoothing)}'")

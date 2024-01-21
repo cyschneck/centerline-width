@@ -129,6 +129,7 @@ class riverCenterline:
 							save_plot_name=None, 
 							display_true_centerline=True,
 							transect_span_distance=3,
+							transect_slope="Average",
 							apply_smoothing=False,
 							flag_intersections=True,
 							remove_intersections=False,
@@ -139,6 +140,7 @@ class riverCenterline:
 											save_plot_name=save_plot_name, 
 											display_true_centerline=display_true_centerline,
 											transect_span_distance=transect_span_distance,
+											transect_slope=transect_slope,
 											apply_smoothing=apply_smoothing,
 											flag_intersections=flag_intersections,
 											remove_intersections=remove_intersections,
@@ -147,6 +149,7 @@ class riverCenterline:
 
 	def riverWidthFromCenterline(self,
 								transect_span_distance=3,
+								transect_slope="Average",
 								apply_smoothing=True,
 								remove_intersections=False,
 								coordinate_unit="Decimal Degrees",
@@ -154,6 +157,7 @@ class riverCenterline:
 								save_to_csv=None):
 		return centerline_width.riverWidthFromCenterline(river_object=self,
 														transect_span_distance=transect_span_distance,
+														transect_slope=transect_slope,
 														apply_smoothing=apply_smoothing,
 														remove_intersections=remove_intersections,
 														coordinate_unit=coordinate_unit,

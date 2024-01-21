@@ -420,6 +420,7 @@ plotCenterlineWidth(plot_title=None,
 		save_plot_name=None, 
 		display_true_centerline=True,
 		transect_span_distance=3,
+		transect_slope="Average",
 		apply_smoothing=False,
 		flag_intersections=True,
 		remove_intersections=False,
@@ -429,7 +430,8 @@ plotCenterlineWidth(plot_title=None,
 * [OPTIONAL] plot_title (string): Change plot title, defaults to "River Coordinates: Valid Centerline = True/False, Valid Polygon = True/False"
 * [OPTIONAL] save_plot_name (string): Save the plot with a given name and location
 * [OPTIONAL] display_true_centerline (boolean): Display generated true centerline based on Voronoi diagrams
-* [OPTIONAL] transect_span_distance (int): Sum up n number of points around a center point to determine the slope (increase to decrease the impact of sudden changes), defaults to 3, must be greater than 1 (since the slope is found from the difference in position between two points)
+* [OPTIONAL] transect_span_distance (int): Number n points around a center point to determine the slope (increase to decrease the impact of sudden changes), defaults to 3, must be greater than 1 (since the slope is found from the difference in position between two points)
+* [OPTIONAL] transect_slope (str): Determine how the width lines are generated, either by averaging all slopes "Average" or directly from the first to last point in the span distance as "Direct", defaults to "Average"
 * [OPTIONAL] apply_smoothing (boolean): Apply a B-spline smoothing to centerline
 * [OPTIONAL] flag_intersections (boolean): Display intersecting width lines as red in graph, defaults to True
 * [OPTIONAL] remove_intersections (boolean): Remove intersecting lines (but maintain the most width lines as possible) and only return non-intersecting width lines, defaults to False
@@ -448,11 +450,19 @@ apply_smoothing applies a spline to smooth the centerline points created by the 
 
 Transect span describes the number of points that are averaged to generate the slope of the width line (example: transect_span_distance=3, average of three slopes). The slope of the width line is  orthogonal to the average slopes measured along the transect span
 
-
 ![transect_span_distance](https://user-images.githubusercontent.com/22159116/227870492-69d105b2-0d3e-4d50-90d9-e938400a58fb.png)
+
 | transect_span_distance=6 | transect_span_distance=30 |
 | ------------- | ------------- |
 | ![river_transect_6+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_transect_6.png) | ![river_transect_30+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_transect_30.png) |
+
+**transect_slope**
+
+The width lines are generated as perpendicular to the slopes of the points across `transect_span_distance`. By default, `transect_slope="Average"` where the width lines are perpendicular to the average slopes of the across span distance (for example: [A, B, C, D] = avg(slope([A, B]) + slope([B, C]) + slope([C+D]))). Optionally, if `transect_slope="Direct"` then the width lines will be perpendicular to slope of the first and last point (for example: [A, B, C, D] = slope([A, D])) to avoid being susceptible to rapid small changes along the centerline
+
+| transect_slope="Average" | transect_slope="Direct" |
+| ------------- | ------------- |
+| ![river_transect_avg+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_transect_avg.png) | ![river_transect_direct+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_transect_direct.png) |
 
 **remove_intersections**
 
@@ -466,7 +476,7 @@ Intersecting lines are flagged in red by default (flag_intersections=True)
 
 **dark_mode**
 
-dark_mode will change the default Matplotlib background black and swap the centerline_color from black to white
+dark_mode will change the default Matplotlib background black and swap `centerline_color` from black to white
 
 | dark_mode=False | dark_mode=True |
 | ------------- | ------------- |
@@ -492,13 +502,15 @@ Return the width of the river at each (evenly spaced or smoothed) with coordinat
 
 ```
 riverWidthFromCenterline(transect_span_distance=3,
+			transect_slope="Average",
 			apply_smoothing=True,
 			remove_intersections=False,
 			coordinate_unit="Decimal Degrees",
 			coordinate_reference="Centerline",
 			save_to_csv=None)
 ```
-* [OPTIONAL] transect_span_distance (int): Sum up n number of points around a center point to determine the slope (increase to decrease the impact of sudden changes), defaults to 6, must be greater than 2 (since the slope is found from the difference in position between two points), measured orthogonal to the centerline
+* [OPTIONAL] transect_span_distance (int): Number n points around a center point to determine the slope (increase to decrease the impact of sudden changes), defaults to 3, must be greater than 1 (since the slope is found from the difference in position between two points)
+* [OPTIONAL] transect_slope (str): Determine how the width lines are generated, either by averaging all slopes "Average" or directly from the first to last point in the span distance as "Direct", defaults to "Average"
 * [OPTIONAL] apply_smoothing (boolean): Apply a B-spline smoothing to centerline
 * [OPTIONAL] remove_intersections (boolean): Iterative remove intersecting lines, to maintain the most width lines, but return only non-intersecting width lines, defaults to True
 * [OPTIONAL] coordinate_unit (string): Coordinates of the river are return as "Decimal Degrees" (latitude/longtidue) or converted to a distance from the first point on the left bank as "Relative Distance", defaults to "Decimal Degrees"
