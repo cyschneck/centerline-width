@@ -492,7 +492,7 @@ equal_axis will set the x and y axis of the plot to be equal. Useful to show the
 
 | equal_axis=False | equal_axis=True |
 | ------------- | ------------- |
-| ![river_not_equale+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_not_equal_default_ax.png) | ![river_equal+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_equal_ax.png)|
+| ![river_not_equal+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_not_equal_default_ax.png) | ![river_equal+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_equal_ax.png)|
 
 **coordinate_unit**
 
