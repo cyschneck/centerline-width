@@ -60,7 +60,7 @@ centerline_width.extractPointsToTextFile(left_kml="left_bank.kml",
 					text_output_name="river_coordinates_output.txt")
 centerline_width.convertColumnsToCSV(text_file="river_coordinates_output.txt")
 ```
-Then once the .csv file is created, in order to run the centerline-width functions, generate a river object from the `river_coordinates_output.csv`
+Then once the .csv file is created, to run the centerline-width functions, generate a river object from the `river_coordinates_output.csv`
 
 ```python
 river_object = centerline_width.riverCenterline(csv_data="river_coordinates_output.csv")
@@ -101,7 +101,7 @@ Map the left bank using the path tool. You can zoom into the river using the scr
 
 **Step 2**
 
-Save the path to a .kml file by right clicking on the path in Places and selecting 'save as'. Be sure to save as a .kml and not .kmz file. It is generally good practice to do this for each new path to ensure that no work is lost if Google Earth Pro crashes
+Save the path to a .kml file by right clicking on the path in Places and selecting 'save as'. Be sure to save as a .kml and not .kml file. It is generally good practice to do this for each new path to ensure that no work is lost if Google Earth Pro crashes
 
 **Step 3**
 
@@ -241,7 +241,7 @@ The red pins represent the equal distance centerline coordinates produced by cen
 * df_len (int): Length of the data frame of the csv data (spliced by the optional_cutoff)
 * equal_distance (int): Distance between points (in meters) used in centerlineEqualDistance, defaults to points every 10 meters
 * ellipsoid (string): Built-in ellipsoid definition of Earth to determine how degrees are converted to meters used by centerlineEqualDistance, defaults to "WGS84"
-* bank_polygon (Shapley Polygon): Multi-sided polygon generated to encapsulate the latitude/longtiude coordinate riverbank (used to define an inside and an outside of the river)
+* bank_polygon (Shapley Polygon): Multi-sided polygon generated to encapsulate the latitude/longitude coordinate riverbank (used to define an inside and an outside of the river)
 * bank_polygon_relative (Shapley Polygon): Multi-sided polygon generated to encapsulate the relative distance coordinate riverbank (used to define an inside and an outside of the river)
 * top_bank (Shapley Linestring): Linestring that represents the top of the river/polygon for the latitude/longitude coordinate system
 * top_bank_relative (Shapley Linestring): Linestring that represents the top of the river/polygon for the relative distance coordinate system
@@ -333,8 +333,8 @@ saveCenterlineCSV(save_to_csv=None, centerline_type="Voronoi", coordinate_unit="
 * **[REQUIRED]** save_to_csv (string): CSV filename, requires a .csv extension
 * [OPTIONAL] centerline_type (string): Centerline type to save to CSV (not case-sensitive), options: ["Voronoi", "Evenly Spaced", "Smoothed", "Equal Distance"], defaults to "Voronoi"
 * [OPTIONAL] latitude_header (string): Column header for latitude values, defaults to `<centerline_type> Centerline Latitude (Deg)` or `<centerline_type> Relative Distance Y (from Latitude) (m)`
-* [OPTIONAL] longitude_header (string): Column header for Longitude values, defaults to `<centerline_type> Centerline Longitude (Deg)` or `<centerline_type> Relative Distance X (from Longitude) (m)`
-* [OPTIONAL] coordinate_unit (string): Coordinates of the river are return as "Decimal Degrees" (latitude/longtidue) or converted to a distance from the first point on the left bank as "Relative Distance", defaults to "Decimal Degrees"
+* [OPTIONAL] longitude_header (string): Column header for longitude values, defaults to `<centerline_type> Centerline Longitude (Deg)` or `<centerline_type> Relative Distance X (from Longitude) (m)`
+* [OPTIONAL] coordinate_unit (string): Coordinates of the river are return as "Decimal Degrees" (latitude/longitude) or converted to a distance from the first point on the left bank as "Relative Distance", defaults to "Decimal Degrees"
 
 ```python
 import centerline_width
@@ -403,7 +403,7 @@ plotCenterline(centerline_type="Voronoi",
 * [OPTIONAL] plot_title (string): Change plot title, defaults to "River Coordinates: Valid Centerline = True/False, Valid Polygon = True/False"
 * [OPTIONAL] save_plot_name (string): Save the plot with a given name and location
 * [OPTIONAL] display_voronoi (boolean): Overlay Voronoi diagram used to generate centerline, defaults to False
-* [OPTIONAL] coordinate_unit (string): Coordinates of the river are return as "Decimal Degrees" (latitude/longtidue) or converted to a distance from the first point on the left bank as "Relative Distance", defaults to "Decimal Degrees"
+* [OPTIONAL] coordinate_unit (string): Coordinates of the river are return as "Decimal Degrees" (latitude/longitude) or converted to a distance from the first point on the left bank as "Relative Distance", defaults to "Decimal Degrees"
 
 ```python
 import centerline_width
@@ -440,11 +440,11 @@ plotCenterlineWidth(plot_title=None,
 * [OPTIONAL] remove_intersections (boolean): Remove intersecting lines (but maintain the most width lines as possible) and only return non-intersecting width lines, defaults to False
 * [OPTIONAL] dark_mode (bool): Change plot to a black ground (and override if `centerline_color="black"` to `centerline_color="white"`), defaults to False
 * [OPTIONAL] equal_axis (bool): Set x/y axes in plot to be equal, defaults to False
-* [OPTIONAL] coordinate_unit (string): Coordinates of the river are return as "Decimal Degrees" (latitude/longtidue) or converted to a distance from the first point on the left bank as "Relative Distance", defaults to "Decimal Degrees"
+* [OPTIONAL] coordinate_unit (string): Coordinates of the river are return as "Decimal Degrees" (latitude/longitude) or converted to a distance from the first point on the left bank as "Relative Distance", defaults to "Decimal Degrees"
 
 **display_true_centerline**
 
-The width lines are generated with either "Evenly Spaced" or "Smoothed" coordiantes for the centerline, but display_true_centerline will overlay the Voronoi centerline on top of the plot
+The width lines are generated from the evenly spaced coordinate (by default) or with the smoothed coordinates (when `apply_smoothing=True`), but display_true_centerline will overlay the Voronoi centerline on top of the plot
 
 | display_true_centerline=True | display_true_centerline=False |
 | ------------- | ------------- |
