@@ -432,7 +432,7 @@ plotCenterlineWidth(plot_title=None,
 ```
 * [OPTIONAL] plot_title (string): Change plot title, defaults to "River Coordinates: Valid Centerline = True/False, Valid Polygon = True/False"
 * [OPTIONAL] save_plot_name (string): Save the plot with a given name and location
-* [OPTIONAL] display_true_centerline (boolean): Display generated true centerline based on Voronoi diagrams
+* [OPTIONAL] display_true_centerline (boolean): Display generated true centerline based on Voronoi diagrams, defaults to True
 * [OPTIONAL] transect_span_distance (int): Number n points around a center point to determine the slope (increase to decrease the impact of sudden changes), defaults to 3, must be greater than 1 (since the slope is found from the difference in position between two points)
 * [OPTIONAL] transect_slope (str): Determine how the width lines are generated, either by averaging all slopes "Average" or directly from the first to last point in the span distance as "Direct", defaults to "Average"
 * [OPTIONAL] apply_smoothing (boolean): Apply a B-spline smoothing to centerline
@@ -441,6 +441,14 @@ plotCenterlineWidth(plot_title=None,
 * [OPTIONAL] dark_mode (bool): Change plot to a black ground (and override if `centerline_color="black"` to `centerline_color="white"`), defaults to False
 * [OPTIONAL] equal_axis (bool): Set x/y axes in plot to be equal, defaults to False
 * [OPTIONAL] coordinate_unit (string): Coordinates of the river are return as "Decimal Degrees" (latitude/longtidue) or converted to a distance from the first point on the left bank as "Relative Distance", defaults to "Decimal Degrees"
+
+**display_true_centerline**
+
+The width lines are generated with either "Evenly Spaced" or "Smoothed" coordiantes for the centerline, but display_true_centerline will overlay the Voronoi centerline on top of the plot
+
+| display_true_centerline=True | display_true_centerline=False |
+| ------------- | ------------- |
+| ![river_with_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_with_centerline.png) | ![river_no_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_without_centerline.png) |
 
 **apply_smoothing**
 
@@ -454,6 +462,8 @@ apply_smoothing applies a spline to smooth the centerline points created by the 
 
 Transect span describes the number of points that are averaged to generate the slope of the width line (example: transect_span_distance=3, average of three slopes). The slope of the width line is  orthogonal to the average slopes measured along the transect span
 
+If the span is odd then the width line will be generated at the position of the middle of the span on n/2. If the span is even, then the width line will be generated at 1 + n/2, for example, `[A, B, C, D]` will generated a width line at point `C`
+
 ![transect_span_distance](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/span_description.png)
 
 | transect_span_distance=6 | transect_span_distance=30 |
@@ -462,7 +472,11 @@ Transect span describes the number of points that are averaged to generate the s
 
 **transect_slope**
 
-The width lines are generated as perpendicular to the slopes of the points across `transect_span_distance`. By default, `transect_slope="Average"` where the width lines are perpendicular to the average slopes of the across span distance (for example: [A, B, C, D] = avg(slope([A, B]) + slope([B, C]) + slope([C+D]))). Optionally, if `transect_slope="Direct"` then the width lines will be perpendicular to slope of the first and last point (for example: [A, B, C, D] = slope([A, D])) to avoid being susceptible to rapid small changes along the centerline
+The width lines are generated as perpendicular to the slopes of the points across `transect_span_distance`
+
+By default, `transect_slope="Average"` where the width lines are perpendicular to the average slopes of the across span distance. For example: `[A, B, C, D] = avg( slope([A, B]) + slope([B, C]) + slope([C+D]) )`
+
+Optionally, if `transect_slope="Direct"` then the width lines will be perpendicular to slope of the first and last point. For example: `[A, B, C, D] = slope([A, D])` to avoid being susceptible to rapid small changes along the centerline
 
 ![transect_span_distance](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/slope_description.png)
 | transect_slope="Average" | transect_slope="Direct" |

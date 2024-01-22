@@ -161,6 +161,17 @@ def test_plotCenterlineWidth_transectSpanDistanceInvalidTypes(invalid_input, err
 		centerline_width.plotCenterlineWidth(river_object=river_class_example,
 											transect_span_distance=invalid_input)
 
+@pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
+def test_plotCenterlineWidth_transectSlopeInvalidTypes(invalid_input, error_output):
+	with pytest.raises(ValueError, match=re.escape(f"[transect_slope]: Must be a str, current type = '{error_output}'")):
+		centerline_width.plotCenterlineWidth(river_object=river_class_example,
+											transect_slope=invalid_input)
+
+def test_plotCenterlineWidth_transectSlopeInvalidOption():
+	with pytest.raises(ValueError, match=re.escape("[transect_slope]: Must be an available option in ['Average', 'Direct'], current option = 'Invalid Option'")):
+		centerline_width.plotCenterlineWidth(river_object=river_class_example,
+										transect_slope="Invalid Option")
+
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_bool_options)
 def test_plotCenterlineWidth_applySmoothingInvalidTypes(invalid_input, error_output):
 	with pytest.raises(ValueError, match=re.escape(f"[apply_smoothing]: Must be a bool, current type = '{error_output}'")):
