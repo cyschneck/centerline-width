@@ -5,7 +5,6 @@ dependencies:
   - python>=3.9,<3.12  # minimum support 3.9
   - geopy
   - haversine
-  - matplotlib
   - networkx
   - numpy
   - pandas
@@ -14,3 +13,6 @@ dependencies:
   - pytest
   - scipy
   - shapely
+  - pip
+  - pip:
+    - matplotlib # avoid warning "QApplication: invalid style override passed, ignoring it."

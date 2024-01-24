@@ -665,11 +665,20 @@ river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv"
 
 The number of additional points added by interpolating can be adjusted with `interpolate_n`, but defaults to add 5 additional points between values
 
-## Developer Notes: Tech Debt and Bug Fixes
-* option to turn off verbose (no logs printed)
-* Fix legend overlapping on graph, replace doc_examples that have an overlapping
-* Conda env
-* Python 3.12.0 compatibility
+## Development
+To run or test against `centerline-width` github repo, a development environment can be created via conda/miniconda
+
+First, [install Miniconda](https://docs.conda.io/projects/miniconda/en/latest/miniconda-install.html)
+
+Then, using the existing `environment.yml`, a new conda environment can be create to run/test scripts against
+
+```
+conda env create --file environment.yml
+```
+
+```
+conda activate centerline_width
+```
 
 ## Citations
 Python implementation of [R-Code CMGO](https://github.com/AntoniusGolly/cmgo) with modification (Golly et al. 2017):

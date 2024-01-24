@@ -2,7 +2,7 @@
 import centerline_width
 
 if __name__ == "__main__":
-	centerline_width.convertColumnsToCSV(text_file="data/river_coords.txt", flipBankDirection=True)
+	#centerline_width.convertColumnsToCSV(text_file="data/river_coords.txt", flipBankDirection=True)
 
 	centerline_width.extractPointsToTextFile(left_kml="data/leftbank.kml",
 											right_kml="data/rightbank.kml",
