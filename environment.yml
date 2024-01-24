@@ -1,0 +1,16 @@
+name: centerline_width
+channels:
+  - conda-forge
+dependencies:
+  - python>=3.9,<3.12  # minimum support 3.9
+  - geopy
+  - haversine
+  - matplotlib
+  - networkx
+  - numpy
+  - pandas
+  - pykml
+  - pyproj
+  - pytest
+  - scipy
+  - shapely
