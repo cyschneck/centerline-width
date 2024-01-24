@@ -59,7 +59,7 @@ def leftRightCoordinates(dataframe):
 			left_bank_coordinates.append([row.llon, row.llat])
 	return left_bank_coordinates, right_bank_coordinates
 
-def generatePolygon(left_bank_lst, right_bank_lst, recursion_check=False):
+def generatePolygon(left_bank_lst, right_bank_lst, coord_type=None, recursion_check=False):
 	# Return a shapely polygon based on the position of the river bank points
 	if len(right_bank_lst) == 0:
 		logger.critical("\nCRITICAL ERROR, right bank data is empty (or NaN)")
@@ -74,22 +74,26 @@ def generatePolygon(left_bank_lst, right_bank_lst, recursion_check=False):
 	bottom_river = LineString([Point(right_bank_lst[0][0], right_bank_lst[0][1]), Point(left_bank_lst[0][0], left_bank_lst[0][1])])
 
 	if not river_polygon.is_valid and not recursion_check:
-		logger.critical("[FAILED]  Invalid Polygon may need to be corrected")
-		polygon_check, _, _ = generatePolygon(left_bank_lst, right_bank_lst[::-1], recursion_check=True) # only run once with recursion_check set (just to check if reverse banks fixes issue)
+		logger.critical(f"[FAILED]  Invalid Polygon may need to be corrected - {coord_type}")
+		# only run once with recursion_check set (just to check if reverse banks fixes issue)
+		polygon_check, _, _ = generatePolygon(left_bank_lst=left_bank_lst,
+											  right_bank_lst=right_bank_lst[::-1],
+											  coord_type=coord_type,
+											  recursion_check=True) 
 		if polygon_check.is_valid:
 			logger.critical("\nWARNING: Invalid Polygon Due to Flipped Banks, fix recommendation: rerun convertColumnsToCSV() and set flipBankDirection=True (or reset to default 'False' if currently set to flipBankDirection=True)\n")
 	if river_polygon.is_valid and not recursion_check:
-		logger.info("[SUCCESS] Valid polygon generated")
+		logger.info(f"[SUCCESS] Valid polygon generated - {coord_type}")
 
 	return river_polygon, top_river, bottom_river
 
-def generateVoronoi(left_bank_lst, right_bank_lst):
+def generateVoronoi(left_bank_lst, right_bank_lst, coord_type=None):
 	# Generate a Voronoi shape based on the left/right bank points
 	all_banks_points = left_bank_lst + right_bank_lst
 	all_banks_points = np.array(all_banks_points)
 
 	river_voronoi = Voronoi(all_banks_points)
-	logger.info("[SUCCESS] Voronoi diagram generated")
+	logger.info(f"[SUCCESS] Voronoi diagram generated - {coord_type}")
 	return river_voronoi
 
 def pointsFromVoronoi(river_voronoi, river_polygon):

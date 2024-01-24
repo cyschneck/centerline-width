@@ -665,8 +665,8 @@ river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv"
 
 The number of additional points added by interpolating can be adjusted with `interpolate_n`, but defaults to add 5 additional points between values
 
-## Development
-To run or test against `centerline-width` github repo, a development environment can be created via conda/miniconda
+## Development Environment
+To run or test against `centerline-width` github repo/fork, a development environment can be created via conda/miniconda
 
 First, [install Miniconda](https://docs.conda.io/projects/miniconda/en/latest/miniconda-install.html)
 
@@ -675,7 +675,7 @@ Then, using the existing `environment.yml`, a new conda environment can be creat
 ```
 conda env create --file environment.yml
 ```
-
+Once the environment has been built, activate the environment:
 ```
 conda activate centerline_width
 ```
