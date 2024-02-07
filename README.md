@@ -42,13 +42,6 @@ PyPi pip install at [pypi.org/project/centerline-width/](https://pypi.org/projec
 pip install centerline-width
 ```
 
-## Requirements
-
-```
-pip install -r requirements.txt
-```
-Requirements will also be downloaded as part of the pip download
-
 ## Quickstart: centerline-width
 
 The core of centerline-width works with a .csv file of the left and right bank latitude/longitudes. So, if starting from Google Earth Pro, two .kml must first be translated to a single .csv file
@@ -681,7 +674,7 @@ conda activate centerline_width
 ```
 
 ## Citations
-Python implementation of [R-Code CMGO](https://github.com/AntoniusGolly/cmgo) with modification (Golly et al. 2017):
+Originally a Python implementation of [R-Code CMGO](https://github.com/AntoniusGolly/cmgo) (Golly et al. 2017) but has been extensively expanded:
 
 >Golly, A. and Turowski, J. M.: Deriving principal channel metrics from bank and long-profile geometry with the R package cmgo, Earth Surf. Dynam., 5, 557-570, https://doi.org/10.5194/esurf-5-557-2017, 2017.
 

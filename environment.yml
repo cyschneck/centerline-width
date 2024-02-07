@@ -8,6 +8,7 @@ dependencies:
   - networkx
   - numpy
   - pandas
+  - pyarrow
   - pykml
   - pyproj
   - pytest
