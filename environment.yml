@@ -2,7 +2,7 @@ name: centerline_width
 channels:
   - conda-forge
 dependencies:
-  - python>=3.9,<3.12  # minimum support 3.9
+  - python>=3.9,<3.13  # minimum support 3.9, maximum support 3.12
   - geopy
   - haversine
   - networkx
