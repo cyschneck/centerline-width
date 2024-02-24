@@ -116,6 +116,12 @@ def test_plotCenterline_displayVoronoiInvalidTypes(invalid_input, error_output):
 		centerline_width.plotCenterline(river_object=river_class_example,
 										display_voronoi=invalid_input)
 
+@pytest.mark.parametrize("invalid_input, error_output", invalid_non_bool_options)
+def test_plotCenterline_showPlotInvalidTypes(invalid_input, error_output):
+	with pytest.raises(ValueError, match=re.escape(f"[show_plot]: Must be a bool, current type = '{error_output}'")):
+		centerline_width.plotCenterline(river_object=river_class_example,
+										show_plot=invalid_input)
+
 def test_plotCenterline_coordinateUnitInvalidOption():
 	with pytest.raises(ValueError, match=re.escape("[coordinate_unit]: Must be an available option in ['Decimal Degrees', 'Relative Distance'], current option = 'Invalid Option'")):
 		centerline_width.plotCenterline(river_object=river_class_example,
@@ -199,16 +205,22 @@ def test_plotCenterlineWidth_darkModeInvalidTypes(invalid_input, error_output):
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_bool_options)
 def test_plotCenterline_equalAxisInvalidTypes(invalid_input, error_output):
 	with pytest.raises(ValueError, match=re.escape(f"[equal_axis]: Must be a bool, current type = '{error_output}'")):
-		centerline_width.plotCenterline(river_object=river_class_example,
-										equal_axis=invalid_input)
+		centerline_width.plotCenterlineWidth(river_object=river_class_example,
+											equal_axis=invalid_input)
+
+@pytest.mark.parametrize("invalid_input, error_output", invalid_non_bool_options)
+def test_plotCenterline_showPlotInvalidTypes(invalid_input, error_output):
+	with pytest.raises(ValueError, match=re.escape(f"[show_plot]: Must be a bool, current type = '{error_output}'")):
+		centerline_width.plotCenterlineWidth(river_object=river_class_example,
+											show_plot=invalid_input)
 
 def test_plotCenterlineWidth_coordinateUnitInvalidOption():
 	with pytest.raises(ValueError, match=re.escape("[coordinate_unit]: Must be an available option in ['Decimal Degrees', 'Relative Distance'], current option = 'Invalid Option'")):
 		centerline_width.plotCenterlineWidth(river_object=river_class_example,
-										coordinate_unit="Invalid Option")
+											coordinate_unit="Invalid Option")
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
 def test_plotCenterlineWidth_coordinateUnitInvalidTypes(invalid_input, error_output):
 	with pytest.raises(ValueError, match=re.escape(f"[coordinate_unit]: Must be a str, current type = '{error_output}'")):
 		centerline_width.plotCenterlineWidth(river_object=river_class_example,
-										coordinate_unit=invalid_input)
+											coordinate_unit=invalid_input)

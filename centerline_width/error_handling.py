@@ -44,6 +44,7 @@ def errorHandlingPlotCenterline(river_object=None,
 								plot_title=None,
 								save_plot_name=None,
 								display_voronoi=None,
+								show_plot=None,
 								coordinate_unit=None):
 	# Error handling for plotCenterline()
 	if river_object is None:
@@ -86,6 +87,9 @@ def errorHandlingPlotCenterline(river_object=None,
 	if type(display_voronoi) != bool:
 		raise ValueError(f"[display_voronoi]: Must be a bool, current type = '{type(display_voronoi)}'")
 
+	if type(show_plot) != bool:
+		raise ValueError(f"[show_plot]: Must be a bool, current type = '{type(show_plot)}'")
+
 	if type(coordinate_unit) != str:
 		raise ValueError(f"[coordinate_unit]: Must be a str, current type = '{type(coordinate_unit)}'")
 	else:
@@ -104,6 +108,7 @@ def errorHandlingPlotCenterlineWidth(river_object=None,
 									remove_intersections=None,
 									dark_mode=None,
 									equal_axis=None,
+									show_plot=None,
 									coordinate_unit=None):
 	# Error handling for plotCenterlineWidth()
 	if river_object is None:
@@ -149,6 +154,9 @@ def errorHandlingPlotCenterlineWidth(river_object=None,
 
 	if type(equal_axis) != bool:
 		raise ValueError(f"[equal_axis]: Must be a bool, current type = '{type(equal_axis)}'")
+
+	if type(show_plot) != bool:
+		raise ValueError(f"[show_plot]: Must be a bool, current type = '{type(show_plot)}'")
 
 	if type(coordinate_unit) != str:
 		raise ValueError(f"[coordinate_unit]: Must be a str, current type = '{type(coordinate_unit)}'")

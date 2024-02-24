@@ -385,6 +385,7 @@ plotCenterline(centerline_type="Voronoi",
 		plot_title=None, 
 		save_plot_name=None, 
 		display_voronoi=False,
+		show_plot=True,
 		coordinate_unit="Decimal Degrees")
 ```
 * [OPTIONAL] centerline_type (string): Centerline type graph within river (not case-sensitive), options: ["Voronoi", "Evenly Spaced", "Smoothed", "Equal Distance"], defaults to "Voronoi"
@@ -396,6 +397,7 @@ plotCenterline(centerline_type="Voronoi",
 * [OPTIONAL] plot_title (string): Change plot title, defaults to "River Coordinates: Valid Centerline = True/False, Valid Polygon = True/False"
 * [OPTIONAL] save_plot_name (string): Save the plot with a given name and location
 * [OPTIONAL] display_voronoi (boolean): Overlay Voronoi diagram used to generate centerline, defaults to False
+* [OPTIONAL] show_plot (boolean): display and open plots (plt.show() in Matplotlib), defaults to True
 * [OPTIONAL] coordinate_unit (string): Coordinates of the river are return as "Decimal Degrees" (latitude/longitude) or converted to a distance from the first point on the left bank as "Relative Distance", defaults to "Decimal Degrees"
 
 ```python
@@ -421,6 +423,7 @@ plotCenterlineWidth(plot_title=None,
 		remove_intersections=False,
 		dark_mode=False,
 		equal_axis=False,
+		show_plot=True,
 		coordinate_unit="Decimal Degrees")
 ```
 * [OPTIONAL] plot_title (string): Change plot title, defaults to "River Coordinates: Valid Centerline = True/False, Valid Polygon = True/False"
@@ -433,6 +436,7 @@ plotCenterlineWidth(plot_title=None,
 * [OPTIONAL] remove_intersections (boolean): Remove intersecting lines (but maintain the most width lines as possible) and only return non-intersecting width lines, defaults to False
 * [OPTIONAL] dark_mode (bool): Change plot to a black ground (and override if `centerline_color="black"` to `centerline_color="white"`), defaults to False
 * [OPTIONAL] equal_axis (bool): Set x/y axes in plot to be equal, defaults to False
+* [OPTIONAL] show_plot (boolean): display and open plots (plt.show() in Matplotlib), defaults to True
 * [OPTIONAL] coordinate_unit (string): Coordinates of the river are return as "Decimal Degrees" (latitude/longitude) or converted to a distance from the first point on the left bank as "Relative Distance", defaults to "Decimal Degrees"
 
 **display_true_centerline**

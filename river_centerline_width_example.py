@@ -70,6 +70,7 @@ if __name__ == "__main__":
 						plot_title=None,
 						dark_mode=True,
 						equal_axis=True,
+						show_plot=True,
 						coordinate_unit=coord_type)
 
 	transect = 2
@@ -86,8 +87,9 @@ if __name__ == "__main__":
 							remove_intersections=True,
 							dark_mode=True,
 							equal_axis=False,
+							show_plot=True,
 							coordinate_unit=coord_type)
-	exit()
+
 	# Return width line for each centerline coordinates
 	river_width_dict = river.riverWidthFromCenterline(transect_span_distance=transect,
 													transect_slope=slope_type,

@@ -112,6 +112,7 @@ class riverCenterline:
 						display_all_possible_paths=False,
 						plot_title=None,
 						save_plot_name=None,
+						show_plot=True,
 						display_voronoi=False,
 						coordinate_unit="Decimal Degrees"):
 		centerline_width.plotCenterline(river_object=self,
@@ -124,6 +125,7 @@ class riverCenterline:
 										plot_title=plot_title, 
 										save_plot_name=save_plot_name, 
 										display_voronoi=display_voronoi,
+										show_plot=show_plot,
 										coordinate_unit=coordinate_unit)
 
 	def plotCenterlineWidth(self,
@@ -137,6 +139,7 @@ class riverCenterline:
 							remove_intersections=False,
 							dark_mode=False,
 							equal_axis=False,
+							show_plot=True,
 							coordinate_unit="Decimal Degrees"):
 		centerline_width.plotCenterlineWidth(river_object=self,
 											plot_title=plot_title, 
@@ -149,6 +152,7 @@ class riverCenterline:
 											remove_intersections=remove_intersections,
 											dark_mode=dark_mode,
 											equal_axis=equal_axis,
+											show_plot=show_plot,
 											coordinate_unit=coordinate_unit)
 
 	def riverWidthFromCenterline(self,

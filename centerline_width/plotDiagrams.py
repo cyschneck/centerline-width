@@ -132,6 +132,7 @@ def plotCenterline(river_object=None,
 					plot_title=None, 
 					save_plot_name=None, 
 					display_voronoi=False,
+					show_plot=True,
 					coordinate_unit="Decimal Degrees"):
 	# Plot Centerline of River
 	centerline_width.errorHandlingPlotCenterline(river_object=river_object,
@@ -144,6 +145,7 @@ def plotCenterline(river_object=None,
 												plot_title=plot_title,
 												save_plot_name=save_plot_name,
 												display_voronoi=display_voronoi,
+												show_plot=show_plot,
 												coordinate_unit=coordinate_unit)
 
 	fig, ax, valid_path_through = plotCenterlineBackend(river_object=river_object,
@@ -187,7 +189,7 @@ def plotCenterline(river_object=None,
 		plt.ylabel("Relative Distance Y (m)")
 
 	plt.legend(loc="upper right")
-	plt.show()
+	if show_plot: plt.show()
 	if save_plot_name: fig.savefig(save_plot_name)
 
 def plotCenterlineWidth(river_object=None,
@@ -201,6 +203,7 @@ def plotCenterlineWidth(river_object=None,
 						remove_intersections=False,
 						dark_mode=False,
 						equal_axis=False,
+						show_plot=True,
 						coordinate_unit="Decimal Degrees"):
 	# Plot Width Lines based on Centerline
 	centerline_width.errorHandlingPlotCenterlineWidth(river_object=river_object,
@@ -214,6 +217,7 @@ def plotCenterlineWidth(river_object=None,
 													remove_intersections=remove_intersections,
 													dark_mode=dark_mode,
 													equal_axis=equal_axis,
+													show_plot=show_plot,
 													coordinate_unit=coordinate_unit)
 
 	fig, ax, valid_path_through = plotCenterlineBackend(river_object=river_object, 
@@ -305,5 +309,5 @@ def plotCenterlineWidth(river_object=None,
 		plt.ylabel("Distance Distance Y (m)")
 
 	plt.legend(loc="upper right")
-	plt.show()
+	if show_plot: plt.show()
 	if save_plot_name: fig.savefig(save_plot_name)
