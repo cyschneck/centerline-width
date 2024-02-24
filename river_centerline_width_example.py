@@ -2,15 +2,15 @@
 import centerline_width
 
 if __name__ == "__main__":
+	#centerline_width.extractPointsToTextFile(left_kml="data/leftbank.kml",
+	#										right_kml="data/rightbank.kml",
+	#										text_output_name="data/river_coords.txt")										
 	#centerline_width.convertColumnsToCSV(text_file="data/river_coords.txt", flipBankDirection=True)
 
-	centerline_width.extractPointsToTextFile(left_kml="data/leftbank.kml",
-											right_kml="data/rightbank.kml",
-											text_output_name="data/river_coords.txt")
 	#centerline_width.extractPointsToTextFile(left_kml="data/59deg48_18dot87_N_69deg46_59dot57_E_lb.kml",
 	#										right_kml="data/59deg48_18dot87_N_69deg46_59dot57_E_rb.kml",
 	#										text_output_name="data/N_output.txt")
-	centerline_width.convertColumnsToCSV(text_file="data/river_coords.txt", flipBankDirection=True)
+	#centerline_width.convertColumnsToCSV(text_file="data/river_coords.txt", flipBankDirection=True)
 
 	# Valid Examples
 	cutoff = None
@@ -93,7 +93,7 @@ if __name__ == "__main__":
 													transect_slope=slope_type,
 													apply_smoothing=False,
 													remove_intersections=False,
-													save_to_csv="testing_new.csv",
+													save_to_csv=None,
 													coordinate_reference="banks",
 													coordinate_unit=coord_type)
 

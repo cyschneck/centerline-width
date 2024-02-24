@@ -2,6 +2,7 @@
 import csv
 import logging
 import math
+import os
 
 # External Python libraries (installed via pip install)
 from collections import Counter
@@ -43,7 +44,11 @@ def convertColumnsToCSV(text_file=None, flipBankDirection=False):
 	for i, row in enumerate(left_rows):
 		total_rows.append(row + right_rows[i])
 
-	write_file_name = text_file.split(".")[0] + ".csv"
+	# account for relative and absolute paths to use text_file name and location for .csv
+	full_path, filename = os.path.split(os.path.abspath(text_file))
+	csv_file_name = filename.split(".")[0] + ".csv"
+	write_file_name = os.path.join(full_path, csv_file_name)
+
 	with open(write_file_name, "w") as f:
 		write = csv.writer(f)
 		write.writerow(header_fields)

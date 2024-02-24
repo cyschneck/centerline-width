@@ -672,6 +672,10 @@ Once the environment has been built, activate the environment:
 ```
 conda activate centerline_width
 ```
+To run existing and new tests from the root directory:
+```
+python -m pytest
+```
 
 ## Citations
 Originally a Python implementation of [R-Code CMGO](https://github.com/AntoniusGolly/cmgo) (Golly et al. 2017) but has been extensively expanded:
