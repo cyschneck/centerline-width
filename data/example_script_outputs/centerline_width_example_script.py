@@ -9,7 +9,6 @@
 ########################################################################
 
 import centerline_width as cw
-import sys
 
 def main():
 
