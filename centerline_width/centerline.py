@@ -482,6 +482,14 @@ def riverWidthFromCenterline(river_object=None,
 
 	return width_dict
 
+def calculateRiverArea(bank_polygon=None, ellipsoid="WGS84"):
+	# Return the area contained within the river polygon (km^2)
+	if bank_polygon is None:
+		return 0
+	geodesic = pyproj.Geod(ellps=ellipsoid)
+	river_area, river_perimeter = geodesic.geometry_area_perimeter(bank_polygon)
+	return abs(river_area)/1000
+
 def centerlineLength(centerline_coordinates=None, ellipsoid="WGS84"):
 	# Return the length/distance for all the centerline coordinates in km
 	total_length = 0

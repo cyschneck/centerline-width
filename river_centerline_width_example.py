@@ -50,6 +50,7 @@ if __name__ == "__main__":
 	#print("centerlineSmoothed = {0}".format(river.centerlineSmoothed))
 	#print("centerlineSmoothedRelative = {0}".format(river.centerlineSmoothedRelative))
 	#print(river.left_bank_relative_coordinates)
+	print(river.riverArea)
 
 	#coord_type = "relative DIStance"
 	coord_type = "decimal degrees"

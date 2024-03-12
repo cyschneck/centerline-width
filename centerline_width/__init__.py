@@ -23,6 +23,7 @@ from .relativeDistance import relativeWidthCoordinates
 from .centerline import centerlinePath
 from .centerline import networkXGraphShortestPath
 from .centerline import centerlineLength
+from .centerline import calculateRiverArea
 from .centerline import equalDistanceCenterline
 from .centerline import evenlySpacedCenterline
 from .centerline import smoothedCoordinates

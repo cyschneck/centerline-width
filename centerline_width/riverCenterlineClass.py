@@ -53,6 +53,9 @@ class riverCenterline:
 		self.top_bank = top_bank
 		self.bottom_bank = bottom_bank
 
+		# Area contained within river polygon
+		self.riverArea = centerline_width.calculateRiverArea(self.bank_polygon, self.ellipsoid)
+
 		# Relative Coordinates: River polygon, position of the top/bottom polygon
 		river_bank_polygon, top_bank, bottom_bank = centerline_width.generatePolygon(self.left_bank_relative_coordinates, self.right_bank_relative_coordinates, coord_type="Relative Distance")
 		self.bank_polygon_relative = river_bank_polygon
