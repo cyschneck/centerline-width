@@ -329,7 +329,7 @@ def errorHandlingExtractPointsToTextFile(left_kml=None, right_kml=None, text_out
 			raise ValueError(f"[right_kml]: Extension must be a .kml file, current extension = '{right_kml.split('.')[1]}'")
 
 	if right_kml == left_kml:
-		raise ValueError(f"right_kml and left_kml are set to the same file (needs a seperate left and right bank): right_kml='{right_kml}' and left_kml='{left_kml}'")
+		raise ValueError(f"right_kml and left_kml are set to the same file (needs a separate left and right bank): right_kml='{right_kml}' and left_kml='{left_kml}'")
 
 	if text_output_name is None:
 		raise ValueError("[text_output_name]: Requires output file name")
@@ -374,8 +374,8 @@ def errorHandlingRiverCenterlineClass(csv_data=None,
 
 	if type(equal_distance) != int and type(equal_distance) != float:
 		raise ValueError(f"[equal_distance]: Must be a int or float, current type = '{type(equal_distance)}'")
-		if equal_distance <= 0:
-			raise ValueError(f"[equal_distance]: Must be a postive value, greater than 0, currently = '{equal_distance}'")
+	if equal_distance <= 0:
+		raise ValueError(f"[equal_distance]: Must be a positive value, greater than 0, currently = '{equal_distance}'")
 
 	ellipsoid_options = ["GRS80", "airy", "bessel", "clrk66", "intl", "WGS60", "WGS66", "WGS72", "WGS84", "sphere"]
 	if type(ellipsoid) != str:

@@ -87,12 +87,12 @@ def plotCenterlineBackend(river_object=None,
 		if coordinate_unit == "Relative Distance": centerline_coordinates_by_type = river_object.centerlineEqualDistanceRelative
 
 	if centerline_type == "Evenly Spaced": 
-		centerline_legend = "Evenly Spaced Centerline Coordiantes"
+		centerline_legend = "Evenly Spaced Centerline Coordinates"
 		if coordinate_unit == "Decimal Degrees": centerline_coordinates_by_type = river_object.centerlineEvenlySpaced
 		if coordinate_unit == "Relative Distance": centerline_coordinates_by_type = river_object.centerlineEvenlySpacedRelative
 
 	if centerline_type == "Smoothed": 
-		centerline_legend = "Smoothed Centerlined Coordiantes"
+		centerline_legend = "Smoothed Centerline Coordinates"
 		if coordinate_unit == "Decimal Degrees": centerline_coordinates_by_type = river_object.centerlineSmoothed
 		if coordinate_unit == "Relative Distance": centerline_coordinates_by_type = river_object.centerlineSmoothedRelative
 
@@ -111,7 +111,7 @@ def plotCenterlineBackend(river_object=None,
 				plt.scatter(x, y, c=centerline_color, label=centerline_legend, s=8, zorder=10)
 
 	# Dynamically assign the starting and ending
-	if river_object.starting_node is not None: # error handling for when data is too small to generate centerline coordiantes
+	if river_object.starting_node is not None: # error handling for when data is too small to generate centerline coordinates
 		ss = 45 # scatter size
 		if coordinate_unit == "Decimal Degrees":
 			plt.scatter(river_object.starting_node[0], river_object.starting_node[1], c="green", label="Starting Node", s=ss)
@@ -237,7 +237,7 @@ def plotCenterlineWidth(river_object=None,
 
 	if river_object.centerlineVoronoi is not None:
 		number_of_evenly_spaced_points = f"\nCenterline made of {river_object.interpolate_n_centerpoints} Fixed Points, width lines generated every {transect_span_distance} points"
-		if river_object.starting_node is not None: # error handling for when data is too small to generate centerline coordiantes
+		if river_object.starting_node is not None: # error handling for when data is too small to generate centerline coordinates
 
 			# if using smoothing, replace left/right coordinates with the smoothed variation
 			if apply_smoothing:

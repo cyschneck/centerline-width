@@ -71,7 +71,7 @@ def centerlinePath(river_voronoi, river_polygon, top_polygon_line, bottom_polygo
 	nx_graphs, largest_subgraph_nodes = generateNXGraph(start_end_points_dict)
 
 	x_ridge_point = [] # X position on path
-	y_ridge_point = [] # Y poistion on path
+	y_ridge_point = [] # Y position on path
 	starting_node = None # starting position at the top of the river
 	ending_node = None # ending position at the bottom of the river
 	for start_point, end_point_list in start_end_points_dict.items():
@@ -206,7 +206,7 @@ def riverWidthFromCenterlineCoordinates(river_object=None,
 										save_to_csv=None):
 	# Return the left/right coordinates of width centerlines
 
-	# Group the centerline coordiantes into groups of length n
+	# Group the centerline coordinates into groups of length n
 	centerline_slope = {}
 	# group points inclusive of previous point: [A, B, C, D] = [A, B], [B, C], [C, D]
 	groups_of_n_points = []
@@ -284,7 +284,7 @@ def riverWidthFromCenterlineCoordinates(river_object=None,
 		# if the line only intersects in two places (does not intersect polygon any additional times)
 		if str(line_intersection_points) != "LINESTRING Z EMPTY": # if linestring has intersect (not empty)
 			if len(line_intersection_points.geoms) == 2:
-				 # only save width lines that do not touch the artifical top/bottom
+				 # only save width lines that do not touch the artificial top/bottom
 				if not intersectsTopOrBottomOfBank(line_intersection_points.geoms[0], line_intersection_points.geoms[1]):
 					left_width_coordinates[centerline_point] = (line_intersection_points.geoms[0].x, line_intersection_points.geoms[0].y)
 					right_width_coordinates[centerline_point] = (line_intersection_points.geoms[1].x, line_intersection_points.geoms[1].y)
@@ -301,7 +301,7 @@ def riverWidthFromCenterlineCoordinates(river_object=None,
 
 					# linestring contains the centerline, save coordinates
 					if left_point is not None and right_point is not None:
-						 # only save width lines that do not touch the artifical top/bottom
+						 # only save width lines that do not touch the artificial top/bottom
 						if not intersectsTopOrBottomOfBank(left_point, right_point):
 							left_width_coordinates[centerline_point] = (left_point.x, left_point.y)
 							right_width_coordinates[centerline_point] = (right_point.x, right_point.y)
@@ -352,7 +352,7 @@ def riverWidthFromCenterlineCoordinates(river_object=None,
 				centerline_of_removed_line = linestring_with_centerlines[linestring_most_interactions]
 				if centerline_of_removed_line not in centerline_coordinates_to_be_removed: centerline_coordinates_to_be_removed.append(centerline_of_removed_line)
 
-			# if two linestring both have one intersection (with just eachother), remove the longer width line
+			# if two linestring both have one intersection (with just each other), remove the longer width line
 			if num_intersection_coordinates[linestring_with_centerlines[linestring_most_interactions]] == 1: 
 				linestring_1 = linestring_most_interactions
 				linestring_2 = linestring_with_linestrings_that_intersect[linestring_most_interactions][0]

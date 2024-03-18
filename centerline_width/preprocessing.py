@@ -20,7 +20,7 @@ stream_handler = logging.StreamHandler()
 logger.addHandler(stream_handler)
 
 def convertColumnsToCSV(text_file=None, flipBankDirection=False):
-	# Convert txt file to a comma seperated version of the file to use in pandas
+	# Convert txt file to a comma-separated version of the file to use in pandas
 	centerline_width.errrorHandlingConvertColumnsToCSV(text_file=text_file, flipBankDirection=flipBankDirection)
 
 	left_rows = []
@@ -56,7 +56,7 @@ def convertColumnsToCSV(text_file=None, flipBankDirection=False):
 
 def leftRightCoordinates(dataframe):
 	right_bank_coordinates = [] # without nan
-	left_bank_coordinates = [] # wtihout nan
+	left_bank_coordinates = []  # without nan
 	for index, row in dataframe.iterrows():
 		if not math.isnan(row.rlat) and not math.isnan(row.rlon):
 			right_bank_coordinates.append([row.rlon, row.rlat])

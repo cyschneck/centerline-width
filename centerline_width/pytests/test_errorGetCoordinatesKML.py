@@ -50,5 +50,5 @@ def test_plotCenterline_textOutputNameInvalidTypes(invalid_input, error_output):
 			centerline_width.extractPointsToTextFile(left_kml="left_kml.kml", right_kml="right_kml.kml", text_output_name=invalid_input)
 
 def test_extractPointsToTextFile_rightAndLeftKMLMatchInvalid():
-	with pytest.raises(ValueError, match=re.escape("right_kml and left_kml are set to the same file (needs a seperate left and right bank): right_kml='same_kml.kml' and left_kml='same_kml.kml'")):
+	with pytest.raises(ValueError, match=re.escape("right_kml and left_kml are set to the same file (needs a separate left and right bank): right_kml='same_kml.kml' and left_kml='same_kml.kml'")):
 		centerline_width.extractPointsToTextFile(left_kml="same_kml.kml", right_kml="same_kml.kml", text_output_name=None)

@@ -1,5 +1,5 @@
 # Pytest for riverCenterlineClass.py
-# centerline-width/: python3 -m pytest -v
+# centerline-width/: python -m pytest -v
 from io import StringIO
 import re
 
@@ -56,6 +56,11 @@ def test_riverCenterline_interpolateNInvalidTypes(invalid_input, error_output):
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_num_options)
 def test_riverCenterline_equalDistanceInvalidTypes(invalid_input, error_output):
 	with pytest.raises(ValueError, match=re.escape(f"[equal_distance]: Must be a int or float, current type = '{error_output}'")):
+		centerline_width.riverCenterline(csv_data="csv_example.csv", equal_distance=invalid_input)
+
+@pytest.mark.parametrize("invalid_input, error_output", [(-1, -1), (0, 0)])
+def test_riverCenterline_equalDistanceInvalidRange(invalid_input, error_output):
+	with pytest.raises(ValueError, match=re.escape(f"[equal_distance]: Must be a positive value, greater than 0, currently = '{error_output}'")):
 		centerline_width.riverCenterline(csv_data="csv_example.csv", equal_distance=invalid_input)
 
 @pytest.mark.parametrize("invalid_input, error_output", invalid_non_str_options)
