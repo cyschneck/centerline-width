@@ -692,6 +692,18 @@ Once the environment has been built, activate the environment:
 ```
 conda activate centerline_width
 ```
+Set up pre-commit hooks to ensure standard code formatting and spelling
+```
+pre-commit install
+```
+Pre-commit hooks can be manually run before commits
+```
+pre-commit run --all-files
+```
+Pre-commit hooks will run before commits can be committed to suggest potential code changes. To run without pre-commit hooks:
+```
+git commit -m "commit message" --no-verify
+```
 To run existing and new tests from the root directory:
 ```
 python -m pytest

@@ -1,9 +1,11 @@
+codespell>=2.2.6
 geopy>=2.3.0
 haversine>=2.8.0
 matplotlib>=3.1.0
 networkx>=3.0
 numpy>=1.24.1
 pandas>=1.5.2
+pre-commit>=3.6.2
 pyarrow>=15.0.0
 pykml>=0.2.0
 pyproj>=3.4.1

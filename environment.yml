@@ -14,6 +14,7 @@ dependencies:
   - pytest
   - scipy
   - shapely
+  - pre-commit # pre-commit hooks
   - pip
   - pip:
     - matplotlib # avoid warning "QApplication: invalid style override passed, ignoring it."

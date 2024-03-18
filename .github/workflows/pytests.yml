@@ -12,7 +12,7 @@ permissions:
 jobs:
   build:
 
-    runs-on: ubuntu-20.04 # specifically calls the version number instead of lastest to work on 'act'
+    runs-on: ubuntu-20.04 # specifically calls the version number instead of latest to work on 'act'
 
     strategy:
       matrix:
