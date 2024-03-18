@@ -1,9 +1,8 @@
 name: pytests
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
+  push:
     branches: [ "main" ]
 
 permissions:
@@ -12,7 +11,7 @@ permissions:
 jobs:
   build:
 
-    runs-on: ubuntu-20.04 # specifically calls the version number instead of latest to work on 'act'
+    runs-on: ubuntu-latest #ubuntu-20.04 # specifically calls the version number instead of latest to work on 'act'
 
     strategy:
       matrix:
