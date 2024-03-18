@@ -8,6 +8,7 @@
 [![NSF-2141064](https://img.shields.io/badge/NSF-2141064-blue)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2141064&HistoricalAwards=false)
 ![PyPi-Versions](https://img.shields.io/pypi/pyversions/centerline-width)
 [![pytests](https://github.com/cyschneck/centerline-width/actions/workflows/pytests.yml/badge.svg)](https://github.com/cyschneck/centerline-width/actions/workflows/pytests.yml)
+[![pre-commit](https://github.com/cyschneck/centerline-width/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/cyschneck/centerline-width/actions/workflows/pre-commit.yml)
 
 Find the centerline and width of rivers based on the latitude and longitude positions from the right and left bank 
 
