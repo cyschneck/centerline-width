@@ -2,6 +2,9 @@
 # Pytests to Compare and Verify Expected Outputs
 from io import StringIO
 
+# External Python libraries (installed via pip install)
+import pytest
+
 # Internal centerline-width reference to access functions, global variables, and error handling
 import centerline_width
 
@@ -29,7 +32,7 @@ def test_riverCenterline_centerlineLength():
     )
     csv_example.seek(0)
     test_river = centerline_width.riverCenterline(csv_data=csv_example)
-    assert test_river.centerlineLength == 1.3534252753108382
+    assert test_river.centerlineLength == pytest.approx(1.3534252753108382)
 
 
 def test_riverWidthFromCenterline_transectSlopeAverage():
@@ -78,12 +81,15 @@ def test_riverWidthFromCenterline_transectSlopeAverage():
         transect_span_distance=span_distance,
         apply_smoothing=False)
     # Verify same keys are used
-    assert list(river_width_dict.keys()) == centerline_slope_expected
+    assert list(
+        river_width_dict.keys()) == pytest.approx(centerline_slope_expected)
     # Verify output
-    assert river_width_dict == {
-        (-4.269872495291112, 48.28213146317461): 0.476108068803046,
-        (-4.263272551474902, 48.281909175456114): 0.4790787641902623
-    }
+    assert river_width_dict == pytest.approx({
+        (-4.269872495291112, 48.28213146317461):
+        0.476108068803046,
+        (-4.263272551474902, 48.281909175456114):
+        0.4790787641902623
+    })
 
 
 def test_riverWidthFromCenterline_transectSlopeDirect():
@@ -132,9 +138,12 @@ def test_riverWidthFromCenterline_transectSlopeDirect():
         transect_span_distance=span_distance,
         apply_smoothing=False)
     # Verify same keys are used
-    assert list(river_width_dict.keys()) == centerline_slope_expected
+    assert list(
+        river_width_dict.keys()) == pytest.approx(centerline_slope_expected)
     # Verify output
-    assert river_width_dict == {
-        (-4.269872495291112, 48.28213146317461): 0.476108068803046,
-        (-4.263272551474902, 48.281909175456114): 0.4790787641902623
-    }
+    assert river_width_dict == pytest.approx({
+        (-4.269872495291112, 48.28213146317461):
+        0.476108068803046,
+        (-4.263272551474902, 48.281909175456114):
+        0.4790787641902623
+    })
