@@ -14,20 +14,19 @@ Rivers, 2024, Nature Communication
 
 def make_logger(logname="mylog",level=logging.WARNING, log_to_file=False):
 
-    personal_note_logger = logging.getLogger(logname)
+    personal_note_logger = logging.getLogger()
     personal_note_logger.setLevel(level)
 
-    # Define a formatter for log messages
+
     formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(funcName)s() [line %(lineno)d] - %(message)s')
 
-    # Create a stream handler to output log messages to the console
     stream_handler = logging.StreamHandler()
     stream_handler.setFormatter(formatter)
     personal_note_logger.addHandler(stream_handler)
 
-    # Optionally, create a file handler to save log messages to a file
+    # save to .log file
     if log_to_file:
-        file_handler = logging.FileHandler('personal_note.log')
+        file_handler = logging.FileHandler(logname+'.log')
         file_handler.setFormatter(formatter)
         personal_note_logger.addHandler(file_handler)
 
