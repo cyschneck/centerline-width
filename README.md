@@ -680,7 +680,7 @@ river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv"
 
 The number of additional points added by interpolating can be adjusted with `interpolate_n`, but defaults to add 5 additional points between values
 
-## Development Environment
+## Development Environment	
 To run or test against `centerline-width` github repo/fork, a development environment can be created via conda/miniconda
 
 First, [install Miniconda](https://docs.conda.io/projects/miniconda/en/latest/miniconda-install.html)
@@ -694,17 +694,13 @@ Once the environment has been built, activate the environment:
 ```
 conda activate centerline_width
 ```
-Set up pre-commit hooks to ensure standard code formatting and spelling
+Set up pre-commit hooks to ensure standard code formatting and spelling:
 ```
 pre-commit install
 ```
-Pre-commit hooks can be manually run before commits
+Pre-commit hooks can be manually run before commits:
 ```
 pre-commit run --all-files
-```
-Pre-commit hooks will run before commits can be committed to suggest potential code changes. To run without pre-commit hooks:
-```
-git commit -m "commit message" --no-verify
 ```
 To run existing and new tests from the root directory:
 ```
@@ -712,7 +708,7 @@ python -m pytest
 ```
 
 ## Citations
-Originally a Python implementation of [R-Code CMGO](https://github.com/AntoniusGolly/cmgo) (Golly et al. 2017) but has been extensively expanded:
+Originally a Python implementation of [R-Code CMGO](https://github.com/AntoniusGolly/cmgo) (Golly et al. 2017) but has since been extensively expanded:
 
 >Golly, A. and Turowski, J. M.: Deriving principal channel metrics from bank and long-profile geometry with the R package cmgo, Earth Surf. Dynam., 5, 557-570, https://doi.org/10.5194/esurf-5-557-2017, 2017.
 
@@ -728,7 +724,7 @@ Please acknowledge the use of this software in any publications:
 ```
 "River centerline/width extraction software was provided by C. Y. Schneck and U. G. Schneck, and is available at URL: https://github.com/cyschneck/centerline-width."
 ```
-Please send a copy of such publications to: cyschneck@gmail.com and ugschneck@gmail.com
+We are interested in expanding this software based on river needs, so please send a copy of such publications to: cyschneck@gmail.com and ugschneck@gmail.com
 
 
 This material is based upon work supported by the National Science Foundation Graduate Fellowship under Grant No. 2141064. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the National Science Foundation.
