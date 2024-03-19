@@ -2,7 +2,7 @@
 # ERROR CATCHES AND LOGGING FOR CLARITY WHEN USING CENTERLINE-WIDTH
 ########################################################################
 
-# Built in Python functions
+# Built-in Python functions
 import logging
 from io import StringIO
 

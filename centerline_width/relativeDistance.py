@@ -1,7 +1,7 @@
-# Built in Python functions
+# Built-in Python functions
 import math
 
-# External Python libraries (installed via pip install)
+# External Python libraries
 import numpy as np
 import pyproj
 import geopy.distance

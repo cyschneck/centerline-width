@@ -1,8 +1,8 @@
-# Built in Python functions
+# Built-in Python functions
 import csv
 import logging
 
-# External Python libraries (installed via pip install)
+# External Python libraries
 import numpy as np
 from scipy.io import savemat
 

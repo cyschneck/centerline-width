@@ -1,7 +1,7 @@
-# Built in Python functions
+# Built-in Python functions
 import re
 
-# External Python libraries (installed via pip install)
+# External Python libraries
 import pandas as pd
 from pykml import parser
 

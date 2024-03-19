@@ -1,8 +1,8 @@
-# Built in Python functions
+# Built-in Python functions
 import math
 import logging
 
-# External Python libraries (installed via pip install)
+# External Python libraries
 import matplotlib.pyplot as plt
 from scipy.spatial import voronoi_plot_2d
 

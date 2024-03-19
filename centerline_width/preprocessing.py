@@ -1,11 +1,11 @@
-# Built in Python functions
+# Built-in Python functions
 import csv
 import logging
 import math
 import os
-
-# External Python libraries (installed via pip install)
 from collections import Counter
+
+# External Python libraries
 import numpy as np
 from shapely.geometry import Point, Polygon, LineString
 from scipy.spatial import Voronoi

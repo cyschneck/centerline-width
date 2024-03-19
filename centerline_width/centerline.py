@@ -1,9 +1,9 @@
-# Built in Python functions
+# Built-in Python functions
 import math
 import logging
 import csv
 
-# External Python libraries (installed via pip install)
+# External Python libraries
 import numpy as np
 import networkx as nx
 from scipy import interpolate
@@ -25,6 +25,7 @@ logger.addHandler(stream_handler)
 def generateNXGraph(all_points_dict):
     # Generate a NetworkX graph to find the largest graph
     def distanceBetween(start, end):
+        # return the distance between two points on a graph
         lat1 = start[0]
         lat2 = end[0]
         lon1 = start[1]
@@ -34,6 +35,9 @@ def generateNXGraph(all_points_dict):
             lat1 * p) * math.cos(lat2 * p) * (1 - math.cos(
                 (lon2 - lon1) * p)) / 2
         return math.asin(math.sqrt(a))
+
+
+# nodes as lat/lon positions, weighted by the distance between each position
 
     all_connections_in_graph = nx.Graph()
     node_as_keys_pos_values = {}
@@ -58,7 +62,7 @@ def generateNXGraph(all_points_dict):
     for idx, g in enumerate(components_of_subgraphs, start=1):
         if len(g.nodes()) > len(nodes_of_largest_subgraph):
             nodes_of_largest_subgraph = list(g.nodes())
-        #print("Subgraph {0}: Nodes: {1}, Edges: {2}".format(idx, len(g.nodes()), len(g.edges())))
+        #print(f"Subgraph {idx}: Nodes: {len(g.nodes())}, Edges: {len(g.edges())}")
 
     return all_connections_in_graph, nodes_of_largest_subgraph
 
@@ -231,7 +235,7 @@ def smoothedCoordinates(river_object=None,
     smoothed_coordinates = []
     tck, *rest = interpolate.splprep(
         [x_coordinates, y_coordinates],
-        s=0.000001)  # spline prep, tck = knots - coefficeinets - degree
+        s=0.000001)  # spline prep, tck = knots - coefficients - degree
     u = np.linspace(
         0, 1, interprolate_num
     )  # number of steps between each point (to determine smoothness)
@@ -652,7 +656,7 @@ def calculateRiverArea(bank_polygon=None, ellipsoid="WGS84"):
     geodesic = pyproj.Geod(ellps=ellipsoid)
     river_area, river_perimeter = geodesic.geometry_area_perimeter(
         bank_polygon)
-    return abs(river_area) / 1000
+    return abs(river_area) / 1000  # km
 
 
 def centerlineLength(centerline_coordinates=None, ellipsoid="WGS84"):
@@ -675,4 +679,4 @@ def centerlineLength(centerline_coordinates=None, ellipsoid="WGS84"):
             total_length += distance_between_meters
         # Set previous_pair to xy_pair for the next iteration.
         previous_pair = xy_pair
-    return total_length / 1000
+    return total_length / 1000  # km

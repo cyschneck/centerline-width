@@ -1,6 +1,6 @@
 # River object class used for all functions and centerline functions
 
-# External Python libraries (installed via pip install)
+# External Python libraries
 import pandas as pd
 
 # Internal centerline_width reference to access functions, global variables, and error handling
