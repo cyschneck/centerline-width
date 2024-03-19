@@ -710,6 +710,16 @@ To run existing and new tests from the root directory:
 ```
 python -m pytest
 ```
+## Beta :test_tube: features
+These features are not included in pip install because they are still experimental and being tested/debugged. For more information and getting them up and running, contact cyschneck@gmail.com or ugschneck@gmail.com
+
+(1) Calculate the dominant meander wavelength amd its variance
+
+(2) Calculate the asymmetry of the meanders 
+
+(3) Calculate the dominant submeander and supermeander scales
+
+(4) Extract elevation/slope from river profiles 
 
 ## Citations
 Originally a Python implementation of [R-Code CMGO](https://github.com/AntoniusGolly/cmgo) (Golly et al. 2017) but has been extensively expanded:
@@ -733,6 +743,6 @@ Please send a copy of such publications to: cyschneck@gmail.com and ugschneck@gm
 
 This material is based upon work supported by the National Science Foundation Graduate Fellowship under Grant No. 2141064. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the National Science Foundation.
 
-## Bug and Feature Request
+## Bug :bug: and Feature Request
 
 Submit a bug fix, question, or feature request as a [Github Issue](https://github.com/cyschneck/centerline-width/issues) or to ugschneck@gmail.com/cyschneck@gmail.com
