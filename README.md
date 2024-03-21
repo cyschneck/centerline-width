@@ -653,7 +653,7 @@ The smoothed centerline (`river_object.centerlineSmoothed`) can end up lying out
 
 Example Error: `WARNING: Partially invalid smoothed centerline due to sparse centerline data (6 points lie outside the polygon), fix recommendation: rerun riverCenterline to create river object with interpolate_n_centerpoints set to 62+`
 
-By default, `interpolate_n_centerpoints` is set to None and not additional points will be added between the existing points along the centerline. By adding additional points between the existing centerline, the smoothed centerline can be fixed to stay within the polygon. This fix is set by creating a river object, `centerline_width.riverCenterline`, with `interpolate_n_centerpoints=65` (with the recommended 62+) to fix for centerline coordinates that lie outside the polygon
+By default, `interpolate_n_centerpoints` is set to None and no additional points will be added between the existing points along the centerline. By adding additional points between the existing centerline, the smoothed centerline can be fixed to stay within the polygon. This fix is set by creating a river object, `centerline_width.riverCenterline`, with `interpolate_n_centerpoints=65` (with the recommended 62+) to fix for centerline coordinates that lie outside the polygon
 
 `interpolate_n_centerpoints = None` does not interpolate data points, so the size will be set to the number of fixed points when creating the evenly spaced coordinates (equal to the size of the data frame)
 
@@ -666,7 +666,7 @@ For very narrow rivers, this problem can become extreme and pronounced
 
 By increasing the interpolation between the centerline points, the smoothed centerlines will be forced within the polygon and reduce the number of points outside of the polygon. By default, this warning will be thrown if more than 2 points are outside of polygon, so as long as more than 2 points lie outside the polygon, the warning will recommend doubling the amount of centerline points
 
-### Fix Gaps and Jagged Centerlines
+### Fixing Gaps and Jagged Centerlines
 Gaps formed can cause part of the centerline to be skipped due to sparse data. As a result, the start and end of the centerline can skip parts at the beginning or end of a river
 ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/interpolate_false_gaps_short_path.png)
 Set river object created by `centerline_width.riverCenterline` to `interpolate_data=True` to fix for jagged edges or gaps formed by the interaction of sparse data and narrow banks
@@ -706,16 +706,18 @@ To run existing and new tests from the root directory:
 ```
 python -m pytest
 ```
-## Beta :test_tube: features
-These features are not included in pip install because they are still experimental and being tested/debugged. For more information and getting them up and running, contact cyschneck@gmail.com or ugschneck@gmail.com
+## Beta :test_tube: Features
+These features are not included in pip install because they are still experimental and being tested/debugged. For more information and getting them up and running, contact cyschneck@gmail.com or ugschneck@gmail.com or post a question as a [Github Issue](https://github.com/cyschneck/centerline-width/issues)
 
-(1) Calculate the dominant meander wavelength amd its variance
+- Calculate sinuosity of river, in total and in equal parts
 
-(2) Calculate the asymmetry of the meanders 
+- Calculate the dominant meander wavelength amd its variance
 
-(3) Calculate the dominant submeander and supermeander scales
+- Calculate the asymmetry of the meanders 
 
-(4) Extract elevation/slope from river profiles 
+- Calculate the dominant submeander and supermeander scales
+
+- Extract elevation/slope from river profiles (.kml files)
 
 ## Citations
 Originally a Python implementation of [R-Code CMGO](https://github.com/AntoniusGolly/cmgo) (Golly et al. 2017) but has since been extensively expanded:
@@ -739,6 +741,6 @@ We are interested in expanding this software based on river needs, so please sen
 
 This material is based upon work supported by the National Science Foundation Graduate Fellowship under Grant No. 2141064. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the National Science Foundation.
 
-## Bug :bug: and Feature Request
+## Bug :bug: and Feature Requests
 
 Submit a bug fix, question, or feature request as a [Github Issue](https://github.com/cyschneck/centerline-width/issues) or to ugschneck@gmail.com/cyschneck@gmail.com
