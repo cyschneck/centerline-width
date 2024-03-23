@@ -33,7 +33,7 @@ jobs:
       run: |
         python -m pytest
 
-      - name: Upload coverage reports to Codecov
+    - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4.0.1
         with:
             working-directory: centerline_width
