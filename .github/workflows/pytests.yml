@@ -32,3 +32,12 @@ jobs:
     - name: Test with pytest
       run: |
         python -m pytest
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+            working-directory: centerline_width
+            token: ${{ secrets.CODECOV_TOKEN }}
+            slug: cyschneck/centerline-width
+            fail_ci_if_error: false
+
