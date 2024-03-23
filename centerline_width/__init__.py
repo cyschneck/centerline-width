@@ -27,8 +27,10 @@ from .centerline import calculateRiverArea
 from .centerline import equalDistanceCenterline
 from .centerline import evenlySpacedCenterline
 from .centerline import smoothedCoordinates
-from .centerline import riverWidthFromCenterlineCoordinates
-from .centerline import riverWidthFromCenterline
+
+# width.py function calls
+from .width import riverWidthFromCenterlineCoordinates
+from .width import riverWidthFromCenterline
 
 # saveOutput.py function calls
 from .saveOutput import saveCenterlineCSV

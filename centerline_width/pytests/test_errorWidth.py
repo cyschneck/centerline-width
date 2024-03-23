@@ -1,4 +1,4 @@
-# Pytest for preprocessing.py
+# Pytest for centerline.py
 # centerline-width/: python -m pytest -v
 from io import StringIO
 import re

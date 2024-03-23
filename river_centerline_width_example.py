@@ -70,7 +70,7 @@ if __name__ == "__main__":
     #river.saveCenterlineMAT(save_to_mat="centerline_for_matlab.mat", latitude_header="lat", longitude_header="long", centerline_type="Evenly Spaced")
 
     # Plot river bank centerline
-    river.plotCenterline(save_plot_name="new_c.png",
+    river.plotCenterline(save_plot_name=None,
                          centerline_type=center_type,
                          marker_type="line",
                          centerline_color="black",
@@ -86,7 +86,7 @@ if __name__ == "__main__":
     slope_type = "average"
 
     # Plot river bank width line
-    river.plotCenterlineWidth(save_plot_name="new_d.png",
+    river.plotCenterlineWidth(save_plot_name=None,
                               plot_title=None,
                               display_true_centerline=False,
                               transect_span_distance=transect,
