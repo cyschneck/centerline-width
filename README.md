@@ -10,6 +10,7 @@
 ![PyPi-Versions](https://img.shields.io/pypi/pyversions/centerline-width)
 [![pytests](https://github.com/cyschneck/centerline-width/actions/workflows/pytests.yml/badge.svg)](https://github.com/cyschneck/centerline-width/actions/workflows/pytests.yml)
 [![pre-commit](https://github.com/cyschneck/centerline-width/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/cyschneck/centerline-width/actions/workflows/pre-commit.yml)
+[![codecov](https://codecov.io/gh/cyschneck/centerline-width/graph/badge.svg?token=V6Z2DC37MT)](https://codecov.io/gh/cyschneck/centerline-width)
 
 Find the centerline and width of rivers based on the latitude and longitude positions from the right and left bank 
 
