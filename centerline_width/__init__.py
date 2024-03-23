@@ -22,11 +22,13 @@ from .relativeDistance import relativeWidthCoordinates
 # centerline.py function calls
 from .centerline import centerlinePath
 from .centerline import networkXGraphShortestPath
-from .centerline import centerlineLength
-from .centerline import calculateRiverArea
 from .centerline import equalDistanceCenterline
 from .centerline import evenlySpacedCenterline
 from .centerline import smoothedCoordinates
+
+# riverFeatures.py function calls
+from .riverFeatures import centerlineLength
+from .riverFeatures import calculateRiverArea
 
 # width.py function calls
 from .width import riverWidthFromCenterlineCoordinates
