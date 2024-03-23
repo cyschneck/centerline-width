@@ -10,5 +10,6 @@ pyarrow>=15.0.0
 pykml>=0.2.0
 pyproj>=3.4.1
 pytest>=7.2.2
+pytest-cov>=4.1.0
 scipy>=1.10.1
 shapely>=2.0.1

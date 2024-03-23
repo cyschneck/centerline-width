@@ -29,9 +29,9 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
-    - name: Test with pytest
+    - name: Test with pytest and generate coverage reports
       run: |
-        python -m pytest
+        python -m pytest --cov
 
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v4.0.1

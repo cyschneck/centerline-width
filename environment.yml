@@ -12,6 +12,7 @@ dependencies:
   - pykml
   - pyproj
   - pytest
+  - pytest-cov # codecov reports
   - scipy
   - shapely
   - pre-commit # pre-commit hooks
