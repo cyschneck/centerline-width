@@ -40,9 +40,11 @@ jobs:
         path: pytest.xml
 
     - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v4.0.1
-      with:
-        working-directory: centerline_width
-        token: ${{ secrets.CODECOV_TOKEN }}
-        slug: cyschneck/centerline-width
-        fail_ci_if_error: false
+        uses: codecov/codecov-action@v4.1.0
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        with:
+          file: ./coverage.xml
+          env_vars: OS,PYTHON
+          name: codecov-umbrella
+          fail_ci_if_error: false
