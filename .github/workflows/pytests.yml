@@ -31,7 +31,13 @@ jobs:
         pip install -r requirements.txt
     - name: Test with pytest and generate coverage reports
       run: |
-        python -m pytest --cov
+        python -m pytest --cov=./centerline_width --cov-report=xml --junitxml=pytest.xml
+
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      with:
+        name: Test results for ${{ matrix.os }}-${{ matrix.python-version }}
+        path: pytest.xml
 
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v4.0.1
