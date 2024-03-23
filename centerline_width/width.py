@@ -1,5 +1,6 @@
 # Built-in Python functions
 import logging
+import csv
 
 # External Python libraries
 from shapely.geometry import Point, LineString
@@ -101,8 +102,6 @@ def riverWidthFromCenterlineCoordinates(river_object=None,
     right_width_coordinates = {}
     left_width_coordinates = {}
     num_intersection_coordinates = {}
-    x = []
-    y = []
 
     min_x, min_y, max_x, max_y = river_object.bank_polygon.bounds
     for centerline_point, slope in centerline_slope.items():

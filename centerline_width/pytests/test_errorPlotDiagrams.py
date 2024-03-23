@@ -385,7 +385,8 @@ def test_plotCenterlineWidth_darkModeInvalidTypes(invalid_input, error_output):
 
 @pytest.mark.parametrize("invalid_input, error_output",
                          invalid_non_bool_options)
-def test_plotCenterline_equalAxisInvalidTypes(invalid_input, error_output):
+def test_plotCenterlineWidth_equalAxisInvalidTypes(invalid_input,
+                                                   error_output):
     with pytest.raises(
             ValueError,
             match=re.escape(
@@ -397,7 +398,7 @@ def test_plotCenterline_equalAxisInvalidTypes(invalid_input, error_output):
 
 @pytest.mark.parametrize("invalid_input, error_output",
                          invalid_non_bool_options)
-def test_plotCenterline_showPlotInvalidTypes(invalid_input, error_output):
+def test_plotCenterlineWidth_showPlotInvalidTypes(invalid_input, error_output):
     with pytest.raises(
             ValueError,
             match=re.escape(

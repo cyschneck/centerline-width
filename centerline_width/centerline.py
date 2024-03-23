@@ -1,7 +1,6 @@
 # Built-in Python functions
 import math
 import logging
-import csv
 
 # External Python libraries
 import numpy as np
@@ -154,7 +153,6 @@ def equalDistanceCenterline(centerline_coordinates=None,
     if centerline_coordinates is None:
         return None
 
-    centerline_line = LineString(centerline_coordinates)
     equal_distance_between_centerline_coordinates = []
 
     geodesic = pyproj.Geod(ellps=ellipsoid)

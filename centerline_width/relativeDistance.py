@@ -65,7 +65,6 @@ def relativeCenterlineCoordinates(first_point, centerline_coordinates,
 
 def relativeRidgeCoordinates(first_point, x_ridge, y_ridge, ellipsoid):
     # Convert Voronoi ridges from Decimal Degree to Relative Distance
-    geodesic = pyproj.Geod(ellps=ellipsoid)
 
     x_relative_ridges = []
     y_relative_ridges = []
@@ -89,7 +88,6 @@ def relativeRidgeCoordinates(first_point, x_ridge, y_ridge, ellipsoid):
 
 def relativeWidthCoordinates(first_point, width_dictionary, ellipsoid):
     # Convert width dictionary from Decimal Degree to Relative Distance
-    geodesic = pyproj.Geod(ellps=ellipsoid)
 
     relative_width_dictionary = {}
     for k, v in width_dictionary.items():
