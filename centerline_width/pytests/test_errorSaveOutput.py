@@ -37,12 +37,35 @@ def test_saveCenterlineCSV_riverObjectRequired():
         centerline_width.saveCenterlineCSV(river_object=None)
 
 
+@pytest.mark.parametrize("invalid_input, error_output",
+                         invalid_non_str_options)
+def test_saveCenterlineCSV_riverObjectInvalidType(invalid_input, error_output):
+    with pytest.raises(
+            ValueError,
+            match=re.escape(
+                f"[river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{error_output}'"
+            )):
+        centerline_width.saveCenterlineCSV(river_object=invalid_input)
+
+
 def test_saveCenterlineCSV_csvInvalidExtension():
     with pytest.raises(
             ValueError,
             match=re.escape("[save_to_csv]: Requires csv filename")):
         centerline_width.saveCenterlineCSV(river_object=river_class_example,
                                            save_to_csv=None)
+
+
+@pytest.mark.parametrize("invalid_input, error_output",
+                         invalid_non_str_options)
+def test_saveCenterlineCSV_csvInvalidType(invalid_input, error_output):
+    with pytest.raises(
+            ValueError,
+            match=re.escape(
+                f"[save_to_csv]: Must be a str, current type = '{error_output}'"
+            )):
+        centerline_width.saveCenterlineCSV(river_object=river_class_example,
+                                           save_to_csv=invalid_input)
 
 
 def test_saveCenterlineCSV_csvRequired():
@@ -149,6 +172,18 @@ def test_saveCenterlineMAT_matInvalidExtension():
             match=re.escape("[save_to_mat]: Requires mat filename")):
         centerline_width.saveCenterlineMAT(river_object=river_class_example,
                                            save_to_mat=None)
+
+
+@pytest.mark.parametrize("invalid_input, error_output",
+                         invalid_non_str_options)
+def test_saveCenterlineMAT_matInvalidType(invalid_input, error_output):
+    with pytest.raises(
+            ValueError,
+            match=re.escape(
+                f"[save_to_mat]: Must be a str, current type = '{error_output}'"
+            )):
+        centerline_width.saveCenterlineMAT(river_object=river_class_example,
+                                           save_to_mat=invalid_input)
 
 
 def test_saveCenterlineMAT_matRequired():

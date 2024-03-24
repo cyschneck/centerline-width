@@ -84,6 +84,30 @@ def test_riverCenterline_interpolateNInvalidTypes(invalid_input, error_output):
 
 
 @pytest.mark.parametrize("invalid_input, error_output",
+                         invalid_non_int_options)
+def test_riverCenterline_interpolateNCenterpointsInvalidTypes(
+        invalid_input, error_output):
+    with pytest.raises(
+            ValueError,
+            match=re.escape(
+                f"[interpolate_n_centerpoints]: Must be a int, current type = '{error_output}'"
+            )):
+        centerline_width.riverCenterline(
+            csv_data="csv_example.csv",
+            interpolate_n_centerpoints=invalid_input)
+
+
+def test_riverCenterline_interpolateNCenterpointsInvalidRange():
+    with pytest.raises(
+            ValueError,
+            match=re.escape(
+                f"[interpolate_n_centerpoints]: Must be a greater than 1, currently = '1'"
+            )):
+        centerline_width.riverCenterline(csv_data="csv_example.csv",
+                                         interpolate_n_centerpoints=1)
+
+
+@pytest.mark.parametrize("invalid_input, error_output",
                          invalid_non_num_options)
 def test_riverCenterline_equalDistanceInvalidTypes(invalid_input,
                                                    error_output):

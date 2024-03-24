@@ -78,6 +78,39 @@ def test_riverWidthFromCenterline_transectSpanDistanceInvalidTypes(
             transect_span_distance=invalid_input)
 
 
+def test_riverWidthFromCenterline_transectSpanDistanceInvalidRange():
+    with pytest.raises(
+            ValueError,
+            match=re.escape(
+                f"[transect_span_distance]: Must be greater than 2, currently = '1'"
+            )):
+        centerline_width.riverWidthFromCenterline(
+            river_object=river_class_example, transect_span_distance=1)
+
+
+@pytest.mark.parametrize("invalid_input, error_output",
+                         invalid_non_str_options)
+def test_riverWidthFromCenterline_transectSlopeInvalidTypes(
+        invalid_input, error_output):
+    with pytest.raises(
+            ValueError,
+            match=re.escape(
+                f"[transect_slope]: Must be a str, current type = '{error_output}'"
+            )):
+        centerline_width.riverWidthFromCenterline(
+            river_object=river_class_example, transect_slope=invalid_input)
+
+
+def test_riverWidthFromCenterline_transectSlopeInvalidOption():
+    with pytest.raises(
+            ValueError,
+            match=re.escape(
+                "[transect_slope]: Must be an available option in ['Average', 'Direct'], current option = 'Invalid Option'"
+            )):
+        centerline_width.riverWidthFromCenterline(
+            river_object=river_class_example, transect_slope="Invalid Option")
+
+
 @pytest.mark.parametrize("invalid_input, error_output",
                          invalid_non_bool_options)
 def test_riverWidthFromCenterline_applySmoothingInvalidTypes(
@@ -163,3 +196,14 @@ def test_riverWidthFromCenterline_coordinateReferenceInvalidTypes(
         centerline_width.riverWidthFromCenterline(
             river_object=river_class_example,
             coordinate_reference=invalid_input)
+
+
+def test_riverWidthFromCenterline_coordinateReferenceInvalidOption():
+    with pytest.raises(
+            ValueError,
+            match=re.escape(
+                "[coordinate_reference]: Must be an available option in ['Centerline', 'Banks'], current option = 'invalid centerline reference'"
+            )):
+        centerline_width.riverWidthFromCenterline(
+            river_object=river_class_example,
+            coordinate_reference="invalid centerline reference")
