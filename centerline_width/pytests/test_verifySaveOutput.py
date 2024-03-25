@@ -142,11 +142,14 @@ def test_saveOutput_centerlineDecimalDegreesVoronoiCSV(
         ]
     })
     csv_output_df = pd.read_csv(generate_csv_centerlineDecimalDegreesVoronoi)
-    assert csv_output_df.columns.tolist() == expected_df.columns.tolist()
-    assert list(csv_output_df["Voronoi Centerline Latitude (Deg)"]) == list(
-        expected_df["Voronoi Centerline Latitude (Deg)"])
-    assert list(csv_output_df["Voronoi Centerline Longitude (Deg)"]) == list(
-        expected_df["Voronoi Centerline Longitude (Deg)"])
+    assert expected_df.columns.tolist() == pytest.approx(
+        csv_output_df.columns.tolist())
+    assert list(
+        expected_df["Voronoi Centerline Latitude (Deg)"]) == pytest.approx(
+            list(csv_output_df["Voronoi Centerline Latitude (Deg)"]))
+    assert list(
+        expected_df["Voronoi Centerline Longitude (Deg)"]) == pytest.approx(
+            list(csv_output_df["Voronoi Centerline Longitude (Deg)"]))
 
 
 @pytest.fixture(scope="session")
@@ -174,13 +177,15 @@ def test_saveOutput_centerlineDecimalDegreesEqualDistanceCSV(
     })
     csv_output_df = pd.read_csv(
         generate_csv_centerlineDecimalDegreesEqualDistance)
-    assert csv_output_df.columns.tolist() == expected_df.columns.tolist()
+    assert expected_df.columns.tolist() == csv_output_df.columns.tolist()
     assert list(
-        csv_output_df["Equal Distance Centerline Latitude (Deg)"]) == list(
-            expected_df["Equal Distance Centerline Latitude (Deg)"])
+        expected_df["Equal Distance Centerline Latitude (Deg)"]
+    ) == pytest.approx(
+        list(csv_output_df["Equal Distance Centerline Latitude (Deg)"]))
     assert list(
-        csv_output_df["Equal Distance Centerline Longitude (Deg)"]) == list(
-            expected_df["Equal Distance Centerline Longitude (Deg)"])
+        expected_df["Equal Distance Centerline Longitude (Deg)"]
+    ) == pytest.approx(
+        list(csv_output_df["Equal Distance Centerline Longitude (Deg)"]))
 
 
 @pytest.fixture(scope="session")
@@ -222,15 +227,15 @@ def test_saveOutput_centerlineDecimalDegreesEvenlySpacedCSV(
     })
     csv_output_df = pd.read_csv(
         generate_csv_centerlineDecimalDegreesEvenlySpaced)
-    print(list(csv_output_df["Evenly Spaced Centerline Latitude (Deg)"]))
-    print(list(csv_output_df["Evenly Spaced Centerline Longitude (Deg)"]))
-    assert csv_output_df.columns.tolist() == expected_df.columns.tolist()
+    assert expected_df.columns.tolist() == csv_output_df.columns.tolist()
     assert list(
-        csv_output_df["Evenly Spaced Centerline Latitude (Deg)"]) == list(
-            expected_df["Evenly Spaced Centerline Latitude (Deg)"])
+        expected_df["Evenly Spaced Centerline Latitude (Deg)"]
+    ) == pytest.approx(
+        list(csv_output_df["Evenly Spaced Centerline Latitude (Deg)"]))
     assert list(
-        csv_output_df["Evenly Spaced Centerline Longitude (Deg)"]) == list(
-            expected_df["Evenly Spaced Centerline Longitude (Deg)"])
+        expected_df["Evenly Spaced Centerline Longitude (Deg)"]
+    ) == pytest.approx(
+        list(csv_output_df["Evenly Spaced Centerline Longitude (Deg)"]))
 
 
 @pytest.fixture(scope="session")
@@ -271,13 +276,13 @@ def test_saveOutput_centerlineDecimalDegreesSmoothedCSV(
         ]
     })
     csv_output_df = pd.read_csv(generate_csv_centerlineDecimalDegreesSmoothed)
-    print(list(csv_output_df["Smoothed Centerline Latitude (Deg)"]))
-    print(list(csv_output_df["Smoothed Centerline Longitude (Deg)"]))
-    assert csv_output_df.columns.tolist() == expected_df.columns.tolist()
-    assert list(csv_output_df["Smoothed Centerline Latitude (Deg)"]) == list(
-        expected_df["Smoothed Centerline Latitude (Deg)"])
-    assert list(csv_output_df["Smoothed Centerline Longitude (Deg)"]) == list(
-        expected_df["Smoothed Centerline Longitude (Deg)"])
+    assert expected_df.columns.tolist() == csv_output_df.columns.tolist()
+    assert list(
+        expected_df["Smoothed Centerline Latitude (Deg)"]) == pytest.approx(
+            list(csv_output_df["Smoothed Centerline Latitude (Deg)"]))
+    assert list(
+        expected_df["Smoothed Centerline Longitude (Deg)"]) == pytest.approx(
+            list(csv_output_df["Smoothed Centerline Longitude (Deg)"]))
 
 
 @pytest.fixture(scope="session")
@@ -312,18 +317,16 @@ def test_saveOutput_centerlineRelativeDistanceVoronoiCSV(
         ]
     })
     csv_output_df = pd.read_csv(generate_csv_centerlineRelativeDistanceVoronoi)
-    print(
+    assert expected_df.columns.tolist() == csv_output_df.columns.tolist()
+    assert list(
+        expected_df["Voronoi Relative Distance Y (from Latitude) (m)"]
+    ) == pytest.approx(
         list(csv_output_df["Voronoi Relative Distance Y (from Latitude) (m)"]))
-    print(
+    assert list(
+        expected_df["Voronoi Relative Distance X (from Longitude) (m)"]
+    ) == pytest.approx(
         list(
             csv_output_df["Voronoi Relative Distance X (from Longitude) (m)"]))
-    assert csv_output_df.columns.tolist() == expected_df.columns.tolist()
-    assert list(
-        csv_output_df["Voronoi Relative Distance Y (from Latitude) (m)"]
-    ) == list(expected_df["Voronoi Relative Distance Y (from Latitude) (m)"])
-    assert list(
-        csv_output_df["Voronoi Relative Distance X (from Longitude) (m)"]
-    ) == list(expected_df["Voronoi Relative Distance X (from Longitude) (m)"])
 
 
 @pytest.fixture(scope="session")
@@ -351,22 +354,17 @@ def test_saveOutput_centerlineRelativeDistanceEqualDistanceCSV(
     })
     csv_output_df = pd.read_csv(
         generate_csv_centerlineRelativeDistanceEqualDistance)
-    print(
+    assert expected_df.columns.tolist() == csv_output_df.columns.tolist()
+    assert list(
+        expected_df["Equal Distance Relative Distance Y (from Latitude) (m)"]
+    ) == pytest.approx(
         list(csv_output_df[
             "Equal Distance Relative Distance Y (from Latitude) (m)"]))
-    print(
+    assert list(
+        expected_df["Equal Distance Relative Distance X (from Longitude) (m)"]
+    ) == pytest.approx(
         list(csv_output_df[
             "Equal Distance Relative Distance X (from Longitude) (m)"]))
-    assert csv_output_df.columns.tolist() == expected_df.columns.tolist()
-    assert list(
-        csv_output_df["Equal Distance Relative Distance Y (from Latitude) (m)"]
-    ) == list(
-        expected_df["Equal Distance Relative Distance Y (from Latitude) (m)"])
-    assert list(
-        csv_output_df[
-            "Equal Distance Relative Distance X (from Longitude) (m)"]
-    ) == list(
-        expected_df["Equal Distance Relative Distance X (from Longitude) (m)"])
 
 
 @pytest.fixture(scope="session")
@@ -408,21 +406,17 @@ def test_saveOutput_centerlineRelativeDistanceEvenlySpacedCSV(
     })
     csv_output_df = pd.read_csv(
         generate_csv_centerlineRelativeDistanceEvenlySpaced)
-    print(
+    assert expected_df.columns.tolist() == csv_output_df.columns.tolist()
+    assert list(
+        expected_df["Evenly Spaced Relative Distance Y (from Latitude) (m)"]
+    ) == pytest.approx(
         list(csv_output_df[
             "Evenly Spaced Relative Distance Y (from Latitude) (m)"]))
-    print(
+    assert list(
+        expected_df["Evenly Spaced Relative Distance X (from Longitude) (m)"]
+    ) == pytest.approx(
         list(csv_output_df[
             "Evenly Spaced Relative Distance X (from Longitude) (m)"]))
-    assert csv_output_df.columns.tolist() == expected_df.columns.tolist()
-    assert list(
-        csv_output_df["Evenly Spaced Relative Distance Y (from Latitude) (m)"]
-    ) == list(
-        expected_df["Evenly Spaced Relative Distance Y (from Latitude) (m)"])
-    assert list(
-        csv_output_df["Evenly Spaced Relative Distance X (from Longitude) (m)"]
-    ) == list(
-        expected_df["Evenly Spaced Relative Distance X (from Longitude) (m)"])
 
 
 @pytest.fixture(scope="session")
@@ -464,16 +458,14 @@ def test_saveOutput_centerlineRelativeDistanceSmoothedCSV(
     })
     csv_output_df = pd.read_csv(
         generate_csv_centerlineRelativeDistanceSmoothed)
-    print(
+    assert expected_df.columns.tolist() == csv_output_df.columns.tolist()
+    assert list(
+        expected_df["Smoothed Relative Distance Y (from Latitude) (m)"]
+    ) == pytest.approx(
         list(
             csv_output_df["Smoothed Relative Distance Y (from Latitude) (m)"]))
-    print(
+    assert list(
+        expected_df["Smoothed Relative Distance X (from Longitude) (m)"]
+    ) == pytest.approx(
         list(csv_output_df["Smoothed Relative Distance X (from Longitude) (m)"]
              ))
-    assert csv_output_df.columns.tolist() == expected_df.columns.tolist()
-    assert list(
-        csv_output_df["Smoothed Relative Distance Y (from Latitude) (m)"]
-    ) == list(expected_df["Smoothed Relative Distance Y (from Latitude) (m)"])
-    assert list(
-        csv_output_df["Smoothed Relative Distance X (from Longitude) (m)"]
-    ) == list(expected_df["Smoothed Relative Distance X (from Longitude) (m)"])
