@@ -1,2 +1,2 @@
 ignore:
-  - "riverAsymmetry.py" # ignore WIP
+  - "**/riverAsymmetry" # ignore WIP
