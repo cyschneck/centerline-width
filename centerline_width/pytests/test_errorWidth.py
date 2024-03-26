@@ -42,7 +42,7 @@ def river_class_object():
 river_class_example = river_class_object()
 
 
-## riverWidthFromCenterlineCoordinates() #####################################################
+## riverWidthFromCenterline() #####################################################
 def test_riverWidthFromCenterline_riverObjectRequired():
     with pytest.raises(
             ValueError,
