@@ -23,11 +23,14 @@ def relativeSingleCoordinate(first_point, lat_lon_coord, ellipsoid):
 def relativeBankCoordinates(left_lon_lat_coordinates,
                             right_lon_lat_coordinates, ellipsoid):
     # Convert bank latitude/longtiude coordinates to relative coordinates
-    first_point = left_lon_lat_coordinates[
-        0]  # first point is the first point on the left bank
-
     if left_lon_lat_coordinates is None or right_lon_lat_coordinates is None:
         return None, None
+    if len(left_lon_lat_coordinates) == 0 or len(
+            right_lon_lat_coordinates) == 0:
+        return None, None
+
+    first_point = left_lon_lat_coordinates[
+        0]  # first point is the first point on the left bank
 
     left_relative_coordinates = []
     for left_point in left_lon_lat_coordinates:

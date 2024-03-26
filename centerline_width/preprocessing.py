@@ -74,11 +74,9 @@ def generatePolygon(left_bank_lst,
                     recursion_check=False):
     # Return a shapely polygon based on the position of the river bank points
     if len(right_bank_lst) == 0:
-        logger.critical("\nCRITICAL ERROR, right bank data is empty (or NaN)")
-        exit()
+        raise ValueError("CRITICAL ERROR, right bank data is empty (or NaN)")
     if len(left_bank_lst) == 0:
-        logger.critical("\nCRITICAL ERROR, left bank data is empty (or NaN)")
-        exit()
+        raise ValueError("\nCRITICAL ERROR, left bank data is empty (or NaN)")
     circular_list_of_banks = left_bank_lst + right_bank_lst[::-1] + [
         left_bank_lst[0]
     ]
