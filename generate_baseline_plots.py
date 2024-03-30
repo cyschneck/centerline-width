@@ -11,7 +11,7 @@ if __name__ == "__main__":
                                          flipBankDirection=True)
 
     river_object = centerline_width.riverCenterline(
-        csv_data="data/river_coords.csv", optional_cutoff=550)
+        csv_data="data/river_coords.csv", optional_cutoff=100)
     is_debug = False  # set to False when generating, True when debugging to view all plots
 
     ################### plotCenterline() ##########################################################
@@ -90,24 +90,61 @@ if __name__ == "__main__":
     ################### plotCenterlineWidth() ########################################################
     coord_type_options = ["Relative Distance", "Decimal Degrees"]
     is_apply_smoothing = [True, False]
+    transect_slope_type = ["Direct", "Average"]
+    is_remove_intersections = [True, False]
 
     # Plot combinations of coordinate units and apply_smoothing
     for is_smoothed in is_apply_smoothing:
         for coord_type in coord_type_options:
-            coord_option = coord_type.replace(" ", "_").lower()
-            is_smoothed_option = str(is_smoothed).lower()
-            river_object.plotCenterlineWidth(
-                save_plot_name=
-                f"centerline_width/pytests/baseline_plots/width_{coord_option}_isSmoothed_{is_smoothed_option}",
-                apply_smoothing=is_smoothed,
-                coordinate_unit=coord_type,
-                show_plot=False)
-            plt.close()
+            for transect_type in transect_slope_type:
+                for is_remove in is_remove_intersections:
+                    coord_option = coord_type.replace(" ", "_").lower()
+                    river_object.plotCenterlineWidth(
+                        save_plot_name=
+                        f"centerline_width/pytests/baseline_plots/width_{coord_option}_removeIntersections{is_remove}_smoothed{is_smoothed}_transectSlope{transect_type}",
+                        apply_smoothing=is_smoothed,
+                        coordinate_unit=coord_type,
+                        transect_slope=transect_type,
+                        remove_intersections=is_remove,
+                        show_plot=False)
+                    plt.close()
 
-    display_centerline = [True, False]
-    transect_span_distance_type = ["Direct", "Average"]
-    is_flag_intersections = [True, False]
-    is_remove_intersections = [True, False]
-    is_dark_mode = [True, False]
-    is_dark_mode = [True, False]
-    is_equal_axis = [True, False]
+    # Display centerline option
+    display_centerline_options = [True, False]
+    for show_centerline in display_centerline_options:
+        river_object.plotCenterlineWidth(
+            save_plot_name=
+            f"centerline_width/pytests/baseline_plots/width_displayCenterline{show_centerline}",
+            display_true_centerline=show_centerline,
+            show_plot=False)
+        plt.close()
+
+    # Display Dark Mode
+    dark_mode_options = [True, False]
+    for is_dark in dark_mode_options:
+        river_object.plotCenterlineWidth(
+            save_plot_name=
+            f"centerline_width/pytests/baseline_plots/width_isDarkMode{is_dark}",
+            dark_mode=is_dark,
+            show_plot=False)
+        plt.close()
+
+    # Display Equal Axis
+    equal_axis_options = [True, False]
+    for is_equal_axis in equal_axis_options:
+        river_object.plotCenterlineWidth(
+            save_plot_name=
+            f"centerline_width/pytests/baseline_plots/width_isEqualAxis{is_equal_axis}",
+            equal_axis=is_equal_axis,
+            show_plot=False)
+        plt.close()
+
+    # Flag intersections
+    is_flag_intersections_options = [True, False]
+    for flag_intersect in is_flag_intersections_options:
+        river_object.plotCenterlineWidth(
+            save_plot_name=
+            f"centerline_width/pytests/baseline_plots/width_flagIntersections{flag_intersect}",
+            flag_intersections=flag_intersect,
+            show_plot=False)
+        plt.close()
