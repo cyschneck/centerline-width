@@ -2044,3 +2044,62 @@ def test_plotCenterline_voronoi_relativeDistance_scatter(generate_plot_image):
     assert matplotlib.testing.compare.compare_images(
         expected_png, str(generate_plot_image), tol=0.001,
         in_decorator=False) is None
+
+
+def test_plotCenterlineWidth_decimalDegrees_smoothed_false(
+        generate_plot_image):
+    test_river.plotCenterlineWidth(save_plot_name=str(generate_plot_image),
+                                   apply_smoothing=False,
+                                   coordinate_unit="Decimal Degrees",
+                                   show_plot=False)
+    expected_png = (Path(__file__).parent).joinpath(
+        'baseline_plots', "width_decimal_degrees_isSmoothed_false.png")
+    plt.close()
+    assert os.path.exists(expected_png)
+    assert matplotlib.testing.compare.compare_images(
+        expected_png, str(generate_plot_image), tol=0.001,
+        in_decorator=False) is None
+
+
+def test_plotCenterlineWidth_decimalDegrees_smoothed_true(generate_plot_image):
+    test_river.plotCenterlineWidth(save_plot_name=str(generate_plot_image),
+                                   apply_smoothing=True,
+                                   coordinate_unit="Decimal Degrees",
+                                   show_plot=False)
+    expected_png = (Path(__file__).parent).joinpath(
+        'baseline_plots', "width_decimal_degrees_isSmoothed_false.png")
+    plt.close()
+    assert os.path.exists(expected_png)
+    assert matplotlib.testing.compare.compare_images(
+        expected_png, str(generate_plot_image), tol=0.001,
+        in_decorator=False) is None
+
+
+def test_plotCenterlineWidth_relativeDistance_smoothed_false(
+        generate_plot_image):
+    test_river.plotCenterlineWidth(save_plot_name=str(generate_plot_image),
+                                   apply_smoothing=False,
+                                   coordinate_unit="Relative Distance",
+                                   show_plot=False)
+    expected_png = (Path(__file__).parent).joinpath(
+        'baseline_plots', "width_relative_distance_isSmoothed_false.png")
+    plt.close()
+    assert os.path.exists(expected_png)
+    assert matplotlib.testing.compare.compare_images(
+        expected_png, str(generate_plot_image), tol=0.001,
+        in_decorator=False) is None
+
+
+def test_plotCenterlineWidth_relativeDistance_smoothed_true(
+        generate_plot_image):
+    test_river.plotCenterlineWidth(save_plot_name=str(generate_plot_image),
+                                   apply_smoothing=True,
+                                   coordinate_unit="Relative Distance",
+                                   show_plot=False)
+    expected_png = (Path(__file__).parent).joinpath(
+        'baseline_plots', "width_relative_distance_isSmoothed_false.png")
+    plt.close()
+    assert os.path.exists(expected_png)
+    assert matplotlib.testing.compare.compare_images(
+        expected_png, str(generate_plot_image), tol=0.001,
+        in_decorator=False) is None

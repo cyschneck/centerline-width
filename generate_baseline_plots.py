@@ -38,7 +38,7 @@ if __name__ == "__main__":
                     marker_type=mark_type,
                     dark_mode=is_debug,
                     show_plot=is_debug)
-    plt.close()
+        plt.close()
 
     # display all possible paths
     display_all_paths = [True, False]
@@ -50,7 +50,7 @@ if __name__ == "__main__":
             display_all_possible_paths=is_display_paths,
             dark_mode=is_debug,
             show_plot=is_debug)
-    plt.close()
+        plt.close()
 
     # display Voronoi graphs
     display_voronoi_graph = [True, False]
@@ -62,7 +62,7 @@ if __name__ == "__main__":
             display_voronoi=is_display_voronoi,
             dark_mode=is_debug,
             show_plot=is_debug)
-    plt.close()
+        plt.close()
 
     # display dark mode
     dark_mode_option = [True, False]
@@ -73,7 +73,7 @@ if __name__ == "__main__":
             f"centerline_width/pytests/baseline_plots/dark_mode_{dark_mode_option}",
             dark_mode=is_dark_mode,
             show_plot=is_debug)
-    plt.close()
+        plt.close()
 
     # display equal axis
     equal_axis_option = [True, False]
@@ -85,21 +85,29 @@ if __name__ == "__main__":
             equal_axis=is_equal_axis,
             dark_mode=is_debug,
             show_plot=is_debug)
-    plt.close()
+        plt.close()
 
     ################### plotCenterlineWidth() ########################################################
-    """
-    # Plot river bank width line
-    river.plotCenterlineWidth(save_plot_name=None,
-                              plot_title=None,
-                              display_true_centerline=False,
-                              transect_span_distance=transect,
-                              transect_slope=slope_type,
-                              apply_smoothing=True,
-                              flag_intersections=True,
-                              remove_intersections=True,
-                              dark_mode=True,
-                              equal_axis=False,
-                              show_plot=True,
-                              coordinate_unit=coord_type)
-    """
+    coord_type_options = ["Relative Distance", "Decimal Degrees"]
+    is_apply_smoothing = [True, False]
+
+    # Plot combinations of coordinate units and apply_smoothing
+    for is_smoothed in is_apply_smoothing:
+        for coord_type in coord_type_options:
+            coord_option = coord_type.replace(" ", "_").lower()
+            is_smoothed_option = str(is_smoothed).lower()
+            river_object.plotCenterlineWidth(
+                save_plot_name=
+                f"centerline_width/pytests/baseline_plots/width_{coord_option}_isSmoothed_{is_smoothed_option}",
+                apply_smoothing=is_smoothed,
+                coordinate_unit=coord_type,
+                show_plot=False)
+            plt.close()
+
+    display_centerline = [True, False]
+    transect_span_distance_type = ["Direct", "Average"]
+    is_flag_intersections = [True, False]
+    is_remove_intersections = [True, False]
+    is_dark_mode = [True, False]
+    is_dark_mode = [True, False]
+    is_equal_axis = [True, False]
