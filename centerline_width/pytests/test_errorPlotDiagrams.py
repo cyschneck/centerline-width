@@ -312,7 +312,7 @@ def test_plotCenterlineWidth_transectSpanDistanceInvalidRange():
     with pytest.raises(
             ValueError,
             match=re.escape(
-                f"[transect_span_distance]: Must be a greater than 1 to find the slope between at least two points, currently = '1'"
+                "[transect_span_distance]: Must be a greater than 1 to find the slope between at least two points, currently = '1'"
             )):
         centerline_width.plotCenterlineWidth(river_object=river_class_example,
                                              transect_span_distance=1)
