@@ -33,7 +33,6 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
@@ -51,4 +50,4 @@ setup(
         "networkx>=3.0", "numpy>=1.24.1", "pandas>=1.3.5", "pykml>=0.2.0",
         "pyproj>=3.4.1", "pytest>=7.2.2", "scipy>=1.10.1", "shapely>=2.0.1"
     ],
-    python_requires='>=3.9')
+    python_requires='>=3.10')
