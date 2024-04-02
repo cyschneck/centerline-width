@@ -26,6 +26,8 @@ def riverWidthFromCenterlineCoordinates(river_object=None,
                                         coordinate_unit="Decimal Degrees",
                                         save_to_csv=None):
     # Return the left/right coordinates of width centerlines
+    # Returns three dictionaries: right_width_coordinates, left_width_coordinates, num_intersection_coordinates
+    # Used in the backend to plot coordinates in plotCenterlineWidth()
 
     # Group the centerline coordinates into groups of length n
     centerline_slope = {}
@@ -264,6 +266,7 @@ def riverWidthFromCenterlineCoordinates(river_object=None,
             del left_width_coordinates[centerline_coord]
         logger.info("[SUCCESS] Intersection lines removed")
 
+    # if using Relative Distance, convert points from Decimal Degrees to Relative Distance
     if coordinate_unit == "Relative Distance":
         right_width_coordinates = centerline_width.relativeWidthCoordinates(
             river_object.left_bank_coordinates[0], right_width_coordinates,

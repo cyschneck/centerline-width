@@ -1,3 +1,5 @@
+# River features, unrelated to width/centerline: area, length, sinuosity
+
 # External Python libraries
 import pyproj
 
@@ -33,3 +35,8 @@ def centerlineLength(centerline_coordinates=None, ellipsoid="WGS84"):
         # Set previous_pair to xy_pair for the next iteration.
         previous_pair = xy_pair
     return total_length / 1000  # km
+
+
+def calculateSinuosity():
+    # Return the sinuosity of the river, in total and in evenly spaced parts
+    pass

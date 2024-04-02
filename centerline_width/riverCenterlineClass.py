@@ -126,7 +126,7 @@ class riverCenterline:
             ellipsoid=self.ellipsoid)
         self.equal_distance = equal_distance
 
-        # The different types of Centerline coordinates
+        # Set the different types of Centerline coordinates
         self.centerlineEqualDistance = centerline_width.equalDistanceCenterline(
             centerline_coordinates=self.centerlineVoronoi,
             equal_distance=self.equal_distance,

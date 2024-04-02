@@ -458,6 +458,14 @@ plotCenterlineWidth(plot_title=None,
 * [OPTIONAL] show_plot (boolean): display and open plots (plt.show() in Matplotlib), defaults to True
 * [OPTIONAL] coordinate_unit (string): Coordinates of the river are return as "Decimal Degrees" (latitude/longitude) or converted to a distance from the first point on the left bank as "Relative Distance", defaults to "Decimal Degrees"
 
+
+```python
+import centerline_width
+river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
+river_object.plotCenterlineWidth(apply_smoothing=True, remove_intersections=True, display_true_centerline=False)
+```
+![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width.png)
+
 **display_true_centerline**
 
 The width lines are generated from the evenly spaced coordinate (by default) or with the smoothed coordinates (when `apply_smoothing=True`), but display_true_centerline will overlay the Voronoi centerline on top of the plot
@@ -532,13 +540,6 @@ Two options for measuring and displaying coordinates. The two options are "Decim
 | coordinate_unit="Decimal Degrees" | remove_intersections="Relative Distance" |
 | ------------- | ------------- |
 | ![dd_coords+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_decimal_degrees.png) | ![rd_coords+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_relative_distance.png)|
-
-```python
-import centerline_width
-river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
-river_object.plotCenterlineWidth(apply_smoothing=True, remove_intersections=True, display_true_centerline=False)
-```
-![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width.png)
 
 ### Return Width of River
 Return the width of the river at each (evenly spaced or smoothed) with coordinates where width line intersects either the centerline, `(Centerline Longitude, Centerline Latitude) : width`, or riverbanks, `((Right Bank Longitude, Right Bank Latitude), (Left Bank Longitude, Left Bank Latitude)) : width` in kilometers
