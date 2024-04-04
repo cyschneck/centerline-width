@@ -37,6 +37,6 @@ def centerlineLength(centerline_coordinates=None, ellipsoid="WGS84"):
     return total_length / 1000  # km
 
 
-def calculateSinuosity():
-    # Return the sinuosity of the river, in total and in evenly spaced parts
-    pass
+#def calculateSinuosity():
+#    # Return the sinuosity of the river, in total and in evenly spaced parts
+#    pass
