@@ -9,9 +9,9 @@ from pykml import parser
 import centerline_width
 
 
-def extractPointsToTextFile(left_kml=None,
-                            right_kml=None,
-                            text_output_name=None):
+def extractPointsToTextFile(left_kml: str = None,
+                            right_kml: str = None,
+                            text_output_name: str = None) -> None:
     # Extract points from KML files from Google Earth Pro and exports coordinates into a text file with headers: llat, llong, rlat, rlong
 
     centerline_width.errorHandlingExtractPointsToTextFile(

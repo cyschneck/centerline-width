@@ -16,14 +16,15 @@ stream_handler = logging.StreamHandler()
 logger.addHandler(stream_handler)
 
 
-def plotCenterlineBackend(river_object=None,
-                          display_true_centerline=True,
-                          centerline_type="Voronoi",
-                          marker_type="line",
-                          centerline_color="black",
-                          dark_mode=False,
-                          equal_axis=False,
-                          coordinate_unit=None):
+def plotCenterlineBackend(
+        river_object: centerline_width.riverCenterline = None,
+        display_true_centerline: bool = True,
+        centerline_type: str = "Voronoi",
+        marker_type: str = "line",
+        centerline_color: str = "black",
+        dark_mode: bool = False,
+        equal_axis: bool = False,
+        coordinate_unit: str = None):
     # Shared components between plotCenterline and plotCenterlineWidth
     coordinate_unit = coordinate_unit.title()
 
@@ -157,18 +158,18 @@ def plotCenterlineBackend(river_object=None,
     return fig, ax, valid_path_through
 
 
-def plotCenterline(river_object=None,
-                   centerline_type="Voronoi",
-                   marker_type="line",
-                   centerline_color="black",
-                   dark_mode=False,
-                   equal_axis=False,
-                   display_all_possible_paths=False,
-                   plot_title=None,
-                   save_plot_name=None,
-                   display_voronoi=False,
-                   show_plot=True,
-                   coordinate_unit="Decimal Degrees"):
+def plotCenterline(river_object: centerline_width.riverCenterline = None,
+                   centerline_type: str = "Voronoi",
+                   marker_type: str = "line",
+                   centerline_color: str = "black",
+                   dark_mode: bool = False,
+                   equal_axis: bool = False,
+                   display_all_possible_paths: bool = False,
+                   plot_title: str = None,
+                   save_plot_name: str = None,
+                   display_voronoi: bool = False,
+                   show_plot: bool = True,
+                   coordinate_unit: str = "Decimal Degrees") -> None:
     # Plot Centerline of River
     centerline_width.errorHandlingPlotCenterline(
         river_object=river_object,
@@ -246,19 +247,19 @@ def plotCenterline(river_object=None,
     if save_plot_name: fig.savefig(save_plot_name)
 
 
-def plotCenterlineWidth(river_object=None,
-                        plot_title=None,
-                        save_plot_name=None,
-                        display_true_centerline=True,
-                        transect_span_distance=3,
-                        transect_slope="Average",
-                        apply_smoothing=False,
-                        flag_intersections=True,
-                        remove_intersections=False,
-                        dark_mode=False,
-                        equal_axis=False,
-                        show_plot=True,
-                        coordinate_unit="Decimal Degrees"):
+def plotCenterlineWidth(river_object: centerline_width.riverCenterline = None,
+                        plot_title: str = None,
+                        save_plot_name: str = None,
+                        display_true_centerline: bool = True,
+                        transect_span_distance: int = 3,
+                        transect_slope: str = "Average",
+                        apply_smoothing: bool = False,
+                        flag_intersections: bool = True,
+                        remove_intersections: bool = False,
+                        dark_mode: bool = False,
+                        equal_axis: bool = False,
+                        show_plot: bool = True,
+                        coordinate_unit: str = "Decimal Degrees") -> None:
     # Plot Width Lines based on Centerline
     centerline_width.errorHandlingPlotCenterlineWidth(
         river_object=river_object,

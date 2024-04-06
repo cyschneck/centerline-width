@@ -20,7 +20,8 @@ stream_handler = logging.StreamHandler()
 logger.addHandler(stream_handler)
 
 
-def convertColumnsToCSV(text_file=None, flipBankDirection=False):
+def convertColumnsToCSV(text_file: str = None,
+                        flipBankDirection: bool = False) -> None:
     # Convert txt file to a comma-separated version of the file to use in pandas
     centerline_width.errrorHandlingConvertColumnsToCSV(
         text_file=text_file, flipBankDirection=flipBankDirection)
@@ -57,7 +58,7 @@ def convertColumnsToCSV(text_file=None, flipBankDirection=False):
         write.writerows(total_rows)
 
 
-def leftRightCoordinates(dataframe):
+def leftRightCoordinates(dataframe=None):
     right_bank_coordinates = []  # without nan
     left_bank_coordinates = []  # without nan
     for index, row in dataframe.iterrows():
@@ -68,10 +69,11 @@ def leftRightCoordinates(dataframe):
     return left_bank_coordinates, right_bank_coordinates
 
 
-def generatePolygon(left_bank_lst,
-                    right_bank_lst,
-                    coord_type=None,
-                    recursion_check=False):
+def generatePolygon(
+        left_bank_lst: list = None,
+        right_bank_lst: list = None,
+        coord_type: str = None,
+        recursion_check: bool = False) -> [Polygon, LineString, LineString]:
     # Return a shapely polygon based on the position of the river bank points
     if len(right_bank_lst) == 0:
         raise ValueError("CRITICAL ERROR, right bank data is empty (or NaN)")
@@ -111,7 +113,9 @@ def generatePolygon(left_bank_lst,
     return river_polygon, top_river, bottom_river
 
 
-def generateVoronoi(left_bank_lst, right_bank_lst, coord_type=None):
+def generateVoronoi(left_bank_lst: list = None,
+                    right_bank_lst: list = None,
+                    coord_type: str = None) -> Voronoi:
     # Generate a Voronoi shape based on the left/right bank points
     all_banks_points = left_bank_lst + right_bank_lst
     all_banks_points = np.array(all_banks_points)
@@ -121,7 +125,8 @@ def generateVoronoi(left_bank_lst, right_bank_lst, coord_type=None):
     return river_voronoi
 
 
-def pointsFromVoronoi(river_voronoi, river_polygon):
+def pointsFromVoronoi(river_voronoi: Voronoi = None,
+                      river_polygon: Polygon = None) -> dict:
     # Returns a dictionary list of all the voronoi points: {start point : [list of end points]}
     points_dict = {}
     all_connections_start_to_end = []
@@ -160,8 +165,9 @@ def pointsFromVoronoi(river_voronoi, river_polygon):
     return points_dict
 
 
-def interpolateBetweenPoints(left_bank_coordinates, right_bank_coordinates,
-                             interpolate_n):
+def interpolateBetweenPoints(left_bank_coordinates: list = None,
+                             right_bank_coordinates: list = None,
+                             interpolate_n: int = 5) -> [list, list]:
     # Interpolated between points at an even distance along the river banks to attempt to even out Voronoi diagrams
     interpolate_n += 2  # adds two exta points, to ensure that interpolating is adding the points between the existing points
 

@@ -18,13 +18,14 @@ stream_handler = logging.StreamHandler()
 logger.addHandler(stream_handler)
 
 
-def riverWidthFromCenterlineCoordinates(river_object=None,
-                                        centerline_coordinates=None,
-                                        transect_span_distance=3,
-                                        transect_slope="Average",
-                                        remove_intersections=False,
-                                        coordinate_unit="Decimal Degrees",
-                                        save_to_csv=None):
+def riverWidthFromCenterlineCoordinates(
+        river_object: centerline_width.riverCenterline = None,
+        centerline_coordinates: list = None,
+        transect_span_distance: int = 3,
+        transect_slope: str = "Average",
+        remove_intersections: bool = False,
+        coordinate_unit: str = "Decimal Degrees",
+        save_to_csv: str = None) -> [dict, dict, dict]:
     # Return the left/right coordinates of width centerlines
     # Returns three dictionaries: right_width_coordinates, left_width_coordinates, num_intersection_coordinates
     # Used in the backend to plot coordinates in plotCenterlineWidth()
@@ -281,14 +282,15 @@ def riverWidthFromCenterlineCoordinates(river_object=None,
     return right_width_coordinates, left_width_coordinates, num_intersection_coordinates
 
 
-def riverWidthFromCenterline(river_object=None,
-                             transect_span_distance=3,
-                             transect_slope="Average",
-                             apply_smoothing=True,
-                             remove_intersections=False,
-                             coordinate_unit="Decimal Degrees",
-                             coordinate_reference="Centerline",
-                             save_to_csv=None):
+def riverWidthFromCenterline(
+        river_object: centerline_width.riverCenterline = None,
+        transect_span_distance: int = 3,
+        transect_slope: str = "Average",
+        apply_smoothing: bool = True,
+        remove_intersections: bool = False,
+        coordinate_unit: str = "Decimal Degrees",
+        coordinate_reference: str = "Centerline",
+        save_to_csv: str = None) -> dict:
     # Return river width: centerline and width at centerline
     # Width is measured to the bank, relative to the center point (normal of the centerline)
     # { [centerline latitude, centerline longitude] : widthValue }

@@ -21,7 +21,8 @@ centerline_type_options = [
 
 
 ## Error Handling: preprocessing.py
-def errrorHandlingConvertColumnsToCSV(text_file=None, flipBankDirection=None):
+def errrorHandlingConvertColumnsToCSV(text_file: str = None,
+                                      flipBankDirection: bool = None) -> None:
     # Error handling for convertColumnsToCSV()
     if text_file is None:
         raise ValueError("[text_file]: Requires text file")
@@ -43,18 +44,20 @@ def errrorHandlingConvertColumnsToCSV(text_file=None, flipBankDirection=None):
 
 
 ## Error Handling: plotDiagrams.py
-def errorHandlingPlotCenterline(river_object=None,
-                                centerline_type=None,
-                                marker_type=None,
-                                centerline_color=None,
-                                dark_mode=None,
-                                equal_axis=None,
-                                display_all_possible_paths=None,
-                                plot_title=None,
-                                save_plot_name=None,
-                                display_voronoi=None,
-                                show_plot=None,
-                                coordinate_unit=None):
+def errorHandlingPlotCenterline(
+        river_object: centerline_width.riverCenterline = None,
+        centerline_type: str = None,
+        marker_type: str = None,
+        centerline_color: str = None,
+        dark_mode: bool = None,
+        equal_axis: bool = None,
+        display_all_possible_paths: bool = None,
+        plot_title: str = None,
+        save_plot_name: str = None,
+        display_voronoi: bool = None,
+        show_plot: bool = None,
+        coordinate_unit: str = None) -> None:
+
     # Error handling for plotCenterline()
     if river_object is None:
         raise ValueError(
@@ -137,19 +140,20 @@ def errorHandlingPlotCenterline(river_object=None,
             )
 
 
-def errorHandlingPlotCenterlineWidth(river_object=None,
-                                     plot_title=None,
-                                     save_plot_name=None,
-                                     display_true_centerline=None,
-                                     transect_span_distance=None,
-                                     transect_slope=None,
-                                     apply_smoothing=None,
-                                     flag_intersections=None,
-                                     remove_intersections=None,
-                                     dark_mode=None,
-                                     equal_axis=None,
-                                     show_plot=None,
-                                     coordinate_unit=None):
+def errorHandlingPlotCenterlineWidth(
+        river_object: centerline_width.riverCenterline = None,
+        plot_title: str = None,
+        save_plot_name: str = None,
+        display_true_centerline: bool = None,
+        transect_span_distance: int = None,
+        transect_slope: str = None,
+        apply_smoothing: bool = None,
+        flag_intersections: bool = None,
+        remove_intersections: bool = None,
+        dark_mode: bool = None,
+        equal_axis: bool = None,
+        show_plot: bool = None,
+        coordinate_unit: str = None):
     # Error handling for plotCenterlineWidth()
     if river_object is None:
         raise ValueError(
@@ -239,14 +243,15 @@ def errorHandlingPlotCenterlineWidth(river_object=None,
 
 
 ## Error Handling: centerline.py
-def errorHandlingRiverWidthFromCenterline(river_object=None,
-                                          transect_span_distance=None,
-                                          transect_slope=None,
-                                          apply_smoothing=None,
-                                          remove_intersections=None,
-                                          coordinate_unit=None,
-                                          coordinate_reference=None,
-                                          save_to_csv=None):
+def errorHandlingRiverWidthFromCenterline(
+        river_object: centerline_width.riverCenterline = None,
+        transect_span_distance: int = None,
+        transect_slope: str = None,
+        apply_smoothing: bool = None,
+        remove_intersections: bool = None,
+        coordinate_unit: str = None,
+        coordinate_reference: str = None,
+        save_to_csv: str = None) -> None:
     # Error Handling for riverWidthFromCenterline()
     if river_object is None:
         raise ValueError(
@@ -323,12 +328,13 @@ def errorHandlingRiverWidthFromCenterline(river_object=None,
             )
 
 
-def errorHandlingSaveCenterlineCSV(river_object=None,
-                                   latitude_header=None,
-                                   longitude_header=None,
-                                   save_to_csv=None,
-                                   centerline_type=None,
-                                   coordinate_unit=None):
+def errorHandlingSaveCenterlineCSV(
+        river_object: centerline_width.riverCenterline = None,
+        latitude_header: str = None,
+        longitude_header: str = None,
+        save_to_csv: str = None,
+        centerline_type: str = None,
+        coordinate_unit: str = None) -> None:
     # Error Handling for saveCenterlineCSV()
     if river_object is None:
         raise ValueError(
@@ -385,12 +391,13 @@ def errorHandlingSaveCenterlineCSV(river_object=None,
             )
 
 
-def errorHandlingSaveCenterlineMAT(river_object=None,
-                                   latitude_header=None,
-                                   longitude_header=None,
-                                   save_to_mat=None,
-                                   centerline_type=None,
-                                   coordinate_unit=None):
+def errorHandlingSaveCenterlineMAT(
+        river_object: centerline_width.riverCenterline = None,
+        latitude_header: str = None,
+        longitude_header: str = None,
+        save_to_mat: str = None,
+        centerline_type: str = None,
+        coordinate_unit: str = None) -> None:
     # Error Handling for saveCenterlineMAT()
     if river_object is None:
         raise ValueError(
@@ -459,9 +466,9 @@ def errorHandlingSaveCenterlineMAT(river_object=None,
 
 
 # Error Handling: getCoordinatesKML.py
-def errorHandlingExtractPointsToTextFile(left_kml=None,
-                                         right_kml=None,
-                                         text_output_name=None):
+def errorHandlingExtractPointsToTextFile(left_kml: str = None,
+                                         right_kml: str = None,
+                                         text_output_name: str = None) -> None:
     # Error Handling for extractPointsToTextFile()
     if left_kml is None:
         raise ValueError("[left_kml]: Requires left_kml file")
@@ -502,13 +509,13 @@ def errorHandlingExtractPointsToTextFile(left_kml=None,
 
 
 ## Error Handling: riverCenterlineClass.py
-def errorHandlingRiverCenterlineClass(csv_data=None,
-                                      optional_cutoff=None,
-                                      interpolate_data=None,
-                                      interpolate_n=None,
-                                      interpolate_n_centerpoints=None,
-                                      equal_distance=None,
-                                      ellipsoid=None):
+def errorHandlingRiverCenterlineClass(csv_data: str = None,
+                                      optional_cutoff: int = None,
+                                      interpolate_data: bool = None,
+                                      interpolate_n: int = None,
+                                      interpolate_n_centerpoints: int = None,
+                                      equal_distance: [int, float] = None,
+                                      ellipsoid: str = None) -> None:
     # Error Handling for riverCenterlineClass()
     if csv_data is None:
         raise ValueError("[csv_data]: Requires csv_data location")

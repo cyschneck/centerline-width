@@ -12,6 +12,8 @@ import matplotlib.pyplot as plt
 # Internal centerline-width reference to access functions, global variables, and error handling
 import centerline_width
 
+## Baseline plots generated generate_baseline_plots.py
+
 
 def generate_testRiver():
     csv_example = StringIO()

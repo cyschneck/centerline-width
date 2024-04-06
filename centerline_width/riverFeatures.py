@@ -4,7 +4,7 @@
 import pyproj
 
 
-def calculateRiverArea(bank_polygon=None, ellipsoid="WGS84"):
+def calculateRiverArea(bank_polygon=None, ellipsoid: str = "WGS84") -> float:
     # Return the area contained within the river polygon (km^2)
     if bank_polygon is None:
         return 0
@@ -14,7 +14,8 @@ def calculateRiverArea(bank_polygon=None, ellipsoid="WGS84"):
     return abs(river_area) / 1000  # km
 
 
-def centerlineLength(centerline_coordinates=None, ellipsoid="WGS84"):
+def centerlineLength(centerline_coordinates: list = None,
+                     ellipsoid: str = "WGS84") -> float:
     # Return the length/distance for all the centerline coordinates in km
     total_length = 0
     previous_pair = None

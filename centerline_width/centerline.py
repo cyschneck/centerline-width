@@ -20,9 +20,9 @@ stream_handler = logging.StreamHandler()
 logger.addHandler(stream_handler)
 
 
-def generateNXGraph(all_points_dict):
+def generateNXGraph(all_points_dict: dict = None):
     # Generate a NetworkX graph to find the largest graph
-    def distanceBetween(start, end):
+    def distanceBetween(start: tuple = None, end: tuple = None) -> float:
         # return the distance between two points on a graph
         lat1 = start[0]
         lat2 = end[0]
@@ -34,8 +34,7 @@ def generateNXGraph(all_points_dict):
                 (lon2 - lon1) * p)) / 2
         return math.asin(math.sqrt(a))
 
-
-# nodes as lat/lon positions, weighted by the distance between each position
+    # nodes as lat/lon positions, weighted by the distance between each position
 
     all_connections_in_graph = nx.Graph()
     node_as_keys_pos_values = {}
@@ -65,7 +64,9 @@ def generateNXGraph(all_points_dict):
     return all_connections_in_graph, nodes_of_largest_subgraph
 
 
-def networkXGraphShortestPath(nx_graph, starting_node, ending_node):
+def networkXGraphShortestPath(nx_graph=None,
+                              starting_node=None,
+                              ending_node=None):
     # Find the shortest path if it exists
     if starting_node is not None:
         try:
@@ -84,8 +85,10 @@ def networkXGraphShortestPath(nx_graph, starting_node, ending_node):
         return None
 
 
-def centerlinePath(river_voronoi, river_polygon, top_polygon_line,
-                   bottom_polygon_line):
+def centerlinePath(river_voronoi=None,
+                   river_polygon=None,
+                   top_polygon_line: LineString = None,
+                   bottom_polygon_line: LineString = None):
     # Return the starting node, ending node, all possible paths positions, and all paths starting/end position as a dictionary
     start_end_points_dict = centerline_width.pointsFromVoronoi(
         river_voronoi,
@@ -146,9 +149,9 @@ def centerlinePath(river_voronoi, river_polygon, top_polygon_line,
     return starting_node, ending_node, x_ridge_point, y_ridge_point, shortest_path_points
 
 
-def equalDistanceCenterline(centerline_coordinates=None,
-                            equal_distance=None,
-                            ellipsoid="WGS84"):
+def equalDistanceCenterline(centerline_coordinates: list = None,
+                            equal_distance: int = None,
+                            ellipsoid="WGS84") -> None:
     # Interpolate centerline to space out coordinates an equal physical distance from the next (in meters)
     if centerline_coordinates is None:
         return None
@@ -189,8 +192,8 @@ def equalDistanceCenterline(centerline_coordinates=None,
     return equal_distance_between_centerline_coordinates
 
 
-def evenlySpacedCenterline(centerline_coordinates=None,
-                           number_of_fixed_points=None):
+def evenlySpacedCenterline(centerline_coordinates: list = None,
+                           number_of_fixed_points: int = None) -> None:
     # Interpolate to evenly space points along the centerline coordinates (effectively smoothing with fewer points)
     if centerline_coordinates is None:
         return None
@@ -213,9 +216,9 @@ def evenlySpacedCenterline(centerline_coordinates=None,
     return interpolated_centerline_coordinates
 
 
-def smoothedCoordinates(river_object=None,
-                        centerline_coordinates=None,
-                        interprolate_num=None):
+def smoothedCoordinates(river_object: centerline_width.riverCenterline = None,
+                        centerline_coordinates: list = None,
+                        interprolate_num: int = None) -> None:
     # return a list coordinates after applying b-spline (smoothing)
     if centerline_coordinates is None:
         return None

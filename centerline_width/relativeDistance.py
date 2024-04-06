@@ -7,7 +7,9 @@ import pyproj
 import geopy.distance
 
 
-def relativeSingleCoordinate(first_point, lat_lon_coord, ellipsoid):
+def relativeSingleCoordinate(first_point=None,
+                             lat_lon_coord=None,
+                             ellipsoid: str = "WGS84") -> tuple:
     # Convert a single point to relative position
     if lat_lon_coord is None:
         return None
@@ -20,8 +22,9 @@ def relativeSingleCoordinate(first_point, lat_lon_coord, ellipsoid):
     return (x, y)
 
 
-def relativeBankCoordinates(left_lon_lat_coordinates,
-                            right_lon_lat_coordinates, ellipsoid):
+def relativeBankCoordinates(left_lon_lat_coordinates=None,
+                            right_lon_lat_coordinates=None,
+                            ellipsoid: str = "WGS84"):
     # Convert bank latitude/longtiude coordinates to relative coordinates
     if left_lon_lat_coordinates is None or right_lon_lat_coordinates is None:
         return None, None
@@ -50,8 +53,9 @@ def relativeBankCoordinates(left_lon_lat_coordinates,
     return left_relative_coordinates, right_relative_coordinates
 
 
-def relativeCenterlineCoordinates(first_point, centerline_coordinates,
-                                  ellipsoid):
+def relativeCenterlineCoordinates(first_point=None,
+                                  centerline_coordinates=None,
+                                  ellipsoid: str = "WGS84"):
     # Convert centerline coordinates to relative distance from the first point on the left bank
     centerline_relative_coordinates = []
 
@@ -66,7 +70,10 @@ def relativeCenterlineCoordinates(first_point, centerline_coordinates,
     return centerline_relative_coordinates
 
 
-def relativeRidgeCoordinates(first_point, x_ridge, y_ridge, ellipsoid):
+def relativeRidgeCoordinates(first_point=None,
+                             x_ridge=None,
+                             y_ridge=None,
+                             ellipsoid: str = "WGS84"):
     # Convert Voronoi ridges from Decimal Degree to Relative Distance
 
     x_relative_ridges = []
@@ -89,7 +96,9 @@ def relativeRidgeCoordinates(first_point, x_ridge, y_ridge, ellipsoid):
     return x_relative_ridges, y_relative_ridges
 
 
-def relativeWidthCoordinates(first_point, width_dictionary, ellipsoid):
+def relativeWidthCoordinates(first_point=None,
+                             width_dictionary: dict = None,
+                             ellipsoid: str = "WGS84") -> dict:
     # Convert width dictionary from Decimal Degree to Relative Distance
 
     relative_width_dictionary = {}
