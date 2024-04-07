@@ -1,14 +1,15 @@
 # River features, unrelated to width/centerline: area, length, sinuosity
 
 # External Python libraries
-import pyproj
+from pyproj import Geod
+from shapely.geometry import Point, LineString
 
 
 def calculateRiverArea(bank_polygon=None, ellipsoid: str = "WGS84") -> float:
     # Return the area contained within the river polygon (km^2)
     if bank_polygon is None:
         return 0
-    geodesic = pyproj.Geod(ellps=ellipsoid)
+    geodesic = Geod(ellps=ellipsoid)
     river_area, river_perimeter = geodesic.geometry_area_perimeter(
         bank_polygon)
     return abs(river_area) / 1000  # km
@@ -17,25 +18,15 @@ def calculateRiverArea(bank_polygon=None, ellipsoid: str = "WGS84") -> float:
 def centerlineLength(centerline_coordinates: list = None,
                      ellipsoid: str = "WGS84") -> float:
     # Return the length/distance for all the centerline coordinates in km
-    total_length = 0
-    previous_pair = None
     if centerline_coordinates is None:
         return 0
 
-    geodesic = pyproj.Geod(ellps=ellipsoid)
+    geodesic = Geod(ellps=ellipsoid)
+    geo_coordinates = LineString(map(Point, centerline_coordinates))
+    centerline_length_km = geodesic.geometry_length(
+        geo_coordinates) / 1000  # km
 
-    for xy_pair in centerline_coordinates:
-        if previous_pair is None:
-            previous_pair = xy_pair
-        else:
-            lon1, lon2 = previous_pair[0], xy_pair[0]
-            lat1, lat2 = previous_pair[1], xy_pair[1]
-            _, _, distance_between_meters = geodesic.inv(
-                lon1, lat1, lon2, lat2)
-            total_length += distance_between_meters
-        # Set previous_pair to xy_pair for the next iteration.
-        previous_pair = xy_pair
-    return total_length / 1000  # km
+    return centerline_length_km
 
 
 #def calculateSinuosity():
