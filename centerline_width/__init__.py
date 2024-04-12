@@ -21,6 +21,7 @@ from .relativeDistance import relativeWidthCoordinates
 
 # centerline.py function calls
 from .centerline import centerlinePath
+from .centerline import generateNXGraph
 from .centerline import networkXGraphShortestPath
 from .centerline import equalDistanceCenterline
 from .centerline import evenlySpacedCenterline

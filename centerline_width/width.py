@@ -359,6 +359,8 @@ def riverWidthFromCenterline(
 
     width_dict = {}
 
+    geodesic = Geod(ellps=river_object.ellipsoid)
+
     for centerline_coord, _ in right_width_coordinates.items():
         # store the distance between the lat/lon position of the right/left bank
         lon1, lat1 = right_width_coordinates[centerline_coord]

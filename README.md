@@ -537,7 +537,7 @@ equal_axis will set the x and y axis of the plot to be equal. Useful to show the
 
 Two options for measuring and displaying coordinates. The two options are "Decimal Degrees" and "Relative Distance". "Decimal Degrees" is the default option that uses the original data coordinate system with latitude/longitude. "Relative Distance" changes the coordinates of each point to be the distance (in meters) from the first point on the left bank
 
-| coordinate_unit="Decimal Degrees" | remove_intersections="Relative Distance" |
+| coordinate_unit="Decimal Degrees" | coordinate_unit="Relative Distance" |
 | ------------- | ------------- |
 | ![dd_coords+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_decimal_degrees.png) | ![rd_coords+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width_relative_distance.png)|
 
@@ -580,42 +580,45 @@ Note: it is best practice to plot the centerline and width with same arguments i
 The centerline is defined by the greatest distance from the right and left bank, created from a Voronoi Diagram. The remaining paths within the river are filtered through Dijkstra's algorithm to find the shortest path that is the centerline
 
 ### Right and Left bank points are plotted (X-Axis for Latitude, Y-Axis for Longitude)
-![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/example1.png)
+![algorithm_step1+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/algorithm_step1.png)
 
 ### Generate a polygon to encapsulate the river between the right and left banks to define in and outside of river
-![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/example2.png)
+![algorithm_step2+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/algorithm_step2.png)
 
 ### Generate a Voronoi diagram based on the points along the riverbanks
-![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/example3.png)
+![algorithm_step3+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/algorithm_step3.png)
 
 ### Display Voronoi ridge vertices that lie within the polygon (within the riverbanks)
-![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/example4.png)
+Filter out any point pairs that only have one connection to filter out the short dead end paths
 
-### Filter out any point pairs that only have one connection to filter out the short dead end paths
 With the vertices removed, it is possible to form multiple unconnected graphs within the polygon. The largest subgraph is assumed to contain the centerline and the other subgraphs are filtered out
-![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/example6.png)
+![algorithm_step4+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/algorithm_step4.png)
+
+### Define Top and Bottom of Polygon
+The top of the river is defined as the last plotted points in the data, while the bottom of the river is the first plotted points
+![algorithm_step5+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/algorithm_step5.png)
 
 ### Find the starting and ending node based on distance from the top and bottom of polygon
 The starting/ending node is defined by the vertex closest to the top/bottom of the polygon along the longest path
-![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/example7.png)
+![algorithm_step6+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/algorithm_step6.png)
 
 ### Find the shortest path from the starting node to the ending node ([Dijkstra's Algorithm](https://networkx.org/documentation/stable/reference/algorithms/generated/networkx.algorithms.shortest_paths.generic.shortest_path.html#networkx.algorithms.shortest_paths.generic.shortest_path))
 | Points on Riverbank | NetworkX Graph of Points on Riverbank |
 | ------------- | ------------- |
-| ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/example10.png) | ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/example9.png) |
+| ![algorithm_step7+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/algorithm_step7.png) | ![algorithm_step8+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/algorithm_step8.png) |
 
 ### Display the centerline found by connecting the starting/ending node with the shortest path
-![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/example8.png)
+![algorithm_step9+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/algorithm_step9.png)
 
 This is an attempt at a more robust algorithm working from raw data to ensure that all dead ends are removed, and no gaps exist in the centerline
 
 Points that only have one connection are removed, but limiting the number of connections for a point to just two will create gaps. The Voronoi vertices connect to other vertex values, but some connect to more and some only connect to one other point. Removing additional values will create gaps, so this is avoided in this code by not applying additional filters.
 
 **All vertices:**
-![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/example4.png)
+![algorithm_step4+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/algorithm_step4.png)
 
 **Vertices that have at least two connections (that would create gaps):**
-![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/example5.png)
+![algorithm_step10+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/algorithm_step10.png)
 
 ## Debugging, Error Handling, and Edge Cases
 ### Wide Start/End of River

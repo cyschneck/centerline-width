@@ -7,7 +7,7 @@ import numpy as np
 import networkx as nx
 from scipy import interpolate
 from shapely.geometry import Point, LineString
-import pyproj
+from pyproj import Geod
 import geopy.distance
 
 # Internal centerline_width reference to access functions, global variables, and error handling
@@ -79,7 +79,7 @@ def networkXGraphShortestPath(nx_graph=None,
                 "[FAILED]  No direct path found from starting node to ending node. To view gaps, plotCenterline(display_all_possible_paths=True). Recommended fix, rerun riverCenterline: set interpolate_data=True or (if interpolate_data=True) increase interpolate_n"
             )
             return None
-        #nx.draw(graph_connections, with_labels=True, font_size=10)
+        #nx.draw(nx_graph, with_labels=True, font_size=10)
         return shortest_path
     else:
         return None
@@ -88,7 +88,8 @@ def networkXGraphShortestPath(nx_graph=None,
 def centerlinePath(river_voronoi=None,
                    river_polygon=None,
                    top_polygon_line: LineString = None,
-                   bottom_polygon_line: LineString = None):
+                   bottom_polygon_line: LineString = None,
+                   multiple_connections: int = 0):
     # Return the starting node, ending node, all possible paths positions, and all paths starting/end position as a dictionary
     start_end_points_dict = centerline_width.pointsFromVoronoi(
         river_voronoi,
@@ -102,7 +103,7 @@ def centerlinePath(river_voronoi=None,
     for start_point, end_point_list in start_end_points_dict.items():
         if len(
                 end_point_list
-        ) > 0:  # TESTING TESTING: Show only the end points that have multiple connections (set to 0 during production)
+        ) > multiple_connections:  # TESTING TESTING: Show only the end points that have multiple connections (set to 0 during production)
             # Find the starting and ending node based on distance from the top and bottom of the polygon
             if starting_node is None:
                 starting_node = start_point
@@ -158,7 +159,7 @@ def equalDistanceCenterline(centerline_coordinates: list = None,
 
     equal_distance_between_centerline_coordinates = []
 
-    geodesic = pyproj.Geod(ellps=ellipsoid)
+    geodesic = Geod(ellps=ellipsoid)
 
     # Iterate through coordinates based on a set distance (distance_m)
     lon_start, lat_start = centerline_coordinates[0]
