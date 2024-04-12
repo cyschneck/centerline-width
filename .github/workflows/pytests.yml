@@ -28,6 +28,7 @@ jobs:
 
     - name: Install dependencies
       run: |
+        pip install --upgrade pip
         pip install -r requirements.txt
     - name: Test with pytest and generate coverage reports
       run: |

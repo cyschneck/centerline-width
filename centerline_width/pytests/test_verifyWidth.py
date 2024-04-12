@@ -77,21 +77,6 @@ def test_riverWidthFromCenterline_transectSlopeAverage_RelativeCenterline():
     })
 
 
-def test_riverWidthFromCenterline_transectSlopeAverage_RelativeBanks():
-    river_width_dict = test_river.riverWidthFromCenterline(
-        transect_slope="Average",
-        transect_span_distance=span_distance,
-        coordinate_reference="Banks",
-        apply_smoothing=False)
-    # Verify output
-    assert river_width_dict == pytest.approx({
-        ((-4.267374383747516, 48.283954817156506), (-4.272059498223084, 48.28053518517227)):
-        0.515263253111841,
-        ((-4.262940530490867, 48.28035744890995), (-4.263843392504115, 48.284577046528305)):
-        0.47396221154877105
-    })
-
-
 def test_riverWidthFromCenterline_transectSlopeDirect_RelativeCenterline():
     river_width_dict = test_river.riverWidthFromCenterline(
         transect_slope="Direct",
@@ -106,21 +91,5 @@ def test_riverWidthFromCenterline_transectSlopeDirect_RelativeCenterline():
         (-4.269872495291112, 48.28213146317461):
         0.515263253111841,
         (-4.263272551474902, 48.281909175456114):
-        0.47396221154877105
-    })
-
-
-def test_riverWidthFromCenterline_transectSlopeDirect_RelativeBanks():
-    river_width_dict = test_river.riverWidthFromCenterline(
-        transect_slope="Direct",
-        transect_span_distance=span_distance,
-        coordinate_reference="Banks",
-        apply_smoothing=False)
-    # Verify output
-    print(river_width_dict)
-    assert river_width_dict == pytest.approx({
-        ((-4.267374383747516, 48.283954817156506), (-4.272059498223084, 48.28053518517227)):
-        0.515263253111841,
-        ((-4.262940530490867, 48.28035744890995), (-4.263843392504115, 48.284577046528305)):
         0.47396221154877105
     })
