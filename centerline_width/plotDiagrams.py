@@ -244,6 +244,7 @@ def plotCenterline(river_object: centerline_width.riverCenterline = None,
 
     plt.legend(loc="upper right")
     if show_plot: plt.show()
+    if not show_plot: plt.close()
     if save_plot_name: fig.savefig(save_plot_name)
 
 
@@ -391,4 +392,5 @@ def plotCenterlineWidth(river_object: centerline_width.riverCenterline = None,
 
     plt.legend(loc="upper right")
     if show_plot: plt.show()
+    if not show_plot: plt.close()
     if save_plot_name: fig.savefig(save_plot_name)
