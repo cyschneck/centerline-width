@@ -1,12 +1,14 @@
 # Built-in Python functions
 import logging
 import csv
+import math
 
 # External Python libraries
+import numpy as np
 from shapely.geometry import Point, LineString
 from shapely.ops import split
 import geopy.distance
-import pyproj
+from pyproj import Geod
 
 # Internal centerline_width reference to access functions, global variables, and error handling
 import centerline_width
@@ -42,6 +44,8 @@ def riverWidthFromCenterlineCoordinates(
             groups_of_n_points.append(
                 centerline_coordinates[i - 1:i + transect_span_distance])
 
+    geodesic = Geod(ellps=river_object.ellipsoid)
+
     # Average all slopes for every n points to chart (slope of A->B + B->C)
     if transect_slope == "Average":
         for group_points in groups_of_n_points:
@@ -49,14 +53,26 @@ def riverWidthFromCenterlineCoordinates(
             total_slopes = 0
             for i in range(len(group_points)):
                 if i + 1 < len(group_points):
+                    lon_start = group_points[i][0]
+                    lat_start = group_points[i][1]
+                    lon_end = group_points[i + 1][0]
+                    lat_end = group_points[i + 1][1]
+                    forward_bearing, reverse_bearing, distance_between_meters = geodesic.inv(
+                        lon_start, lat_start, lon_end, lat_end)
+                    x_diff = math.sin(
+                        np.deg2rad(forward_bearing)) * distance_between_meters
+                    y_diff = math.cos(
+                        np.deg2rad(forward_bearing)) * distance_between_meters
                     dy = group_points[i + 1][1] - group_points[i][1]
                     dx = group_points[i + 1][0] - group_points[i][0]
                     if dx != 0:
-                        slope_sum += (dy / dx)
+                        slope_sum += (y_diff / x_diff)
                         total_slopes += 1
+                        #print(f"angle is 90 = {math.floor(np.rad2deg(math.atan((1/(y_diff / x_diff) - (y_diff / x_diff)) / (1.00000001 + y_diff / x_diff * -1/(y_diff / x_diff)))))}")
             if slope_sum != 0:
                 slope_avg = slope_sum / total_slopes
                 normal_of_slope = -1 / slope_avg
+                #print(f"angle is 90 = {math.ceil(np.rad2deg(math.atan((slope_avg - normal_of_slope) / (1.00000001 + (slope_avg * normal_of_slope)))))}")
                 middle_of_list = (
                     len(group_points) + 1
                 ) // 2  # set centerline point to be the middle point being averaged
@@ -67,15 +83,22 @@ def riverWidthFromCenterlineCoordinates(
     if transect_slope == "Direct":
         for group_points in groups_of_n_points:
             if len(group_points) > 1:
-                dx_i = group_points[0][0]
-                dy_i = group_points[0][1]
-                dx_f = group_points[-1][0]
-                dy_f = group_points[-1][1]
+                lon_start = group_points[0][0]
+                lat_start = group_points[0][1]
+                lon_end = group_points[-1][0]
+                lat_end = group_points[-1][1]
+                forward_bearing, reverse_bearing, distance_between_meters = geodesic.inv(
+                    lon_start, lat_start, lon_end, lat_end)
+                x_diff = math.sin(
+                    np.deg2rad(forward_bearing)) * distance_between_meters
+                y_diff = math.cos(
+                    np.deg2rad(forward_bearing)) * distance_between_meters
                 slope = 0
-                if (dx_f - dx_i) != 0:
-                    slope = (dy_f - dy_i) / (dx_f - dx_i)
+                if x_diff != 0:
+                    slope = (y_diff / x_diff)
                 if slope != 0:
                     normal_of_slope = -1 / slope
+                    #print(f"angle = {math.ceil(np.rad2deg(math.atan((slope - normal_of_slope) / (1.00000001 + (slope * normal_of_slope)))))}")
                     middle_of_list = (
                         len(group_points) + 1
                     ) // 2  # set centerline point to be the middle point being averaged
@@ -333,9 +356,8 @@ def riverWidthFromCenterline(
             transect_span_distance=transect_span_distance,
             remove_intersections=remove_intersections,
             coordinate_unit="Decimal Degrees")
-    width_dict = {}
 
-    geodesic = pyproj.Geod(ellps=river_object.ellipsoid)
+    width_dict = {}
 
     for centerline_coord, _ in right_width_coordinates.items():
         # store the distance between the lat/lon position of the right/left bank
