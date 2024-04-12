@@ -125,7 +125,7 @@ if __name__ == "__main__":
         centerline_color="blue",
         marker_type="scatter",
         plot_title=
-        f"Centerline Formed by {ro_550_interpolate_centerline_200.interpolate_n_centerpoints} Centerline Coordinates",
+        f"Centerline Formed by {ro_550_interpolate_centerline_200.interpolate_n_centerpoints} Smoothed Centerline Coordinates",
         show_plot=is_debug)
     ro_550_interpolate_centerline_200.plotCenterline(
         save_plot_name="data/doc_examples/smoothed_centerline_relative.png",
@@ -134,7 +134,7 @@ if __name__ == "__main__":
         marker_type="scatter",
         coordinate_unit="Relative Distance",
         plot_title=
-        f"Centerline Formed by {ro_550_interpolate_centerline_200.interpolate_n_centerpoints} Centerline Coordinates with Relative Distance",
+        f"Centerline Formed by {ro_550_interpolate_centerline_200.interpolate_n_centerpoints} Smoothed Centerline Coordinates with Relative Distance",
         show_plot=is_debug)
 
     ################### Plot Centerline Width Lines in Matplotlib ###############################
@@ -389,6 +389,7 @@ if __name__ == "__main__":
                   plot_polygon=True,
                   plot_all_possible_paths=True,
                   plot_top_bottom_banks=True,
+                  plot_start_end_node=True,
                   plot_point_labels=True)
     plotNetworkXGraph(fig_save_name="data/doc_examples/algorithm_step8.png")
     plotAlgorithm(fig_save_name="data/doc_examples/algorithm_step9.png",
@@ -402,3 +403,40 @@ if __name__ == "__main__":
                   plot_all_possible_paths=True,
                   plot_top_bottom_banks=True,
                   total_number_of_connections=1)
+
+    ################### Debugging, Error Handling, and Edge Cases ###############################
+
+    ro_725 = centerline_width.riverCenterline(csv_data="data/river_coords.csv",
+                                              optional_cutoff=725)
+    ro_725.plotCenterline(
+        save_plot_name="data/doc_examples/invalid_too_wide.png",
+        display_all_possible_paths=True,
+        show_plot=is_debug)
+
+    ro_250 = centerline_width.riverCenterline(csv_data="data/river_coords.csv",
+                                              optional_cutoff=250)
+    ro_250.plotCenterline(
+        save_plot_name="data/doc_examples/invalid_minor_polygon.png",
+        display_all_possible_paths=True,
+        show_plot=is_debug)
+
+    ro_1000 = centerline_width.riverCenterline(
+        csv_data="data/river_coords.csv", optional_cutoff=1000)
+    ro_1000.plotCenterline(
+        save_plot_name="data/doc_examples/invalid_major_polygon.png",
+        display_all_possible_paths=True,
+        show_plot=is_debug)
+
+    ro_10 = centerline_width.riverCenterline(csv_data="data/river_coords.csv",
+                                             optional_cutoff=5)
+    ro_10.plotCenterline(
+        save_plot_name="data/doc_examples/invalid_too_small.png",
+        display_voronoi=True,
+        show_plot=is_debug)
+
+    centerline_width.convertColumnsToCSV(text_file="data/river_coords.txt",
+                                         flipBankDirection=False)
+    ro_400 = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
+    ro_400.plotCenterline(
+        save_plot_name="data/doc_examples/invalid_flipped_banks.png",
+        show_plot=is_debug)

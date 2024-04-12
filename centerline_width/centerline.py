@@ -140,7 +140,7 @@ def centerlinePath(river_voronoi=None,
 
     if starting_node is None:
         logger.critical(
-            "\nCRITICAL ERROR, Polygon too short for the Voronoi diagram generated (no starting node found), unable to plot centerline. Set displayVoronoi=True to view vertices. Can typically be fixed by adding more data to expand range."
+            "\nCRITICAL ERROR, Polygon too short for the Voronoi diagram generated (no starting node found), unable to plot centerline. Set display_voronoi=True to view vertices. Can typically be fixed by adding more data to expand range"
         )
         shortest_path_points = None
     else:

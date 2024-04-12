@@ -623,14 +623,14 @@ Points that only have one connection are removed, but limiting the number of con
 ## Debugging, Error Handling, and Edge Cases
 ### Wide Start/End of River
 If the data starts or ends with a large width, it is possible for the starting/ending nodes to end up in the wrong position
-![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/invalid_example3.png)
+![invalid_too_wide+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/invalid_too_wide.png)
 Currently, the starting node is determined by the closest node on the path to the top of the bank (in green) and the ending node is determined by the closest node on the path to the bottom of the bank (in red) that sits along the longest path
 
 ### Invalid Polygon
 A polygon is formed to encapsulate the river with the given data (to determine the inside and outside of the river). The top and bottom are connected by a straight line from the start/end of the available data. As a result, it is possible for this straight line to overlap and create an invalid polygon.
 
 A polygon is invalid if it overlaps within itself:
-![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/invalid_example1.png)
+![invalid_minor_polygon+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/invalid_minor_polygon.png)
 In this example, the polygon is invalid, but with such a small overlap it is still able to find a valid path
 
 With limited data, the polygon will overlap more dramatically and will struggle to find a valid centerline:
@@ -639,8 +639,8 @@ With limited data, the polygon will overlap more dramatically and will struggle 
 ### Invalid Centerline
 If the data is too small, a centerline and its coordinates cannot be found (since only a single Voronoi vertex exists within the polygon and after dead ends are filtered)
 
-`CRITICAL ERROR, Polygon too short for the Voronoi diagram generated (no starting node found), unable to plot centerline. Set displayVoronoi=True to view vertices. Can typically be fixed by adding more data to expand range.`
-![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/invalid_example2.png)
+`CRITICAL ERROR, Polygon too short for the Voronoi diagram generated (no starting node found), unable to plot centerline. Set display_voronoi=True to view vertices. Can typically be fixed by adding more data to expand range`
+![invalid_too_small+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/invalid_too_small.png)
 Can be fixed by expanding the data until the polygon is large enough to contain at least two different vertex points
 
 ### Invalid Top and Bottom Bank Positions (flipBankDirection = True)
@@ -651,7 +651,7 @@ If the data for the left and right riverbanks are generated in reverse order, th
 If the latitude/longitude of the banks are generated in reverse order, flip the final values so left/right bank are in order
 
 This can be fixed by using the flipBankDirection optional argument `centerline_width.convertColumnsToCSV(text_file="data_example.txt", flipBankDirection=True)`
-![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/flipDirection_example.png)
+![invalid_flipped_banks+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/invalid_flipped_banks.png)
 
 ### Invalid Smoothed Centerline
 The smoothed centerline (`river_object.centerlineSmoothed`) can end up lying outside the river if the centerline data points are sparse in a narrow river. If more than two points in the smoothed centerline lie outside the river, a warning will be thrown
