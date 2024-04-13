@@ -47,12 +47,12 @@ def test_convertColumnsToCSV_textFileInvalidExtensions():
 
 @pytest.mark.parametrize("invalid_input, error_output",
                          invalid_non_bool_options)
-def test_convertColumnsToCSV_flipBankDirectionInvalidTypes(
-        invalid_input, error_output):
+def test_convertColumnsToCSV_flipDirectionInvalidTypes(invalid_input,
+                                                       error_output):
     with pytest.raises(
             ValueError,
             match=re.escape(
-                f"[flipBankDirection]: Must be a bool, current type = '{error_output}'"
+                f"[flip_direction]: Must be a bool, current type = '{error_output}'"
             )):
         centerline_width.convertColumnsToCSV(text_file="text_file.txt",
-                                             flipBankDirection=invalid_input)
+                                             flip_direction=invalid_input)

@@ -8,7 +8,7 @@ if __name__ == "__main__":
         right_kml="data/rightbank.kml",
         text_output_name="data/river_coords.txt")
     centerline_width.convertColumnsToCSV(text_file="data/river_coords.txt",
-                                         flipBankDirection=True)
+                                         flip_direction=True)
 
     river_object = centerline_width.riverCenterline(
         csv_data="data/river_coords.csv", optional_cutoff=100)

@@ -10,7 +10,7 @@ if __name__ == "__main__":
         right_kml="data/rightbank.kml",
         text_output_name="data/river_coords.txt")
     centerline_width.convertColumnsToCSV(text_file="data/river_coords.txt",
-                                         flipBankDirection=True)
+                                         flip_direction=True)
 
     is_debug = False  # set to False when generating, True when debugging to view all plots
 
@@ -435,7 +435,7 @@ if __name__ == "__main__":
         show_plot=is_debug)
 
     centerline_width.convertColumnsToCSV(text_file="data/river_coords.txt",
-                                         flipBankDirection=False)
+                                         flip_direction=False)
     ro_400 = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
     ro_400.plotCenterline(
         save_plot_name="data/doc_examples/invalid_flipped_banks.png",

@@ -142,10 +142,10 @@ Example:
 Convert a text file with coordinates for a left and right bank's latitude and longitude to a csv file with columns for the left bank latitude (llat), left bank longitude (llon), right bank latitude (rlat), right bank longitude (rlon)
 
 ```
-convertColumnsToCSV(text_file=None, flipBankDirection=False)
+convertColumnsToCSV(text_file=None, flip_direction=False)
 ```
 * **[REQUIRED]** text_file (string): File location of the text file to convert
-* [OPTIONAL] flipBankDirection (boolean): If the latitude/longitude of the banks are generated in reverse order, flip the final values so left/right bank are in order
+* [OPTIONAL] flip_direction (boolean): If the latitude/longitude of the banks are generated in reverse order, flip the final values so left/right bank are in order
 
 Scripts expects data as a list of point for left and right banks:
 - Header: llat, llon, rlat, rlon
@@ -153,7 +153,7 @@ Scripts expects data as a list of point for left and right banks:
 ```python
 import centerline_width
 centerline_width.convertColumnsToCSV(text_file="data/river_coords.txt",
-				flipBankDirection=True)
+				flip_direction=True)
 ```
 Converts text file:
 ```
@@ -643,14 +643,14 @@ If the data is too small, a centerline and its coordinates cannot be found (sinc
 ![invalid_too_small+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/invalid_too_small.png)
 Can be fixed by expanding the data until the polygon is large enough to contain at least two different vertex points
 
-### Invalid Top and Bottom Bank Positions (flipBankDirection = True)
-Error: `WARNING: Invalid Polygon Due to Flipped Banks, fix recommendation: rerun convertColumnsToCSV() and set flipBankDirection=True (or reset to default 'False' if currently set to flipBankDirection=True)`
+### Invalid Top and Bottom Bank Positions (flip_direction = True)
+Error: `WARNING: Invalid Polygon Due to Flipped Banks, fix recommendation: rerun convertColumnsToCSV() and set flip_direction=True (or reset to default 'False' if currently set to flip_direction=True)`
 
 If the data for the left and right riverbanks are generated in reverse order, they will be read in the incorrect order and the graph will find the invalid top and bottom of the bank
 
 If the latitude/longitude of the banks are generated in reverse order, flip the final values so left/right bank are in order
 
-This can be fixed by using the flipBankDirection optional argument `centerline_width.convertColumnsToCSV(text_file="data_example.txt", flipBankDirection=True)`
+This can be fixed by using the flip_direction optional argument `centerline_width.convertColumnsToCSV(text_file="data_example.txt", flip_direction=True)`
 ![invalid_flipped_banks+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/invalid_flipped_banks.png)
 
 ### Invalid Smoothed Centerline

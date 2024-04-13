@@ -22,7 +22,7 @@ centerline_type_options = [
 
 ## Error Handling: preprocessing.py
 def errrorHandlingConvertColumnsToCSV(text_file: str = None,
-                                      flipBankDirection: bool = None) -> None:
+                                      flip_direction: bool = None) -> None:
     # Error handling for convertColumnsToCSV()
     if text_file is None:
         raise ValueError("[text_file]: Requires text file")
@@ -37,9 +37,9 @@ def errrorHandlingConvertColumnsToCSV(text_file: str = None,
                     f"[text_file]: Extension must be a .txt file, current extension = '{text_file.split('.')[1]}'"
                 )
 
-    if type(flipBankDirection) != bool:
+    if type(flip_direction) != bool:
         raise ValueError(
-            f"[flipBankDirection]: Must be a bool, current type = '{type(flipBankDirection)}'"
+            f"[flip_direction]: Must be a bool, current type = '{type(flip_direction)}'"
         )
 
 

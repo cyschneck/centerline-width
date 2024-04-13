@@ -21,10 +21,10 @@ logger.addHandler(stream_handler)
 
 
 def convertColumnsToCSV(text_file: str = None,
-                        flipBankDirection: bool = False) -> None:
+                        flip_direction: bool = False) -> None:
     # Convert txt file to a comma-separated version of the file to use in pandas
     centerline_width.errrorHandlingConvertColumnsToCSV(
-        text_file=text_file, flipBankDirection=flipBankDirection)
+        text_file=text_file, flip_direction=flip_direction)
 
     left_rows = []
     right_rows = []
@@ -40,7 +40,7 @@ def convertColumnsToCSV(text_file: str = None,
                 right_rows.append(line[2:])
 
     # reverse the direction for the right bank
-    if flipBankDirection:
+    if flip_direction:
         right_rows = right_rows[::-1]
 
     total_rows = []
@@ -105,7 +105,7 @@ def generatePolygon(
             recursion_check=True)
         if polygon_check.is_valid:
             logger.critical(
-                "\nWARNING: Invalid Polygon Due to Flipped Banks, fix recommendation: rerun convertColumnsToCSV() and set flipBankDirection=True (or reset to default 'False' if currently set to flipBankDirection=True)\n"
+                "\nWARNING: Invalid Polygon Due to Flipped Banks, fix recommendation: rerun convertColumnsToCSV() and set flip_direction=True (or reset to default 'False' if currently set to flip_direction=True)\n"
             )
     if river_polygon.is_valid and not recursion_check:
         logger.info(f"[SUCCESS] Valid polygon generated - {coord_type}")
