@@ -634,7 +634,7 @@ A polygon is invalid if it overlaps within itself:
 In this example, the polygon is invalid, but with such a small overlap it is still able to find a valid path
 
 With limited data, the polygon will overlap more dramatically and will struggle to find a valid centerline:
-![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/invalid_example4.png)
+![invalid_major_polygon+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/invalid_major_polygon.png)
 
 ### Invalid Centerline
 If the data is too small, a centerline and its coordinates cannot be found (since only a single Voronoi vertex exists within the polygon and after dead ends are filtered)
