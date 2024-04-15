@@ -11,7 +11,18 @@ if __name__ == "__main__":
         text_output_name="data/river_coords.txt")
     centerline_width.convertColumnsToCSV(text_file="data/river_coords.txt",
                                          flip_direction=True)
-
+    ro_5 = centerline_width.riverCenterline(csv_data="data/river_coords.csv",
+                                            optional_cutoff=5)
+    ro_10 = centerline_width.riverCenterline(csv_data="data/river_coords.csv",
+                                             optional_cutoff=10)
+    ro_15 = centerline_width.riverCenterline(csv_data="data/river_coords.csv",
+                                             optional_cutoff=15)
+    ro_250 = centerline_width.riverCenterline(csv_data="data/river_coords.csv",
+                                              optional_cutoff=250)
+    ro_550 = centerline_width.riverCenterline(csv_data="data/river_coords.csv",
+                                              optional_cutoff=550)
+    ro_725 = centerline_width.riverCenterline(csv_data="data/river_coords.csv",
+                                              optional_cutoff=725)
     is_debug = False  # set to False when generating, True when debugging to view all plots
 
     ################### Introduction and Quickstart ##########################################
@@ -22,9 +33,6 @@ if __name__ == "__main__":
         plot_title="Centerline with Riverbanks",
         save_plot_name="data/doc_examples/river_example.png",
         show_plot=is_debug)
-
-    ro_550 = centerline_width.riverCenterline(csv_data="data/river_coords.csv",
-                                              optional_cutoff=550)
     ro_550.plotCenterline(
         save_plot_name="data/doc_examples/river_coords_centerline.png",
         show_plot=is_debug)
@@ -80,7 +88,6 @@ if __name__ == "__main__":
         plot_title=
         "Centerline Formed by Voronoi Diagram with Relative Distance",
         show_plot=is_debug)
-
     ro_550.plotCenterline(
         save_plot_name="data/doc_examples/equal_distance_centerline.png",
         centerline_type="Equal Distance",
@@ -99,7 +106,6 @@ if __name__ == "__main__":
         plot_title=
         f"Centerline Formed by Points Equally Distanced Apart Every {ro_550.equal_distance} Meters with Relative Distance",
         show_plot=is_debug)
-
     ro_550_interpolate_centerline_200.plotCenterline(
         save_plot_name="data/doc_examples/evenly_spaced_centerline.png",
         centerline_type="Evenly Spaced",
@@ -118,7 +124,6 @@ if __name__ == "__main__":
         plot_title=
         f"Centerline Formed by {ro_550_interpolate_centerline_200.interpolate_n_centerpoints} Evenly Spaced Centerline Points with Relative Distance",
         show_plot=is_debug)
-
     ro_550_interpolate_centerline_200.plotCenterline(
         save_plot_name="data/doc_examples/smoothed_centerline.png",
         centerline_type="Smoothed",
@@ -137,7 +142,48 @@ if __name__ == "__main__":
         f"Centerline Formed by {ro_550_interpolate_centerline_200.interpolate_n_centerpoints} Smoothed Centerline Coordinates with Relative Distance",
         show_plot=is_debug)
 
-    ################### Plot Centerline Width Lines in Matplotlib ###############################
+    ################### Plot plotCenterline() #############################################
+
+    ro_550.plotCenterline(
+        centerline_type="Smoothed",
+        save_plot_name="data/doc_examples/river_centerline_type_smoothed.png",
+        show_plot=is_debug)
+    ro_550.plotCenterline(
+        marker_type="Scatter",
+        save_plot_name="data/doc_examples/river_marker_type_scatter.png",
+        show_plot=is_debug)
+    ro_550.plotCenterline(
+        centerline_color="purple",
+        save_plot_name="data/doc_examples/river_centerline_color.png",
+        show_plot=is_debug)
+    ro_550.plotCenterline(
+        dark_mode=True,
+        save_plot_name="data/doc_examples/river_dark_mode.png",
+        show_plot=is_debug)
+    ro_15.plotCenterline(
+        equal_axis=False,
+        save_plot_name="data/doc_examples/river_equal_axis_false.png",
+        show_plot=is_debug)
+    ro_15.plotCenterline(
+        equal_axis=True,
+        save_plot_name="data/doc_examples/river_equal_axis_true.png",
+        show_plot=is_debug)
+    ro_550.plotCenterline(
+        display_all_possible_paths=True,
+        save_plot_name=
+        "data/doc_examples/river_display_all_possible_paths_true.png",
+        show_plot=is_debug)
+    ro_550.plotCenterline(
+        display_voronoi=True,
+        save_plot_name="data/doc_examples/river_display_voronoi_true.png",
+        show_plot=is_debug)
+    ro_550.plotCenterline(
+        coordinate_unit="Relative Distance",
+        save_plot_name="data/doc_examples/river_coordinate_unit_rd.png",
+        show_plot=is_debug)
+
+    ################### Plot plotCenterlineWidth() ########################################
+
     ro_550.plotCenterlineWidth(
         save_plot_name="data/doc_examples/river_coords_with_centerline.png",
         display_true_centerline=True,
@@ -220,8 +266,6 @@ if __name__ == "__main__":
         remove_intersections=False,
         dark_mode=True,
         show_plot=is_debug)
-    ro_10 = centerline_width.riverCenterline(csv_data="data/river_coords.csv",
-                                             optional_cutoff=10)
     ro_10.plotCenterlineWidth(
         save_plot_name=
         "data/doc_examples/river_coords_not_equal_default_ax.png",
@@ -253,8 +297,7 @@ if __name__ == "__main__":
         show_plot=is_debug)
 
     ################### Algorithm to Determine Centerline ###############################
-    ro_15 = centerline_width.riverCenterline(csv_data="data/river_coords.csv",
-                                             optional_cutoff=15)
+
 
     def plotAlgorithm(fig_save_name=None,
                       plot_polygon=False,
@@ -406,30 +449,21 @@ if __name__ == "__main__":
 
     ################### Debugging, Error Handling, and Edge Cases ###############################
 
-    ro_725 = centerline_width.riverCenterline(csv_data="data/river_coords.csv",
-                                              optional_cutoff=725)
     ro_725.plotCenterline(
         save_plot_name="data/doc_examples/invalid_too_wide.png",
         display_all_possible_paths=True,
         show_plot=is_debug)
-
-    ro_250 = centerline_width.riverCenterline(csv_data="data/river_coords.csv",
-                                              optional_cutoff=250)
     ro_250.plotCenterline(
         save_plot_name="data/doc_examples/invalid_minor_polygon.png",
         display_all_possible_paths=True,
         show_plot=is_debug)
-
     ro_1000 = centerline_width.riverCenterline(
         csv_data="data/river_coords.csv", optional_cutoff=1000)
     ro_1000.plotCenterline(
         save_plot_name="data/doc_examples/invalid_major_polygon.png",
         display_all_possible_paths=True,
         show_plot=is_debug)
-
-    ro_10 = centerline_width.riverCenterline(csv_data="data/river_coords.csv",
-                                             optional_cutoff=5)
-    ro_10.plotCenterline(
+    ro_5.plotCenterline(
         save_plot_name="data/doc_examples/invalid_too_small.png",
         display_voronoi=True,
         show_plot=is_debug)
