@@ -122,6 +122,10 @@ def plotCenterlineBackend(
                 for k, v in centerline_coordinates_by_type:
                     x.append(k)
                     y.append(v)
+                    # Plot labels for each point
+                    #display_labels = True
+                    #if display_labels:
+                    #    ax.annotate(f"{k}, {v}", (k, v), fontsize=8)
                 plt.scatter(x,
                             y,
                             c=centerline_color,
@@ -199,15 +203,19 @@ def plotCenterline(river_object: centerline_width.riverCenterline = None,
 
     # Display the Voronoi Diagram
     if display_voronoi:
+        voronoi_line_color = 'black'
+        if dark_mode: voronoi_line_color = 'moccasin'
         if coordinate_unit == "Decimal Degrees":
             voronoi_plot_2d(river_object.bank_voronoi,
                             show_points=True,
                             point_size=1,
+                            line_colors=voronoi_line_color,
                             ax=ax)
         if coordinate_unit == "Relative Distance":
             voronoi_plot_2d(river_object.bank_voronoi_relative,
                             show_points=True,
                             point_size=1,
+                            line_colors=voronoi_line_color,
                             ax=ax)
 
     # Plot all possible paths with text for positions
