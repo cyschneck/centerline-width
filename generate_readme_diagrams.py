@@ -153,7 +153,7 @@ if __name__ == "__main__":
         save_plot_name="data/doc_examples/river_marker_type_scatter.png",
         show_plot=is_debug)
     ro_550.plotCenterline(
-        centerline_color="purple",
+        centerline_color="palegreen",
         save_plot_name="data/doc_examples/river_centerline_color.png",
         show_plot=is_debug)
     ro_550.plotCenterline(
@@ -173,7 +173,11 @@ if __name__ == "__main__":
         save_plot_name=
         "data/doc_examples/river_display_all_possible_paths_true.png",
         show_plot=is_debug)
-    ro_550.plotCenterline(
+    ro_15.plotCenterline(
+        display_voronoi=False,
+        save_plot_name="data/doc_examples/river_display_voronoi_false.png",
+        show_plot=is_debug)
+    ro_15.plotCenterline(
         display_voronoi=True,
         save_plot_name="data/doc_examples/river_display_voronoi_true.png",
         show_plot=is_debug)

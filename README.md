@@ -446,7 +446,7 @@ Display centerline plot as either line or scatter
 
 Change the color of the centerline, defaults to black
 
-| centerline_color="black" | centerline_color="purple" |
+| centerline_color="black" | centerline_color="palegreen" |
 | ------------- | ------------- |
 | ![centerline_color_black+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_centerline.png) | ![centerline_color_purple+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_centerline_color.png) |
 
@@ -480,7 +480,7 @@ Overlay Voronoi diagram used to generate centerline, defaults to False
 
 | display_voronoi=False | display_voronoi=True |
 | ------------- | ------------- |
-| ![display_voronoi_default+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_centerline.png) | ![display_voronoi_true+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_display_voronoi_true.png) |
+| ![display_voronoi_default+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_display_voronoi_false.png) | ![display_voronoi_true+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_display_voronoi_true.png) |
 
 
 **coordinate_unit**
