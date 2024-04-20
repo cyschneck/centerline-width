@@ -4,5 +4,5 @@ authors:
 - family-names: "Schneck, Schneck"
   given-names: Una G, Cora Y"
 title: "centerline-width: River centerline/width extraction software"
-version: 1.5.0
+version: 1.6.0
 url: "https://github.com/cyschneck/centerline-width"
