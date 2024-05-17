@@ -791,6 +791,8 @@ These features are not included in pip install because they are still experiment
 
 - Overlay plots with images via geopandas
 
+- Calculate centerline migration rate
+  
 ## Citations
 Originally a Python implementation of [R-Code CMGO](https://github.com/AntoniusGolly/cmgo) (Golly et al. 2017) but has since been extensively expanded:
 
