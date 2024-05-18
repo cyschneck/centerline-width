@@ -43,6 +43,9 @@ from .saveOutput import saveCenterlineMAT
 from .plotDiagrams import plotCenterline
 from .plotDiagrams import plotCenterlineWidth
 
+# channelMigration.py function calls
+from .channelMigration import centerlineMigrationRate
+
 # error_handling.py function calls
 from .error_handling import errrorHandlingConvertColumnsToCSV
 from .error_handling import errorHandlingPlotCenterline
