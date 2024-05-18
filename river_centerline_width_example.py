@@ -10,8 +10,8 @@ if __name__ == "__main__":
                                          flip_direction=True)
 
     #centerline_width.extractPointsToTextFile(left_kml="data/59deg48_18dot87_N_69deg46_59dot57_E_lb.kml",
-    #										right_kml="data/59deg48_18dot87_N_69deg46_59dot57_E_rb.kml",
-    #										text_output_name="data/N_output.txt")
+    #                                        right_kml="data/59deg48_18dot87_N_69deg46_59dot57_E_rb.kml",
+    #                                        text_output_name="data/N_output.txt")
     #centerline_width.convertColumnsToCSV(text_file="data/river_coords.txt", flip_direction=True)
 
     # Valid Examples

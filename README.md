@@ -15,24 +15,24 @@
 Find the centerline and width of rivers based on the latitude and longitude positions from the right and left bank 
 
 * **Convert raw data from Google Earth Pro to CSV**
-	* extractPointsToTextFile()
-	* convertColumnsToCSV()
+    * extractPointsToTextFile()
+    * convertColumnsToCSV()
 * **Find centerline and width of river**
-	* plotCenterline()
-	* plotCenterlineWidth()
-	* riverWidthFromCenterline()
-	* centerlineVoronoi
-	* centerlineEqualDistance 
-	* centerlineEvenlySpaced
-	* centerlineSmoothed
-	* centerlineLength
+    * plotCenterline()
+    * plotCenterlineWidth()
+    * riverWidthFromCenterline()
+    * centerlineVoronoi
+    * centerlineEqualDistance 
+    * centerlineEvenlySpaced
+    * centerlineSmoothed
+    * centerlineLength
 * **Return river features**
-	* rightBankLength
-	* leftBankLength
-	* riverArea
+    * rightBankLength
+    * leftBankLength
+    * riverArea
 * **Export centerline to .CSV and .MAT files**
-	* saveCenterlineCSV()
-	* saveCenterlineMAT()
+    * saveCenterlineCSV()
+    * saveCenterlineMAT()
 
 | River Outlined in Google Earth Pro | Generated Centerline for the Riverbank |
 | ------------- | ------------- |
@@ -54,8 +54,8 @@ The core of centerline-width works with a .csv file of the left and right bank l
 ```python
 import centerline_width
 centerline_width.extractPointsToTextFile(left_kml="left_bank.kml",
-					right_kml="right_bank.kml",
-					text_output_name="river_coordinates_output.txt")
+                    right_kml="right_bank.kml",
+                    text_output_name="river_coordinates_output.txt")
 centerline_width.convertColumnsToCSV(text_file="river_coordinates_output.txt")
 ```
 Then once the .csv file is created, to run the centerline-width functions, generate a river object from the `river_coordinates_output.csv`
@@ -111,8 +111,8 @@ Convert two .kml files from Google Earth Pro (for the left and right bank) and e
 
 ```
 extractPointsToTextFile(left_kml=None,
-			right_kml=None,
-			text_output_name=None)
+            right_kml=None,
+            text_output_name=None)
 ```
 
 * **[REQUIRED]** left_kml (string): File location of the kml file for left bank
@@ -122,8 +122,8 @@ extractPointsToTextFile(left_kml=None,
 ```python
 import centerline_width
 centerline_width.extractPointsToTextFile(left_kml="leftbank.kml",
-					right_kml="rightbank.kml",
-					text_output_name="data/river_coords_output.txt")
+                    right_kml="rightbank.kml",
+                    text_output_name="data/river_coords_output.txt")
 ```
 Output: The text file `data/river_coords_output.txt` with the headers `llat, llon, rlat, rlon` (for the left latitude, left longitude, right latitude, and right longitude)
 
@@ -153,7 +153,7 @@ Scripts expects data as a list of point for left and right banks:
 ```python
 import centerline_width
 centerline_width.convertColumnsToCSV(text_file="data/river_coords.txt",
-				flip_direction=True)
+                flip_direction=True)
 ```
 Converts text file:
 ```
@@ -180,12 +180,12 @@ Output: A csv file `data/river_coords.csv` with the headers `llat, llon, rlat, r
 First, generate a river object to contain river data and available transformations
 ```
 centerline_width.riverCenterline(csv_data=None,
-				optional_cutoff=None,
-				interpolate_data=False,
-				interpolate_n=5,
-				interpolate_n_centerpoints=None,
-				equal_distance=10,
-				ellipsoid="WGS84")
+                optional_cutoff=None,
+                interpolate_data=False,
+                interpolate_n=5,
+                interpolate_n_centerpoints=None,
+                equal_distance=10,
+                ellipsoid="WGS84")
 ```
 * **[REQUIRED]** csv_data (string): File location of the text file to convert
 * [OPTIONAL] optional_cutoff (int): Include only the first x number of the data to chart (useful for debugging)
@@ -396,16 +396,16 @@ Plot the centerline created from a list of right and left banks
 
 ```
 plotCenterline(centerline_type="Voronoi",
-		marker_type="line",
-		centerline_color="black",
-		dark_mode=False,
-		equal_axis=False,
-		display_all_possible_paths=False, 
-		plot_title=None, 
-		save_plot_name=None, 
-		display_voronoi=False,
-		show_plot=True,
-		coordinate_unit="Decimal Degrees")
+        marker_type="line",
+        centerline_color="black",
+        dark_mode=False,
+        equal_axis=False,
+        display_all_possible_paths=False, 
+        plot_title=None, 
+        save_plot_name=None, 
+        display_voronoi=False,
+        show_plot=True,
+        coordinate_unit="Decimal Degrees")
 ```
 * [OPTIONAL] centerline_type (string): Centerline type graph within river (not case-sensitive), options: ["Voronoi", "Evenly Spaced", "Smoothed", "Equal Distance"], defaults to "Voronoi"
 * [OPTIONAL] marker_type (string): Graph type (not case-sensitive), options: ["Line", "Scatter"], defaults to "Line"
@@ -498,17 +498,17 @@ Plot the width of the river based on the centerline
 
 ```
 plotCenterlineWidth(plot_title=None, 
-		save_plot_name=None, 
-		display_true_centerline=True,
-		transect_span_distance=3,
-		transect_slope="Average",
-		apply_smoothing=False,
-		flag_intersections=True,
-		remove_intersections=False,
-		dark_mode=False,
-		equal_axis=False,
-		show_plot=True,
-		coordinate_unit="Decimal Degrees")
+        save_plot_name=None, 
+        display_true_centerline=True,
+        transect_span_distance=3,
+        transect_slope="Average",
+        apply_smoothing=False,
+        flag_intersections=True,
+        remove_intersections=False,
+        dark_mode=False,
+        equal_axis=False,
+        show_plot=True,
+        coordinate_unit="Decimal Degrees")
 ```
 * [OPTIONAL] plot_title (string): Change plot title, defaults to "River Width Coordinates: Valid Centerline = True/False, Valid Polygon = True/False, Centerline made of <interpolate_n_centerpoints> Fixed Points, width lines generated every <transect_span_distance> points, Interpolated = True/False"
 * [OPTIONAL] save_plot_name (string): Save the plot with a given name and location
@@ -611,12 +611,12 @@ Return the width of the river at each (evenly spaced or smoothed) with coordinat
 
 ```
 riverWidthFromCenterline(transect_span_distance=3,
-			transect_slope="Average",
-			apply_smoothing=True,
-			remove_intersections=False,
-			coordinate_unit="Decimal Degrees",
-			coordinate_reference="Centerline",
-			save_to_csv=None)
+            transect_slope="Average",
+            apply_smoothing=True,
+            remove_intersections=False,
+            coordinate_unit="Decimal Degrees",
+            coordinate_reference="Centerline",
+            save_to_csv=None)
 ```
 * [OPTIONAL] transect_span_distance (int): Number n points around a center point to determine the slope (increase to decrease the impact of sudden changes), defaults to 3, must be greater than 1 (since the slope is found from the difference in position between two points)
 * [OPTIONAL] transect_slope (str): Determine how the width lines are generated, either by averaging all slopes "Average" or directly from the first to last point in the span distance as "Direct", defaults to "Average"
@@ -632,9 +632,9 @@ Important note, when using `apply_smoothing=True`, the centerline generated is t
 import centerline_width
 river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
 river_width_dict = river_object.riverWidthFromCenterline(transect_span_distance=3,
-							apply_smoothing=True,
-							coordinate_reference="Centerline",
-							remove_intersections=True)
+                            apply_smoothing=True,
+                            coordinate_reference="Centerline",
+                            remove_intersections=True)
 ```
 Width dictionary = `{(-92.86792084788995, 30.037769672351182): 0.10969163557087018, (-92.86795038641004, 30.03769867854198): 0.10794219579997719}`
 
@@ -750,7 +750,7 @@ river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv"
 
 The number of additional points added by interpolating can be adjusted with `interpolate_n`, but defaults to add 5 additional points between values
 
-## Development Environment	
+## Development Environment    
 To run or test against `centerline-width` github repo/fork, a development environment can be created via conda/miniconda
 
 First, [install Miniconda](https://docs.conda.io/projects/miniconda/en/latest/miniconda-install.html)

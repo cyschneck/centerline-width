@@ -4,6 +4,19 @@ repos:
     hooks:
       - id: codespell
 
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-toml
+      - id: check-yaml
+
+  - repo: https://github.com/Lucas-C/pre-commit-hooks
+    rev: v1.0.1
+    hooks:
+      - id: remove-tabs
+        name: remove tabs
+        exclude_types: [csv, kml]
+
   - repo: https://github.com/google/yapf
     rev: v0.40.2
     hooks:

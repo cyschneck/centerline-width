@@ -4,7 +4,7 @@
 # Data file .kml for right bank: 43deg44_18dot23_N_101deg27_7dot61_W_lb
 #
 # To run in terminal:
-#			python centerline_width_example_script.py
+#            python centerline_width_example_script.py
 #
 ########################################################################
 
