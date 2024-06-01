@@ -21,4 +21,5 @@ repos:
     rev: v0.40.2
     hooks:
       - id: yapf
+        name: yapf reformat
         args: ['--in-place', '--recursive', '--style', 'pep8']
