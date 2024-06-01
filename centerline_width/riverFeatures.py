@@ -29,6 +29,17 @@ def centerlineLength(centerline_coordinates: list = None,
     return centerline_length_km
 
 
-#def calculateSinuosity():
-#    # Return the sinuosity of the river, in total and in evenly spaced parts
-#    pass
+def calculateSinuosity(centerline_evenlySpaced_coordinates: list = None,
+                       ellipsoid: str = "WGS84") -> float:
+    # Return the sinuosity of the river in total
+    if centerline_evenlySpaced_coordinates is None:
+        return 0
+
+    # sinuosity is the difference of length of first/last point to centerline
+    sinuosity = 0
+    sinuosity = centerlineLength([
+        centerline_evenlySpaced_coordinates[0],
+        centerline_evenlySpaced_coordinates[-1]
+    ], ellipsoid) / centerlineLength(centerline_evenlySpaced_coordinates)
+
+    return sinuosity

@@ -30,6 +30,7 @@ Find the centerline and width of rivers based on the latitude and longitude posi
     * rightBankLength
     * leftBankLength
     * riverArea
+    * riverSinuosity
 * **Export centerline to .CSV and .MAT files**
     * saveCenterlineCSV()
     * saveCenterlineMAT()

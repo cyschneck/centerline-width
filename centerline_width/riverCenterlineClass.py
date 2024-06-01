@@ -154,6 +154,10 @@ class riverCenterline:
             self.left_bank_coordinates[0], self.centerlineSmoothed,
             self.ellipsoid)
 
+        # Sinuosity
+        self.riverSinuosity = centerline_width.calculateSinuosity(
+            self.centerlineEvenlySpaced, self.ellipsoid)
+
     def plotCenterline(self,
                        centerline_type: str = "Voronoi",
                        marker_type: str = "line",
