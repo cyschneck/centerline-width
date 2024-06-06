@@ -784,6 +784,8 @@ These features are not included in pip install because they are still experiment
 
 - Calculate the dominant meander wavelength amd its variance
 
+- Research and Contribute to [OpenStreetMap](https://github.com/cyschneck/centerline-width/issues/5) for existing mapped rivers with generated centerlines
+
 - Calculate the asymmetry of the meanders 
 
 - Calculate the dominant submeander and supermeander scales
