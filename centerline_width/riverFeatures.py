@@ -53,4 +53,19 @@ def calculateIncrementalSinuosity(
     if centerline_evenlySpaced_coordinates is None:
         return {}
 
-    return {}
+    # Ignore the first and last point in the coordinates
+    centerline_coordinates = centerline_evenlySpaced_coordinates[1:-1]
+
+    # Separate centerline in groups of incremental_points long
+    centerline_groups = list(
+        zip(*[iter(centerline_coordinates)] * incremental_points))
+
+    # Calculate incremental sinuosity
+    incremental_sinuosity = {}
+    for centerline_coords in centerline_groups:
+        incremental_sinuosity[(
+            centerline_coords[0], centerline_coords[-1])] = calculateSinuosity(
+                centerline_evenlySpaced_coordinates=centerline_coords,
+                ellipsoid=ellipsoid)
+
+    return incremental_sinuosity

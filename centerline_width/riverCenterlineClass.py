@@ -161,7 +161,9 @@ class riverCenterline:
     def calculateIncrementalSinuosity(self, incremental_points: int = 10):
         # Incremental Sinuosity
         return centerline_width.calculateIncrementalSinuosity(
-            self.centerlineEvenlySpaced, self.ellipsoid, incremental_points=10)
+            self.centerlineEvenlySpaced,
+            self.ellipsoid,
+            incremental_points=incremental_points)
 
     def plotCenterline(self,
                        centerline_type: str = "Voronoi",
