@@ -43,3 +43,14 @@ def calculateSinuosity(centerline_evenlySpaced_coordinates: list = None,
     ], ellipsoid) / centerlineLength(centerline_evenlySpaced_coordinates)
 
     return sinuosity
+
+
+def calculateIncrementalSinuosity(
+        centerline_evenlySpaced_coordinates: list = None,
+        ellipsoid: str = "WGS84",
+        incremental_points: int = 10) -> dict:
+    # Return the sinuosity of the river in increments
+    if centerline_evenlySpaced_coordinates is None:
+        return {}
+
+    return {}
