@@ -57,3 +57,4 @@ from .error_handling import errorHandlingSaveCenterlineCSV
 from .error_handling import errorHandlingSaveCenterlineMAT
 from .error_handling import errorHandlingExtractPointsToTextFile
 from .error_handling import errorHandlingRiverCenterlineClass
+from .error_handling import errorHandlingCalculateIncrementalSinuosity

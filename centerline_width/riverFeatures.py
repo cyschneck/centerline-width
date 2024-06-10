@@ -55,10 +55,12 @@ def calculateIncrementalSinuosity(
         incremental_points: int = 10,
         save_to_csv: str = None) -> dict:
     # Return the sinuosity of the river in increments
+    # (Centerline Coordinate Start, Centerline Coordinate End Longtiude, Sinuosity)
 
-    if river_object.interpolate_n_centerpoints < incremental_points:
-        print(
-            "\tERROR: (TODO) interpolate_n_centerpoints < incremental_points")
+    centerline_width.errorHandlingCalculateIncrementalSinuosity(
+        river_object=river_object,
+        incremental_points=incremental_points,
+        save_to_csv=save_to_csv)
 
     if river_object.centerlineEvenlySpaced is None:
         return {}
@@ -79,7 +81,6 @@ def calculateIncrementalSinuosity(
                 ellipsoid=river_object.ellipsoid)
 
     # Save width dictionary to a csv file
-    # (Centerline Coordinate Start, Centerline Coordinate End Longtiude, Sinuosity)
     if save_to_csv:
         with open(save_to_csv, "w") as csv_file_output:
             writer = csv.writer(csv_file_output)

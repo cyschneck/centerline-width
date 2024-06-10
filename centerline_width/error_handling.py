@@ -578,3 +578,45 @@ def errorHandlingRiverCenterlineClass(csv_data: str = None,
             raise ValueError(
                 f"[ellipsoid]: Must be an available option in {ellipsoid_options}, current option = '{ellipsoid}'"
             )
+
+
+## Error Handling: riverFeatures.py
+def errorHandlingCalculateIncrementalSinuosity(
+        river_object: centerline_width.riverCenterline = None,
+        incremental_points: int = 10,
+        save_to_csv: str = None) -> None:
+    # Error Handling for calculateIncrementalSinuosity()
+    if river_object is None:
+        raise ValueError(
+            "[river_object]: Requires a river object (see: centerline_width.riverCenterline)"
+        )
+    else:
+        if not isinstance(river_object, centerline_width.riverCenterline):
+            raise ValueError(
+                f"[river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{type(river_object)}'"
+            )
+
+    if type(incremental_points) != int:
+        raise ValueError(
+            f"[incremental_points]: Must be a int, current type = '{type(incremental_points)}'"
+        )
+    if incremental_points <= 0:
+        raise ValueError(
+            f"[incremental_points]: Must be a positive value, greater than 0, currently = '{incremental_points}'"
+        )
+
+    if river_object.interpolate_n_centerpoints < incremental_points:
+        raise ValueError(
+            f"[incremental_points]: length of centerline points must be greater than incremental_points, currently `{river_object.interpolate_n_centerpoints} < {incremental_points}'"
+        )
+
+    if save_to_csv is not None:
+        if type(save_to_csv) != str:
+            raise ValueError(
+                f"[save_to_csv]: Must be a str, current type = '{type(save_to_csv)}'"
+            )
+        else:
+            if not save_to_csv.lower().endswith(".csv"):
+                raise ValueError(
+                    f"[save_to_csv]: Extension must be a .csv file, current extension = '{save_to_csv.split('.')[1]}'"
+                )
