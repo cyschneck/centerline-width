@@ -1,8 +1,13 @@
 # River features, unrelated to width/centerline: area, length, sinuosity
+# Built-in Python functions
+import csv
 
 # External Python libraries
 from pyproj import Geod
 from shapely.geometry import Point, LineString
+
+# Internal centerline_width reference to access functions, global variables, and error handling
+import centerline_width
 
 
 def calculateRiverArea(bank_polygon=None, ellipsoid: str = "WGS84") -> float:
@@ -46,15 +51,20 @@ def calculateSinuosity(centerline_evenlySpaced_coordinates: list = None,
 
 
 def calculateIncrementalSinuosity(
-        centerline_evenlySpaced_coordinates: list = None,
-        ellipsoid: str = "WGS84",
-        incremental_points: int = 10) -> dict:
+        river_object: centerline_width.riverCenterline = None,
+        incremental_points: int = 10,
+        save_to_csv: str = None) -> dict:
     # Return the sinuosity of the river in increments
-    if centerline_evenlySpaced_coordinates is None:
+
+    if river_object.interpolate_n_centerpoints < incremental_points:
+        print(
+            "\tERROR: (TODO) interpolate_n_centerpoints < incremental_points")
+
+    if river_object.centerlineEvenlySpaced is None:
         return {}
 
     # Ignore the first and last point in the coordinates
-    centerline_coordinates = centerline_evenlySpaced_coordinates[1:-1]
+    centerline_coordinates = river_object.centerlineEvenlySpaced[1:-1]
 
     # Separate centerline in groups of incremental_points long
     centerline_groups = list(
@@ -66,6 +76,24 @@ def calculateIncrementalSinuosity(
         incremental_sinuosity[(
             centerline_coords[0], centerline_coords[-1])] = calculateSinuosity(
                 centerline_evenlySpaced_coordinates=centerline_coords,
-                ellipsoid=ellipsoid)
+                ellipsoid=river_object.ellipsoid)
+
+    # Save width dictionary to a csv file
+    # (Centerline Coordinate Start, Centerline Coordinate End Longtiude, Sinuosity)
+    if save_to_csv:
+        with open(save_to_csv, "w") as csv_file_output:
+            writer = csv.writer(csv_file_output)
+            writer.writerow([
+                "Centerline Latitude Start (Deg)",
+                "Centerline Longitude Start (Deg)",
+                "Centerline Latitude End (Deg)",
+                "Centerline Longitude End (Deg)", "Sinuosity"
+            ])
+            for coordinate_key, sinuosity_value in incremental_sinuosity.items(
+            ):
+                writer.writerow([
+                    coordinate_key[0][1], coordinate_key[0][0],
+                    coordinate_key[1][1], coordinate_key[1][0], sinuosity_value
+                ])
 
     return incremental_sinuosity
