@@ -411,8 +411,8 @@ The sinuosity of the river returns as a float `0.6852533956654481`
 Return the incremental sinuosity of the river at evenly spaced increments
 ```
 calculateIncrementalSinuosity(
-        incremental_points = 100,
-        save_to_csv = None)
+        incremental_points=100,
+        save_to_csv=None)
 ```
 * **[REQUIRED]** incremental_points: grouping of centerline coordinates, defaults to 100 (must be less than the length of the evenly spaced centerline coordinates)
 * [OPTIONAL] save_to_csv (string): CSV filename, requires a .csv extension with headers `["Centerline Latitude Start (Deg)", "Centerline Longitude Start (Deg)", "Centerline Latitude End (Deg)", "Centerline Longitude End (Deg)", "Sinuosity"]`
@@ -420,7 +420,7 @@ calculateIncrementalSinuosity(
 ```python
 import centerline_width
 river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
-river_object.river.calculateIncrementalSinuosity()
+river_object.calculateIncrementalSinuosity()
 ```
 Returns a dictionary with the start and end centerline coordinates and associated sinuosity `{((-92.87803465419134, 30.04494734395193), (-92.87718084516158, 30.03944640478984)): 0.8164574107802118, ((-92.87714797109666, 30.03944945940497), (-92.87020323809925, 30.039886265891074)): 0.9810773013508994}`
 

@@ -1,8 +1,13 @@
 cff-version: 1.2.0
+title: "centerline-width: River analysis, centerline, and width extraction software"
+version: 1.6.0
 message: "Please acknowledge the use of this software in any publications by citing:"
 authors:
-- family-names: "Schneck, Schneck"
-  given-names: Una G, Cora Y"
-title: "centerline-width: River centerline/width extraction software"
-version: 1.6.0
+- family-names: Schneck
+  given-names: Cora Y.
+  orchid: 'https://orcid.org/0009-0009-1415-5170'
+- family-names: Schneck
+  given-names: Una G.
+  orchid: 'https://orcid.org/0000-0003-0048-5143'
+repository-code:: "https://github.com/cyschneck/centerline-width"
 url: "https://github.com/cyschneck/centerline-width"
