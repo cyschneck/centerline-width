@@ -835,7 +835,7 @@ These features are not included in pip install because they are still experiment
 - Calculate centerline migration rate
   
 ## Citations
-Originally a Python implementation of [R-Code CMGO](https://github.com/AntoniusGolly/cmgo) (Golly et al. 2017) but has since been extensively expanded:
+Originally, centerline-width was developed as a Python implementation of [R-Code CMGO](https://github.com/AntoniusGolly/cmgo) (Golly et al. 2017) but has since been extensively expanded and changed:
 
 >Golly, A. and Turowski, J. M.: Deriving principal channel metrics from bank and long-profile geometry with the R package cmgo, Earth Surf. Dynam., 5, 557-570, https://doi.org/10.5194/esurf-5-557-2017, 2017.
 
@@ -851,7 +851,7 @@ Please acknowledge the use of this software in any publications:
 ```
 "River centerline/width extraction software was provided by C. Y. Schneck and U. G. Schneck, and is available at URL: https://github.com/cyschneck/centerline-width."
 ```
-We are interested in expanding this software based on river needs, so please send a copy of such publications to: cyschneck@gmail.com and ugschneck@gmail.com
+We are interested in expanding this software based on river needs, so please send a copy of such publications to: cyschneck@gmail.com and ugschneck@gmail.com (we'd love to see them!)
 
 
 This material is based upon work supported by the National Science Foundation Graduate Fellowship under Grant No. 2141064. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the National Science Foundation.
