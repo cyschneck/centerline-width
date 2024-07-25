@@ -43,7 +43,8 @@ setup(
         "Topic :: Scientific/Engineering :: Visualization"
     ],
     packages=find_namespace_packages(
-        include=['centerline_width', 'centerline_width.*']),
+        include=['centerline_width', 'centerline_width.*'],
+        exclude=['centerline_width.pytests']),
     include_package_data=True,
     install_requires=[
         "geopy", "haversine", "matplotlib", "networkx", "numpy", "pandas",
