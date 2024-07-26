@@ -1,14 +1,23 @@
+# Pytest for riverFeatures.py
 # centerline-width/: python -m pytest -v
-# python -m pytest -k test_verifyRiverFeatures -xv
+# python -m pytest -k test_errorRiverFeatures -xv
 
-# Pytests to Compare and Verify Expected Outputs
 from io import StringIO
+import re
 
 # External Python libraries (installed via pip install)
 import pytest
 
 # Internal centerline-width reference to access functions, global variables, and error handling
 import centerline_width
+
+invalid_non_int_options = [("testing_string", "<class 'str'>"),
+                           (3.1415, "<class 'float'>"), ([], "<class 'list'>"),
+                           (False, "<class 'bool'>")]
+
+invalid_non_str_options = [(1961, "<class 'int'>"),
+                           (3.1415, "<class 'float'>"), ([], "<class 'list'>"),
+                           (False, "<class 'bool'>")]
 
 
 def river_class_object():
@@ -108,36 +117,72 @@ def river_class_object():
 river_class_example = river_class_object()
 
 
-## riverFeatures() #####################################################
-def test_riverCenterline_centerlineLength():
-    assert river_class_example.centerlineLength == pytest.approx(
-        0.08284102060354828)
+## calculateIncrementalSinuosity() #####################################################
+def test_calculateIncrementalSinuosity_riverObjectRequired():
+    with pytest.raises(
+            ValueError,
+            match=re.escape(
+                "[river_object]: Requires a river object (see: centerline_width.riverCenterline)"
+            )):
+        centerline_width.calculateIncrementalSinuosity(river_object=None)
 
 
-def test_riverCenterline_rightBankLength():
-    assert river_class_example.rightBankLength == pytest.approx(
-        0.09705816897006408)
+@pytest.mark.parametrize("invalid_input, error_output",
+                         invalid_non_int_options)
+def test_calculateIncrementalSinuosity_InvalidTypeIncrementalPoints(
+        invalid_input, error_output):
+    with pytest.raises(
+            ValueError,
+            match=re.escape(
+                f"[incremental_points]: Must be a int, current type = '{error_output}'"
+            )):
+        centerline_width.calculateIncrementalSinuosity(
+            river_object=river_class_example, incremental_points=invalid_input)
 
 
-def test_riverCenterline_leftBankLength():
-    assert river_class_example.leftBankLength == pytest.approx(
-        0.10570962276643736)
+def test_calculateIncrementalSinuosity_InvalidRangeIncrementalPoints():
+    with pytest.raises(
+            ValueError,
+            match=re.escape(
+                f"[incremental_points]: Must be a positive value, greater than 0, currently = '0'"
+            )):
+        centerline_width.calculateIncrementalSinuosity(
+            river_object=river_class_example, incremental_points=0)
 
 
-def test_riverCenterline_riverArea():
-    assert river_class_example.riverArea == pytest.approx(11.4030195647527)
+def test_calculateIncrementalSinuosity_InvalidRangeIncrementalPointsFromCenterpoints(
+):
+    with pytest.raises(
+            ValueError,
+            match=re.escape(
+                f"[incremental_points]: length of centerline points must be greater than incremental_points, currently `{river_class_example.interpolate_n_centerpoints} < 100'"
+            )):
+        centerline_width.calculateIncrementalSinuosity(
+            river_object=river_class_example)
 
 
-def test_riverCenterline_riverSinuosity():
-    assert river_class_example.riverSinuosity == pytest.approx(
-        0.9877076848214962)
+@pytest.mark.parametrize("invalid_input, error_output",
+                         invalid_non_str_options)
+def test_calculateIncrementalSinuosity_csvInvalidType(invalid_input,
+                                                      error_output):
+    with pytest.raises(
+            ValueError,
+            match=re.escape(
+                f"[save_to_csv]: Must be a str, current type = '{error_output}'"
+            )):
+        centerline_width.calculateIncrementalSinuosity(
+            river_object=river_class_example,
+            incremental_points=20,
+            save_to_csv=invalid_input)
 
 
-def test_riverCenterline_riverIncrementalSinuosity():
-    assert river_class_example.calculateIncrementalSinuosity(
-    ) == pytest.approx({
-        ((-92.86781591391708, 30.038216571334427), (-92.8678415323492, 30.037979489365142)):
-        0.9858671625556824,
-        ((-92.86785143668344, 30.037954361467868), (-92.86793749224125, 30.03772716195012)):
-        0.9997264563404605
-    })
+def test_calculateIncrementalSinuosity_csvRequired():
+    with pytest.raises(
+            ValueError,
+            match=re.escape(
+                "[save_to_csv]: Extension must be a .csv file, current extension = 'txt'"
+            )):
+        centerline_width.calculateIncrementalSinuosity(
+            river_object=river_class_example,
+            incremental_points=20,
+            save_to_csv="filename.txt")

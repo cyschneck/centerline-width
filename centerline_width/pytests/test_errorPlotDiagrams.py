@@ -1,5 +1,7 @@
 # Pytest for plotDiagram.py
 # centerline-width/: python -m pytest -v
+# python -m pytest -k test_errorPlotDiagrams -xv
+
 from io import StringIO
 import re
 

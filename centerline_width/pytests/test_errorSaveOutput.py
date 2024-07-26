@@ -1,5 +1,7 @@
-# Pytest for preprocessing.py
+# Pytest for saveO.py
 # centerline-width/: python -m pytest -v
+# python -m pytest -k test_errorSaveOutput -xv
+
 from io import StringIO
 import re
 

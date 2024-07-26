@@ -1,5 +1,7 @@
 # Pytest for preprocessing.py
 # centerline-width/: python -m pytest -v
+# python -m pytest -k test_errorPreprocessing -xv
+
 import re
 
 # External Python libraries (installed via pip install)

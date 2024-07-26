@@ -1,4 +1,6 @@
 # centerline-width/: python -m pytest -v
+# python -m pytest -k test_verifyGetCoordinatesKML -xv
+
 # Pytests to Compare and Verify Expected Outputs
 
 # External Python libraries (installed via pip install)

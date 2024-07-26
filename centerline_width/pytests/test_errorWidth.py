@@ -1,5 +1,7 @@
 # Pytest for centerline.py
 # centerline-width/: python -m pytest -v
+# python -m pytest -k test_errorWidth -xv
+
 from io import StringIO
 import re
 

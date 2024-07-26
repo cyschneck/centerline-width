@@ -1,5 +1,7 @@
 # Pytest for getCoordinatesKML.py
 # centerline-width/: python3 -m pytest -v
+# python -m pytest -k test_errorGetCoordinatesKML -xv
+
 import re
 
 # External Python libraries (installed via pip install)
