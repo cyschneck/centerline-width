@@ -83,7 +83,7 @@ class riverCenterline:
         self.bottom_bank = bottom_bank
 
         # Area contained within river polygon
-        self.riverArea = centerline_width.calculateRiverArea(
+        self.area = centerline_width.calculateRiverArea(
             self.bank_polygon, self.ellipsoid)
 
         # Relative Coordinates: River polygon, position of the top/bottom polygon
@@ -168,14 +168,14 @@ class riverCenterline:
             self.ellipsoid)
 
         # Overall Sinuosity
-        self.riverSinuosity = centerline_width.calculateSinuosity(
+        self.sinuosity = centerline_width.calculateSinuosity(
             self.centerlineEvenlySpaced, self.ellipsoid)
 
-    def calculateIncrementalSinuosity(self,
-                                      incremental_points: int = 10,
-                                      save_to_csv: str = None):
+    def incrementalSinuosity(self,
+                             incremental_points: int = 10,
+                             save_to_csv: str = None):
         # Incremental Sinuosity
-        return centerline_width.calculateIncrementalSinuosity(
+        return centerline_width.incrementalSinuosity(
             river_object=self,
             incremental_points=incremental_points,
             save_to_csv=save_to_csv)

@@ -125,20 +125,18 @@ def test_riverCenterline_leftBankLength():
         0.10570962276643736)
 
 
-def test_riverCenterline_riverArea():
-    assert river_class_example.riverArea == pytest.approx(11.4030195647527)
+def test_riverCenterline_area():
+    assert river_class_example.area == pytest.approx(11.4030195647527)
 
 
 def test_riverCenterline_riverSinuosity():
-    assert river_class_example.riverSinuosity == pytest.approx(
-        0.9877076848214962)
+    assert river_class_example.sinuosity == pytest.approx(1.0124452966878812)
 
 
 def test_riverCenterline_riverIncrementalSinuosity():
-    assert river_class_example.calculateIncrementalSinuosity(
-    ) == pytest.approx({
+    assert river_class_example.incrementalSinuosity() == pytest.approx({
         ((-92.86781591391708, 30.038216571334427), (-92.8678415323492, 30.037979489365142)):
-        0.9858671625556824,
+        1.0143354378572471,
         ((-92.86785143668344, 30.037954361467868), (-92.86793749224125, 30.03772716195012)):
-        0.9997264563404605
+        1.000273618506147
     })

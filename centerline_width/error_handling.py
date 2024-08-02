@@ -586,11 +586,11 @@ def errorHandlingRiverCenterlineClass(csv_data: str = None,
 
 
 ## Error Handling: riverFeatures.py
-def errorHandlingCalculateIncrementalSinuosity(
+def errorHandlingIncrementalSinuosity(
         river_object: centerline_width.riverCenterline = None,
         incremental_points: int = 10,
         save_to_csv: str = None) -> None:
-    # Error Handling for calculateIncrementalSinuosity()
+    # Error Handling for incrementalSinuosity()
     if river_object is None:
         raise ValueError(
             "[river_object]: Requires a river object (see: centerline_width.riverCenterline)"

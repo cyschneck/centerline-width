@@ -57,13 +57,13 @@ if __name__ == "__main__":
         river.centerlineSmoothedRelative))
     print(river.right_bank_relative_coordinates)
     print(river.left_bank_relative_coordinates)
-    print(river.riverArea)
     '''
-    print(f"riverSinuosity  = {river.riverSinuosity}")
-    incrementalSinuosity = river.calculateIncrementalSinuosity(
-        incremental_points=215, save_to_csv=None)
-    print(f"\nriverSinuosityIncremental  = {incrementalSinuosity}")
-    exit()
+    print(f"area = {river.area} km^2")
+    print(f"sinuosity  = {river.sinuosity}")
+    incrementalSinuosity = river.incrementalSinuosity(incremental_points=215,
+                                                      save_to_csv=None)
+    print(f"\nincremental sinuosity  = {incrementalSinuosity}")
+    #exit()
 
     #coord_type = "relative DIStance"
     coord_type = "decimal degrees"
