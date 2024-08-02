@@ -49,8 +49,9 @@ stream_handler = logging.StreamHandler()
 logger.addHandler(stream_handler)
 
 
-def generateNXGraph(all_points_dict: dict = None):
+def generateNXGraph(all_points_dict: dict = None) -> (dict, list):
     # Generate a NetworkX graph to find the largest graph
+
     def distanceBetween(start: tuple = None, end: tuple = None) -> float:
         # return the distance between two points on a graph
         lat1 = start[0]
@@ -65,7 +66,7 @@ def generateNXGraph(all_points_dict: dict = None):
 
     # nodes as lat/lon positions, weighted by the distance between each position
 
-    all_connections_in_graph = nx.Graph()
+    all_connections_in_graph = nx.Graph()  # all possible paths
     node_as_keys_pos_values = {}
     for start_point, end_point_list in all_points_dict.items():
         node_as_keys_pos_values[start_point] = (start_point[0], start_point[1])
@@ -181,7 +182,7 @@ def centerlinePath(river_voronoi=None,
 
 def equalDistanceCenterline(centerline_coordinates: list = None,
                             equal_distance: int = None,
-                            ellipsoid="WGS84") -> None:
+                            ellipsoid="WGS84") -> list:
     # Interpolate centerline to space out coordinates an equal physical distance from the next (in meters)
     if centerline_coordinates is None:
         return None
@@ -223,7 +224,7 @@ def equalDistanceCenterline(centerline_coordinates: list = None,
 
 
 def evenlySpacedCenterline(centerline_coordinates: list = None,
-                           number_of_fixed_points: int = None) -> None:
+                           number_of_fixed_points: int = None) -> list:
     # Interpolate to evenly space points along the centerline coordinates (effectively smoothing with fewer points)
     if centerline_coordinates is None:
         return None
@@ -248,7 +249,7 @@ def evenlySpacedCenterline(centerline_coordinates: list = None,
 
 def smoothedCoordinates(river_object: centerline_width.riverCenterline = None,
                         centerline_coordinates: list = None,
-                        interprolate_num: int = None) -> None:
+                        interprolate_num: int = None) -> list:
     # return a list coordinates after applying b-spline (smoothing)
     if centerline_coordinates is None:
         return None

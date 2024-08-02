@@ -32,34 +32,26 @@ def extractPointsToTextFile(left_kml: str = None,
         right_kml=right_kml,
         text_output_name=text_output_name)
 
-    # extract points from kml file
-    with open(left_kml) as f:
-        doc = parser.parse(f)
-    root = doc.getroot()
-    coords = root.Document.Placemark.LineString.coordinates.text
-    llon = []
-    llat = []
-    coords = coords.replace('\n', '').replace('\t', '')
-    for coord in coords.split(
-            " "
-    ):  # split coordinates based on commas (excluding preceding 0's)
-        if coord != "":
-            llon.append(coord.split(",")[0])
-            llat.append(coord.split(",")[1])
+    def extractKML(kml_file: str = None) -> (list, list):
+        # extract points from kml file for the given bank
+        with open(kml_file) as f:
+            doc = parser.parse(f)
+        root = doc.getroot()
+        coords = root.Document.Placemark.LineString.coordinates.text
+        lon = []
+        lat = []
+        coords = coords.replace('\n', '').replace('\t', '')
+        for coord in coords.split(
+                " "
+        ):  # split coordinates based on commas (excluding preceding 0's)
+            if coord != "":
+                lon.append(coord.split(",")[0])
+                lat.append(coord.split(",")[1])
+        return lon, lat
 
-    with open(right_kml) as f:
-        doc = parser.parse(f)
-    root = doc.getroot()
-    coords = root.Document.Placemark.LineString.coordinates.text
-    rlon = []
-    rlat = []
-    coords = coords.replace('\n', '').replace('\t', '')
-    for coord in coords.split(
-            " "
-    ):  # split coordinates based on commas (excluding preceding 0's)
-        if coord != "":
-            rlon.append(coord.split(",")[0])
-            rlat.append(coord.split(",")[1])
+    # extract right and left bank files
+    rlon, rlat = extractKML(right_kml)
+    llon, llat = extractKML(left_kml)
 
     df_lb = pd.DataFrame({'llat': llat, 'llon': llon})
     df_rb = pd.DataFrame({'rlat': rlat, 'rlon': rlon})
