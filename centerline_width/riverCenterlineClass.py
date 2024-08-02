@@ -1,3 +1,16 @@
+#                                                                                                 #
+#                                                                                                 #
+#                                                                                                 #
+#      riverCenterlineClass.py builds and defines the values for the river class                  #
+#      that are used in the centerline, width, and plotting functions                             #
+#                                                                                                 #
+#      This includes the functions for:                                                           #
+#                                       - riverCenterline: river class that holds all             #
+#                                              river features and functions                       #
+#                                                                                                 #
+#                                                                                                 #
+#                                                                                                 #
+
 # River object class used for all functions and centerline functions
 
 # External Python libraries

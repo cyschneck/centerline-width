@@ -1,3 +1,22 @@
+#                                                                                                 #
+#                                                                                                 #
+#                                                                                                 #
+#      plotDiagrams.py plots river coordinates and width with Matplotlib                          #
+#                                                                                                 #
+#      This includes the functions for:                                                           #
+#                                       - plotCenterlineBackend: backend share                    #
+#                                              components for each plot                           #
+#                                              csv                                                #
+#                                                                                                 #
+#                                       - plotCenterline: plot centerline and                     #
+#                                              river points/polygons                              #
+#                                                                                                 #
+#                                       - plotCenterlineWidth: plot centerline                    #
+#                                              and river with width lines                         #
+#                                                                                                 #
+#                                                                                                 #
+#                                                                                                 #
+
 # Built-in Python functions
 import math
 import logging

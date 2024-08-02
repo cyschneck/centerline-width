@@ -1,4 +1,4 @@
-# Pytest for riverCenterlineClass.py
+# Test Expected Error Messages from riverCenterlineClass.py
 # centerline-width/: python -m pytest -v
 # python -m pytest -k test_errorRiverCenterlineClass -xv
 

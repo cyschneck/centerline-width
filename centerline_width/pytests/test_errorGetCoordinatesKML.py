@@ -1,4 +1,4 @@
-# Pytest for getCoordinatesKML.py
+# Test Expected Error Messages from getCoordinatesKML.py
 # centerline-width/: python3 -m pytest -v
 # python -m pytest -k test_errorGetCoordinatesKML -xv
 

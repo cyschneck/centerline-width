@@ -1,4 +1,26 @@
-# River features, unrelated to width/centerline: area, length, sinuosity
+#                                                                                                 #
+#                                                                                                 #
+#                                                                                                 #
+#      riverFeatures.py contains calculations for determining river features which are            #
+#      unrelated to width and centerline. This currently includes area, length, and               #
+#      sinuosity                                                                                  #
+#                                                                                                 #
+#      This includes the functions for:                                                           #
+#                                       - calculateRiverArea: returns the area contains           #
+#                                              within the river polygon/coordinates               #
+#                                                                                                 #
+#                                       - riverWidthFromCenterline: returns the length of         #
+#                                                centerline                                       #
+#                                                                                                 #
+#                                       - calculateSinuosity: returns the total sinuosity         #
+#                                                                                                 #
+#                                       - calculateIncrementalSinuosity: returns the              #
+#                                                incremental sinuosity along the length of        #
+#                                                the river                                        #
+#                                                                                                 #
+#                                                                                                 #
+#                                                                                                 #
+
 # Built-in Python functions
 import csv
 

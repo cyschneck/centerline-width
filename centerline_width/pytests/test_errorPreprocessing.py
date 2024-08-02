@@ -1,4 +1,4 @@
-# Pytest for preprocessing.py
+# Test Expected Error Messages from preprocessing.py
 # centerline-width/: python -m pytest -v
 # python -m pytest -k test_errorPreprocessing -xv
 

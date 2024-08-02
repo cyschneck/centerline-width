@@ -1,3 +1,29 @@
+#                                                                                                 #
+#                                                                                                 #
+#                                                                                                 #
+#      preprocessing.py calculates and processes river data input data                            #
+#                                                                                                 #
+#      This includes the functions for:                                                           #
+#                                       - convertColumnsToCSV: converts txt file to               #
+#                                              csv                                                #
+#                                                                                                 #
+#                                       - leftRightCoordinates: input left and right              #
+#                                              coordinates from the input values                  #
+#                                                                                                 #
+#                                       - generatePolygon: generate river polygon                 #
+#                                              based on input values                              #
+#                                              distance                                           #
+#                                                                                                 #
+#                                       - generateVoronoi: generate Voronoi diagram               #
+#                                              based on the left/right bank points                #
+#                                                                                                 #
+#                                       - interpolateBetweenPoints: interpolates                  #
+#                                              additional points at an even distance              #
+#                                              along river banks                                  #
+#                                                                                                 #
+#                                                                                                 #
+#                                                                                                 #
+
 # Built-in Python functions
 import csv
 import logging
@@ -22,7 +48,7 @@ logger.addHandler(stream_handler)
 
 def convertColumnsToCSV(text_file: str = None,
                         flip_direction: bool = False) -> None:
-    # Convert txt file to a comma-separated version of the file to use in pandas
+    # Convert txt file to a comma-separated version of the file
     centerline_width.errrorHandlingConvertColumnsToCSV(
         text_file=text_file, flip_direction=flip_direction)
 
@@ -59,13 +85,17 @@ def convertColumnsToCSV(text_file: str = None,
 
 
 def leftRightCoordinates(dataframe=None):
-    right_bank_coordinates = []  # without nan
-    left_bank_coordinates = []  # without nan
+    # returns the left and right coordinates from the input values
+    right_bank_coordinates = []
+    left_bank_coordinates = []
+
     for index, row in dataframe.iterrows():
+        # iterate through input dataframe and save non-nan values
         if not math.isnan(row.rlat) and not math.isnan(row.rlon):
             right_bank_coordinates.append([row.rlon, row.rlat])
         if not math.isnan(row.llat) and not math.isnan(row.llon):
             left_bank_coordinates.append([row.llon, row.llat])
+
     return left_bank_coordinates, right_bank_coordinates
 
 
@@ -116,7 +146,7 @@ def generatePolygon(
 def generateVoronoi(left_bank_lst: list = None,
                     right_bank_lst: list = None,
                     coord_type: str = None) -> Voronoi:
-    # Generate a Voronoi shape based on the left/right bank points
+    # Generate a Voronoi diagram based on the left/right bank points
     all_banks_points = left_bank_lst + right_bank_lst
     all_banks_points = np.array(all_banks_points)
 

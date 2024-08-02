@@ -17,7 +17,7 @@ if __name__ == "__main__":
     # Valid Examples
     cutoff = None
     #cutoff = 10
-    #cutoff = 15 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
+    #cutoff = 15  # valid centerline, valid path, valid polygon, valid starting node, valid ending node
     #cutoff = 30
     #cutoff = 100 # valid centerline, valid path, valid polygon, valid starting node, valid ending node
     cutoff = 550  # valid centerline, valid path, valid polygon, valid starting node, valid ending node
@@ -31,13 +31,12 @@ if __name__ == "__main__":
     river = centerline_width.riverCenterline(csv_data="data/river_coords.csv",
                                              optional_cutoff=cutoff,
                                              interpolate_data=False,
-                                             interpolate_n=200,
                                              interpolate_n_centerpoints=None,
-                                             equal_distance=10,
                                              ellipsoid="WGS84")
 
     #print(river)
     #print(river.__dict__.keys())
+    '''
     print("\nCenterline Length = {0} km".format(river.centerlineLength))
     print("Centerline Length = {0} m".format(river.centerlineLength * 1000))
     print("Right Bank Length = {0} km".format(river.rightBankLength))
@@ -59,6 +58,12 @@ if __name__ == "__main__":
     print(river.right_bank_relative_coordinates)
     print(river.left_bank_relative_coordinates)
     print(river.riverArea)
+    '''
+    print(f"riverSinuosity  = {river.riverSinuosity}")
+    incrementalSinuosity = river.calculateIncrementalSinuosity(
+        incremental_points=215, save_to_csv=None)
+    print(f"\nriverSinuosityIncremental  = {incrementalSinuosity}")
+    exit()
 
     #coord_type = "relative DIStance"
     coord_type = "decimal degrees"
@@ -70,6 +75,12 @@ if __name__ == "__main__":
     #river.saveCenterlineMAT(save_to_mat="centerline_for_matlab.mat", centerline_type=center_type, coordinate_unit=coord_type)
     #river.saveCenterlineCSV(save_to_csv="centerline_for_csv.csv", latitude_header="lat", longitude_header="long", centerline_type="Equal Distance")
     #river.saveCenterlineMAT(save_to_mat="centerline_for_matlab.mat", latitude_header="lat", longitude_header="long", centerline_type="Evenly Spaced")
+
+    river.plotCenterline(centerline_type="Evenly Spaced",
+                         centerline_color="fuchsia",
+                         marker_type="scatter",
+                         dark_mode=True)
+    exit()
 
     # Plot river bank centerline
     river.plotCenterline(save_plot_name=None,

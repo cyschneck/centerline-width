@@ -1,3 +1,4 @@
+# Test Expected Error Messages from width.py
 # Pytest for centerline.py
 # centerline-width/: python -m pytest -v
 # python -m pytest -k test_errorWidth -xv

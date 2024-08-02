@@ -1,3 +1,15 @@
+#                                                                                                 #
+#                                                                                                 #
+#                                                                                                 #
+#      WIP: Beta Functionality                                                                    #
+#      channelMigration.py contains calculations for determining centerline migration             #
+#                                                                                                 #
+#      This includes the functions for:                                                           #
+#                                       - WIP                                                     #
+#                                                                                                 #
+#                                                                                                 #
+#                                                                                                 #
+
 # External Python libraries
 from pyproj import Geod
 

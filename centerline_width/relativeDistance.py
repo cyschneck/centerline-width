@@ -1,3 +1,30 @@
+#                                                                                                 #
+#                                                                                                 #
+#                                                                                                 #
+#      relativeDistance.py contains calculations to convert latitude and longtiude                #
+#      (decimal degree) coordinates to a relative distance from the first point on                #
+#      the left bank                                                                              #
+#                                                                                                 #
+#      This includes the functions for:                                                           #
+#                                       - relativeSingleCoordinate: backend function              #
+#                                              converts a single point to a relative              #
+#                                              distance from first                                #
+#                                              point on the left bank                             #
+#                                                                                                 #
+#                                       - relativeBankCoordinates: convert latitude               #
+#                                              and longitude coordinates as a                     #
+#                                              relative distance                                  #
+#                                                                                                 #
+#                                       - relativeRidgeCoordinates: convert Voronoi               #
+#                                              ridges coordinates to a relative                   #
+#                                              distance                                           #
+#                                                                                                 #
+#                                       - relativeWidthCoordinates: convert width                 #
+#                                              dictionary to a relative distance                  #
+#                                                                                                 #
+#                                                                                                 #
+#                                                                                                 #
+
 # Built-in Python functions
 import math
 

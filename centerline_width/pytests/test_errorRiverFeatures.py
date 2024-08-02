@@ -1,4 +1,4 @@
-# Pytest for riverFeatures.py
+# Test Expected Error Messages from riverFeatures.py
 # centerline-width/: python -m pytest -v
 # python -m pytest -k test_errorRiverFeatures -xv
 

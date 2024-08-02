@@ -1,4 +1,4 @@
-# Pytest for plotDiagram.py
+# Test Expected Error Messages from plotDiagrams.py
 # centerline-width/: python -m pytest -v
 # python -m pytest -k test_errorPlotDiagrams -xv
 

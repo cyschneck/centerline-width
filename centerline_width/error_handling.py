@@ -1,6 +1,11 @@
-########################################################################
-# ERROR CATCHES AND LOGGING FOR CLARITY WHEN USING CENTERLINE-WIDTH
-########################################################################
+#                                                                                                 #
+#                                                                                                 #
+#                                                                                                 #
+#      error_handling.py contains functions to capture and log invalid inputs for                 #
+#      claity when using centerline-width                                                         #
+#                                                                                                 #
+#                                                                                                 #
+#                                                                                                 #
 
 # Built-in Python functions
 import logging

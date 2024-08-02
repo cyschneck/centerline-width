@@ -1,3 +1,23 @@
+#                                                                                                 #
+#                                                                                                 #
+#                                                                                                 #
+#      width.py is responsible for determining the width between banks based on latitude and      #
+#      and longitude. Width is calculated from the coordinates of the centerline to where         #
+#      the width line intersects the banks                                                        #
+#                                                                                                 #
+#      This includes the functions for:                                                           #
+#                                       - riverWidthFromCenterlineCoordinates: backend for        #
+#                                              plotCenterlineWidth, returns the coordinates       #
+#                                              for the width intersection points                  #
+#                                                                                                 #
+#                                       - riverWidthFromCenterline: returns width dictionary      #
+#                                                and width at centerline where {[centerline       #
+#                                                latitude, centerline longitude] :                #
+#                                                 widthValue }                                    #
+#                                                                                                 #
+#                                                                                                 #
+#                                                                                                 #
+
 # Built-in Python functions
 import logging
 import csv

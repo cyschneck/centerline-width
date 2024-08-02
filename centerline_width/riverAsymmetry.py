@@ -1,3 +1,15 @@
+#                                                                                                 #
+#                                                                                                 #
+#                                                                                                 #
+#      WIP: Beta Functionality                                                                    #
+#      riverAsymmetry.py contains calculations for determining river asymmetry                    #
+#                                                                                                 #
+#      This includes the functions for:                                                           #
+#                                       - WIP                                                     #
+#                                                                                                 #
+#                                                                                                 #
+#                                                                                                 #
+
 # Built-in Python functions
 import logging
 import math

@@ -1,4 +1,4 @@
-# Pytest for saveO.py
+# Test Expected Error Messages from saveOutput.py
 # centerline-width/: python -m pytest -v
 # python -m pytest -k test_errorSaveOutput -xv
 

@@ -1,3 +1,16 @@
+#                                                                                                 #
+#                                                                                                 #
+#                                                                                                 #
+#      getCoordinatesKML.py handles converting input KML files to readable                        #
+#      coordinates                                                                                #
+#                                                                                                 #
+#      This includes the functions for:                                                           #
+#                                       - extractPointsToTextFile: extract KML points             #
+#                                              to a readable text file                            #
+#                                                                                                 #
+#                                                                                                 #
+#                                                                                                 #
+
 # Built-in Python functions
 import re
 
