@@ -11,11 +11,11 @@ dependencies:
   - pyarrow
   - pykml
   - pyproj
-  - pytest
-  - pytest-cov # codecov reports
   - scipy
   - shapely
-  - pre-commit # pre-commit hooks
+  - pytest      # dev: testing
+  - pytest-cov  # dev: codecov reports
+  - pre-commit  # dev: pre-commit hooks
   - pip
   - pip:
     - matplotlib # avoid warning "QApplication: invalid style override passed, ignoring it."

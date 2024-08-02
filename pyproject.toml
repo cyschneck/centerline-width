@@ -1,0 +1,72 @@
+[project]
+name = "centerline-width"
+version = "1.6.0"
+authors = [
+  { name="Cora Schneck", email="cyschneck@gmail.com" },
+  { name="Una Schneck", email="ugschneck@gmail.com" }
+]
+
+description = "A Python package to find the centerline and width of rivers based on the latitude and longitude of the right and left bank"
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.9"
+
+dependencies = [
+    "geopy",
+    "haversine",
+    "networkx",
+    "numpy",
+    "pandas",
+    "pykml",
+    "pyproj",
+    "scipy",
+    "shapely",
+    "matplotlib",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "pre-commit"
+]
+
+classifiers = [
+    "Development Status :: 4 - Beta", "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: Scientific/Engineering :: Hydrology",
+    "Topic :: Scientific/Engineering :: Visualization"
+]
+
+keywords = [
+        "geophysics", "python", "voronoi", "networkx", "centerline",
+        "centerline-extraction", "centerline-detection", "rivers",
+        "river-bank-length", "river-bank", "limnology", "hydrology", "fluvial",
+        "geomorphology"
+    ]
+
+[project.urls]
+Repository = "https://github.com/cyschneck/centerline-width"
+Issues = "https://github.com/cyschneck/centerline-width/issues"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["centerline_width"]
+exclude = ["centerline_width/pytests*"]
