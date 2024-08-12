@@ -412,7 +412,7 @@ Sinuosity = centerline length / straight distance from first/last point
 Sinuosity = river length / straight line length of the river
 ```
 Where sinuosity is broken in types:
-- SI < 1.05: Almost Straight river
+- SI < 1.05: Almost straight river
 - 1.05 <= SI < 1.25: Winding river
 - 1.25 <= SI < 1.5: Twisty river
 - 1.5 <= Meandering river

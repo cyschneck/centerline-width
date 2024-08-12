@@ -138,9 +138,9 @@ class riverCenterline:
         self.centerlineLength = centerline_width.centerlineLength(
             centerline_coordinates=shortest_path_coordinates,
             ellipsoid=self.ellipsoid)
-        self.equal_distance = equal_distance
 
         # Set the different types of Centerline coordinates
+        self.equal_distance = equal_distance
         self.centerlineEqualDistance = centerline_width.equalDistanceCenterline(
             centerline_coordinates=self.centerlineVoronoi,
             equal_distance=self.equal_distance,
