@@ -11,26 +11,6 @@ readme = "README.md"
 license = {file = "LICENSE"}
 requires-python = ">=3.9"
 
-dependencies = [
-    "geopy",
-    "haversine",
-    "networkx",
-    "numpy",
-    "pandas",
-    "pykml",
-    "pyproj",
-    "scipy",
-    "shapely",
-    "matplotlib",
-]
-
-[project.optional-dependencies]
-dev = [
-    "pytest",
-    "pytest-cov",
-    "pre-commit"
-]
-
 classifiers = [
     "Development Status :: 4 - Beta", "Intended Audience :: Developers",
     "Intended Audience :: Education",
@@ -54,6 +34,26 @@ keywords = [
         "river-bank-length", "river-bank", "limnology", "hydrology", "fluvial",
         "geomorphology"
     ]
+
+dependencies = [
+    "geopy",
+    "haversine",
+    "networkx",
+    "numpy",
+    "pandas",
+    "pykml",
+    "pyproj",
+    "scipy",
+    "shapely",
+    "matplotlib",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "pre-commit"
+]
 
 [project.urls]
 Repository = "https://github.com/cyschneck/centerline-width"
