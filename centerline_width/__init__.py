@@ -31,7 +31,7 @@ from .centerline import smoothedCoordinates
 from .riverFeatures import centerlineLength
 from .riverFeatures import calculateRiverArea
 from .riverFeatures import calculateSinuosity
-from .riverFeatures import incrementalSinuosity
+from .riverFeatures import incremental_sinuosity
 
 # width.py function calls
 from .width import riverWidthFromCenterlineCoordinates

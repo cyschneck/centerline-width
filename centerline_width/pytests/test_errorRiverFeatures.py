@@ -117,14 +117,14 @@ def river_class_object():
 river_class_example = river_class_object()
 
 
-## incrementalSinuosity() #####################################################
+## incremental_sinuosity() #####################################################
 def test_incrementalSinuosity_riverObjectRequired():
     with pytest.raises(
             ValueError,
             match=re.escape(
                 "[river_object]: Requires a river object (see: centerline_width.riverCenterline)"
             )):
-        centerline_width.incrementalSinuosity(river_object=None)
+        centerline_width.incremental_sinuosity(river_object=None)
 
 
 @pytest.mark.parametrize("invalid_input, error_output",
@@ -136,8 +136,8 @@ def test_incrementalSinuosity_InvalidTypeIncrementalPoints(
             match=re.escape(
                 f"[incremental_points]: Must be a int, current type = '{error_output}'"
             )):
-        centerline_width.incrementalSinuosity(river_object=river_class_example,
-                                              incremental_points=invalid_input)
+        centerline_width.incremental_sinuosity(
+            river_object=river_class_example, incremental_points=invalid_input)
 
 
 def test_incrementalSinuosity_InvalidRangeIncrementalPoints():
@@ -146,8 +146,8 @@ def test_incrementalSinuosity_InvalidRangeIncrementalPoints():
             match=re.escape(
                 f"[incremental_points]: Must be a positive value, greater than 0, currently = '0'"
             )):
-        centerline_width.incrementalSinuosity(river_object=river_class_example,
-                                              incremental_points=0)
+        centerline_width.incremental_sinuosity(
+            river_object=river_class_example, incremental_points=0)
 
 
 def test_incrementalSinuosity_InvalidRangeIncrementalPointsFromCenterpoints():
@@ -156,7 +156,8 @@ def test_incrementalSinuosity_InvalidRangeIncrementalPointsFromCenterpoints():
             match=re.escape(
                 f"[incremental_points]: length of centerline points must be greater than incremental_points, currently `{river_class_example.interpolate_n_centerpoints} < 100'"
             )):
-        centerline_width.incrementalSinuosity(river_object=river_class_example)
+        centerline_width.incremental_sinuosity(
+            river_object=river_class_example)
 
 
 @pytest.mark.parametrize("invalid_input, error_output",
@@ -167,9 +168,10 @@ def test_incrementalSinuosity_csvInvalidType(invalid_input, error_output):
             match=re.escape(
                 f"[save_to_csv]: Must be a str, current type = '{error_output}'"
             )):
-        centerline_width.incrementalSinuosity(river_object=river_class_example,
-                                              incremental_points=20,
-                                              save_to_csv=invalid_input)
+        centerline_width.incremental_sinuosity(
+            river_object=river_class_example,
+            incremental_points=20,
+            save_to_csv=invalid_input)
 
 
 def test_incrementalSinuosity_csvRequired():
@@ -178,6 +180,7 @@ def test_incrementalSinuosity_csvRequired():
             match=re.escape(
                 "[save_to_csv]: Extension must be a .csv file, current extension = 'txt'"
             )):
-        centerline_width.incrementalSinuosity(river_object=river_class_example,
-                                              incremental_points=20,
-                                              save_to_csv="filename.txt")
+        centerline_width.incremental_sinuosity(
+            river_object=river_class_example,
+            incremental_points=20,
+            save_to_csv="filename.txt")

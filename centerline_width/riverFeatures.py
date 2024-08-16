@@ -14,7 +14,7 @@
 #                                                                                                 #
 #                                       - calculateSinuosity: returns the total sinuosity         #
 #                                                                                                 #
-#                                       - incrementalSinuosity: returns the incremental           #
+#                                       - incremental_sinuosity: returns the incremental          #
 #                                                 sinuosity along the length of the river         #
 #                                                                                                 #
 #                                                                                                 #
@@ -72,9 +72,10 @@ def calculateSinuosity(centerline_evenlySpaced_coordinates: list = None,
     return sinuosity
 
 
-def incrementalSinuosity(river_object: centerline_width.riverCenterline = None,
-                         incremental_points: int = 100,
-                         save_to_csv: str = None) -> dict:
+def incremental_sinuosity(
+        river_object: centerline_width.riverCenterline = None,
+        incremental_points: int = 100,
+        save_to_csv: str = None) -> dict:
     # Return the sinuosity of the river in increments
     # (Centerline Coordinate Start, Centerline Coordinate End Longtiude, Sinuosity)
 
@@ -94,9 +95,9 @@ def incrementalSinuosity(river_object: centerline_width.riverCenterline = None,
         zip(*[iter(centerline_coordinates)] * incremental_points))
 
     # Calculate incremental sinuosity
-    incremental_sinuosity = {}
+    incremental_sinuosity_dict = {}
     for centerline_coords in centerline_groups:
-        incremental_sinuosity[(
+        incremental_sinuosity_dict[(
             centerline_coords[0], centerline_coords[-1])] = calculateSinuosity(
                 centerline_evenlySpaced_coordinates=centerline_coords,
                 ellipsoid=river_object.ellipsoid)
@@ -111,11 +112,11 @@ def incrementalSinuosity(river_object: centerline_width.riverCenterline = None,
                 "Centerline Latitude End (Deg)",
                 "Centerline Longitude End (Deg)", "Sinuosity"
             ])
-            for coordinate_key, sinuosity_value in incremental_sinuosity.items(
+            for coordinate_key, sinuosity_value in incremental_sinuosity_dict.items(
             ):
                 writer.writerow([
                     coordinate_key[0][1], coordinate_key[0][0],
                     coordinate_key[1][1], coordinate_key[1][0], sinuosity_value
                 ])
 
-    return incremental_sinuosity
+    return incremental_sinuosity_dict

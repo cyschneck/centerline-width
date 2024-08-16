@@ -580,13 +580,13 @@ def test_riverCenterlineClass_default():
 
 def test_riverCenterlineClass_default_incrementalSinuosity():
     river_class_example = centerline_width.riverCenterline(csv_data=csv_data())
-    assert river_class_example.incrementalSinuosity() == {
+    assert river_class_example.incremental_sinuosity() == {
         ((-92.86781591391708, 30.038216571334427), (-92.8678415323492, 30.037979489365142)):
         pytest.approx(1.0143354378572471),
         ((-92.86785143668344, 30.037954361467868), (-92.86793749224125, 30.03772716195012)):
         pytest.approx(1.000273618506147)
     }
-    assert river_class_example.incrementalSinuosity(incremental_points=2) == {
+    assert river_class_example.incremental_sinuosity(incremental_points=2) == {
         ((-92.86781591391708, 30.038216571334427), (-92.86781295429665, 30.038189723934206)):
         1.0,
         ((-92.86780979130727, 30.03816290193235), (-92.867808170901, 30.038135955272256)):
@@ -615,9 +615,9 @@ def test_riverCenterlineClass_default_incrementalSinuosity():
         1.0
     }
     assert all(value == 1.0
-               for value in river_class_example.incrementalSinuosity(
+               for value in river_class_example.incremental_sinuosity(
                    incremental_points=2).values())
-    assert river_class_example.incrementalSinuosity(incremental_points=5) == {
+    assert river_class_example.incremental_sinuosity(incremental_points=5) == {
         ((-92.86781591391708, 30.038216571334427), (-92.86780740520584, 30.038108960025653)):
         pytest.approx(1.0005075696359558),
         ((-92.86780876912015, 30.038081984444297), (-92.8678415323492, 30.037979489365142)):
@@ -2056,13 +2056,13 @@ def test_riverCenterlineClass_interpolateTrue():
 def test_riverCenterlineClass_interpolateTrue_incrementalSinuosity():
     river_class_example = centerline_width.riverCenterline(
         csv_data=csv_data(), interpolate_data=True)
-    assert river_class_example.incrementalSinuosity() == {
+    assert river_class_example.incremental_sinuosity() == {
         ((-92.86781877818767, 30.03824331037043), (-92.86783468860202, 30.03799605241219)):
         pytest.approx(1.0128092250280218),
         ((-92.867845263934, 30.037970121132588), (-92.86793435532044, 30.037734482116893)):
         pytest.approx(1.0002815914658583)
     }
-    assert river_class_example.incrementalSinuosity(incremental_points=2) == {
+    assert river_class_example.incremental_sinuosity(incremental_points=2) == {
         ((-92.86781877818767, 30.03824331037043), (-92.8678157919604, 30.038215465037222)):
         1.0,
         ((-92.8678127342897, 30.038187627254047), (-92.86780944123, 30.038159817668966)):
@@ -2091,9 +2091,9 @@ def test_riverCenterlineClass_interpolateTrue_incrementalSinuosity():
         1.0
     }
     assert all(value == 1.0
-               for value in river_class_example.incrementalSinuosity(
+               for value in river_class_example.incremental_sinuosity(
                    incremental_points=2).values())
-    assert river_class_example.incrementalSinuosity(incremental_points=5) == {
+    assert river_class_example.incremental_sinuosity(incremental_points=5) == {
         ((-92.86781877818767, 30.03824331037043), (-92.86780799592266, 30.038131855329787)):
         pytest.approx(1.0002605222846732),
         ((-92.86780766274642, 30.038103866372037), (-92.86783468860202, 30.03799605241219)):

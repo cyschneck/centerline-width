@@ -31,7 +31,7 @@ Find the centerline and width of rivers based on the latitude and longitude posi
     * leftBankLength
     * area
     * sinuosity
-    * incrementalSinuosity()
+    * incremental_sinuosity()
 * **Export centerline to .CSV and .MAT files**
     * saveCenterlineCSV()
     * saveCenterlineMAT()
@@ -428,7 +428,7 @@ The sinuosity of the river returns as a float `1.4593141841039725`
 ### Incremental Sinuosity of River
 Return the incremental sinuosity of the river at evenly spaced increments
 ```
-incrementalSinuosity(
+incremental_sinuosity(
         incremental_points=100,
         save_to_csv=None)
 ```
@@ -438,7 +438,7 @@ incrementalSinuosity(
 ```python
 import centerline_width
 river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
-river_object.incrementalSinuosity()
+river_object.incremental_sinuosity()
 ```
 Returns a dictionary with the start and end centerline coordinates and associated sinuosity `{((-92.87803465419134, 30.04494734395193), (-92.87718084516158, 30.03944640478984)): 0.8164574107802118, ((-92.87714797109666, 30.03944945940497), (-92.87020323809925, 30.039886265891074)): 0.9810773013508994}`
 

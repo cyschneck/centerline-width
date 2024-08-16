@@ -134,7 +134,7 @@ def test_riverCenterline_riverSinuosity():
 
 
 def test_riverCenterline_riverIncrementalSinuosity():
-    assert river_class_example.incrementalSinuosity() == pytest.approx({
+    assert river_class_example.incremental_sinuosity() == pytest.approx({
         ((-92.86781591391708, 30.038216571334427), (-92.8678415323492, 30.037979489365142)):
         1.0143354378572471,
         ((-92.86785143668344, 30.037954361467868), (-92.86793749224125, 30.03772716195012)):

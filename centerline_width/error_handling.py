@@ -590,7 +590,7 @@ def errorHandlingIncrementalSinuosity(
         river_object: centerline_width.riverCenterline = None,
         incremental_points: int = 10,
         save_to_csv: str = None) -> None:
-    # Error Handling for incrementalSinuosity()
+    # Error Handling for incremental_sinuosity()
     if river_object is None:
         raise ValueError(
             "[river_object]: Requires a river object (see: centerline_width.riverCenterline)"

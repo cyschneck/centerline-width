@@ -60,9 +60,9 @@ if __name__ == "__main__":
     '''
     print(f"area = {river.area} km^2")
     print(f"sinuosity  = {river.sinuosity}")
-    incrementalSinuosity = river.incrementalSinuosity(incremental_points=215,
-                                                      save_to_csv=None)
-    print(f"\nincremental sinuosity  = {incrementalSinuosity}")
+    incremental_sinuosity = river.incremental_sinuosity(incremental_points=215,
+                                                        save_to_csv=None)
+    print(f"\nincremental sinuosity  = {incremental_sinuosity}")
     #exit()
 
     #coord_type = "relative DIStance"
