@@ -4,9 +4,6 @@
 #      preprocessing.py calculates and processes river data input data                            #
 #                                                                                                 #
 #      This includes the functions for:                                                           #
-#                                       - convertColumnsToCSV: converts txt file to               #
-#                                              csv                                                #
-#                                                                                                 #
 #                                       - leftRightCoordinates: input left and right              #
 #                                              coordinates from the input values                  #
 #                                                                                                 #
@@ -44,44 +41,6 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 stream_handler = logging.StreamHandler()
 logger.addHandler(stream_handler)
-
-
-def convertColumnsToCSV(text_file: str = None,
-                        flip_direction: bool = False) -> None:
-    # Convert txt file to a comma-separated version of the file
-    centerline_width.errrorHandlingConvertColumnsToCSV(
-        text_file=text_file, flip_direction=flip_direction)
-
-    left_rows = []
-    right_rows = []
-    with open(text_file) as input_file:
-        lines = input_file.readlines()
-        for i, line in enumerate(lines):
-            line = line.strip().split(" ")
-            line = [x for x in line if x != '']
-            if i == 0:
-                header_fields = line
-            else:
-                left_rows.append(line[:2])
-                right_rows.append(line[2:])
-
-    # reverse the direction for the right bank
-    if flip_direction:
-        right_rows = right_rows[::-1]
-
-    total_rows = []
-    for i, row in enumerate(left_rows):
-        total_rows.append(row + right_rows[i])
-
-    # account for relative and absolute paths to use text_file name and location for .csv
-    full_path, filename = os.path.split(os.path.abspath(text_file))
-    csv_file_name = filename.split(".")[0] + ".csv"
-    write_file_name = os.path.join(full_path, csv_file_name)
-
-    with open(write_file_name, "w") as f:
-        write = csv.writer(f)
-        write.writerow(header_fields)
-        write.writerows(total_rows)
 
 
 def leftRightCoordinates(dataframe=None):

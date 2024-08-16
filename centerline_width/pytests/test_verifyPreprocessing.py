@@ -21,9 +21,6 @@ def generate_txt_convertColumnsToCSV_noFlip(tmpdir):
         text_file.write("30.037581,-92.868569,30.037441,-92.867476\n")
         text_file.write("30.137581,-92.868569,30.037441,-92.867476\n")
         text_file.write("30.237581,-92.868569,30.037441,-92.867476\n")
-    centerline_width.convertColumnsToCSV(text_file=str(temp_text_file),
-                                         flip_direction=False)
-
     return temp_text_file
 
 

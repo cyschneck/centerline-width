@@ -15,8 +15,8 @@
 Find the centerline and width of rivers based on the latitude and longitude positions from the right and left bank 
 
 * **Convert raw data from Google Earth Pro to CSV**
-    * extractPointsToTextFile()
-    * convertColumnsToCSV()
+    * kml_to_csv()
+    * txt_to_csv()
 * **Find centerline and width of river**
     * plotCenterline()
     * plotCenterlineWidth()
@@ -56,10 +56,9 @@ The core of centerline-width works with a .csv file of the left and right bank l
 
 ```python
 import centerline_width
-centerline_width.extractPointsToTextFile(left_kml="left_bank.kml",
+centerline_width.kml_to_csv(left_kml="left_bank.kml",
                     right_kml="right_bank.kml",
-                    text_output_name="river_coordinates_output.txt")
-centerline_width.convertColumnsToCSV(text_file="river_coordinates_output.txt")
+                    text_output_name="river_coordinates_output.csv")
 ```
 Then once the .csv file is created, to run the centerline-width functions, generate a river object from the `river_coordinates_output.csv`
 
@@ -108,46 +107,20 @@ Save the path to a .kml file by right clicking on the path in Places and selecti
 
 Repeat (1) and (2) for the right bank by starting a new path
 
-### Convert KML files to Text File
+### Convert KML files to CSV File
 
-Convert two .kml files from Google Earth Pro (for the left and right bank) and export the coordinates into a text file
+Convert two .kml files from Google Earth Pro (for the left and right bank) and export the coordinates into a csv file
 
 ```
-extractPointsToTextFile(left_kml=None,
-            right_kml=None,
-            text_output_name=None)
+kml_to_csv(left_kml: str = None,
+           right_kml: str = None,
+           flip_direction: bool = False,
+           csv_output: str = None)
 ```
 
 * **[REQUIRED]** left_kml (string): File location of the kml file for left bank
 * **[REQUIRED]** right_kml (string): File location of the kml file for right bank
-* **[REQUIRED]** text_output_name (string): Output file name (and location)
-
-```python
-import centerline_width
-centerline_width.extractPointsToTextFile(left_kml="leftbank.kml",
-                    right_kml="rightbank.kml",
-                    text_output_name="data/river_coords_output.txt")
-```
-Output: The text file `data/river_coords_output.txt` with the headers `llat, llon, rlat, rlon` (for the left latitude, left longitude, right latitude, and right longitude)
-
-Example:
-```
-     llat       llon      rlat       rlon
-30.037581 -92.868569 30.119804 -92.907933
-30.037613 -92.868549 30.119772 -92.907924
-30.037648 -92.868546 30.119746 -92.907917
-30.037674 -92.868536 30.119721 -92.907909
-30.037702 -92.868533 30.119706 -92.907905
-```
-
-### Converted Text File to CSV
-
-Convert a text file with coordinates for a left and right bank's latitude and longitude to a csv file with columns for the left bank latitude (llat), left bank longitude (llon), right bank latitude (rlat), right bank longitude (rlon)
-
-```
-convertColumnsToCSV(text_file=None, flip_direction=False)
-```
-* **[REQUIRED]** text_file (string): File location of the text file to convert
+* **[REQUIRED]** csv_output (string): Output file name (and location)
 * [OPTIONAL] flip_direction (boolean): If the latitude/longitude of the banks are generated in reverse order, flip the final values so left/right bank are in order
 
 Scripts expects data as a list of point for left and right banks:
@@ -155,7 +128,39 @@ Scripts expects data as a list of point for left and right banks:
 
 ```python
 import centerline_width
-centerline_width.convertColumnsToCSV(text_file="data/river_coords.txt",
+centerline_width.kml_to_csv(left_kml="leftbank.kml",
+                    right_kml="rightbank.kml",
+                    csv_output="data/river_coords_output.csv")
+```
+Example:
+```
+llat,llon,rlat,rlon
+30.037581,-92.868569,30.037441,-92.867476
+30.037613,-92.868549,30.037448,-92.867474
+30.037648,-92.868546,30.037482,-92.867449
+30.037674,-92.868536,30.037506,-92.867432
+30.037702,-92.868533,30.037525,-92.867430
+```
+Output: A csv file `data/river_coords.csv` with the headers `llat, llon, rlat, rlon`
+
+### Converted Text File to CSV
+
+Convert a text file with coordinates for a left and right bank's latitude and longitude to a csv file with columns for the left bank latitude (llat), left bank longitude (llon), right bank latitude (rlat), right bank longitude (rlon)
+
+```
+txt_to_csv(txt_input: str = None,
+           flip_direction: bool = False
+```
+
+* **[REQUIRED]** txt_input (string): File location of the text file to convert
+* [OPTIONAL] flip_direction (boolean): If the latitude/longitude of the banks are generated in reverse order, flip the final values so left/right bank are in order
+
+Scripts expects data as a list of point for left and right banks:
+- Header: llat, llon, rlat, rlon
+
+```python
+import centerline_width
+centerline_width.txt_to_csv(txt_input="data/river_coords.txt",
                 flip_direction=True)
 ```
 Converts text file:

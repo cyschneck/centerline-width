@@ -1,8 +1,10 @@
 # get_coordinates_kml.py function calls
-from .getCoordinatesKML import extractPointsToTextFile
+from .getCoordinatesKML import kml_to_csv
+from .getCoordinatesKML import txt_to_csv
+from .getCoordinatesKML import extractPointsToTextFile  # pending deprecation
+from .getCoordinatesKML import convertColumnsToCSV  # pending deprecation
 
 # preprocessing.py function calls
-from .preprocessing import convertColumnsToCSV
 from .preprocessing import leftRightCoordinates
 from .preprocessing import generatePolygon
 from .preprocessing import generateVoronoi

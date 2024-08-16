@@ -2,10 +2,12 @@
 import centerline_width
 
 if __name__ == "__main__":
-    centerline_width.kml_to_csv(left_kml="data/leftbank.kml",
-                                right_kml="data/rightbank.kml",
-                                flip_direction=True,
-                                csv_output="data/river_coords.csv")
+    centerline_width.extractPointsToTextFile(
+        left_kml="data/leftbank.kml",
+        right_kml="data/rightbank.kml",
+        text_output_name="data/river_coords.txt")
+    centerline_width.convertColumnsToCSV(text_file="data/river_coords.txt",
+                                         flip_direction=True)
 
     #centerline_width.extractPointsToTextFile(left_kml="data/59deg48_18dot87_N_69deg46_59dot57_E_lb.kml",
     #                                        right_kml="data/59deg48_18dot87_N_69deg46_59dot57_E_rb.kml",
