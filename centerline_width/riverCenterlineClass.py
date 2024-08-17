@@ -166,9 +166,12 @@ class CenterlineWidth:
         self.centerlineEvenlySpaced = centerline_width.evenlySpacedCenterline(
             centerline_coordinates=self.centerline_voronoi,
             number_of_fixed_points=self.interpolate_n_centerpoints)
+        self.centerline_evenly_spaced = centerline_width.evenlySpacedCenterline(
+            centerline_coordinates=self.centerline_voronoi,
+            number_of_fixed_points=self.interpolate_n_centerpoints)
         self.centerlineSmoothed = centerline_width.smoothedCoordinates(
             river_object=self,
-            centerline_coordinates=self.centerlineEvenlySpaced,
+            centerline_coordinates=self.centerline_evenly_spaced,
             interprolate_num=self.interpolate_n_centerpoints)
 
         # Relative Distance from bottom left bank point to each Centerline coordinates
@@ -179,7 +182,7 @@ class CenterlineWidth:
             self.left_bank_coordinates[0], self.centerlineEqualDistance,
             self.ellipsoid)
         self.centerlineEvenlySpacedRelative = centerline_width.relativeCenterlineCoordinates(
-            self.left_bank_coordinates[0], self.centerlineEvenlySpaced,
+            self.left_bank_coordinates[0], self.centerline_evenly_spaced,
             self.ellipsoid)
         self.centerlineSmoothedRelative = centerline_width.relativeCenterlineCoordinates(
             self.left_bank_coordinates[0], self.centerlineSmoothed,
@@ -187,7 +190,7 @@ class CenterlineWidth:
 
         # Overall Sinuosity
         self.sinuosity = centerline_width.calculateSinuosity(
-            self.centerlineEvenlySpaced, self.ellipsoid)
+            self.centerline_evenly_spaced, self.ellipsoid)
 
     def incremental_sinuosity(self,
                               incremental_points: int = 10,

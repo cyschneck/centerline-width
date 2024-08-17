@@ -370,7 +370,7 @@ def width(river_object: centerline_width.CenterlineWidth = None,
     else:
         right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(
             river_object=river_object,
-            centerline_coordinates=river_object.centerlineEvenlySpaced,
+            centerline_coordinates=river_object.centerline_evenly_spaced,
             transect_span_distance=transect_span_distance,
             remove_intersections=remove_intersections,
             coordinate_unit="Decimal Degrees")

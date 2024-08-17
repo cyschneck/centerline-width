@@ -84,11 +84,11 @@ def incremental_sinuosity(
         incremental_points=incremental_points,
         save_to_csv=save_to_csv)
 
-    if river_object.centerlineEvenlySpaced is None:
+    if river_object.centerline_evenly_spaced is None:
         return {}
 
     # Ignore the first and last point in the coordinates
-    centerline_coordinates = river_object.centerlineEvenlySpaced[1:-1]
+    centerline_coordinates = river_object.centerline_evenly_spaced[1:-1]
 
     # Separate centerline in groups of incremental_points long
     centerline_groups = list(

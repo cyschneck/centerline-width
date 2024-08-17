@@ -41,13 +41,13 @@ def generate_testRiver():
 def generate_expectedCenterline(span_distance=None):
     # group points inclusive of previous point: [A, B, C, D] = [A, B], [B, C], [C, D]
     groups_of_n_points = []
-    for i in range(0, len(test_river.centerlineEvenlySpaced), span_distance):
+    for i in range(0, len(test_river.centerline_evenly_spaced), span_distance):
         if i == 0:
             groups_of_n_points.append(
-                test_river.centerlineEvenlySpaced[0:span_distance])
+                test_river.centerline_evenly_spaced[0:span_distance])
         else:
             groups_of_n_points.append(
-                test_river.centerlineEvenlySpaced[i - 1:i + span_distance])
+                test_river.centerline_evenly_spaced[i - 1:i + span_distance])
 
     centerline_slope_expected = []
     for group_points in groups_of_n_points:

@@ -39,6 +39,7 @@ if __name__ == "__main__":
     print("centerlineVoronoi = {0}".format(river.centerlineVoronoi))
     print("equalDistanceCenterline = {0}".format(
         river.centerlineEqualDistance))
+    print("centerlineEvenlySpaced = {0}".format(river.centerlineEvenlySpaced))
     '''
     print("\nCenterline Length = {0} km".format(river.centerlineLength))
     print("Centerline Length = {0} m".format(river.centerlineLength * 1000))
@@ -49,7 +50,6 @@ if __name__ == "__main__":
         river.centerlineVoronoiRelative))
     print("equalDistanceCenterlineRelative = {0}".format(
         river.centerlineEqualDistanceRelative))
-    print("centerlineEvenlySpaced = {0}".format(river.centerlineEvenlySpaced))
     print("centerlineEvenlySpacedRelative = {0}".format(
         river.centerlineEvenlySpacedRelative))
     print("centerlineSmoothed = {0}".format(river.centerlineSmoothed))

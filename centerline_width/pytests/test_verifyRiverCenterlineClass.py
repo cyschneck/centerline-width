@@ -417,7 +417,7 @@ def test_CenterlineWidth_default():
         pytest.approx((-92.86797615799243, 30.037635124296454)),
         pytest.approx((-92.86800507153629, 30.037548493536658))
     ]
-    assert river_class_example.centerlineEvenlySpaced == [
+    assert river_class_example.centerline_evenly_spaced == [
         pytest.approx((-92.86781887353752, 30.03824341873465)),
         pytest.approx((-92.86781591391708, 30.038216571334427)),
         pytest.approx((-92.86781295429665, 30.038189723934206)),
@@ -1883,7 +1883,7 @@ def test_CenterlineWidth_interpolateTrue():
         pytest.approx((-92.8679656786269, 30.037661458145394)),
         pytest.approx((-92.86799812738784, 30.037575780441053))
     ]
-    assert river_class_example.centerlineEvenlySpaced == [
+    assert river_class_example.centerline_evenly_spaced == [
         pytest.approx((-92.86782125207236, 30.03827120587997)),
         pytest.approx((-92.86781877818767, 30.03824331037043)),
         pytest.approx((-92.8678157919604, 30.038215465037222)),
