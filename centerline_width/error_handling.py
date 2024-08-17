@@ -225,16 +225,15 @@ def errorHandlingPlotCenterlineWidth(
 
 
 ## Error Handling: centerline.py
-def errorHandlingRiverWidthFromCenterline(
-        river_object: centerline_width.riverCenterline = None,
-        transect_span_distance: int = None,
-        transect_slope: str = None,
-        apply_smoothing: bool = None,
-        remove_intersections: bool = None,
-        coordinate_unit: str = None,
-        coordinate_reference: str = None,
-        save_to_csv: str = None) -> None:
-    # Error Handling for riverWidthFromCenterline()
+def errorHandlingWidth(river_object: centerline_width.riverCenterline = None,
+                       transect_span_distance: int = None,
+                       transect_slope: str = None,
+                       apply_smoothing: bool = None,
+                       remove_intersections: bool = None,
+                       coordinate_unit: str = None,
+                       coordinate_reference: str = None,
+                       save_to_csv: str = None) -> None:
+    # Error Handling for width()
     if river_object is None:
         raise ValueError(
             "[river_object]: Requires a river object (see: centerline_width.riverCenterline)"

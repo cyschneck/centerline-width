@@ -37,7 +37,7 @@ from .riverFeatures import incremental_sinuosity
 
 # width.py function calls
 from .width import riverWidthFromCenterlineCoordinates
-from .width import riverWidthFromCenterline
+from .width import width
 
 # saveOutput.py function calls
 from .saveOutput import saveCenterlineCSV
@@ -54,7 +54,7 @@ from .channelMigration import centerlineMigrationRate
 from .error_handling import errrorHandlingConvertColumnsToCSV
 from .error_handling import errorHandlingPlotCenterline
 from .error_handling import errorHandlingPlotCenterlineWidth
-from .error_handling import errorHandlingRiverWidthFromCenterline
+from .error_handling import errorHandlingWidth
 from .error_handling import errorHandlingSaveCenterlineCSV
 from .error_handling import errorHandlingSaveCenterlineMAT
 from .error_handling import errorHandlingExtractPointsToTextFile

@@ -20,7 +20,7 @@ Find the centerline and width of rivers based on the latitude and longitude posi
 * **Find centerline and width of river**
     * plot_centerline()
     * plot_centerline_width()
-    * riverWidthFromCenterline()
+    * width()
     * centerlineVoronoi
     * centerlineEqualDistance 
     * centerlineEvenlySpaced
@@ -666,7 +666,7 @@ Two options for measuring and displaying coordinates. The two options are "Decim
 Return the width of the river at each (evenly spaced or smoothed) with coordinates where width line intersects either the centerline, `(Centerline Longitude, Centerline Latitude) : width`, or riverbanks, `((Right Bank Longitude, Right Bank Latitude), (Left Bank Longitude, Left Bank Latitude)) : width` in kilometers
 
 ```
-riverWidthFromCenterline(transect_span_distance=3,
+width(transect_span_distance=3,
             transect_slope="Average",
             apply_smoothing=True,
             remove_intersections=False,
@@ -688,7 +688,7 @@ riverWidthFromCenterline(transect_span_distance=3,
 ```python
 import centerline_width
 river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
-river_width_dict = river_object.riverWidthFromCenterline(transect_span_distance=3,
+river_width_dict = river_object.width(transect_span_distance=3,
                             apply_smoothing=True,
                             coordinate_reference="Centerline",
                             remove_intersections=True)

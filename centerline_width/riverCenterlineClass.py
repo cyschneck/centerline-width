@@ -313,7 +313,32 @@ class riverCenterline:
                                  coordinate_unit: str = "Decimal Degrees",
                                  coordinate_reference: str = "Centerline",
                                  save_to_csv: str = None):
-        return centerline_width.riverWidthFromCenterline(
+        ### Pending Deprecation for function name replaced with plot_centerline()
+        ## To be removed
+        warnings.warn(
+            "riverWidthFromCenterline() has been replaced with width() and will be removed in the future",
+            FutureWarning,
+            stacklevel=2)
+
+        return centerline_width.width(
+            river_object=self,
+            transect_span_distance=transect_span_distance,
+            transect_slope=transect_slope,
+            apply_smoothing=apply_smoothing,
+            remove_intersections=remove_intersections,
+            coordinate_unit=coordinate_unit,
+            coordinate_reference=coordinate_reference,
+            save_to_csv=save_to_csv)
+
+    def width(self,
+              transect_span_distance: int = 3,
+              transect_slope: str = "Average",
+              apply_smoothing: bool = True,
+              remove_intersections: bool = False,
+              coordinate_unit: str = "Decimal Degrees",
+              coordinate_reference: str = "Centerline",
+              save_to_csv: str = None):
+        return centerline_width.width(
             river_object=self,
             transect_span_distance=transect_span_distance,
             transect_slope=transect_slope,

@@ -110,13 +110,12 @@ if __name__ == "__main__":
                                 coordinate_unit=coord_type)
 
     # Return width line for each centerline coordinates
-    river_width_dict = river.riverWidthFromCenterline(
-        transect_span_distance=transect,
-        transect_slope=slope_type,
-        apply_smoothing=False,
-        remove_intersections=False,
-        save_to_csv=None,
-        coordinate_reference="banks",
-        coordinate_unit=coord_type)
+    river_width_dict = river.width(transect_span_distance=transect,
+                                   transect_slope=slope_type,
+                                   apply_smoothing=False,
+                                   remove_intersections=False,
+                                   save_to_csv=None,
+                                   coordinate_reference="banks",
+                                   coordinate_unit=coord_type)
 
     print(f"\nriver width dict = {river_width_dict}\n")
