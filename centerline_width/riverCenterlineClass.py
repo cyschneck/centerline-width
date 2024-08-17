@@ -167,7 +167,7 @@ class CenterlineWidth:
         self.centerlineEqualDistance = centerline_width.equalDistanceCenterline(
             centerline_coordinates=self.centerline_voronoi,
             equal_distance=self.equal_distance,
-            ellipsoid=self.ellipsoid)
+            ellipsoid=self.ellipsoid)  # Pending Deprecation
         self.centerline_equal_distance = centerline_width.equalDistanceCenterline(
             centerline_coordinates=self.centerline_voronoi,
             equal_distance=self.equal_distance,
@@ -195,7 +195,10 @@ class CenterlineWidth:
             self.left_bank_coordinates[0], self.centerline_voronoi,
             self.ellipsoid)
         self.centerlineEqualDistanceRelative = centerline_width.relativeCenterlineCoordinates(
-            self.left_bank_coordinates[0], self.centerlineEqualDistance,
+            self.left_bank_coordinates[0], self.centerline_equal_distance,
+            self.ellipsoid)  # Pending Deprecation
+        self.centerline_equal_distance_relative = centerline_width.relativeCenterlineCoordinates(
+            self.left_bank_coordinates[0], self.centerline_equal_distance,
             self.ellipsoid)
         self.centerlineEvenlySpacedRelative = centerline_width.relativeCenterlineCoordinates(
             self.left_bank_coordinates[0], self.centerline_evenly_spaced,

@@ -45,11 +45,12 @@ if __name__ == "__main__":
     print("Left Bank Length = {0} km".format(river.left_bank_length))
     print("centerline_voronoi_relative = {0}".format(
         river.centerline_voronoi_relative))
+    print("centerline_equal_distance_relative = {0}".format(
+        river.centerline_equal_distance_relative))
     '''
     print("Centerline Length = {0} m".format(river.centerlineLength * 1000))
     print("ellipsoid = {0}".format(river.ellipsoid))
-    print("equalDistanceCenterlineRelative = {0}".format(
-        river.centerlineEqualDistanceRelative))
+
     print("centerlineEvenlySpacedRelative = {0}".format(
         river.centerlineEvenlySpacedRelative))
     print("centerlineSmoothedRelative = {0}".format(
