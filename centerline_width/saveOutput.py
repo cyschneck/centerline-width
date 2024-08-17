@@ -62,7 +62,7 @@ def save_centerline_csv(river_object: centerline_width.CenterlineWidth = None,
             centerline_coordinates_by_type = river_object.centerline_smoothed
     if coordinate_unit == "Relative Distance":
         if centerline_type == "Voronoi":
-            centerline_coordinates_by_type = river_object.centerlineVoronoiRelative
+            centerline_coordinates_by_type = river_object.centerline_voronoi_relative
         if centerline_type == "Equal Distance":
             centerline_coordinates_by_type = river_object.centerlineEqualDistanceRelative
         if centerline_type == "Evenly Spaced":
@@ -125,7 +125,7 @@ def save_centerline_mat(river_object: centerline_width.CenterlineWidth = None,
             centerline_coordinates_by_type = river_object.centerline_smoothed
     if coordinate_unit == "Relative Distance":
         if centerline_type == "Voronoi":
-            centerline_coordinates_by_type = river_object.centerlineVoronoiRelative
+            centerline_coordinates_by_type = river_object.centerline_voronoi_relative
         if centerline_type == "Equal Distance":
             centerline_coordinates_by_type = river_object.centerlineEqualDistanceRelative
         if centerline_type == "Evenly Spaced":

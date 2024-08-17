@@ -103,7 +103,7 @@ def plotCenterlineBackend(
         if coordinate_unit == "Decimal Degrees":
             centerline_coordinates_by_type = river_object.centerline_voronoi
         if coordinate_unit == "Relative Distance":
-            centerline_coordinates_by_type = river_object.centerlineVoronoiRelative
+            centerline_coordinates_by_type = river_object.centerline_voronoi_relative
 
     if centerline_type == "Equal Distance":
         centerline_legend = "Equal Distance Centerline Coordinates"

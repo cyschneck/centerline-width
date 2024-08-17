@@ -190,6 +190,9 @@ class CenterlineWidth:
         # Relative Distance from bottom left bank point to each Centerline coordinates
         self.centerlineVoronoiRelative = centerline_width.relativeCenterlineCoordinates(
             self.left_bank_coordinates[0], self.centerline_voronoi,
+            self.ellipsoid)  # Pending Deprecation
+        self.centerline_voronoi_relative = centerline_width.relativeCenterlineCoordinates(
+            self.left_bank_coordinates[0], self.centerline_voronoi,
             self.ellipsoid)
         self.centerlineEqualDistanceRelative = centerline_width.relativeCenterlineCoordinates(
             self.left_bank_coordinates[0], self.centerlineEqualDistance,

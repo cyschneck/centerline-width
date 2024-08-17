@@ -479,7 +479,7 @@ def test_CenterlineWidth_default():
         pytest.approx((-92.86800440657967, 30.03755104077941)),
         pytest.approx((-92.86801062016116, 30.037525395801037))
     ]
-    assert river_class_example.centerlineVoronoiRelative == [
+    assert river_class_example.centerline_voronoi_relative == [
         pytest.approx((73.47047894946884, 72.32036803406206)),
         pytest.approx((66.19109452005578, 73.01861616268259)),
         pytest.approx((65.91411844882091, 73.04069054140477)),
@@ -1945,7 +1945,7 @@ def test_CenterlineWidth_interpolateTrue():
         pytest.approx((-92.86800423779859, 30.037552027025324)),
         pytest.approx((-92.86801078861649, 30.03752549183515))
     ]
-    assert river_class_example.centerlineVoronoiRelative == [
+    assert river_class_example.centerline_voronoi_relative == [
         pytest.approx((76.55076830013083, 72.09093998499534)),
         pytest.approx((74.6098789520801, 72.23550251163009)),
         pytest.approx((73.4721576636839, 72.32834938994927)),
