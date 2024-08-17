@@ -68,7 +68,7 @@ def save_centerline_csv(river_object: centerline_width.CenterlineWidth = None,
         if centerline_type == "Evenly Spaced":
             centerline_coordinates_by_type = river_object.centerline_evenly_spaced_relative
         if centerline_type == "Smoothed":
-            centerline_coordinates_by_type = river_object.centerlineSmoothedRelative
+            centerline_coordinates_by_type = river_object.centerline_smoothed_relative
 
     # set default latitude/longitude headers
     if coordinate_unit == "Decimal Degrees":
@@ -131,7 +131,7 @@ def save_centerline_mat(river_object: centerline_width.CenterlineWidth = None,
         if centerline_type == "Evenly Spaced":
             centerline_coordinates_by_type = river_object.centerline_evenly_spaced_relative
         if centerline_type == "Smoothed":
-            centerline_coordinates_by_type = river_object.centerlineSmoothedRelative
+            centerline_coordinates_by_type = river_object.centerline_smoothed_relative
 
     # .mat files do not allow for spaces or special characters in the header
     # convert spaces/special characters to underscores

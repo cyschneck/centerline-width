@@ -185,7 +185,8 @@ class CenterlineWidth:
         self.centerlineSmoothed = centerline_width.smoothedCoordinates(
             river_object=self,
             centerline_coordinates=self.centerline_evenly_spaced,
-            interprolate_num=self.interpolate_n_centerpoints)
+            interprolate_num=self.interpolate_n_centerpoints
+        )  # Pending Deprecation
         self.centerline_smoothed = centerline_width.smoothedCoordinates(
             river_object=self,
             centerline_coordinates=self.centerline_evenly_spaced,
@@ -214,6 +215,9 @@ class CenterlineWidth:
             self.ellipsoid)
 
         self.centerlineSmoothedRelative = centerline_width.relativeCenterlineCoordinates(
+            self.left_bank_coordinates[0], self.centerline_smoothed,
+            self.ellipsoid)  # Pending Deprecation
+        self.centerline_smoothed_relative = centerline_width.relativeCenterlineCoordinates(
             self.left_bank_coordinates[0], self.centerline_smoothed,
             self.ellipsoid)
 
