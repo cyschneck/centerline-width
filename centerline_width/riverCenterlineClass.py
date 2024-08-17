@@ -27,6 +27,7 @@ class CenterlineWidth:
 
     def __init__(self,
                  csv_data: str = None,
+                 cutoff: int = None,
                  optional_cutoff: int = None,
                  interpolate_data: bool = False,
                  interpolate_n: int = 5,
@@ -36,20 +37,29 @@ class CenterlineWidth:
 
         centerline_width.errorHandlingCenterlineWidth(
             csv_data=csv_data,
-            optional_cutoff=optional_cutoff,
+            cutoff=cutoff,
             interpolate_data=interpolate_data,
             interpolate_n=interpolate_n,
             interpolate_n_centerpoints=interpolate_n_centerpoints,
             equal_distance=equal_distance,
             ellipsoid=ellipsoid)
 
+        if optional_cutoff is not None and cutoff is None:
+            ### Pending Deprecation for function name replaced with cutoff()
+            ## To be removed
+            warnings.warn(
+                "optional_cutoff has been replaced with cutoff and will be removed in the future",
+                FutureWarning,
+                stacklevel=2)
+            cutoff = optional_cutoff
+
         # Description and dataframe
         self.river_name = csv_data
         self.interpolate_data = interpolate_data
         self.interpolate_n = interpolate_n
         df = pd.read_csv(csv_data)
-        if optional_cutoff:
-            df = df.head(optional_cutoff)
+        if cutoff:
+            df = df.head(cutoff)
         self.df_len = len(df)
         self.interpolate_n_centerpoints = interpolate_n_centerpoints
         if self.interpolate_n_centerpoints is None:
@@ -425,6 +435,7 @@ class riverCenterline(CenterlineWidth):
     def __init__(self,
                  csv_data: str = None,
                  optional_cutoff: int = None,
+                 cutoff: int = None,
                  interpolate_data: bool = False,
                  interpolate_n: int = 5,
                  interpolate_n_centerpoints: int = None,
@@ -438,6 +449,7 @@ class riverCenterline(CenterlineWidth):
             self,
             csv_data=csv_data,
             optional_cutoff=optional_cutoff,
+            cutoff=cutoff,
             interpolate_data=interpolate_data,
             interpolate_n=interpolate_n,
             interpolate_n_centerpoints=interpolate_n_centerpoints,

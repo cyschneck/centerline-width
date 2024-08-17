@@ -188,7 +188,7 @@ Output: A csv file `data/river_coords.csv` with the headers `llat, llon, rlat, r
 First, generate a river object to contain river data and available transformations
 ```
 centerline_width.CenterlineWidth(csv_data=None,
-                optional_cutoff=None,
+                cutoff=None,
                 interpolate_data=False,
                 interpolate_n=5,
                 interpolate_n_centerpoints=None,
@@ -196,7 +196,7 @@ centerline_width.CenterlineWidth(csv_data=None,
                 ellipsoid="WGS84")
 ```
 * **[REQUIRED]** csv_data (string): File location of the text file to convert
-* [OPTIONAL] optional_cutoff (int): Include only the first x number of the data to chart (useful for debugging)
+* [OPTIONAL] cutoff (int): Include only the first x number of the data to chart (useful for debugging)
 * [OPTIONAL] interpolate_data (boolean): Interpolate between existing data by adding additional points
 * [OPTIONAL] interpolate_n (int): Number of additional points to add between existing data, defaults to 5 (note: larger numbers will take exponentially longer to run, recommends less than 15)
 * [OPTIONAL] interpolate_n_centerpoints (int): Number of points used to interpolate the Voronoi centerline, defaults to the the length of the data frame (df_len)
@@ -247,7 +247,7 @@ The red pins represent the equal distance centerline coordinates produced by cen
 <li>right_bank_coordinates (list of tuples) list of latitude/longitude coordinates of the right bank generated from the csv file (`[(x, y), (x, y)]`)</li>
 <li>left_bank_relative_coordinates (list of tuples): list of relative distances coordinates of the left bank, measured as the distance in meters from the first point on the left bank (`[(x, y), (x, y)]`)</li>
 <li>right_bank_relative_coordinates (list of tuples): list of relative distances coordinates of the right bank, measured as the distance in meters from the first point on the left bank (`[(x, y), (x, y)]`)</li>
-<li>df_len (int): Length of the data frame of the csv data (spliced by the optional_cutoff)</li>
+<li>df_len (int): Length of the data frame of the csv data (spliced by the cutoff)</li>
 <li>equal_distance (int): Distance between points (in meters) used in centerlineEqualDistance, defaults to points every 10 meters</li>
 <li>ellipsoid (string): Built-in ellipsoid definition of Earth to determine how degrees are converted to meters used by centerlineEqualDistance, defaults to "WGS84"</li>
 <li>bank_polygon (Shapley Polygon): Multi-sided polygon generated to encapsulate the latitude/longitude coordinate riverbank (used to define an inside and an outside of the river)</li>

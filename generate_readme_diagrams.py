@@ -10,17 +10,17 @@ if __name__ == "__main__":
                                 flip_direction=True,
                                 csv_output="data/river_coords.csv")
     ro_5 = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv",
-                                            optional_cutoff=5)
+                                            cutoff=5)
     ro_10 = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv",
-                                             optional_cutoff=10)
+                                             cutoff=10)
     ro_15 = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv",
-                                             optional_cutoff=15)
+                                             cutoff=15)
     ro_250 = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv",
-                                              optional_cutoff=250)
+                                              cutoff=250)
     ro_550 = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv",
-                                              optional_cutoff=550)
+                                              cutoff=550)
     ro_725 = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv",
-                                              optional_cutoff=725)
+                                              cutoff=725)
     is_debug = False  # set to False when generating, True when debugging to view all plots
 
     ################### Introduction and Quickstart ##########################################
@@ -50,7 +50,7 @@ if __name__ == "__main__":
 
     ro_550_interpolate_centerline_75 = centerline_width.CenterlineWidth(
         csv_data="data/river_coords.csv",
-        optional_cutoff=550,
+        cutoff=550,
         interpolate_n_centerpoints=75)
     ro_550_interpolate_centerline_75.plot_centerline(
         save_plot_name="data/doc_examples/interpolate_n_centerpoints_75.png",
@@ -60,7 +60,7 @@ if __name__ == "__main__":
         show_plot=is_debug)
     ro_550_interpolate_centerline_200 = centerline_width.CenterlineWidth(
         csv_data="data/river_coords.csv",
-        optional_cutoff=550,
+        cutoff=550,
         interpolate_n_centerpoints=200)
     ro_550_interpolate_centerline_200.plot_centerline(
         save_plot_name="data/doc_examples/interpolate_n_centerpoints_200.png",
@@ -460,7 +460,7 @@ if __name__ == "__main__":
         display_all_possible_paths=True,
         show_plot=is_debug)
     ro_1000 = centerline_width.CenterlineWidth(
-        csv_data="data/river_coords.csv", optional_cutoff=1000)
+        csv_data="data/river_coords.csv", cutoff=1000)
     ro_1000.plot_centerline(
         save_plot_name="data/doc_examples/invalid_major_polygon.png",
         display_all_possible_paths=True,

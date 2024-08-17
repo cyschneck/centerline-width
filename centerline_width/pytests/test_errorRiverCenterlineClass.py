@@ -54,10 +54,9 @@ def test_CenterlineWidth_optionalCutoffInvalidTypes(invalid_input,
     with pytest.raises(
             ValueError,
             match=re.escape(
-                f"[optional_cutoff]: Must be a int, current type = '{error_output}'"
-            )):
+                f"[cutoff]: Must be a int, current type = '{error_output}'")):
         centerline_width.CenterlineWidth(csv_data="csv_example.csv",
-                                         optional_cutoff=invalid_input)
+                                         cutoff=invalid_input)
 
 
 @pytest.mark.parametrize("invalid_input, error_output",

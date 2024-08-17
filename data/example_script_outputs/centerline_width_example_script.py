@@ -29,7 +29,6 @@ def main():
 
     # create river object
     ro = cw.CenterlineWidth(csv_data="43deg44_18dot23_N_101deg27_7dot61_W.csv",
-                            optional_cutoff=None,
                             interpolate_data=True,
                             interpolate_n=7,
                             interpolate_n_centerpoints=1200,

@@ -537,7 +537,7 @@ def errorHandlingExtractPointsToTextFile(left_kml: str = None,
 
 ## Error Handling: riverCenterlineClass.py
 def errorHandlingCenterlineWidth(csv_data: str = None,
-                                 optional_cutoff: int = None,
+                                 cutoff: int = None,
                                  interpolate_data: bool = None,
                                  interpolate_n: int = None,
                                  interpolate_n_centerpoints: int = None,
@@ -553,11 +553,10 @@ def errorHandlingCenterlineWidth(csv_data: str = None,
                 f"[csv_data]: Must be a str, current type = '{type(csv_data)}'"
             )
 
-    if optional_cutoff is not None:
-        if type(optional_cutoff) != int:
+    if cutoff is not None:
+        if type(cutoff) != int:
             raise ValueError(
-                f"[optional_cutoff]: Must be a int, current type = '{type(optional_cutoff)}'"
-            )
+                f"[cutoff]: Must be a int, current type = '{type(cutoff)}'")
 
     if type(interpolate_data) != bool:
         raise ValueError(
