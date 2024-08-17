@@ -406,7 +406,7 @@ def test_CenterlineWidth_default():
     assert river_class_example.centerlineLength == pytest.approx(
         0.08284102060354828)
     assert river_class_example.equal_distance == 10
-    assert river_class_example.centerlineEqualDistance == [
+    assert river_class_example.centerline_equal_distance == [
         pytest.approx((-92.86781887353752, 30.03824341873465)),
         pytest.approx((-92.86781040076286, 30.03815351096445)),
         pytest.approx((-92.867813429355, 30.038063339971036)),
@@ -1872,7 +1872,7 @@ def test_CenterlineWidth_interpolateTrue():
     assert river_class_example.centerlineLength == pytest.approx(
         0.08592777952584983)
     assert river_class_example.equal_distance == 10
-    assert river_class_example.centerlineEqualDistance == [
+    assert river_class_example.centerline_equal_distance == [
         pytest.approx((-92.86782125207236, 30.03827120587997)),
         pytest.approx((-92.86781202566551, 30.03818135428244)),
         pytest.approx((-92.86780971432128, 30.038091167213576)),

@@ -159,6 +159,10 @@ class CenterlineWidth:
             centerline_coordinates=self.centerline_voronoi,
             equal_distance=self.equal_distance,
             ellipsoid=self.ellipsoid)
+        self.centerline_equal_distance = centerline_width.equalDistanceCenterline(
+            centerline_coordinates=self.centerline_voronoi,
+            equal_distance=self.equal_distance,
+            ellipsoid=self.ellipsoid)
         self.centerlineEvenlySpaced = centerline_width.evenlySpacedCenterline(
             centerline_coordinates=self.centerline_voronoi,
             number_of_fixed_points=self.interpolate_n_centerpoints)
