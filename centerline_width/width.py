@@ -50,7 +50,7 @@ def riverWidthFromCenterlineCoordinates(
         save_to_csv: str = None) -> [dict, dict, dict]:
     # Return the left/right coordinates of width centerlines
     # Returns three dictionaries: right_width_coordinates, left_width_coordinates, num_intersection_coordinates
-    # Used in the backend to plot coordinates in plotCenterlineWidth()
+    # Used in the backend to plot coordinates in plot_centerline_width()
 
     # Group the centerline coordinates into groups of length n
     centerline_slope = {}

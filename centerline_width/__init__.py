@@ -45,7 +45,7 @@ from .saveOutput import saveCenterlineMAT
 
 # plotDiagrams.py function calls
 from .plotDiagrams import plot_centerline
-from .plotDiagrams import plotCenterlineWidth
+from .plotDiagrams import plot_centerline_width
 
 # channelMigration.py function calls
 from .channelMigration import centerlineMigrationRate

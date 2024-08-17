@@ -19,7 +19,7 @@ Find the centerline and width of rivers based on the latitude and longitude posi
     * txt_to_csv()
 * **Find centerline and width of river**
     * plot_centerline()
-    * plotCenterlineWidth()
+    * plot_centerline_width()
     * riverWidthFromCenterline()
     * centerlineVoronoi
     * centerlineEqualDistance 
@@ -72,11 +72,11 @@ river_object.plot_centerline()
 ```
 ![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_centerline.png)
 
-To plot the width of the river at intervals along the bank, run `plotCenterlineWidth`
+To plot the width of the river at intervals along the bank, run `plot_centerline_width()`
 
 While `apply_smoothing`, `remove_intersections`, and `display_true_centerline` are optional, they are recommended to generate a minimal width diagram
 ```python
-river_object.plotCenterlineWidth(apply_smoothing=True, remove_intersections=True, display_true_centerline=False)
+river_object.plot_centerline_width(apply_smoothing=True, remove_intersections=True, display_true_centerline=False)
 ```
 ![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width.png)
 
@@ -553,7 +553,7 @@ Plot as either "Decimal Degrees" and "Relative Distance". defaults to "Decimal D
 Plot the width of the river based on the centerline
 
 ```
-plotCenterlineWidth(plot_title=None, 
+plot_centerline_width(plot_title=None, 
         save_plot_name=None, 
         display_true_centerline=True,
         transect_span_distance=3,
@@ -583,7 +583,7 @@ plotCenterlineWidth(plot_title=None,
 ```python
 import centerline_width
 river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
-river_object.plotCenterlineWidth(apply_smoothing=True, remove_intersections=True, display_true_centerline=False)
+river_object.plot_centerline_width(apply_smoothing=True, remove_intersections=True, display_true_centerline=False)
 ```
 ![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width.png)
 
@@ -696,7 +696,7 @@ river_width_dict = river_object.riverWidthFromCenterline(transect_span_distance=
 Width dictionary = `{(-92.86792084788995, 30.037769672351182): 0.10969163557087018, (-92.86795038641004, 30.03769867854198): 0.10794219579997719}`
 
 > [!TIP]
-> It is best practice to plot the centerline and width with same arguments in `plotCenterlineWidth()` to ensure that the results when `save_to_csv=True` are as expected
+> It is best practice to plot the centerline and width with same arguments in `plot_centerline_width()` to ensure that the results when `save_to_csv=True` are as expected
 
 ## Documentation and Algorithm to Determine Centerline
 

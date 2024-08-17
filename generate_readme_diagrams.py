@@ -34,7 +34,7 @@ if __name__ == "__main__":
     ro_550.plot_centerline(
         save_plot_name="data/doc_examples/river_coords_centerline.png",
         show_plot=is_debug)
-    ro_550.plotCenterlineWidth(
+    ro_550.plot_centerline_width(
         save_plot_name="data/doc_examples/river_coords_width.png",
         apply_smoothing=True,
         remove_intersections=True,
@@ -184,104 +184,104 @@ if __name__ == "__main__":
         save_plot_name="data/doc_examples/river_coordinate_unit_rd.png",
         show_plot=is_debug)
 
-    ################### Plot plotCenterlineWidth() ########################################
+    ################### Plot plot_centerline_width() ########################################
 
-    ro_550.plotCenterlineWidth(
+    ro_550.plot_centerline_width(
         save_plot_name="data/doc_examples/river_coords_with_centerline.png",
         display_true_centerline=True,
         apply_smoothing=True,
         remove_intersections=True,
         show_plot=is_debug)
-    ro_550.plotCenterlineWidth(
+    ro_550.plot_centerline_width(
         save_plot_name="data/doc_examples/river_coords_without_centerline.png",
         display_true_centerline=False,
         apply_smoothing=True,
         remove_intersections=True,
         show_plot=is_debug)
-    ro_550.plotCenterlineWidth(
+    ro_550.plot_centerline_width(
         save_plot_name=
         "data/doc_examples/river_coords_width_without_smoothing.png",
         display_true_centerline=True,
         apply_smoothing=False,
         remove_intersections=True,
         show_plot=is_debug)
-    ro_550.plotCenterlineWidth(
+    ro_550.plot_centerline_width(
         save_plot_name=
         "data/doc_examples/river_coords_width_with_smoothing.png",
         display_true_centerline=False,
         apply_smoothing=True,
         remove_intersections=True,
         show_plot=is_debug)
-    ro_550.plotCenterlineWidth(
+    ro_550.plot_centerline_width(
         save_plot_name="data/doc_examples/river_coords_width_transect_6.png",
         display_true_centerline=False,
         transect_span_distance=6,
         apply_smoothing=True,
         remove_intersections=True,
         show_plot=is_debug)
-    ro_550.plotCenterlineWidth(
+    ro_550.plot_centerline_width(
         save_plot_name="data/doc_examples/river_coords_width_transect_30.png",
         display_true_centerline=False,
         transect_span_distance=30,
         apply_smoothing=True,
         remove_intersections=True,
         show_plot=is_debug)
-    ro_550.plotCenterlineWidth(
+    ro_550.plot_centerline_width(
         save_plot_name="data/doc_examples/river_coords_transect_avg.png",
         display_true_centerline=False,
         transect_slope="Average",
         apply_smoothing=True,
         remove_intersections=True,
         show_plot=is_debug)
-    ro_550.plotCenterlineWidth(
+    ro_550.plot_centerline_width(
         save_plot_name="data/doc_examples/river_coords_transect_direct.png",
         display_true_centerline=False,
         transect_slope="Direct",
         apply_smoothing=True,
         remove_intersections=True,
         show_plot=is_debug)
-    ro_550.plotCenterlineWidth(
+    ro_550.plot_centerline_width(
         save_plot_name=
         "data/doc_examples/river_coords_width_keep_intersections.png",
         display_true_centerline=False,
         remove_intersections=False,
         apply_smoothing=True,
         show_plot=is_debug)
-    ro_550.plotCenterlineWidth(
+    ro_550.plot_centerline_width(
         save_plot_name=
         "data/doc_examples/river_coords_width_remove_intersections.png",
         display_true_centerline=False,
         remove_intersections=True,
         apply_smoothing=True,
         show_plot=is_debug)
-    ro_550.plotCenterlineWidth(
+    ro_550.plot_centerline_width(
         save_plot_name=
         "data/doc_examples/river_coords_width_dark_mode_false.png",
         display_true_centerline=True,
         remove_intersections=False,
         dark_mode=False,
         show_plot=is_debug)
-    ro_550.plotCenterlineWidth(
+    ro_550.plot_centerline_width(
         save_plot_name=
         "data/doc_examples/river_coords_width_dark_mode_true.png",
         display_true_centerline=True,
         remove_intersections=False,
         dark_mode=True,
         show_plot=is_debug)
-    ro_10.plotCenterlineWidth(
+    ro_10.plot_centerline_width(
         save_plot_name=
         "data/doc_examples/river_coords_not_equal_default_ax.png",
         display_true_centerline=True,
         remove_intersections=True,
         equal_axis=False,
         show_plot=is_debug)
-    ro_10.plotCenterlineWidth(
+    ro_10.plot_centerline_width(
         save_plot_name="data/doc_examples/river_coords_equal_ax.png",
         display_true_centerline=True,
         remove_intersections=True,
         equal_axis=True,
         show_plot=is_debug)
-    ro_550.plotCenterlineWidth(
+    ro_550.plot_centerline_width(
         save_plot_name=
         "data/doc_examples/river_coords_width_decimal_degrees.png",
         display_true_centerline=False,
@@ -289,7 +289,7 @@ if __name__ == "__main__":
         coordinate_unit="Decimal Degrees",
         remove_intersections=True,
         show_plot=is_debug)
-    ro_550.plotCenterlineWidth(
+    ro_550.plot_centerline_width(
         save_plot_name=
         "data/doc_examples/river_coords_width_relative_distance.png",
         display_true_centerline=False,

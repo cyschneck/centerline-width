@@ -78,37 +78,36 @@ if __name__ == "__main__":
                           centerline_color="fuchsia",
                           marker_type="scatter",
                           dark_mode=True)
-    exit()
 
     # Plot river bank centerline
-    river.plotCenterline(save_plot_name=None,
-                         centerline_type=center_type,
-                         marker_type="line",
-                         centerline_color="black",
-                         display_all_possible_paths=False,
-                         display_voronoi=False,
-                         plot_title=None,
-                         dark_mode=True,
-                         equal_axis=True,
-                         show_plot=True,
-                         coordinate_unit=coord_type)
+    river.plot_centerline(save_plot_name=None,
+                          centerline_type=center_type,
+                          marker_type="line",
+                          centerline_color="black",
+                          display_all_possible_paths=False,
+                          display_voronoi=False,
+                          plot_title=None,
+                          dark_mode=True,
+                          equal_axis=True,
+                          show_plot=True,
+                          coordinate_unit=coord_type)
 
     transect = 5
     slope_type = "average"
 
     # Plot river bank width line
-    river.plotCenterlineWidth(save_plot_name=None,
-                              plot_title=None,
-                              display_true_centerline=False,
-                              transect_span_distance=transect,
-                              transect_slope=slope_type,
-                              apply_smoothing=True,
-                              flag_intersections=True,
-                              remove_intersections=True,
-                              dark_mode=True,
-                              equal_axis=False,
-                              show_plot=True,
-                              coordinate_unit=coord_type)
+    river.plot_centerline_width(save_plot_name=None,
+                                plot_title=None,
+                                display_true_centerline=False,
+                                transect_span_distance=transect,
+                                transect_slope=slope_type,
+                                apply_smoothing=True,
+                                flag_intersections=True,
+                                remove_intersections=True,
+                                dark_mode=True,
+                                equal_axis=False,
+                                show_plot=True,
+                                coordinate_unit=coord_type)
 
     # Return width line for each centerline coordinates
     river_width_dict = river.riverWidthFromCenterline(

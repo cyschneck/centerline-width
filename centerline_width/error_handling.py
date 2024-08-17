@@ -136,7 +136,7 @@ def errorHandlingPlotCenterlineWidth(
         equal_axis: bool = None,
         show_plot: bool = None,
         coordinate_unit: str = None):
-    # Error handling for plotCenterlineWidth()
+    # Error handling for plot_centerline_width()
     if river_object is None:
         raise ValueError(
             "[river_object]: Requires a river object (see: centerline_width.riverCenterline)"

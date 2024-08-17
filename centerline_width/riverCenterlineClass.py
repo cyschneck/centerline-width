@@ -195,7 +195,7 @@ class riverCenterline:
                        show_plot: bool = True,
                        display_voronoi: bool = False,
                        coordinate_unit: str = "Decimal Degrees"):
-        ### Pending Deprecation for function name replaced with plotCenterline
+        ### Pending Deprecation for function name replaced with plot_centerline()
         ## To be removed
         warnings.warn(
             "plotCenterline() has been replaced with plot_centerline() and will be removed in the future",
@@ -255,7 +255,42 @@ class riverCenterline:
                             equal_axis: bool = False,
                             show_plot: bool = True,
                             coordinate_unit: str = "Decimal Degrees"):
-        centerline_width.plotCenterlineWidth(
+        ### Pending Deprecation for function name replaced with plot_centerline()
+        ## To be removed
+        warnings.warn(
+            "plotCenterlineWidth() has been replaced with plot_centerline_width() and will be removed in the future",
+            FutureWarning,
+            stacklevel=2)
+
+        centerline_width.plot_centerline_width(
+            river_object=self,
+            plot_title=plot_title,
+            save_plot_name=save_plot_name,
+            display_true_centerline=display_true_centerline,
+            transect_span_distance=transect_span_distance,
+            transect_slope=transect_slope,
+            apply_smoothing=apply_smoothing,
+            flag_intersections=flag_intersections,
+            remove_intersections=remove_intersections,
+            dark_mode=dark_mode,
+            equal_axis=equal_axis,
+            show_plot=show_plot,
+            coordinate_unit=coordinate_unit)
+
+    def plot_centerline_width(self,
+                              plot_title: str = None,
+                              save_plot_name: str = None,
+                              display_true_centerline: bool = True,
+                              transect_span_distance: int = 3,
+                              transect_slope: str = "Average",
+                              apply_smoothing: bool = False,
+                              flag_intersections: bool = True,
+                              remove_intersections: bool = False,
+                              dark_mode: bool = False,
+                              equal_axis: bool = False,
+                              show_plot: bool = True,
+                              coordinate_unit: str = "Decimal Degrees"):
+        centerline_width.plot_centerline_width(
             river_object=self,
             plot_title=plot_title,
             save_plot_name=save_plot_name,

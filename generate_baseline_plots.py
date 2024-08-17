@@ -85,7 +85,7 @@ if __name__ == "__main__":
             show_plot=is_debug)
         plt.close()
 
-    ################### plotCenterlineWidth() ########################################################
+    ################### plot_centerline_width() ########################################################
     coord_type_options = ["Relative Distance", "Decimal Degrees"]
     is_apply_smoothing = [True, False]
     transect_slope_type = ["Direct", "Average"]
@@ -97,7 +97,7 @@ if __name__ == "__main__":
             for transect_type in transect_slope_type:
                 for is_remove in is_remove_intersections:
                     coord_option = coord_type.replace(" ", "_").lower()
-                    river_object.plotCenterlineWidth(
+                    river_object.plot_centerline_width(
                         save_plot_name=
                         f"centerline_width/pytests/baseline_plots/width_{coord_option}_removeIntersections{is_remove}_smoothed{is_smoothed}_transectSlope{transect_type}",
                         apply_smoothing=is_smoothed,
@@ -110,7 +110,7 @@ if __name__ == "__main__":
     # Display centerline option
     display_centerline_options = [True, False]
     for show_centerline in display_centerline_options:
-        river_object.plotCenterlineWidth(
+        river_object.plot_centerline_width(
             save_plot_name=
             f"centerline_width/pytests/baseline_plots/width_displayCenterline{show_centerline}",
             display_true_centerline=show_centerline,
@@ -120,7 +120,7 @@ if __name__ == "__main__":
     # Display Dark Mode
     dark_mode_options = [True, False]
     for is_dark in dark_mode_options:
-        river_object.plotCenterlineWidth(
+        river_object.plot_centerline_width(
             save_plot_name=
             f"centerline_width/pytests/baseline_plots/width_isDarkMode{is_dark}",
             dark_mode=is_dark,
@@ -130,7 +130,7 @@ if __name__ == "__main__":
     # Display Equal Axis
     equal_axis_options = [True, False]
     for is_equal_axis in equal_axis_options:
-        river_object.plotCenterlineWidth(
+        river_object.plot_centerline_width(
             save_plot_name=
             f"centerline_width/pytests/baseline_plots/width_isEqualAxis{is_equal_axis}",
             equal_axis=is_equal_axis,
@@ -140,7 +140,7 @@ if __name__ == "__main__":
     # Flag intersections
     is_flag_intersections_options = [True, False]
     for flag_intersect in is_flag_intersections_options:
-        river_object.plotCenterlineWidth(
+        river_object.plot_centerline_width(
             save_plot_name=
             f"centerline_width/pytests/baseline_plots/width_flagIntersections{flag_intersect}",
             flag_intersections=flag_intersect,

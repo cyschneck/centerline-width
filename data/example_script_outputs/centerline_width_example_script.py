@@ -37,13 +37,13 @@ def main():
                             ellipsoid="WGS84")
 
     # plot the centerline with Decimal Degrees (by default)
-    ro.plotCenterline(
+    ro.plot_centerline(
         centerline_type="Equal Distance",
         display_all_possible_paths=False,
         save_plot_name="43deg44_18dot23_N_101deg27_7dot61_W_centerline.png")
 
     # plot the centerline with Relative Distance
-    ro.plotCenterline(
+    ro.plot_centerline(
         centerline_type="Equal Distance",
         display_all_possible_paths=False,
         coordinate_unit="Relative Distance",
@@ -62,7 +62,7 @@ def main():
                          longitude_header="lon")
 
     # plot width lines
-    ro.plotCenterlineWidth(
+    ro.plot_centerline_width(
         display_true_centerline=True,
         transect_span_distance=3,
         apply_smoothing=True,

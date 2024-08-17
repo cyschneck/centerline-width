@@ -80,7 +80,6 @@ if __name__ == "__main__":
                          centerline_color="fuchsia",
                          marker_type="scatter",
                          dark_mode=True)
-    exit()
 
     # Plot river bank centerline
     river.plotCenterline(save_plot_name=None,

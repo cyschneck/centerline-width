@@ -11,7 +11,7 @@
 #                                       - plot_centerline: plot centerline and                    #
 #                                              river points/polygons                              #
 #                                                                                                 #
-#                                       - plotCenterlineWidth: plot centerline                    #
+#                                       - plot_centerline_width: plot centerline                  #
 #                                              and river with width lines                         #
 #                                                                                                 #
 #                                                                                                 #
@@ -275,19 +275,20 @@ def plot_centerline(river_object: centerline_width.riverCenterline = None,
     if save_plot_name: fig.savefig(save_plot_name)
 
 
-def plotCenterlineWidth(river_object: centerline_width.riverCenterline = None,
-                        plot_title: str = None,
-                        save_plot_name: str = None,
-                        display_true_centerline: bool = True,
-                        transect_span_distance: int = 3,
-                        transect_slope: str = "Average",
-                        apply_smoothing: bool = False,
-                        flag_intersections: bool = True,
-                        remove_intersections: bool = False,
-                        dark_mode: bool = False,
-                        equal_axis: bool = False,
-                        show_plot: bool = True,
-                        coordinate_unit: str = "Decimal Degrees") -> None:
+def plot_centerline_width(
+        river_object: centerline_width.riverCenterline = None,
+        plot_title: str = None,
+        save_plot_name: str = None,
+        display_true_centerline: bool = True,
+        transect_span_distance: int = 3,
+        transect_slope: str = "Average",
+        apply_smoothing: bool = False,
+        flag_intersections: bool = True,
+        remove_intersections: bool = False,
+        dark_mode: bool = False,
+        equal_axis: bool = False,
+        show_plot: bool = True,
+        coordinate_unit: str = "Decimal Degrees") -> None:
     # Plot Width Lines based on Centerline
     centerline_width.errorHandlingPlotCenterlineWidth(
         river_object=river_object,

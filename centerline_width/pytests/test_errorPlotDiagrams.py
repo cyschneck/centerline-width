@@ -234,14 +234,14 @@ def test_plotCenterline_coordinateUnitInvalidTypes(invalid_input,
                                          coordinate_unit=invalid_input)
 
 
-## plotCenterlineWidth() #####################################################
+## plot_centerline_width() #####################################################
 def test_plotCenterlineWidth_riverObjectRequired():
     with pytest.raises(
             ValueError,
             match=re.escape(
                 "[river_object]: Requires a river object (see: centerline_width.riverCenterline)"
             )):
-        centerline_width.plotCenterlineWidth(river_object=None)
+        centerline_width.plot_centerline_width(river_object=None)
 
 
 @pytest.mark.parametrize("invalid_input, error_output",
@@ -253,7 +253,7 @@ def test_plotCenterlineWidth_riverObjectInvalidTypes(invalid_input,
             match=re.escape(
                 "[river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{0}'"
                 .format(error_output))):
-        centerline_width.plotCenterlineWidth(river_object=invalid_input)
+        centerline_width.plot_centerline_width(river_object=invalid_input)
 
 
 @pytest.mark.parametrize("invalid_input, error_output",
@@ -265,8 +265,8 @@ def test_plotCenterlineWidth_plotTitleInvalidTypes(invalid_input,
             match=re.escape(
                 f"[plot_title]: Must be a str, current type = '{error_output}'"
             )):
-        centerline_width.plotCenterlineWidth(river_object=river_class_example,
-                                             plot_title=invalid_input)
+        centerline_width.plot_centerline_width(
+            river_object=river_class_example, plot_title=invalid_input)
 
 
 @pytest.mark.parametrize("invalid_input, error_output",
@@ -278,8 +278,8 @@ def test_plotCenterlineWidth_savePlotNameInvalidTypes(invalid_input,
             match=re.escape(
                 f"[save_plot_name]: Must be a str, current type = '{error_output}'"
             )):
-        centerline_width.plotCenterlineWidth(river_object=river_class_example,
-                                             save_plot_name=invalid_input)
+        centerline_width.plot_centerline_width(
+            river_object=river_class_example, save_plot_name=invalid_input)
 
 
 @pytest.mark.parametrize("invalid_input, error_output",
@@ -291,7 +291,7 @@ def test_plotCenterlineWidth_displayTrueCenterlineInvalidTypes(
             match=re.escape(
                 f"[display_true_centerline]: Must be a bool, current type = '{error_output}'"
             )):
-        centerline_width.plotCenterlineWidth(
+        centerline_width.plot_centerline_width(
             river_object=river_class_example,
             display_true_centerline=invalid_input)
 
@@ -305,7 +305,7 @@ def test_plotCenterlineWidth_transectSpanDistanceInvalidTypes(
             match=re.escape(
                 f"[transect_span_distance]: Must be a int, current type = '{error_output}'"
             )):
-        centerline_width.plotCenterlineWidth(
+        centerline_width.plot_centerline_width(
             river_object=river_class_example,
             transect_span_distance=invalid_input)
 
@@ -316,8 +316,8 @@ def test_plotCenterlineWidth_transectSpanDistanceInvalidRange():
             match=re.escape(
                 "[transect_span_distance]: Must be a greater than 1 to find the slope between at least two points, currently = '1'"
             )):
-        centerline_width.plotCenterlineWidth(river_object=river_class_example,
-                                             transect_span_distance=1)
+        centerline_width.plot_centerline_width(
+            river_object=river_class_example, transect_span_distance=1)
 
 
 @pytest.mark.parametrize("invalid_input, error_output",
@@ -329,8 +329,8 @@ def test_plotCenterlineWidth_transectSlopeInvalidTypes(invalid_input,
             match=re.escape(
                 f"[transect_slope]: Must be a str, current type = '{error_output}'"
             )):
-        centerline_width.plotCenterlineWidth(river_object=river_class_example,
-                                             transect_slope=invalid_input)
+        centerline_width.plot_centerline_width(
+            river_object=river_class_example, transect_slope=invalid_input)
 
 
 def test_plotCenterlineWidth_transectSlopeInvalidOption():
@@ -339,8 +339,8 @@ def test_plotCenterlineWidth_transectSlopeInvalidOption():
             match=re.escape(
                 "[transect_slope]: Must be an available option in ['Average', 'Direct'], current option = 'Invalid Option'"
             )):
-        centerline_width.plotCenterlineWidth(river_object=river_class_example,
-                                             transect_slope="Invalid Option")
+        centerline_width.plot_centerline_width(
+            river_object=river_class_example, transect_slope="Invalid Option")
 
 
 @pytest.mark.parametrize("invalid_input, error_output",
@@ -352,8 +352,8 @@ def test_plotCenterlineWidth_applySmoothingInvalidTypes(
             match=re.escape(
                 f"[apply_smoothing]: Must be a bool, current type = '{error_output}'"
             )):
-        centerline_width.plotCenterlineWidth(river_object=river_class_example,
-                                             apply_smoothing=invalid_input)
+        centerline_width.plot_centerline_width(
+            river_object=river_class_example, apply_smoothing=invalid_input)
 
 
 @pytest.mark.parametrize("invalid_input, error_output",
@@ -365,8 +365,8 @@ def test_plotCenterlineWidth_flagIntersectionsInvalidTypes(
             match=re.escape(
                 f"[flag_intersections]: Must be a bool, current type = '{error_output}'"
             )):
-        centerline_width.plotCenterlineWidth(river_object=river_class_example,
-                                             flag_intersections=invalid_input)
+        centerline_width.plot_centerline_width(
+            river_object=river_class_example, flag_intersections=invalid_input)
 
 
 @pytest.mark.parametrize("invalid_input, error_output",
@@ -378,7 +378,7 @@ def test_plotCenterlineWidth_removeIntersectionsInvalidTypes(
             match=re.escape(
                 f"[remove_intersections]: Must be a bool, current type = '{error_output}'"
             )):
-        centerline_width.plotCenterlineWidth(
+        centerline_width.plot_centerline_width(
             river_object=river_class_example,
             remove_intersections=invalid_input)
 
@@ -391,8 +391,8 @@ def test_plotCenterlineWidth_darkModeInvalidTypes(invalid_input, error_output):
             match=re.escape(
                 f"[dark_mode]: Must be a bool, current type = '{error_output}'"
             )):
-        centerline_width.plotCenterlineWidth(river_object=river_class_example,
-                                             dark_mode=invalid_input)
+        centerline_width.plot_centerline_width(
+            river_object=river_class_example, dark_mode=invalid_input)
 
 
 @pytest.mark.parametrize("invalid_input, error_output",
@@ -404,8 +404,8 @@ def test_plotCenterlineWidth_equalAxisInvalidTypes(invalid_input,
             match=re.escape(
                 f"[equal_axis]: Must be a bool, current type = '{error_output}'"
             )):
-        centerline_width.plotCenterlineWidth(river_object=river_class_example,
-                                             equal_axis=invalid_input)
+        centerline_width.plot_centerline_width(
+            river_object=river_class_example, equal_axis=invalid_input)
 
 
 @pytest.mark.parametrize("invalid_input, error_output",
@@ -416,8 +416,8 @@ def test_plotCenterlineWidth_showPlotInvalidTypes(invalid_input, error_output):
             match=re.escape(
                 f"[show_plot]: Must be a bool, current type = '{error_output}'"
             )):
-        centerline_width.plotCenterlineWidth(river_object=river_class_example,
-                                             show_plot=invalid_input)
+        centerline_width.plot_centerline_width(
+            river_object=river_class_example, show_plot=invalid_input)
 
 
 def test_plotCenterlineWidth_coordinateUnitInvalidOption():
@@ -426,8 +426,8 @@ def test_plotCenterlineWidth_coordinateUnitInvalidOption():
             match=re.escape(
                 "[coordinate_unit]: Must be an available option in ['Decimal Degrees', 'Relative Distance'], current option = 'Invalid Option'"
             )):
-        centerline_width.plotCenterlineWidth(river_object=river_class_example,
-                                             coordinate_unit="Invalid Option")
+        centerline_width.plot_centerline_width(
+            river_object=river_class_example, coordinate_unit="Invalid Option")
 
 
 @pytest.mark.parametrize("invalid_input, error_output",
@@ -439,5 +439,5 @@ def test_plotCenterlineWidth_coordinateUnitInvalidTypes(
             match=re.escape(
                 f"[coordinate_unit]: Must be a str, current type = '{error_output}'"
             )):
-        centerline_width.plotCenterlineWidth(river_object=river_class_example,
-                                             coordinate_unit=invalid_input)
+        centerline_width.plot_centerline_width(
+            river_object=river_class_example, coordinate_unit=invalid_input)
