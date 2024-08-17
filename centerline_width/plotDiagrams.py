@@ -117,7 +117,7 @@ def plotCenterlineBackend(
         if coordinate_unit == "Decimal Degrees":
             centerline_coordinates_by_type = river_object.centerline_evenly_spaced
         if coordinate_unit == "Relative Distance":
-            centerline_coordinates_by_type = river_object.centerlineEvenlySpacedRelative
+            centerline_coordinates_by_type = river_object.centerline_evenly_spaced_relative
 
     if centerline_type == "Smoothed":
         centerline_legend = "Smoothed Centerline Coordinates"

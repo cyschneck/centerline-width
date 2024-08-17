@@ -502,7 +502,7 @@ def test_CenterlineWidth_default():
         pytest.approx((-3.4084605052625445, 54.1351126169003)),
         pytest.approx((-6.163506358375243, 53.60729340259522)),
     ]
-    assert river_class_example.centerlineEqualDistanceRelative == [
+    assert river_class_example.centerline_equal_distance_relative == [
         pytest.approx((73.47047894946884, 72.32036803406206)),
         pytest.approx((63.50393050487748, 73.13762693464152)),
         pytest.approx((53.508195776029744, 72.84558714881928)),
@@ -513,7 +513,7 @@ def test_CenterlineWidth_default():
         pytest.approx((6.039076670446599, 57.15074732117381)),
         pytest.approx((-3.5642236371955707, 54.362087572923194))
     ]
-    assert river_class_example.centerlineEvenlySpacedRelative == [
+    assert river_class_example.centerline_evenly_spaced_relative == [
         pytest.approx((73.47047894946884, 72.32036803406206)),
         pytest.approx((70.49436362993764, 72.6058408175882)),
         pytest.approx((67.51824832917079, 72.8913137541397)),
@@ -1977,7 +1977,7 @@ def test_CenterlineWidth_interpolateTrue():
         pytest.approx((-3.4084605052625445, 54.1351126169003)),
         pytest.approx((-6.163506358375243, 53.60729340259522))
     ]
-    assert river_class_example.centerlineEqualDistanceRelative == [
+    assert river_class_example.centerline_equal_distance_relative == [
         pytest.approx((76.55076830013083, 72.09093998499534)),
         pytest.approx((66.59044719216097, 72.9808857261491)),
         pytest.approx((56.592933814925935, 73.20387960632621)),
@@ -1988,7 +1988,7 @@ def test_CenterlineWidth_interpolateTrue():
         pytest.approx((8.958270139623515, 58.16146519825169)),
         pytest.approx((-0.539383038040768, 55.03183517073071))
     ]
-    assert river_class_example.centerlineEvenlySpacedRelative == [
+    assert river_class_example.centerline_evenly_spaced_relative == [
         pytest.approx((76.55076830013083, 72.09093998499534)),
         pytest.approx((73.4584665012726, 72.32956453464425)),
         pytest.approx((70.37172724666243, 72.6176042594705)),

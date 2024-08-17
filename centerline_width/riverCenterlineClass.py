@@ -164,6 +164,7 @@ class CenterlineWidth:
 
         # Set the different types of Centerline coordinates
         self.equal_distance = equal_distance
+
         self.centerlineEqualDistance = centerline_width.equalDistanceCenterline(
             centerline_coordinates=self.centerline_voronoi,
             equal_distance=self.equal_distance,
@@ -172,12 +173,15 @@ class CenterlineWidth:
             centerline_coordinates=self.centerline_voronoi,
             equal_distance=self.equal_distance,
             ellipsoid=self.ellipsoid)
+
         self.centerlineEvenlySpaced = centerline_width.evenlySpacedCenterline(
             centerline_coordinates=self.centerline_voronoi,
-            number_of_fixed_points=self.interpolate_n_centerpoints)
+            number_of_fixed_points=self.interpolate_n_centerpoints
+        )  # Pending Deprecation
         self.centerline_evenly_spaced = centerline_width.evenlySpacedCenterline(
             centerline_coordinates=self.centerline_voronoi,
             number_of_fixed_points=self.interpolate_n_centerpoints)
+
         self.centerlineSmoothed = centerline_width.smoothedCoordinates(
             river_object=self,
             centerline_coordinates=self.centerline_evenly_spaced,
@@ -194,15 +198,21 @@ class CenterlineWidth:
         self.centerline_voronoi_relative = centerline_width.relativeCenterlineCoordinates(
             self.left_bank_coordinates[0], self.centerline_voronoi,
             self.ellipsoid)
+
         self.centerlineEqualDistanceRelative = centerline_width.relativeCenterlineCoordinates(
             self.left_bank_coordinates[0], self.centerline_equal_distance,
             self.ellipsoid)  # Pending Deprecation
         self.centerline_equal_distance_relative = centerline_width.relativeCenterlineCoordinates(
             self.left_bank_coordinates[0], self.centerline_equal_distance,
             self.ellipsoid)
+
         self.centerlineEvenlySpacedRelative = centerline_width.relativeCenterlineCoordinates(
             self.left_bank_coordinates[0], self.centerline_evenly_spaced,
+            self.ellipsoid)  # Pending Deprecation
+        self.centerline_evenly_spaced_relative = centerline_width.relativeCenterlineCoordinates(
+            self.left_bank_coordinates[0], self.centerline_evenly_spaced,
             self.ellipsoid)
+
         self.centerlineSmoothedRelative = centerline_width.relativeCenterlineCoordinates(
             self.left_bank_coordinates[0], self.centerline_smoothed,
             self.ellipsoid)

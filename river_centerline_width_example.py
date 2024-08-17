@@ -47,12 +47,11 @@ if __name__ == "__main__":
         river.centerline_voronoi_relative))
     print("centerline_equal_distance_relative = {0}".format(
         river.centerline_equal_distance_relative))
+    print("centerline_evenly_spaced_relative = {0}".format(
+        river.centerline_evenly_spaced_relative))
     '''
     print("Centerline Length = {0} m".format(river.centerlineLength * 1000))
     print("ellipsoid = {0}".format(river.ellipsoid))
-
-    print("centerlineEvenlySpacedRelative = {0}".format(
-        river.centerlineEvenlySpacedRelative))
     print("centerlineSmoothedRelative = {0}".format(
         river.centerlineSmoothedRelative))
     print(river.right_bank_relative_coordinates)

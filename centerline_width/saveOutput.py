@@ -66,7 +66,7 @@ def save_centerline_csv(river_object: centerline_width.CenterlineWidth = None,
         if centerline_type == "Equal Distance":
             centerline_coordinates_by_type = river_object.centerline_equal_distance_relative
         if centerline_type == "Evenly Spaced":
-            centerline_coordinates_by_type = river_object.centerlineEvenlySpacedRelative
+            centerline_coordinates_by_type = river_object.centerline_evenly_spaced_relative
         if centerline_type == "Smoothed":
             centerline_coordinates_by_type = river_object.centerlineSmoothedRelative
 
@@ -129,7 +129,7 @@ def save_centerline_mat(river_object: centerline_width.CenterlineWidth = None,
         if centerline_type == "Equal Distance":
             centerline_coordinates_by_type = river_object.centerline_equal_distance_relative
         if centerline_type == "Evenly Spaced":
-            centerline_coordinates_by_type = river_object.centerlineEvenlySpacedRelative
+            centerline_coordinates_by_type = river_object.centerline_evenly_spaced_relative
         if centerline_type == "Smoothed":
             centerline_coordinates_by_type = river_object.centerlineSmoothedRelative
 
