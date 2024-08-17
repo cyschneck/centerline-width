@@ -36,7 +36,7 @@ logger.addHandler(stream_handler)
 
 
 def plotCenterlineBackend(
-        river_object: centerline_width.riverCenterline = None,
+        river_object: centerline_width.CenterlineWidth = None,
         display_true_centerline: bool = True,
         centerline_type: str = "Voronoi",
         marker_type: str = "line",
@@ -181,7 +181,7 @@ def plotCenterlineBackend(
     return fig, ax, valid_path_through
 
 
-def plot_centerline(river_object: centerline_width.riverCenterline = None,
+def plot_centerline(river_object: centerline_width.CenterlineWidth = None,
                     centerline_type: str = "Voronoi",
                     marker_type: str = "line",
                     centerline_color: str = "black",
@@ -276,7 +276,7 @@ def plot_centerline(river_object: centerline_width.riverCenterline = None,
 
 
 def plot_centerline_width(
-        river_object: centerline_width.riverCenterline = None,
+        river_object: centerline_width.CenterlineWidth = None,
         plot_title: str = None,
         save_plot_name: str = None,
         display_true_centerline: bool = True,

@@ -40,7 +40,7 @@ logger.addHandler(stream_handler)
 
 
 def riverWidthFromCenterlineCoordinates(
-        river_object: centerline_width.riverCenterline = None,
+        river_object: centerline_width.CenterlineWidth = None,
         centerline_coordinates: list = None,
         transect_span_distance: int = 3,
         transect_slope: str = "Average",
@@ -324,7 +324,7 @@ def riverWidthFromCenterlineCoordinates(
     return right_width_coordinates, left_width_coordinates, num_intersection_coordinates
 
 
-def width(river_object: centerline_width.riverCenterline = None,
+def width(river_object: centerline_width.CenterlineWidth = None,
           transect_span_distance: int = 3,
           transect_slope: str = "Average",
           apply_smoothing: bool = True,

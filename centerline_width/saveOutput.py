@@ -32,7 +32,7 @@ stream_handler = logging.StreamHandler()
 logger.addHandler(stream_handler)
 
 
-def save_centerline_csv(river_object: centerline_width.riverCenterline = None,
+def save_centerline_csv(river_object: centerline_width.CenterlineWidth = None,
                         save_to_csv: str = None,
                         latitude_header: str = None,
                         longitude_header: str = None,
@@ -95,7 +95,7 @@ def save_centerline_csv(river_object: centerline_width.riverCenterline = None,
             )
 
 
-def save_centerline_mat(river_object: centerline_width.riverCenterline = None,
+def save_centerline_mat(river_object: centerline_width.CenterlineWidth = None,
                         save_to_mat: str = None,
                         latitude_header: str = None,
                         longitude_header: str = None,

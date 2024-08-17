@@ -26,7 +26,7 @@ if __name__ == "__main__":
     #cutoff = 700 # invalid centerline, valid path, valid polgyon, invalid starting node, valid ending node
     #cutoff = 1000 # invalid centerline, invalid path, invalid polgyon, invalid starting node, valid ending node
 
-    river = centerline_width.riverCenterline(csv_data="data/river_coords.csv",
+    river = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv",
                                              optional_cutoff=cutoff,
                                              interpolate_data=False,
                                              interpolate_n_centerpoints=None,

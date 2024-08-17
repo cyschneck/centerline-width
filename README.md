@@ -63,7 +63,7 @@ centerline_width.kml_to_csv(left_kml="left_bank.kml",
 Then once the .csv file is created, to run the centerline-width functions, generate a river object from the `river_coordinates_output.csv`
 
 ```python
-river_object = centerline_width.riverCenterline(csv_data="river_coordinates_output.csv")
+river_object = centerline_width.CenterlineWidth(csv_data="river_coordinates_output.csv")
 ```
 
 To plot the centerline, run the `plot_centerline()` function from `river_object` created. By default, will display with `Decimal Degrees` (latitude/longitude) coordinates
@@ -187,7 +187,7 @@ Output: A csv file `data/river_coords.csv` with the headers `llat, llon, rlat, r
 ### River Object
 First, generate a river object to contain river data and available transformations
 ```
-centerline_width.riverCenterline(csv_data=None,
+centerline_width.CenterlineWidth(csv_data=None,
                 optional_cutoff=None,
                 interpolate_data=False,
                 interpolate_n=5,
@@ -274,7 +274,7 @@ The red pins represent the equal distance centerline coordinates produced by cen
 
 ```python
 import centerline_width
-river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
+river_object = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv")
 ```
 
 ### Coordinates of Centerline
@@ -330,7 +330,7 @@ river_object.centerlineSmoothed
 Example:
 ```python
 import centerline_width
-river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
+river_object = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv")
 river_centerline_coordinates = river_object.centerlineVoronoi
 ```
 Output is a list of tuples: (example) `[(-92.86788596499872, 30.03786596717931), (-92.86789573751797, 30.037834641974108), (-92.8679141386283, 30.037789636848878), (-92.8679251193248, 30.037756853899904), (-92.86796903819089, 30.03765423778148), (-92.86797335733262, 30.037643336049054), (-92.8679920356456, 30.037592224469797), (-92.86800576063828, 30.037555441489403), (-92.86800841510367, 30.037546512833107), (-92.8680119498663, 30.03753043193875)]`
@@ -349,7 +349,7 @@ save_centerline_csv(save_to_csv=None, centerline_type="Voronoi", coordinate_unit
 
 ```python
 import centerline_width
-river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
+river_object = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv")
 river_object.save_centerline_csv(save_to_csv="centerline_coordinates.csv", centerline_type="Smoothed")
 ```
 Returns a csv with the Latitude and Longitude coordinates of the specified centerline with column headers with centerline type: `Smoothed Centerline Latitude (Deg), Smoothed Centerline Longitude (Deg)`
@@ -371,7 +371,7 @@ save_centerline_mat(save_to_mat=None, centerline_type="Voronoi", coordinate_unit
 
 ```python
 import centerline_width
-river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
+river_object = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv")
 river_object.save_centerline_mat(save_to_mat="centerline_coordinates.mat", centerline_type="Smoothed")
 ```
 Returns a .mat file with the Latitude and Longitude coordinates of the specified centerline with column headers with centerline type: `Smoothed_Centerline_Latitude_(Deg), Smoothed_Centerline_Longitude_(Deg)`
@@ -387,7 +387,7 @@ river_object.centerlineLength
 Length returned in kilometers
 ```python
 import centerline_width
-river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
+river_object = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv")
 river_centerline_length = river_object.centerlineLength
 ```
 The length of the river centerline returns `215.34700589636674` km
@@ -400,7 +400,7 @@ river_object.area
 Area returned in kilometers^2
 ```python
 import centerline_width
-river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
+river_object = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv")
 river_area = river_object.area
 ```
 The area of the river returns `334.0398585246558` km^2
@@ -425,7 +425,7 @@ Where sinuosity is broken in types:
 Sinuosity of river based on the evenly spaced centerline coordinates
 ```python
 import centerline_width
-river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
+river_object = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv")
 river_area = river_object.sinuosity
 ```
 The sinuosity of the river returns as a float `1.4593141841039725`
@@ -442,7 +442,7 @@ incremental_sinuosity(
 
 ```python
 import centerline_width
-river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
+river_object = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv")
 river_object.incremental_sinuosity()
 ```
 Returns a dictionary with the start and end centerline coordinates and associated sinuosity `{((-92.87803465419134, 30.04494734395193), (-92.87718084516158, 30.03944640478984)): 0.8164574107802118, ((-92.87714797109666, 30.03944945940497), (-92.87020323809925, 30.039886265891074)): 0.9810773013508994}`
@@ -477,7 +477,7 @@ plot_centerline(centerline_type="Voronoi",
 
 ```python
 import centerline_width
-river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
+river_object = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv")
 river_object.plot_centerline()
 ```
 ![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_centerline.png)
@@ -582,7 +582,7 @@ plot_centerline_width(plot_title=None,
 
 ```python
 import centerline_width
-river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
+river_object = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv")
 river_object.plot_centerline_width(apply_smoothing=True, remove_intersections=True, display_true_centerline=False)
 ```
 ![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width.png)
@@ -687,7 +687,7 @@ width(transect_span_distance=3,
 
 ```python
 import centerline_width
-river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
+river_object = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv")
 river_width_dict = river_object.width(transect_span_distance=3,
                             apply_smoothing=True,
                             coordinate_reference="Centerline",
@@ -779,9 +779,9 @@ This can be fixed by using the flip_direction optional argument `centerline_widt
 ### Invalid Smoothed Centerline
 The smoothed centerline (`river_object.centerlineSmoothed`) can end up lying outside the river if the centerline data points are sparse in a narrow river. If more than two points in the smoothed centerline lie outside the river, a warning will be thrown
 
-Example Error: `WARNING: Partially invalid smoothed centerline due to sparse centerline data (6 points lie outside the polygon), fix recommendation: rerun riverCenterline to create river object with interpolate_n_centerpoints set to 62+`
+Example Error: `WARNING: Partially invalid smoothed centerline due to sparse centerline data (6 points lie outside the polygon), fix recommendation: rerun CenterlineWidth to create river object with interpolate_n_centerpoints set to 62+`
 
-By default, `interpolate_n_centerpoints` is set to None and no additional points will be added between the existing points along the centerline. By adding additional points between the existing centerline, the smoothed centerline can be fixed to stay within the polygon. This fix is set by creating a river object, `centerline_width.riverCenterline`, with `interpolate_n_centerpoints=65` (with the recommended 62+) to fix for centerline coordinates that lie outside the polygon
+By default, `interpolate_n_centerpoints` is set to None and no additional points will be added between the existing points along the centerline. By adding additional points between the existing centerline, the smoothed centerline can be fixed to stay within the polygon. This fix is set by creating a river object, `centerline_width.CenterlineWidth`, with `interpolate_n_centerpoints=65` (with the recommended 62+) to fix for centerline coordinates that lie outside the polygon
 
 `interpolate_n_centerpoints = None` does not interpolate data points, so the size will be set to the number of fixed points when creating the evenly spaced coordinates (equal to the size of the data frame)
 
@@ -797,9 +797,9 @@ By increasing the interpolation between the centerline points, the smoothed cent
 ### Fixing Gaps and Jagged Centerlines
 Gaps formed can cause part of the centerline to be skipped due to sparse data. As a result, the start and end of the centerline can skip parts at the beginning or end of a river
 ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/interpolate_false_gaps_short_path.png)
-Set river object created by `centerline_width.riverCenterline` to `interpolate_data=True` to fix for jagged edges or gaps formed by the interaction of sparse data and narrow banks
+Set river object created by `centerline_width.CenterlineWidth` to `interpolate_data=True` to fix for jagged edges or gaps formed by the interaction of sparse data and narrow banks
 ```python
-river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv", interpolate_data=True)
+river_object = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv", interpolate_data=True)
 ```
 | interpolate_data = False | interpolate_data = True |
 | ------------- | ------------- |

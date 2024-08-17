@@ -73,7 +73,7 @@ def calculateSinuosity(centerline_evenlySpaced_coordinates: list = None,
 
 
 def incremental_sinuosity(
-        river_object: centerline_width.riverCenterline = None,
+        river_object: centerline_width.CenterlineWidth = None,
         incremental_points: int = 100,
         save_to_csv: str = None) -> dict:
     # Return the sinuosity of the river in increments

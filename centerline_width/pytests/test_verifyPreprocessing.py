@@ -59,7 +59,7 @@ def test_preprocessing_emptyRightBankCSV(
             ValueError,
             match=re.escape(
                 "CRITICAL ERROR, right bank data is empty (or NaN)")):
-        centerline_width.riverCenterline(
+        centerline_width.CenterlineWidth(
             csv_data=str(generate_txt_convertColumnsToCSV_emptyRight))
 
 
@@ -83,5 +83,5 @@ def test_preprocessing_emptyLeftBankCSV(
             ValueError,
             match=re.escape(
                 "CRITICAL ERROR, left bank data is empty (or NaN)")):
-        centerline_width.riverCenterline(
+        centerline_width.CenterlineWidth(
             csv_data=str(generate_txt_convertColumnsToCSV_emptyLeft))

@@ -28,7 +28,7 @@ def main():
     cw.convertColumnsToCSV(text_file="43deg44_18dot23_N_101deg27_7dot61_W.txt")
 
     # create river object
-    ro = cw.riverCenterline(csv_data="43deg44_18dot23_N_101deg27_7dot61_W.csv",
+    ro = cw.CenterlineWidth(csv_data="43deg44_18dot23_N_101deg27_7dot61_W.csv",
                             optional_cutoff=None,
                             interpolate_data=True,
                             interpolate_n=7,

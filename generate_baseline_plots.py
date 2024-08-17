@@ -8,7 +8,7 @@ if __name__ == "__main__":
                                 flip_direction=True,
                                 csv_output="data/river_coords.csv")
 
-    river_object = centerline_width.riverCenterline(
+    river_object = centerline_width.CenterlineWidth(
         csv_data="data/river_coords.csv", optional_cutoff=100)
     is_debug = False  # set to False when generating, True when debugging to view all plots
 

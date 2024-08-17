@@ -9,23 +9,23 @@ if __name__ == "__main__":
                                 right_kml="data/rightbank.kml",
                                 flip_direction=True,
                                 csv_output="data/river_coords.csv")
-    ro_5 = centerline_width.riverCenterline(csv_data="data/river_coords.csv",
+    ro_5 = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv",
                                             optional_cutoff=5)
-    ro_10 = centerline_width.riverCenterline(csv_data="data/river_coords.csv",
+    ro_10 = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv",
                                              optional_cutoff=10)
-    ro_15 = centerline_width.riverCenterline(csv_data="data/river_coords.csv",
+    ro_15 = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv",
                                              optional_cutoff=15)
-    ro_250 = centerline_width.riverCenterline(csv_data="data/river_coords.csv",
+    ro_250 = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv",
                                               optional_cutoff=250)
-    ro_550 = centerline_width.riverCenterline(csv_data="data/river_coords.csv",
+    ro_550 = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv",
                                               optional_cutoff=550)
-    ro_725 = centerline_width.riverCenterline(csv_data="data/river_coords.csv",
+    ro_725 = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv",
                                               optional_cutoff=725)
     is_debug = False  # set to False when generating, True when debugging to view all plots
 
     ################### Introduction and Quickstart ##########################################
 
-    river_object = centerline_width.riverCenterline(
+    river_object = centerline_width.CenterlineWidth(
         csv_data="data/river_coords.csv")
     river_object.plot_centerline(
         plot_title="Centerline with Riverbanks",
@@ -48,7 +48,7 @@ if __name__ == "__main__":
 
     ################### Centerline and Width ################################################
 
-    ro_550_interpolate_centerline_75 = centerline_width.riverCenterline(
+    ro_550_interpolate_centerline_75 = centerline_width.CenterlineWidth(
         csv_data="data/river_coords.csv",
         optional_cutoff=550,
         interpolate_n_centerpoints=75)
@@ -58,7 +58,7 @@ if __name__ == "__main__":
         centerline_color="fuchsia",
         marker_type="scatter",
         show_plot=is_debug)
-    ro_550_interpolate_centerline_200 = centerline_width.riverCenterline(
+    ro_550_interpolate_centerline_200 = centerline_width.CenterlineWidth(
         csv_data="data/river_coords.csv",
         optional_cutoff=550,
         interpolate_n_centerpoints=200)
@@ -459,7 +459,7 @@ if __name__ == "__main__":
         save_plot_name="data/doc_examples/invalid_minor_polygon.png",
         display_all_possible_paths=True,
         show_plot=is_debug)
-    ro_1000 = centerline_width.riverCenterline(
+    ro_1000 = centerline_width.CenterlineWidth(
         csv_data="data/river_coords.csv", optional_cutoff=1000)
     ro_1000.plot_centerline(
         save_plot_name="data/doc_examples/invalid_major_polygon.png",
@@ -472,7 +472,7 @@ if __name__ == "__main__":
 
     centerline_width.txt_to_csv(txt_input="data/river_coords.txt",
                                 flip_direction=False)
-    ro_400 = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
+    ro_400 = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv")
     ro_400.plot_centerline(
         save_plot_name="data/doc_examples/invalid_flipped_banks.png",
         show_plot=is_debug)

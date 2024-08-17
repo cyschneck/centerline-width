@@ -106,7 +106,7 @@ def networkXGraphShortestPath(nx_graph=None,
             logger.info("[SUCCESS] Valid centerline path found")
         except nx.NetworkXNoPath:  # no direct path found
             logger.info(
-                "[FAILED]  No direct path found from starting node to ending node. To view gaps, plot_centerline(display_all_possible_paths=True). Recommended fix, rerun riverCenterline: set interpolate_data=True or (if interpolate_data=True) increase interpolate_n"
+                "[FAILED]  No direct path found from starting node to ending node. To view gaps, plot_centerline(display_all_possible_paths=True). Recommended fix, rerun CenterlineWidth: set interpolate_data=True or (if interpolate_data=True) increase interpolate_n"
             )
             return None
         #nx.draw(nx_graph, with_labels=True, font_size=10)
@@ -247,7 +247,7 @@ def evenlySpacedCenterline(centerline_coordinates: list = None,
     return interpolated_centerline_coordinates
 
 
-def smoothedCoordinates(river_object: centerline_width.riverCenterline = None,
+def smoothedCoordinates(river_object: centerline_width.CenterlineWidth = None,
                         centerline_coordinates: list = None,
                         interprolate_num: int = None) -> list:
     # return a list coordinates after applying b-spline (smoothing)
@@ -284,7 +284,7 @@ def smoothedCoordinates(river_object: centerline_width.riverCenterline = None,
             points_outside_polygon += 1
     if points_outside_polygon > 2:
         logger.critical(
-            f"\nWARNING: Partially invalid smoothed centerline due to sparse centerline data ({points_outside_polygon} points lie outside the polygon), fix recommendation: rerun riverCenterline to create river object with interpolate_n_centerpoints set to {round(len(centerline_coordinates)*2.5)}+\n"
+            f"\nWARNING: Partially invalid smoothed centerline due to sparse centerline data ({points_outside_polygon} points lie outside the polygon), fix recommendation: rerun CenterlineWidth to create river object with interpolate_n_centerpoints set to {round(len(centerline_coordinates)*2.5)}+\n"
         )
 
     return smoothed_coordinates

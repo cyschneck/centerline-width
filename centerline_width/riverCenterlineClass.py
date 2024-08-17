@@ -5,8 +5,8 @@
 #      that are used in the centerline, width, and plotting functions                             #
 #                                                                                                 #
 #      This includes the functions for:                                                           #
-#                                       - riverCenterline: river class that holds all             #
-#                                              river features and functions                       #
+#                                       - CenterlineWidth: river class that holds all             #
+#                                              centerline/width features and functions            #
 #                                                                                                 #
 #                                                                                                 #
 #                                                                                                 #
@@ -23,7 +23,7 @@ import pandas as pd
 import centerline_width
 
 
-class riverCenterline:
+class CenterlineWidth:
 
     def __init__(self,
                  csv_data: str = None,
@@ -34,7 +34,7 @@ class riverCenterline:
                  equal_distance: int = 10,
                  ellipsoid: str = "WGS84"):
 
-        centerline_width.errorHandlingRiverCenterlineClass(
+        centerline_width.errorHandlingCenterlineWidth(
             csv_data=csv_data,
             optional_cutoff=optional_cutoff,
             interpolate_data=interpolate_data,
@@ -417,3 +417,29 @@ class riverCenterline:
             longitude_header=longitude_header,
             centerline_type=centerline_type,
             coordinate_unit=coordinate_unit)
+
+
+class riverCenterline(CenterlineWidth):
+    ### Pending Deprecation for class name replaced with CenterlineWidth()
+    ## To be removed
+    def __init__(self,
+                 csv_data: str = None,
+                 optional_cutoff: int = None,
+                 interpolate_data: bool = False,
+                 interpolate_n: int = 5,
+                 interpolate_n_centerpoints: int = None,
+                 equal_distance: int = 10,
+                 ellipsoid: str = "WGS84"):
+        warnings.warn(
+            "riverCenterline() has been replaced with CenterlineWidth() and will be removed in the future",
+            FutureWarning,
+            stacklevel=2)
+        CenterlineWidth.__init__(
+            self,
+            csv_data=csv_data,
+            optional_cutoff=optional_cutoff,
+            interpolate_data=interpolate_data,
+            interpolate_n=interpolate_n,
+            interpolate_n_centerpoints=interpolate_n_centerpoints,
+            equal_distance=equal_distance,
+            ellipsoid=ellipsoid)

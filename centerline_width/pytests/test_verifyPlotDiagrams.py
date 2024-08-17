@@ -323,7 +323,7 @@ def generate_testRiver():
     )
     csv_example.seek(0)
 
-    return centerline_width.riverCenterline(csv_data=csv_example)
+    return centerline_width.CenterlineWidth(csv_data=csv_example)
 
 
 test_river = generate_testRiver()

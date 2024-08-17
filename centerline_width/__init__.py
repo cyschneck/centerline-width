@@ -11,8 +11,9 @@ from .preprocessing import generateVoronoi
 from .preprocessing import pointsFromVoronoi
 from .preprocessing import interpolateBetweenPoints
 
-# riverObject.py function calls
-from .riverCenterlineClass import riverCenterline
+# riverCenterlineClass.py function calls
+from .riverCenterlineClass import riverCenterline  # pending deprecation
+from .riverCenterlineClass import CenterlineWidth
 
 # relativeDistance.py function calls
 from .relativeDistance import relativeSingleCoordinate
@@ -58,5 +59,5 @@ from .error_handling import errorHandlingWidth
 from .error_handling import errorHandlingSaveCenterlineCSV
 from .error_handling import errorHandlingSaveCenterlineMAT
 from .error_handling import errorHandlingExtractPointsToTextFile
-from .error_handling import errorHandlingRiverCenterlineClass
+from .error_handling import errorHandlingCenterlineWidth
 from .error_handling import errorHandlingIncrementalSinuosity

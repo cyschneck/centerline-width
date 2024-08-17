@@ -106,9 +106,9 @@ def csv_data():
     return csv_example
 
 
-## riverCenterlineClass() #####################################################
-def test_riverCenterlineClass_default():
-    river_class_example = centerline_width.riverCenterline(csv_data=csv_data())
+## CenterlineWidth() #####################################################
+def test_CenterlineWidth_default():
+    river_class_example = centerline_width.CenterlineWidth(csv_data=csv_data())
     assert river_class_example.interpolate_data is False
     assert river_class_example.interpolate_n == 5
     assert river_class_example.df_len == 29
@@ -578,8 +578,8 @@ def test_riverCenterlineClass_default():
     assert river_class_example.sinuosity == pytest.approx(1.0124452966878812)
 
 
-def test_riverCenterlineClass_default_incrementalSinuosity():
-    river_class_example = centerline_width.riverCenterline(csv_data=csv_data())
+def test_CenterlineWidth_default_incrementalSinuosity():
+    river_class_example = centerline_width.CenterlineWidth(csv_data=csv_data())
     assert river_class_example.incremental_sinuosity() == {
         ((-92.86781591391708, 30.038216571334427), (-92.8678415323492, 30.037979489365142)):
         pytest.approx(1.0143354378572471),
@@ -631,8 +631,8 @@ def test_riverCenterlineClass_default_incrementalSinuosity():
     }
 
 
-def test_riverCenterlineClass_interpolateTrue():
-    river_class_example = centerline_width.riverCenterline(
+def test_CenterlineWidth_interpolateTrue():
+    river_class_example = centerline_width.CenterlineWidth(
         csv_data=csv_data(), interpolate_data=True)
     assert river_class_example.interpolate_data is True
     assert river_class_example.interpolate_n == 5
@@ -2053,8 +2053,8 @@ def test_riverCenterlineClass_interpolateTrue():
     assert river_class_example.sinuosity == pytest.approx(1.0136729726038907)
 
 
-def test_riverCenterlineClass_interpolateTrue_incrementalSinuosity():
-    river_class_example = centerline_width.riverCenterline(
+def test_CenterlineWidth_interpolateTrue_incrementalSinuosity():
+    river_class_example = centerline_width.CenterlineWidth(
         csv_data=csv_data(), interpolate_data=True)
     assert river_class_example.incremental_sinuosity() == {
         ((-92.86781877818767, 30.03824331037043), (-92.86783468860202, 30.03799605241219)):

@@ -103,7 +103,7 @@ def river_class_object():
         "30.03849208414191,-92.86856303294287,30.03825237810393,-92.8671877169286\n"
     )
     csv_example.seek(0)
-    return centerline_width.riverCenterline(csv_data=csv_example)
+    return centerline_width.CenterlineWidth(csv_data=csv_example)
 
 
 river_class_example = river_class_object()

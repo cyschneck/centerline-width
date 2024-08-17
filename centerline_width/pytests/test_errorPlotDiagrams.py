@@ -39,7 +39,7 @@ def river_class_object():
     csv_example.write("30.137581,-92.868569,30.037441,-92.867476\n")
     csv_example.write("30.237581,-92.868569,30.037441,-92.867476\n")
     csv_example.seek(0)
-    return centerline_width.riverCenterline(csv_data=csv_example)
+    return centerline_width.CenterlineWidth(csv_data=csv_example)
 
 
 river_class_example = river_class_object()
@@ -50,7 +50,7 @@ def test_plotCenterline_riverObjectRequired():
     with pytest.raises(
             ValueError,
             match=re.escape(
-                "[river_object]: Requires a river object (see: centerline_width.riverCenterline)"
+                "[river_object]: Requires a river object (see: centerline_width.CenterlineWidth)"
             )):
         centerline_width.plot_centerline(river_object=None)
 
@@ -61,7 +61,7 @@ def test_plotCenterline_riverObjectInvalidTypes(invalid_input, error_output):
     with pytest.raises(
             ValueError,
             match=re.escape(
-                "[river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{0}'"
+                "[river_object]: Must be a river object (see: centerline_width.CenterlineWidth), current type = '{0}'"
                 .format(error_output))):
         centerline_width.plot_centerline(river_object=invalid_input)
 
@@ -239,7 +239,7 @@ def test_plotCenterlineWidth_riverObjectRequired():
     with pytest.raises(
             ValueError,
             match=re.escape(
-                "[river_object]: Requires a river object (see: centerline_width.riverCenterline)"
+                "[river_object]: Requires a river object (see: centerline_width.CenterlineWidth)"
             )):
         centerline_width.plot_centerline_width(river_object=None)
 
@@ -251,7 +251,7 @@ def test_plotCenterlineWidth_riverObjectInvalidTypes(invalid_input,
     with pytest.raises(
             ValueError,
             match=re.escape(
-                "[river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{0}'"
+                "[river_object]: Must be a river object (see: centerline_width.CenterlineWidth), current type = '{0}'"
                 .format(error_output))):
         centerline_width.plot_centerline_width(river_object=invalid_input)
 
