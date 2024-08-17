@@ -1,6 +1,6 @@
 # Verify Outputs from plotDiagrams.py
 # centerline-width/: python -m pytest -v
-# python -m pytest -k test_verifyPlotDiagrams-xv
+# python -m pytest -k test_verifyPlotDiagrams -xv
 
 # Pytests to Compare and Verify Expected Outputs
 from io import StringIO
@@ -335,13 +335,13 @@ def generate_plot_image(tmp_path_factory):
     return plt_file_path
 
 
-################### plotCenterline() ##########################################################
+################### plot_centerline() ##########################################################
 
 
 def test_plotCenterline_darkMode_false(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              dark_mode=False,
-                              show_plot=False)
+    test_river.plot_centerline(save_plot_name=str(generate_plot_image),
+                               dark_mode=False,
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath('baseline_plots',
                                                     "dark_mode_false.png")
     plt.close()
@@ -352,9 +352,9 @@ def test_plotCenterline_darkMode_false(generate_plot_image):
 
 
 def test_plotCenterline_darkMode_true(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              dark_mode=True,
-                              show_plot=False)
+    test_river.plot_centerline(save_plot_name=str(generate_plot_image),
+                               dark_mode=True,
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath('baseline_plots',
                                                     "dark_mode_true.png")
     plt.close()
@@ -365,9 +365,9 @@ def test_plotCenterline_darkMode_true(generate_plot_image):
 
 
 def test_plotCenterline_displayAllPossiblePaths_false(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              display_all_possible_paths=False,
-                              show_plot=False)
+    test_river.plot_centerline(save_plot_name=str(generate_plot_image),
+                               display_all_possible_paths=False,
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "display_all_possible_paths_false.png")
     plt.close()
@@ -378,9 +378,9 @@ def test_plotCenterline_displayAllPossiblePaths_false(generate_plot_image):
 
 
 def test_plotCenterline_displayVoronoiGraph_false(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              display_voronoi=False,
-                              show_plot=False)
+    test_river.plot_centerline(save_plot_name=str(generate_plot_image),
+                               display_voronoi=False,
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "display_voronoi_graph_false.png")
     plt.close()
@@ -391,9 +391,9 @@ def test_plotCenterline_displayVoronoiGraph_false(generate_plot_image):
 
 
 def test_plotCenterline_displayAllPossiblePaths_true(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              display_all_possible_paths=True,
-                              show_plot=False)
+    test_river.plot_centerline(save_plot_name=str(generate_plot_image),
+                               display_all_possible_paths=True,
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "display_all_possible_paths_true.png")
     plt.close()
@@ -404,9 +404,9 @@ def test_plotCenterline_displayAllPossiblePaths_true(generate_plot_image):
 
 
 def test_plotCenterline_displayVoronoiGraph_true(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              display_voronoi=True,
-                              show_plot=False)
+    test_river.plot_centerline(save_plot_name=str(generate_plot_image),
+                               display_voronoi=True,
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "display_voronoi_graph_true.png")
     plt.close()
@@ -417,9 +417,9 @@ def test_plotCenterline_displayVoronoiGraph_true(generate_plot_image):
 
 
 def test_plotCenterline_equalAxis_false(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              equal_axis=False,
-                              show_plot=False)
+    test_river.plot_centerline(save_plot_name=str(generate_plot_image),
+                               equal_axis=False,
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath('baseline_plots',
                                                     "equal_axis_false.png")
     plt.close()
@@ -430,9 +430,9 @@ def test_plotCenterline_equalAxis_false(generate_plot_image):
 
 
 def test_plotCenterline_equalAxis_true(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              equal_axis=True,
-                              show_plot=False)
+    test_river.plot_centerline(save_plot_name=str(generate_plot_image),
+                               equal_axis=True,
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath('baseline_plots',
                                                     "equal_axis_true.png")
     plt.close()
@@ -443,12 +443,12 @@ def test_plotCenterline_equalAxis_true(generate_plot_image):
 
 
 def test_plotCenterline_equalDistance_decimalDegrees_line(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Equal Distance",
-                              centerline_color="mediumorchid",
-                              coordinate_unit="Decimal Degrees",
-                              marker_type="Line",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot_name=str(generate_plot_image),
+                               centerline_type="Equal Distance",
+                               centerline_color="mediumorchid",
+                               coordinate_unit="Decimal Degrees",
+                               marker_type="Line",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "equal_distance_decimal_degrees_line.png")
     plt.close()
@@ -460,12 +460,12 @@ def test_plotCenterline_equalDistance_decimalDegrees_line(generate_plot_image):
 
 def test_plotCenterline_equalDistance_decimalDegrees_scatter(
         generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Equal Distance",
-                              centerline_color="mediumorchid",
-                              coordinate_unit="Decimal Degrees",
-                              marker_type="Scatter",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot_name=str(generate_plot_image),
+                               centerline_type="Equal Distance",
+                               centerline_color="mediumorchid",
+                               coordinate_unit="Decimal Degrees",
+                               marker_type="Scatter",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "equal_distance_decimal_degrees_scatter.png")
     plt.close()
@@ -477,12 +477,12 @@ def test_plotCenterline_equalDistance_decimalDegrees_scatter(
 
 def test_plotCenterline_equalDistance_relativeDistance_line(
         generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Equal Distance",
-                              centerline_color="mediumorchid",
-                              coordinate_unit="Relative Distance",
-                              marker_type="Line",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot_name=str(generate_plot_image),
+                               centerline_type="Equal Distance",
+                               centerline_color="mediumorchid",
+                               coordinate_unit="Relative Distance",
+                               marker_type="Line",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "equal_distance_relative_distance_line.png")
     plt.close()
@@ -494,12 +494,12 @@ def test_plotCenterline_equalDistance_relativeDistance_line(
 
 def test_plotCenterline_equalDistance_relativeDistance_scatter(
         generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Equal Distance",
-                              centerline_color="mediumorchid",
-                              coordinate_unit="Relative Distance",
-                              marker_type="Scatter",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot_name=str(generate_plot_image),
+                               centerline_type="Equal Distance",
+                               centerline_color="mediumorchid",
+                               coordinate_unit="Relative Distance",
+                               marker_type="Scatter",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "equal_distance_relative_distance_scatter.png")
     plt.close()
@@ -510,12 +510,12 @@ def test_plotCenterline_equalDistance_relativeDistance_scatter(
 
 
 def test_plotCenterline_evenlySpaced_decimalDegrees_line(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Evenly Spaced",
-                              centerline_color="fuchsia",
-                              coordinate_unit="Decimal Degrees",
-                              marker_type="Line",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot_name=str(generate_plot_image),
+                               centerline_type="Evenly Spaced",
+                               centerline_color="fuchsia",
+                               coordinate_unit="Decimal Degrees",
+                               marker_type="Line",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "evenly_spaced_decimal_degrees_line.png")
     plt.close()
@@ -527,12 +527,12 @@ def test_plotCenterline_evenlySpaced_decimalDegrees_line(generate_plot_image):
 
 def test_plotCenterline_evenlySpaced_decimalDegrees_scatter(
         generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Evenly Spaced",
-                              centerline_color="fuchsia",
-                              coordinate_unit="Decimal Degrees",
-                              marker_type="Scatter",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot_name=str(generate_plot_image),
+                               centerline_type="Evenly Spaced",
+                               centerline_color="fuchsia",
+                               coordinate_unit="Decimal Degrees",
+                               marker_type="Scatter",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "evenly_spaced_decimal_degrees_scatter.png")
     plt.close()
@@ -544,12 +544,12 @@ def test_plotCenterline_evenlySpaced_decimalDegrees_scatter(
 
 def test_plotCenterline_evenlySpaced_relativeDistance_line(
         generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Evenly Spaced",
-                              centerline_color="fuchsia",
-                              coordinate_unit="Relative Distance",
-                              marker_type="Line",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot_name=str(generate_plot_image),
+                               centerline_type="Evenly Spaced",
+                               centerline_color="fuchsia",
+                               coordinate_unit="Relative Distance",
+                               marker_type="Line",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "evenly_spaced_relative_distance_line.png")
     plt.close()
@@ -561,12 +561,12 @@ def test_plotCenterline_evenlySpaced_relativeDistance_line(
 
 def test_plotCenterline_evenlySpaced_relativeDistance_scatter(
         generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Evenly Spaced",
-                              centerline_color="fuchsia",
-                              coordinate_unit="Relative Distance",
-                              marker_type="Scatter",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot_name=str(generate_plot_image),
+                               centerline_type="Evenly Spaced",
+                               centerline_color="fuchsia",
+                               coordinate_unit="Relative Distance",
+                               marker_type="Scatter",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "evenly_spaced_relative_distance_scatter.png")
     plt.close()
@@ -577,12 +577,12 @@ def test_plotCenterline_evenlySpaced_relativeDistance_scatter(
 
 
 def test_plotCenterline_smoothed_decimalDegrees_line(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Smoothed",
-                              centerline_color="blue",
-                              coordinate_unit="Decimal Degrees",
-                              marker_type="Line",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot_name=str(generate_plot_image),
+                               centerline_type="Smoothed",
+                               centerline_color="blue",
+                               coordinate_unit="Decimal Degrees",
+                               marker_type="Line",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "smoothed_decimal_degrees_line.png")
     plt.close()
@@ -593,12 +593,12 @@ def test_plotCenterline_smoothed_decimalDegrees_line(generate_plot_image):
 
 
 def test_plotCenterline_smoothed_decimalDegrees_scatter(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Smoothed",
-                              centerline_color="blue",
-                              coordinate_unit="Decimal Degrees",
-                              marker_type="Scatter",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot_name=str(generate_plot_image),
+                               centerline_type="Smoothed",
+                               centerline_color="blue",
+                               coordinate_unit="Decimal Degrees",
+                               marker_type="Scatter",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "smoothed_decimal_degrees_scatter.png")
     plt.close()
@@ -609,12 +609,12 @@ def test_plotCenterline_smoothed_decimalDegrees_scatter(generate_plot_image):
 
 
 def test_plotCenterline_smoothed_relativeDistance_line(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Smoothed",
-                              centerline_color="blue",
-                              coordinate_unit="Relative Distance",
-                              marker_type="Line",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot_name=str(generate_plot_image),
+                               centerline_type="Smoothed",
+                               centerline_color="blue",
+                               coordinate_unit="Relative Distance",
+                               marker_type="Line",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "smoothed_relative_distance_line.png")
     plt.close()
@@ -625,12 +625,12 @@ def test_plotCenterline_smoothed_relativeDistance_line(generate_plot_image):
 
 
 def test_plotCenterline_smoothed_relativeDistance_scatter(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Smoothed",
-                              centerline_color="blue",
-                              coordinate_unit="Relative Distance",
-                              marker_type="Scatter",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot_name=str(generate_plot_image),
+                               centerline_type="Smoothed",
+                               centerline_color="blue",
+                               coordinate_unit="Relative Distance",
+                               marker_type="Scatter",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "smoothed_relative_distance_scatter.png")
     plt.close()
@@ -641,12 +641,12 @@ def test_plotCenterline_smoothed_relativeDistance_scatter(generate_plot_image):
 
 
 def test_plotCenterline_voronoi_decimalDegrees_line(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Voronoi",
-                              centerline_color="Black",
-                              coordinate_unit="Decimal Degrees",
-                              marker_type="Line",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot_name=str(generate_plot_image),
+                               centerline_type="Voronoi",
+                               centerline_color="Black",
+                               coordinate_unit="Decimal Degrees",
+                               marker_type="Line",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "voronoi_decimal_degrees_line.png")
     plt.close()
@@ -657,12 +657,12 @@ def test_plotCenterline_voronoi_decimalDegrees_line(generate_plot_image):
 
 
 def test_plotCenterline_voronoi_decimalDegrees_scatter(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Voronoi",
-                              centerline_color="Black",
-                              coordinate_unit="Decimal Degrees",
-                              marker_type="Scatter",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot_name=str(generate_plot_image),
+                               centerline_type="Voronoi",
+                               centerline_color="Black",
+                               coordinate_unit="Decimal Degrees",
+                               marker_type="Scatter",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "voronoi_decimal_degrees_scatter.png")
     plt.close()
@@ -673,12 +673,12 @@ def test_plotCenterline_voronoi_decimalDegrees_scatter(generate_plot_image):
 
 
 def test_plotCenterline_voronoi_relativeDistance_line(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Voronoi",
-                              centerline_color="Black",
-                              coordinate_unit="Relative Distance",
-                              marker_type="Line",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot_name=str(generate_plot_image),
+                               centerline_type="Voronoi",
+                               centerline_color="Black",
+                               coordinate_unit="Relative Distance",
+                               marker_type="Line",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "voronoi_relative_distance_line.png")
     plt.close()
@@ -689,12 +689,12 @@ def test_plotCenterline_voronoi_relativeDistance_line(generate_plot_image):
 
 
 def test_plotCenterline_voronoi_relativeDistance_scatter(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Voronoi",
-                              centerline_color="Black",
-                              coordinate_unit="Relative Distance",
-                              marker_type="Scatter",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot_name=str(generate_plot_image),
+                               centerline_type="Voronoi",
+                               centerline_color="Black",
+                               coordinate_unit="Relative Distance",
+                               marker_type="Scatter",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "voronoi_relative_distance_scatter.png")
     plt.close()

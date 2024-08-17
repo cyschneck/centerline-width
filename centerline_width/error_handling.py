@@ -40,7 +40,7 @@ def errorHandlingPlotCenterline(
         show_plot: bool = None,
         coordinate_unit: str = None) -> None:
 
-    # Error handling for plotCenterline()
+    # Error handling for plot_centerline()
     if river_object is None:
         raise ValueError(
             "[river_object]: Requires a river object (see: centerline_width.riverCenterline)"

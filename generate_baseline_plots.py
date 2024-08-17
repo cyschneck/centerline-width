@@ -3,18 +3,16 @@ import centerline_width
 import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
-    centerline_width.extractPointsToTextFile(
-        left_kml="data/leftbank.kml",
-        right_kml="data/rightbank.kml",
-        text_output_name="data/river_coords.txt")
-    centerline_width.convertColumnsToCSV(text_file="data/river_coords.txt",
-                                         flip_direction=True)
+    centerline_width.kml_to_csv(left_kml="data/leftbank.kml",
+                                right_kml="data/rightbank.kml",
+                                flip_direction=True,
+                                csv_output="data/river_coords.csv")
 
     river_object = centerline_width.riverCenterline(
         csv_data="data/river_coords.csv", optional_cutoff=100)
     is_debug = False  # set to False when generating, True when debugging to view all plots
 
-    ################### plotCenterline() ##########################################################
+    ################### plot_centerline() ##########################################################
 
     center_type_options = [("Voronoi", "Black"),
                            ("Equal Distance", "mediumorchid"),
@@ -29,7 +27,7 @@ if __name__ == "__main__":
                 centerline_option = center_type[0].replace(" ", "_").lower()
                 coord_option = coord_type.replace(" ", "_").lower()
                 marker_option = mark_type.lower()
-                river_object.plotCenterline(
+                river_object.plot_centerline(
                     save_plot_name=
                     f"centerline_width/pytests/baseline_plots/{centerline_option}_{coord_option}_{marker_option}",
                     centerline_type=center_type[0],
@@ -44,7 +42,7 @@ if __name__ == "__main__":
     display_all_paths = [True, False]
     for is_display_paths in display_all_paths:
         display_option = str(is_display_paths).lower()
-        river_object.plotCenterline(
+        river_object.plot_centerline(
             save_plot_name=
             f"centerline_width/pytests/baseline_plots/display_all_possible_paths_{display_option}",
             display_all_possible_paths=is_display_paths,
@@ -56,7 +54,7 @@ if __name__ == "__main__":
     display_voronoi_graph = [True, False]
     for is_display_voronoi in display_voronoi_graph:
         voronoi_option = str(is_display_voronoi).lower()
-        river_object.plotCenterline(
+        river_object.plot_centerline(
             save_plot_name=
             f"centerline_width/pytests/baseline_plots/display_voronoi_graph_{voronoi_option}",
             display_voronoi=is_display_voronoi,
@@ -68,7 +66,7 @@ if __name__ == "__main__":
     dark_mode_option = [True, False]
     for is_dark_mode in dark_mode_option:
         dark_mode_option = str(is_dark_mode).lower()
-        river_object.plotCenterline(
+        river_object.plot_centerline(
             save_plot_name=
             f"centerline_width/pytests/baseline_plots/dark_mode_{dark_mode_option}",
             dark_mode=is_dark_mode,
@@ -79,7 +77,7 @@ if __name__ == "__main__":
     equal_axis_option = [True, False]
     for is_equal_axis in equal_axis_option:
         equal_axis_option = str(is_equal_axis).lower()
-        river_object.plotCenterline(
+        river_object.plot_centerline(
             save_plot_name=
             f"centerline_width/pytests/baseline_plots/equal_axis_{equal_axis_option}",
             equal_axis=is_equal_axis,

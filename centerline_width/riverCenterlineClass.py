@@ -13,6 +13,9 @@
 
 # River object class used for all functions and centerline functions
 
+# Built-in Python functions
+import warnings  # Pending Deprecation
+
 # External Python libraries
 import pandas as pd
 
@@ -192,7 +195,40 @@ class riverCenterline:
                        show_plot: bool = True,
                        display_voronoi: bool = False,
                        coordinate_unit: str = "Decimal Degrees"):
-        centerline_width.plotCenterline(
+        ### Pending Deprecation for function name replaced with plotCenterline
+        ## To be removed
+        warnings.warn(
+            "plotCenterline() has been replaced with plot_centerline() and will be removed in the future",
+            FutureWarning,
+            stacklevel=2)
+
+        centerline_width.plot_centerline(
+            river_object=self,
+            centerline_type=centerline_type,
+            marker_type=marker_type,
+            centerline_color=centerline_color,
+            dark_mode=dark_mode,
+            equal_axis=equal_axis,
+            display_all_possible_paths=display_all_possible_paths,
+            plot_title=plot_title,
+            save_plot_name=save_plot_name,
+            display_voronoi=display_voronoi,
+            show_plot=show_plot,
+            coordinate_unit=coordinate_unit)
+
+    def plot_centerline(self,
+                        centerline_type: str = "Voronoi",
+                        marker_type: str = "line",
+                        centerline_color: str = "black",
+                        dark_mode: bool = False,
+                        equal_axis: bool = False,
+                        display_all_possible_paths: bool = False,
+                        plot_title: str = None,
+                        save_plot_name: str = None,
+                        show_plot: bool = True,
+                        display_voronoi: bool = False,
+                        coordinate_unit: str = "Decimal Degrees"):
+        centerline_width.plot_centerline(
             river_object=self,
             centerline_type=centerline_type,
             marker_type=marker_type,

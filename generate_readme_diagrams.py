@@ -5,12 +5,10 @@ from scipy.spatial import voronoi_plot_2d
 import networkx as nx
 
 if __name__ == "__main__":
-    centerline_width.extractPointsToTextFile(
-        left_kml="data/leftbank.kml",
-        right_kml="data/rightbank.kml",
-        text_output_name="data/river_coords.txt")
-    centerline_width.convertColumnsToCSV(text_file="data/river_coords.txt",
-                                         flip_direction=True)
+    centerline_width.kml_to_csv(left_kml="data/leftbank.kml",
+                                right_kml="data/rightbank.kml",
+                                flip_direction=True,
+                                csv_output="data/river_coords.csv")
     ro_5 = centerline_width.riverCenterline(csv_data="data/river_coords.csv",
                                             optional_cutoff=5)
     ro_10 = centerline_width.riverCenterline(csv_data="data/river_coords.csv",
@@ -29,11 +27,11 @@ if __name__ == "__main__":
 
     river_object = centerline_width.riverCenterline(
         csv_data="data/river_coords.csv")
-    river_object.plotCenterline(
+    river_object.plot_centerline(
         plot_title="Centerline with Riverbanks",
         save_plot_name="data/doc_examples/river_example.png",
         show_plot=is_debug)
-    ro_550.plotCenterline(
+    ro_550.plot_centerline(
         save_plot_name="data/doc_examples/river_coords_centerline.png",
         show_plot=is_debug)
     ro_550.plotCenterlineWidth(
@@ -42,7 +40,7 @@ if __name__ == "__main__":
         remove_intersections=True,
         display_true_centerline=False,
         show_plot=is_debug)
-    ro_550.plotCenterline(
+    ro_550.plot_centerline(
         save_plot_name=
         "data/doc_examples/river_relative_distance_coords_centerline.png",
         coordinate_unit="Relative Distance",
@@ -54,7 +52,7 @@ if __name__ == "__main__":
         csv_data="data/river_coords.csv",
         optional_cutoff=550,
         interpolate_n_centerpoints=75)
-    ro_550_interpolate_centerline_75.plotCenterline(
+    ro_550_interpolate_centerline_75.plot_centerline(
         save_plot_name="data/doc_examples/interpolate_n_centerpoints_75.png",
         centerline_type="Evenly Spaced",
         centerline_color="fuchsia",
@@ -64,7 +62,7 @@ if __name__ == "__main__":
         csv_data="data/river_coords.csv",
         optional_cutoff=550,
         interpolate_n_centerpoints=200)
-    ro_550_interpolate_centerline_200.plotCenterline(
+    ro_550_interpolate_centerline_200.plot_centerline(
         save_plot_name="data/doc_examples/interpolate_n_centerpoints_200.png",
         centerline_type="Evenly Spaced",
         centerline_color="fuchsia",
@@ -72,14 +70,14 @@ if __name__ == "__main__":
         show_plot=is_debug)
 
     ################### Types of Centerlines ################################################
-    ro_550.plotCenterline(
+    ro_550.plot_centerline(
         save_plot_name="data/doc_examples/voronoi_centerline.png",
         centerline_type="Voronoi",
         centerline_color="black",
         marker_type="scatter",
         plot_title="Centerline Formed by Voronoi Diagram",
         show_plot=is_debug)
-    ro_550.plotCenterline(
+    ro_550.plot_centerline(
         save_plot_name="data/doc_examples/voronoi_centerline_relative.png",
         centerline_type="Voronoi",
         centerline_color="black",
@@ -88,7 +86,7 @@ if __name__ == "__main__":
         plot_title=
         "Centerline Formed by Voronoi Diagram with Relative Distance",
         show_plot=is_debug)
-    ro_550.plotCenterline(
+    ro_550.plot_centerline(
         save_plot_name="data/doc_examples/equal_distance_centerline.png",
         centerline_type="Equal Distance",
         centerline_color="mediumorchid",
@@ -96,7 +94,7 @@ if __name__ == "__main__":
         plot_title=
         f"Centerline Formed by Points Equally Distanced Apart Every {ro_550.equal_distance} Meters",
         show_plot=is_debug)
-    ro_550.plotCenterline(
+    ro_550.plot_centerline(
         save_plot_name=
         "data/doc_examples/equal_distance_centerline_relative.png",
         centerline_type="Equal Distance",
@@ -106,7 +104,7 @@ if __name__ == "__main__":
         plot_title=
         f"Centerline Formed by Points Equally Distanced Apart Every {ro_550.equal_distance} Meters with Relative Distance",
         show_plot=is_debug)
-    ro_550_interpolate_centerline_200.plotCenterline(
+    ro_550_interpolate_centerline_200.plot_centerline(
         save_plot_name="data/doc_examples/evenly_spaced_centerline.png",
         centerline_type="Evenly Spaced",
         centerline_color="fuchsia",
@@ -114,7 +112,7 @@ if __name__ == "__main__":
         plot_title=
         f"Centerline Formed by {ro_550_interpolate_centerline_200.interpolate_n_centerpoints} Evenly Spaced Centerline Points",
         show_plot=is_debug)
-    ro_550_interpolate_centerline_200.plotCenterline(
+    ro_550_interpolate_centerline_200.plot_centerline(
         save_plot_name=
         "data/doc_examples/evenly_spaced_centerline_relative.png",
         centerline_type="Evenly Spaced",
@@ -124,7 +122,7 @@ if __name__ == "__main__":
         plot_title=
         f"Centerline Formed by {ro_550_interpolate_centerline_200.interpolate_n_centerpoints} Evenly Spaced Centerline Points with Relative Distance",
         show_plot=is_debug)
-    ro_550_interpolate_centerline_200.plotCenterline(
+    ro_550_interpolate_centerline_200.plot_centerline(
         save_plot_name="data/doc_examples/smoothed_centerline.png",
         centerline_type="Smoothed",
         centerline_color="blue",
@@ -132,7 +130,7 @@ if __name__ == "__main__":
         plot_title=
         f"Centerline Formed by {ro_550_interpolate_centerline_200.interpolate_n_centerpoints} Smoothed Centerline Coordinates",
         show_plot=is_debug)
-    ro_550_interpolate_centerline_200.plotCenterline(
+    ro_550_interpolate_centerline_200.plot_centerline(
         save_plot_name="data/doc_examples/smoothed_centerline_relative.png",
         centerline_type="Smoothed",
         centerline_color="blue",
@@ -142,46 +140,46 @@ if __name__ == "__main__":
         f"Centerline Formed by {ro_550_interpolate_centerline_200.interpolate_n_centerpoints} Smoothed Centerline Coordinates with Relative Distance",
         show_plot=is_debug)
 
-    ################### Plot plotCenterline() #############################################
+    ################### Plot plot_centerline() #############################################
 
-    ro_550.plotCenterline(
+    ro_550.plot_centerline(
         centerline_type="Smoothed",
         save_plot_name="data/doc_examples/river_centerline_type_smoothed.png",
         show_plot=is_debug)
-    ro_550.plotCenterline(
+    ro_550.plot_centerline(
         marker_type="Scatter",
         save_plot_name="data/doc_examples/river_marker_type_scatter.png",
         show_plot=is_debug)
-    ro_550.plotCenterline(
+    ro_550.plot_centerline(
         centerline_color="palegreen",
         save_plot_name="data/doc_examples/river_centerline_color.png",
         show_plot=is_debug)
-    ro_550.plotCenterline(
+    ro_550.plot_centerline(
         dark_mode=True,
         save_plot_name="data/doc_examples/river_dark_mode.png",
         show_plot=is_debug)
-    ro_15.plotCenterline(
+    ro_15.plot_centerline(
         equal_axis=False,
         save_plot_name="data/doc_examples/river_equal_axis_false.png",
         show_plot=is_debug)
-    ro_15.plotCenterline(
+    ro_15.plot_centerline(
         equal_axis=True,
         save_plot_name="data/doc_examples/river_equal_axis_true.png",
         show_plot=is_debug)
-    ro_550.plotCenterline(
+    ro_550.plot_centerline(
         display_all_possible_paths=True,
         save_plot_name=
         "data/doc_examples/river_display_all_possible_paths_true.png",
         show_plot=is_debug)
-    ro_15.plotCenterline(
+    ro_15.plot_centerline(
         display_voronoi=False,
         save_plot_name="data/doc_examples/river_display_voronoi_false.png",
         show_plot=is_debug)
-    ro_15.plotCenterline(
+    ro_15.plot_centerline(
         display_voronoi=True,
         save_plot_name="data/doc_examples/river_display_voronoi_true.png",
         show_plot=is_debug)
-    ro_550.plotCenterline(
+    ro_550.plot_centerline(
         coordinate_unit="Relative Distance",
         save_plot_name="data/doc_examples/river_coordinate_unit_rd.png",
         show_plot=is_debug)
@@ -453,28 +451,28 @@ if __name__ == "__main__":
 
     ################### Debugging, Error Handling, and Edge Cases ###############################
 
-    ro_725.plotCenterline(
+    ro_725.plot_centerline(
         save_plot_name="data/doc_examples/invalid_too_wide.png",
         display_all_possible_paths=True,
         show_plot=is_debug)
-    ro_250.plotCenterline(
+    ro_250.plot_centerline(
         save_plot_name="data/doc_examples/invalid_minor_polygon.png",
         display_all_possible_paths=True,
         show_plot=is_debug)
     ro_1000 = centerline_width.riverCenterline(
         csv_data="data/river_coords.csv", optional_cutoff=1000)
-    ro_1000.plotCenterline(
+    ro_1000.plot_centerline(
         save_plot_name="data/doc_examples/invalid_major_polygon.png",
         display_all_possible_paths=True,
         show_plot=is_debug)
-    ro_5.plotCenterline(
+    ro_5.plot_centerline(
         save_plot_name="data/doc_examples/invalid_too_small.png",
         display_voronoi=True,
         show_plot=is_debug)
 
-    centerline_width.convertColumnsToCSV(text_file="data/river_coords.txt",
-                                         flip_direction=False)
+    centerline_width.txt_to_csv(txt_input="data/river_coords.txt",
+                                flip_direction=False)
     ro_400 = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
-    ro_400.plotCenterline(
+    ro_400.plot_centerline(
         save_plot_name="data/doc_examples/invalid_flipped_banks.png",
         show_plot=is_debug)

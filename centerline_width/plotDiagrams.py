@@ -8,7 +8,7 @@
 #                                              components for each plot                           #
 #                                              csv                                                #
 #                                                                                                 #
-#                                       - plotCenterline: plot centerline and                     #
+#                                       - plot_centerline: plot centerline and                    #
 #                                              river points/polygons                              #
 #                                                                                                 #
 #                                       - plotCenterlineWidth: plot centerline                    #
@@ -44,7 +44,7 @@ def plotCenterlineBackend(
         dark_mode: bool = False,
         equal_axis: bool = False,
         coordinate_unit: str = None):
-    # Shared components between plotCenterline and plotCenterlineWidth
+    # Shared components between plot_centerline() and plotCenterlineWidth
     coordinate_unit = coordinate_unit.title()
 
     # set plot to dark background and alternate centerline color default
@@ -181,18 +181,18 @@ def plotCenterlineBackend(
     return fig, ax, valid_path_through
 
 
-def plotCenterline(river_object: centerline_width.riverCenterline = None,
-                   centerline_type: str = "Voronoi",
-                   marker_type: str = "line",
-                   centerline_color: str = "black",
-                   dark_mode: bool = False,
-                   equal_axis: bool = False,
-                   display_all_possible_paths: bool = False,
-                   plot_title: str = None,
-                   save_plot_name: str = None,
-                   display_voronoi: bool = False,
-                   show_plot: bool = True,
-                   coordinate_unit: str = "Decimal Degrees") -> None:
+def plot_centerline(river_object: centerline_width.riverCenterline = None,
+                    centerline_type: str = "Voronoi",
+                    marker_type: str = "line",
+                    centerline_color: str = "black",
+                    dark_mode: bool = False,
+                    equal_axis: bool = False,
+                    display_all_possible_paths: bool = False,
+                    plot_title: str = None,
+                    save_plot_name: str = None,
+                    display_voronoi: bool = False,
+                    show_plot: bool = True,
+                    coordinate_unit: str = "Decimal Degrees") -> None:
     # Plot Centerline of River
     centerline_width.errorHandlingPlotCenterline(
         river_object=river_object,

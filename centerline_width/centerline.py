@@ -106,7 +106,7 @@ def networkXGraphShortestPath(nx_graph=None,
             logger.info("[SUCCESS] Valid centerline path found")
         except nx.NetworkXNoPath:  # no direct path found
             logger.info(
-                "[FAILED]  No direct path found from starting node to ending node. To view gaps, plotCenterline(display_all_possible_paths=True). Recommended fix, rerun riverCenterline: set interpolate_data=True or (if interpolate_data=True) increase interpolate_n"
+                "[FAILED]  No direct path found from starting node to ending node. To view gaps, plot_centerline(display_all_possible_paths=True). Recommended fix, rerun riverCenterline: set interpolate_data=True or (if interpolate_data=True) increase interpolate_n"
             )
             return None
         #nx.draw(nx_graph, with_labels=True, font_size=10)

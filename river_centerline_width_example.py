@@ -74,10 +74,10 @@ if __name__ == "__main__":
     #river.saveCenterlineCSV(save_to_csv="centerline_for_csv.csv", latitude_header="lat", longitude_header="long", centerline_type="Equal Distance")
     #river.saveCenterlineMAT(save_to_mat="centerline_for_matlab.mat", latitude_header="lat", longitude_header="long", centerline_type="Evenly Spaced")
 
-    river.plotCenterline(centerline_type="Evenly Spaced",
-                         centerline_color="fuchsia",
-                         marker_type="scatter",
-                         dark_mode=True)
+    river.plot_centerline(centerline_type="Evenly Spaced",
+                          centerline_color="fuchsia",
+                          marker_type="scatter",
+                          dark_mode=True)
     exit()
 
     # Plot river bank centerline

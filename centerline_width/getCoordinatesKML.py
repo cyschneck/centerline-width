@@ -166,7 +166,8 @@ def txt_to_csv(txt_input: str = None,
         rlon = rlon[::-1]
 
     # account for relative and absolute paths to use txt_input name and location for .csv
-    txt_input = text_file  # Pending Deprecation
+    if text_file is not None and txt_input is None:
+        txt_input = text_file  # Pending Deprecation
     full_path, filename = os.path.split(os.path.abspath(txt_input))
     csv_file_name = filename.split(".")[0] + ".csv"
 
