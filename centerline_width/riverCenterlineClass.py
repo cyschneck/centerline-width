@@ -152,6 +152,9 @@ class CenterlineWidth:
         self.centerlineLength = centerline_width.centerlineLength(
             centerline_coordinates=shortest_path_coordinates,
             ellipsoid=self.ellipsoid)
+        self.centerline_length = centerline_width.centerlineLength(
+            centerline_coordinates=shortest_path_coordinates,
+            ellipsoid=self.ellipsoid)
 
         # Set the different types of Centerline coordinates
         self.equal_distance = equal_distance

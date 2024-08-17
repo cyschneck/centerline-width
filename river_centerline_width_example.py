@@ -40,8 +40,8 @@ if __name__ == "__main__":
     print("centerline_evenly_spaced = {0}".format(
         river.centerline_evenly_spaced))
     print("centerline_smoothed = {0}".format(river.centerline_smoothed))
-    '''
     print("\nCenterline Length = {0} km".format(river.centerlineLength))
+    '''
     print("Centerline Length = {0} m".format(river.centerlineLength * 1000))
     print("Right Bank Length = {0} km".format(river.rightBankLength))
     print("Left Bank Length = {0} km".format(river.leftBankLength))

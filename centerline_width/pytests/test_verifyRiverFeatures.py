@@ -111,7 +111,7 @@ river_class_example = river_class_object()
 
 ## riverFeatures() #####################################################
 def test_riverFeatures_centerlineLength():
-    assert river_class_example.centerlineLength == pytest.approx(
+    assert river_class_example.centerline_length == pytest.approx(
         0.08284102060354828)
 
 
