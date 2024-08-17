@@ -41,7 +41,7 @@ from .width import width
 
 # saveOutput.py function calls
 from .saveOutput import save_centerline_csv
-from .saveOutput import saveCenterlineMAT
+from .saveOutput import save_centerline_mat
 
 # plotDiagrams.py function calls
 from .plotDiagrams import plot_centerline

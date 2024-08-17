@@ -379,7 +379,7 @@ def errorHandlingSaveCenterlineMAT(
         save_to_mat: str = None,
         centerline_type: str = None,
         coordinate_unit: str = None) -> None:
-    # Error Handling for saveCenterlineMAT()
+    # Error Handling for save_centerline_mat()
     if river_object is None:
         raise ValueError(
             "[river_object]: Requires a river object (see: centerline_width.riverCenterline)"

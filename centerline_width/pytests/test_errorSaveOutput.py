@@ -158,22 +158,22 @@ def test_saveCenterlineCSV_coordinateTypeInvalidTypes(invalid_input,
                                              coordinate_unit=invalid_input)
 
 
-## saveCenterlineMAT() #####################################################
+## save_centerline_mat() #####################################################
 def test_saveCenterlineMAT_riverObjectRequired():
     with pytest.raises(
             ValueError,
             match=re.escape(
                 "[river_object]: Requires a river object (see: centerline_width.riverCenterline)"
             )):
-        centerline_width.saveCenterlineMAT(river_object=None)
+        centerline_width.save_centerline_mat(river_object=None)
 
 
 def test_saveCenterlineMAT_matInvalidExtension():
     with pytest.raises(
             ValueError,
             match=re.escape("[save_to_mat]: Requires mat filename")):
-        centerline_width.saveCenterlineMAT(river_object=river_class_example,
-                                           save_to_mat=None)
+        centerline_width.save_centerline_mat(river_object=river_class_example,
+                                             save_to_mat=None)
 
 
 @pytest.mark.parametrize("invalid_input, error_output",
@@ -184,8 +184,8 @@ def test_saveCenterlineMAT_matInvalidType(invalid_input, error_output):
             match=re.escape(
                 f"[save_to_mat]: Must be a str, current type = '{error_output}'"
             )):
-        centerline_width.saveCenterlineMAT(river_object=river_class_example,
-                                           save_to_mat=invalid_input)
+        centerline_width.save_centerline_mat(river_object=river_class_example,
+                                             save_to_mat=invalid_input)
 
 
 def test_saveCenterlineMAT_matRequired():
@@ -194,8 +194,8 @@ def test_saveCenterlineMAT_matRequired():
             match=re.escape(
                 "[save_to_mat]: Extension must be a .mat file, current extension = 'txt'"
             )):
-        centerline_width.saveCenterlineMAT(river_object=river_class_example,
-                                           save_to_mat="filename.txt")
+        centerline_width.save_centerline_mat(river_object=river_class_example,
+                                             save_to_mat="filename.txt")
 
 
 @pytest.mark.parametrize("invalid_input, error_output",
@@ -207,9 +207,9 @@ def test_saveCenterlineMAT_latitudeHeaderTypeInvalidTypes(
             match=re.escape(
                 f"[latitude_header]: Must be a str, current type = '{error_output}'"
             )):
-        centerline_width.saveCenterlineMAT(river_object=river_class_example,
-                                           save_to_mat="testing.mat",
-                                           latitude_header=invalid_input)
+        centerline_width.save_centerline_mat(river_object=river_class_example,
+                                             save_to_mat="testing.mat",
+                                             latitude_header=invalid_input)
 
 
 def test_saveCenterlineMAT_latitudeHeaderTypeInvalidAlphanumeric():
@@ -218,7 +218,7 @@ def test_saveCenterlineMAT_latitudeHeaderTypeInvalidAlphanumeric():
             match=re.escape(
                 "[latitude_header]: Column names cannot contain any whitespace or non-alphanumeric characters, currently = 'invalid whitespace'"
             )):
-        centerline_width.saveCenterlineMAT(
+        centerline_width.save_centerline_mat(
             river_object=river_class_example,
             save_to_mat="testing.mat",
             latitude_header="invalid whitespace")
@@ -233,9 +233,9 @@ def test_saveCenterlineMAT_longitudeHeaderTypeInvalidTypes(
             match=re.escape(
                 f"[longitude_header]: Must be a str, current type = '{error_output}'"
             )):
-        centerline_width.saveCenterlineMAT(river_object=river_class_example,
-                                           save_to_mat="testing.mat",
-                                           longitude_header=invalid_input)
+        centerline_width.save_centerline_mat(river_object=river_class_example,
+                                             save_to_mat="testing.mat",
+                                             longitude_header=invalid_input)
 
 
 def test_saveCenterlineMAT_longitudeHeaderTypeInvalidAlphanumeric():
@@ -244,7 +244,7 @@ def test_saveCenterlineMAT_longitudeHeaderTypeInvalidAlphanumeric():
             match=re.escape(
                 "[longitude_header]: Column names cannot contain any whitespace or non-alphanumeric characters, currently = 'invalid whitespace'"
             )):
-        centerline_width.saveCenterlineMAT(
+        centerline_width.save_centerline_mat(
             river_object=river_class_example,
             save_to_mat="testing.mat",
             longitude_header="invalid whitespace")
@@ -259,9 +259,9 @@ def test_saveCenterlineMAT_centerlineTypeInvalidTypes(invalid_input,
             match=re.escape(
                 f"[centerline_type]: Must be a str, current type = '{error_output}'"
             )):
-        centerline_width.saveCenterlineMAT(river_object=river_class_example,
-                                           save_to_mat="testing.mat",
-                                           centerline_type=invalid_input)
+        centerline_width.save_centerline_mat(river_object=river_class_example,
+                                             save_to_mat="testing.mat",
+                                             centerline_type=invalid_input)
 
 
 def test_saveCenterlineMAT_centerlineTypeInvalidOptions():
@@ -270,9 +270,9 @@ def test_saveCenterlineMAT_centerlineTypeInvalidOptions():
             match=re.escape(
                 "[centerline_type]: Must be an available option in ['Voronoi', 'Evenly Spaced', 'Smoothed', 'Equal Distance'], current option = 'not valid'"
             )):
-        centerline_width.saveCenterlineMAT(river_object=river_class_example,
-                                           save_to_mat="testing.mat",
-                                           centerline_type="not valid")
+        centerline_width.save_centerline_mat(river_object=river_class_example,
+                                             save_to_mat="testing.mat",
+                                             centerline_type="not valid")
 
 
 def test_saveCenterlineMAT_coordinateUnitInvalidOption():
@@ -281,9 +281,9 @@ def test_saveCenterlineMAT_coordinateUnitInvalidOption():
             match=re.escape(
                 "[coordinate_unit]: Must be an available option in ['Decimal Degrees', 'Relative Distance'], current option = 'Invalid Option'"
             )):
-        centerline_width.saveCenterlineMAT(river_object=river_class_example,
-                                           save_to_mat="testing.mat",
-                                           coordinate_unit="Invalid Option")
+        centerline_width.save_centerline_mat(river_object=river_class_example,
+                                             save_to_mat="testing.mat",
+                                             coordinate_unit="Invalid Option")
 
 
 @pytest.mark.parametrize("invalid_input, error_output",
@@ -295,6 +295,6 @@ def test_saveCenterlineMAT_coordinateUnitInvalidTypes(invalid_input,
             match=re.escape(
                 f"[coordinate_unit]: Must be a str, current type = '{error_output}'"
             )):
-        centerline_width.saveCenterlineMAT(river_object=river_class_example,
-                                           save_to_mat="testing.mat",
-                                           coordinate_unit=invalid_input)
+        centerline_width.save_centerline_mat(river_object=river_class_example,
+                                             save_to_mat="testing.mat",
+                                             coordinate_unit=invalid_input)

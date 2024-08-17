@@ -69,15 +69,18 @@ if __name__ == "__main__":
     coord_type = "decimal degrees"
     center_type = "VorOnoi"
 
-    river.saveCenterlineCSV(save_to_csv="centerline_for_csv.csv",
-                            centerline_type=center_type,
-                            coordinate_unit=coord_type)
+    #river.saveCenterlineCSV(save_to_csv="centerline_for_csv.csv",
+    #                        centerline_type=center_type,
+    #                        coordinate_unit=coord_type)
     #river.saveCenterlineMAT(save_to_mat="centerline_for_matlab.mat", centerline_type=center_type, coordinate_unit=coord_type)
     river.saveCenterlineCSV(save_to_csv="centerline_for_csv.csv",
                             latitude_header="lat",
                             longitude_header="long",
                             centerline_type="Equal Distance")
-    #river.saveCenterlineMAT(save_to_mat="centerline_for_matlab.mat", latitude_header="lat", longitude_header="long", centerline_type="Evenly Spaced")
+    river.saveCenterlineMAT(save_to_mat="centerline_for_matlab.mat",
+                            latitude_header="lat",
+                            longitude_header="long",
+                            centerline_type="Evenly Spaced")
 
     river.plotCenterline(centerline_type="Evenly Spaced",
                          centerline_color="fuchsia",

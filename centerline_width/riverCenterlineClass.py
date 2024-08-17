@@ -389,7 +389,28 @@ class riverCenterline:
                           longitude_header: str = None,
                           centerline_type: str = "Voronoi",
                           coordinate_unit: str = "Decimal Degrees"):
-        return centerline_width.saveCenterlineMAT(
+        ### Pending Deprecation for function name replaced with save_centerline_mat()
+        ## To be removed
+        warnings.warn(
+            "saveCenterlineMAT() has been replaced with save_centerline_mat() and will be removed in the future",
+            FutureWarning,
+            stacklevel=2)
+
+        return centerline_width.save_centerline_mat(
+            river_object=self,
+            save_to_mat=save_to_mat,
+            latitude_header=latitude_header,
+            longitude_header=longitude_header,
+            centerline_type=centerline_type,
+            coordinate_unit=coordinate_unit)
+
+    def save_centerline_mat(self,
+                            save_to_mat: str = None,
+                            latitude_header: str = None,
+                            longitude_header: str = None,
+                            centerline_type: str = "Voronoi",
+                            coordinate_unit: str = "Decimal Degrees"):
+        return centerline_width.save_centerline_mat(
             river_object=self,
             save_to_mat=save_to_mat,
             latitude_header=latitude_header,

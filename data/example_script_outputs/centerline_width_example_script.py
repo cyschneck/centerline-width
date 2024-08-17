@@ -56,10 +56,10 @@ def main():
                            longitude_header="lon")
 
     # save to mat to import into matlab
-    ro.saveCenterlineMAT(save_to_mat="equal_distance_coordinates.mat",
-                         centerline_type="Equal Distance",
-                         latitude_header="lat",
-                         longitude_header="lon")
+    ro.save_centerline_mat(save_to_mat="equal_distance_coordinates.mat",
+                           centerline_type="Equal Distance",
+                           latitude_header="lat",
+                           longitude_header="lon")
 
     # plot width lines
     ro.plot_centerline_width(

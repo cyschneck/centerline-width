@@ -482,9 +482,9 @@ def test_saveOutput_centerlineRelativeDistanceSmoothedCSV(
 @pytest.fixture(scope="session")
 def generate_mat_centerlineDecimalDegreesVoronoi(tmpdir_factory):
     temp_path = tmpdir_factory.mktemp("temp_data").join("pytest.mat")
-    river_class_example.saveCenterlineMAT(save_to_mat=str(temp_path),
-                                          centerline_type="Voronoi",
-                                          coordinate_unit="Decimal Degrees")
+    river_class_example.save_centerline_mat(save_to_mat=str(temp_path),
+                                            centerline_type="Voronoi",
+                                            coordinate_unit="Decimal Degrees")
     return temp_path
 
 
@@ -525,9 +525,9 @@ def test_saveOutput_centerlineDecimalDegreesVoronoiMAT(
 @pytest.fixture(scope="session")
 def generate_mat_centerlineDecimalDegreesEqualDistance(tmpdir_factory):
     temp_path = tmpdir_factory.mktemp("temp_data").join("pytest.mat")
-    river_class_example.saveCenterlineMAT(save_to_mat=str(temp_path),
-                                          centerline_type="Equal Distance",
-                                          coordinate_unit="Decimal Degrees")
+    river_class_example.save_centerline_mat(save_to_mat=str(temp_path),
+                                            centerline_type="Equal Distance",
+                                            coordinate_unit="Decimal Degrees")
     return temp_path
 
 
@@ -562,9 +562,9 @@ def test_saveOutput_centerlineDecimalDegreesEqualDistanceMAT(
 @pytest.fixture(scope="session")
 def generate_mat_centerlineDecimalDegreesEvenlySpaced(tmpdir_factory):
     temp_path = tmpdir_factory.mktemp("temp_data").join("pytest.mat")
-    river_class_example.saveCenterlineMAT(save_to_mat=str(temp_path),
-                                          centerline_type="Evenly Spaced",
-                                          coordinate_unit="Decimal Degrees")
+    river_class_example.save_centerline_mat(save_to_mat=str(temp_path),
+                                            centerline_type="Evenly Spaced",
+                                            coordinate_unit="Decimal Degrees")
     return temp_path
 
 
@@ -613,9 +613,9 @@ def test_saveOutput_centerlineDecimalDegreesEvenlySpacedMAT(
 @pytest.fixture(scope="session")
 def generate_mat_centerlineDecimalDegreesSmoothed(tmpdir_factory):
     temp_path = tmpdir_factory.mktemp("temp_data").join("pytest.mat")
-    river_class_example.saveCenterlineMAT(save_to_mat=str(temp_path),
-                                          centerline_type="Smoothed",
-                                          coordinate_unit="Decimal Degrees")
+    river_class_example.save_centerline_mat(save_to_mat=str(temp_path),
+                                            centerline_type="Smoothed",
+                                            coordinate_unit="Decimal Degrees")
     return temp_path
 
 
@@ -662,9 +662,10 @@ def test_saveOutput_centerlineDecimalDegreesSmoothedMAT(
 @pytest.fixture(scope="session")
 def generate_mat_centerlineRelativeDistanceVoronoi(tmpdir_factory):
     temp_path = tmpdir_factory.mktemp("temp_data").join("pytest.mat")
-    river_class_example.saveCenterlineMAT(save_to_mat=str(temp_path),
-                                          centerline_type="Voronoi",
-                                          coordinate_unit="Relative Distance")
+    river_class_example.save_centerline_mat(
+        save_to_mat=str(temp_path),
+        centerline_type="Voronoi",
+        coordinate_unit="Relative Distance")
     return temp_path
 
 
@@ -709,9 +710,10 @@ def test_saveOutput_centerlineRelativeDistanceVoronoiMAT(
 @pytest.fixture(scope="session")
 def generate_mat_centerlineRelativeDistanceEqualDistance(tmpdir_factory):
     temp_path = tmpdir_factory.mktemp("temp_data").join("pytest.mat")
-    river_class_example.saveCenterlineMAT(save_to_mat=str(temp_path),
-                                          centerline_type="Equal Distance",
-                                          coordinate_unit="Relative Distance")
+    river_class_example.save_centerline_mat(
+        save_to_mat=str(temp_path),
+        centerline_type="Equal Distance",
+        coordinate_unit="Relative Distance")
     return temp_path
 
 
@@ -748,9 +750,10 @@ def test_saveOutput_centerlineRelativeDistanceEqualDistanceMAT(
 @pytest.fixture(scope="session")
 def generate_mat_centerlineRelativeDistanceEvenlySpaced(tmpdir_factory):
     temp_path = tmpdir_factory.mktemp("temp_data").join("pytest.mat")
-    river_class_example.saveCenterlineMAT(save_to_mat=str(temp_path),
-                                          centerline_type="Evenly Spaced",
-                                          coordinate_unit="Relative Distance")
+    river_class_example.save_centerline_mat(
+        save_to_mat=str(temp_path),
+        centerline_type="Evenly Spaced",
+        coordinate_unit="Relative Distance")
     return temp_path
 
 
@@ -801,9 +804,10 @@ def test_saveOutput_centerlineRelativeDistanceEvenlySpacedMAT(
 @pytest.fixture(scope="session")
 def generate_mat_centerlineRelativeDistanceSmoothed(tmpdir_factory):
     temp_path = tmpdir_factory.mktemp("temp_data").join("pytest.mat")
-    river_class_example.saveCenterlineMAT(save_to_mat=str(temp_path),
-                                          centerline_type="Smoothed",
-                                          coordinate_unit="Relative Distance")
+    river_class_example.save_centerline_mat(
+        save_to_mat=str(temp_path),
+        centerline_type="Smoothed",
+        coordinate_unit="Relative Distance")
     return temp_path
 
 
