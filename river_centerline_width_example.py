@@ -39,6 +39,7 @@ if __name__ == "__main__":
         river.centerline_equal_distance))
     print("centerline_evenly_spaced = {0}".format(
         river.centerline_evenly_spaced))
+    print("centerline_smoothed = {0}".format(river.centerline_smoothed))
     '''
     print("\nCenterline Length = {0} km".format(river.centerlineLength))
     print("Centerline Length = {0} m".format(river.centerlineLength * 1000))
@@ -51,7 +52,6 @@ if __name__ == "__main__":
         river.centerlineEqualDistanceRelative))
     print("centerlineEvenlySpacedRelative = {0}".format(
         river.centerlineEvenlySpacedRelative))
-    print("centerlineSmoothed = {0}".format(river.centerlineSmoothed))
     print("centerlineSmoothedRelative = {0}".format(
         river.centerlineSmoothedRelative))
     print(river.right_bank_relative_coordinates)

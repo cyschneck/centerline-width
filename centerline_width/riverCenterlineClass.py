@@ -173,6 +173,10 @@ class CenterlineWidth:
             river_object=self,
             centerline_coordinates=self.centerline_evenly_spaced,
             interprolate_num=self.interpolate_n_centerpoints)
+        self.centerline_smoothed = centerline_width.smoothedCoordinates(
+            river_object=self,
+            centerline_coordinates=self.centerline_evenly_spaced,
+            interprolate_num=self.interpolate_n_centerpoints)
 
         # Relative Distance from bottom left bank point to each Centerline coordinates
         self.centerlineVoronoiRelative = centerline_width.relativeCenterlineCoordinates(
@@ -185,7 +189,7 @@ class CenterlineWidth:
             self.left_bank_coordinates[0], self.centerline_evenly_spaced,
             self.ellipsoid)
         self.centerlineSmoothedRelative = centerline_width.relativeCenterlineCoordinates(
-            self.left_bank_coordinates[0], self.centerlineSmoothed,
+            self.left_bank_coordinates[0], self.centerline_smoothed,
             self.ellipsoid)
 
         # Overall Sinuosity

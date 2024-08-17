@@ -448,7 +448,7 @@ def test_CenterlineWidth_default():
         pytest.approx((-92.86800697996587, 30.03755139550792)),
         pytest.approx((-92.86801289742837, 30.03752504557166))
     ]
-    assert river_class_example.centerlineSmoothed == [
+    assert river_class_example.centerline_smoothed == [
         pytest.approx((-92.86781709744432, 30.03824388764834)),
         pytest.approx((-92.8678128931592, 30.03821641344848)),
         pytest.approx((-92.86781038736042, 30.038189206812227)),
@@ -1914,7 +1914,7 @@ def test_CenterlineWidth_interpolateTrue():
         pytest.approx((-92.86800669645666, 30.03755234944709)),
         pytest.approx((-92.86801289742837, 30.03752504557166))
     ]
-    assert river_class_example.centerlineSmoothed == [
+    assert river_class_example.centerline_smoothed == [
         pytest.approx((-92.86782241200312, 30.038271970539554)),
         pytest.approx((-92.86781637981315, 30.038243329100077)),
         pytest.approx((-92.86781225108764, 30.038214971972298)),

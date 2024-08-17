@@ -122,7 +122,7 @@ def plotCenterlineBackend(
     if centerline_type == "Smoothed":
         centerline_legend = "Smoothed Centerline Coordinates"
         if coordinate_unit == "Decimal Degrees":
-            centerline_coordinates_by_type = river_object.centerlineSmoothed
+            centerline_coordinates_by_type = river_object.centerline_smoothed
         if coordinate_unit == "Relative Distance":
             centerline_coordinates_by_type = river_object.centerlineSmoothedRelative
 
@@ -329,7 +329,7 @@ def plot_centerline_width(
             if apply_smoothing:
                 right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(
                     river_object=river_object,
-                    centerline_coordinates=river_object.centerlineSmoothed,
+                    centerline_coordinates=river_object.centerline_smoothed,
                     transect_span_distance=transect_span_distance,
                     transect_slope=transect_slope,
                     remove_intersections=remove_intersections,
@@ -337,7 +337,7 @@ def plot_centerline_width(
                 x = []
                 y = []
                 if coordinate_unit == "Decimal Degrees":
-                    smoothed_coords = river_object.centerlineSmoothed
+                    smoothed_coords = river_object.centerline_smoothed
                 if coordinate_unit == "Relative Distance":
                     smoothed_coords = river_object.centerlineSmoothedRelative
                 for k, v in smoothed_coords:
