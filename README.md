@@ -33,7 +33,7 @@ Find the centerline and width of rivers based on the latitude and longitude posi
     * sinuosity
     * incremental_sinuosity()
 * **Export centerline to .CSV and .MAT files**
-    * saveCenterlineCSV()
+    * save_centerline_csv()
     * saveCenterlineMAT()
 
 | River Outlined in Google Earth Pro | Generated Centerline for the Riverbank |
@@ -339,7 +339,7 @@ Output is a list of tuples: (example) `[(-92.86788596499872, 30.03786596717931),
 Save the centerline coordinates to a csv file with columns for latitude and longitude. This is the file format for a table of (latitude,longitude) pairs accepted to import back into Google Earth Pro.
 
 ```
-saveCenterlineCSV(save_to_csv=None, centerline_type="Voronoi", coordinate_unit="Decimal Degrees")
+save_centerline_csv(save_to_csv=None, centerline_type="Voronoi", coordinate_unit="Decimal Degrees")
 ```
 * **[REQUIRED]** save_to_csv (string): CSV filename, requires a .csv extension
 * [OPTIONAL] centerline_type (string): Centerline type to save to CSV (not case-sensitive), options: ["Voronoi", "Evenly Spaced", "Smoothed", "Equal Distance"], defaults to "Voronoi"
@@ -350,7 +350,7 @@ saveCenterlineCSV(save_to_csv=None, centerline_type="Voronoi", coordinate_unit="
 ```python
 import centerline_width
 river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
-river_object.saveCenterlineCSV(save_to_csv="centerline_coordinates.csv", centerline_type="Smoothed")
+river_object.save_centerline_csv(save_to_csv="centerline_coordinates.csv", centerline_type="Smoothed")
 ```
 Returns a csv with the Latitude and Longitude coordinates of the specified centerline with column headers with centerline type: `Smoothed Centerline Latitude (Deg), Smoothed Centerline Longitude (Deg)`
 

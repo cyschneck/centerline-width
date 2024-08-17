@@ -50,10 +50,10 @@ def main():
         save_plot_name="43deg44_18dot23_N_101deg27_7dot61_W_centerline.png")
 
     # save to csv to import back into google earth pro
-    ro.saveCenterlineCSV(save_to_csv="equal_distance_coordinates.csv",
-                         centerline_type="Equal Distance",
-                         latitude_header="lat",
-                         longitude_header="lon")
+    ro.save_centerline_csv(save_to_csv="equal_distance_coordinates.csv",
+                           centerline_type="Equal Distance",
+                           latitude_header="lat",
+                           longitude_header="lon")
 
     # save to mat to import into matlab
     ro.saveCenterlineMAT(save_to_mat="equal_distance_coordinates.mat",

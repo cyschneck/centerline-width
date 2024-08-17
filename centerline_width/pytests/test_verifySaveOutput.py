@@ -115,9 +115,9 @@ river_class_example = river_class_object()
 @pytest.fixture(scope="session")
 def generate_csv_centerlineDecimalDegreesVoronoi(tmpdir_factory):
     temp_path = tmpdir_factory.mktemp("temp_data").join("pytest.csv")
-    river_class_example.saveCenterlineCSV(save_to_csv=str(temp_path),
-                                          centerline_type="Voronoi",
-                                          coordinate_unit="Decimal Degrees")
+    river_class_example.save_centerline_csv(save_to_csv=str(temp_path),
+                                            centerline_type="Voronoi",
+                                            coordinate_unit="Decimal Degrees")
     return temp_path
 
 
@@ -156,9 +156,9 @@ def test_saveOutput_centerlineDecimalDegreesVoronoiCSV(
 @pytest.fixture(scope="session")
 def generate_csv_centerlineDecimalDegreesEqualDistance(tmpdir_factory):
     temp_path = tmpdir_factory.mktemp("temp_data").join("pytest.csv")
-    river_class_example.saveCenterlineCSV(save_to_csv=str(temp_path),
-                                          centerline_type="Equal Distance",
-                                          coordinate_unit="Decimal Degrees")
+    river_class_example.save_centerline_csv(save_to_csv=str(temp_path),
+                                            centerline_type="Equal Distance",
+                                            coordinate_unit="Decimal Degrees")
     return temp_path
 
 
@@ -192,9 +192,9 @@ def test_saveOutput_centerlineDecimalDegreesEqualDistanceCSV(
 @pytest.fixture(scope="session")
 def generate_csv_centerlineDecimalDegreesEvenlySpaced(tmpdir_factory):
     temp_path = tmpdir_factory.mktemp("temp_data").join("pytest.csv")
-    river_class_example.saveCenterlineCSV(save_to_csv=str(temp_path),
-                                          centerline_type="Evenly Spaced",
-                                          coordinate_unit="Decimal Degrees")
+    river_class_example.save_centerline_csv(save_to_csv=str(temp_path),
+                                            centerline_type="Evenly Spaced",
+                                            coordinate_unit="Decimal Degrees")
     return temp_path
 
 
@@ -242,9 +242,9 @@ def test_saveOutput_centerlineDecimalDegreesEvenlySpacedCSV(
 @pytest.fixture(scope="session")
 def generate_csv_centerlineDecimalDegreesSmoothed(tmpdir_factory):
     temp_path = tmpdir_factory.mktemp("temp_data").join("pytest.csv")
-    river_class_example.saveCenterlineCSV(save_to_csv=str(temp_path),
-                                          centerline_type="Smoothed",
-                                          coordinate_unit="Decimal Degrees")
+    river_class_example.save_centerline_csv(save_to_csv=str(temp_path),
+                                            centerline_type="Smoothed",
+                                            coordinate_unit="Decimal Degrees")
     return temp_path
 
 
@@ -289,9 +289,10 @@ def test_saveOutput_centerlineDecimalDegreesSmoothedCSV(
 @pytest.fixture(scope="session")
 def generate_csv_centerlineRelativeDistanceVoronoi(tmpdir_factory):
     temp_path = tmpdir_factory.mktemp("temp_data").join("pytest.csv")
-    river_class_example.saveCenterlineCSV(save_to_csv=str(temp_path),
-                                          centerline_type="Voronoi",
-                                          coordinate_unit="Relative Distance")
+    river_class_example.save_centerline_csv(
+        save_to_csv=str(temp_path),
+        centerline_type="Voronoi",
+        coordinate_unit="Relative Distance")
     return temp_path
 
 
@@ -333,9 +334,10 @@ def test_saveOutput_centerlineRelativeDistanceVoronoiCSV(
 @pytest.fixture(scope="session")
 def generate_csv_centerlineRelativeDistanceEqualDistance(tmpdir_factory):
     temp_path = tmpdir_factory.mktemp("temp_data").join("pytest.csv")
-    river_class_example.saveCenterlineCSV(save_to_csv=str(temp_path),
-                                          centerline_type="Equal Distance",
-                                          coordinate_unit="Relative Distance")
+    river_class_example.save_centerline_csv(
+        save_to_csv=str(temp_path),
+        centerline_type="Equal Distance",
+        coordinate_unit="Relative Distance")
     return temp_path
 
 
@@ -371,9 +373,10 @@ def test_saveOutput_centerlineRelativeDistanceEqualDistanceCSV(
 @pytest.fixture(scope="session")
 def generate_csv_centerlineRelativeDistanceEvenlySpaced(tmpdir_factory):
     temp_path = tmpdir_factory.mktemp("temp_data").join("pytest.csv")
-    river_class_example.saveCenterlineCSV(save_to_csv=str(temp_path),
-                                          centerline_type="Evenly Spaced",
-                                          coordinate_unit="Relative Distance")
+    river_class_example.save_centerline_csv(
+        save_to_csv=str(temp_path),
+        centerline_type="Evenly Spaced",
+        coordinate_unit="Relative Distance")
     return temp_path
 
 
@@ -423,9 +426,10 @@ def test_saveOutput_centerlineRelativeDistanceEvenlySpacedCSV(
 @pytest.fixture(scope="session")
 def generate_csv_centerlineRelativeDistanceSmoothed(tmpdir_factory):
     temp_path = tmpdir_factory.mktemp("temp_data").join("pytest.csv")
-    river_class_example.saveCenterlineCSV(save_to_csv=str(temp_path),
-                                          centerline_type="Smoothed",
-                                          coordinate_unit="Relative Distance")
+    river_class_example.save_centerline_csv(
+        save_to_csv=str(temp_path),
+        centerline_type="Smoothed",
+        coordinate_unit="Relative Distance")
     return temp_path
 
 

@@ -313,7 +313,7 @@ class riverCenterline:
                                  coordinate_unit: str = "Decimal Degrees",
                                  coordinate_reference: str = "Centerline",
                                  save_to_csv: str = None):
-        ### Pending Deprecation for function name replaced with plot_centerline()
+        ### Pending Deprecation for function name replaced with width()
         ## To be removed
         warnings.warn(
             "riverWidthFromCenterline() has been replaced with width() and will be removed in the future",
@@ -354,7 +354,28 @@ class riverCenterline:
                           longitude_header: str = None,
                           centerline_type: str = "Voronoi",
                           coordinate_unit: str = "Decimal Degrees"):
-        return centerline_width.saveCenterlineCSV(
+        ### Pending Deprecation for function name replaced with save_centerline_csv()
+        ## To be removed
+        warnings.warn(
+            "saveCenterlineCSV() has been replaced with save_centerline_csv() and will be removed in the future",
+            FutureWarning,
+            stacklevel=2)
+
+        return centerline_width.save_centerline_csv(
+            river_object=self,
+            save_to_csv=save_to_csv,
+            latitude_header=latitude_header,
+            longitude_header=longitude_header,
+            centerline_type=centerline_type,
+            coordinate_unit=coordinate_unit)
+
+    def save_centerline_csv(self,
+                            save_to_csv: str = None,
+                            latitude_header: str = None,
+                            longitude_header: str = None,
+                            centerline_type: str = "Voronoi",
+                            coordinate_unit: str = "Decimal Degrees"):
+        return centerline_width.save_centerline_csv(
             river_object=self,
             save_to_csv=save_to_csv,
             latitude_header=latitude_header,

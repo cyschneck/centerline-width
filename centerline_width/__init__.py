@@ -40,7 +40,7 @@ from .width import riverWidthFromCenterlineCoordinates
 from .width import width
 
 # saveOutput.py function calls
-from .saveOutput import saveCenterlineCSV
+from .saveOutput import save_centerline_csv
 from .saveOutput import saveCenterlineMAT
 
 # plotDiagrams.py function calls

@@ -5,7 +5,7 @@
 #      intersections) and returning the values as either a .csv or .mat format                    #
 #                                                                                                 #
 #      This includes the functions for:                                                           #
-#                                       - saveCenterlineCSV: saves the centerline                 #
+#                                       - save_centerline_csv: saves the centerline               #
 #                                              coordinates to a .csv file                         #
 #                                                                                                 #
 #                                       - saveCenterlineMAT: saves the centerline                 #
@@ -32,12 +32,12 @@ stream_handler = logging.StreamHandler()
 logger.addHandler(stream_handler)
 
 
-def saveCenterlineCSV(river_object: centerline_width.riverCenterline = None,
-                      save_to_csv: str = None,
-                      latitude_header: str = None,
-                      longitude_header: str = None,
-                      centerline_type: str = "Voronoi",
-                      coordinate_unit: str = "Decimal Degrees") -> None:
+def save_centerline_csv(river_object: centerline_width.riverCenterline = None,
+                        save_to_csv: str = None,
+                        latitude_header: str = None,
+                        longitude_header: str = None,
+                        centerline_type: str = "Voronoi",
+                        coordinate_unit: str = "Decimal Degrees") -> None:
     # Save Centerline Coordinates to .CSV
 
     centerline_width.errorHandlingSaveCenterlineCSV(
