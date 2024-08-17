@@ -101,7 +101,7 @@ def plotCenterlineBackend(
     if centerline_type == "Voronoi":
         centerline_legend = "Voronoi Centerline Coordinates"
         if coordinate_unit == "Decimal Degrees":
-            centerline_coordinates_by_type = river_object.centerlineVoronoi
+            centerline_coordinates_by_type = river_object.centerline_voronoi
         if coordinate_unit == "Relative Distance":
             centerline_coordinates_by_type = river_object.centerlineVoronoiRelative
 
@@ -321,7 +321,7 @@ def plot_centerline_width(
     # Determine the Width of River
     number_of_evenly_spaced_points = ""
 
-    if river_object.centerlineVoronoi is not None:
+    if river_object.centerline_voronoi is not None:
         number_of_evenly_spaced_points = f"\nCenterline made of {river_object.interpolate_n_centerpoints} Fixed Points, width lines generated every {transect_span_distance} points"
         if river_object.starting_node is not None:  # error handling for when data is too small to generate centerline coordinates
 

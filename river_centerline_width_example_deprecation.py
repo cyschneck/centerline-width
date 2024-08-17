@@ -36,13 +36,13 @@ if __name__ == "__main__":
 
     #print(river)
     #print(river.__dict__.keys())
+    print("centerlineVoronoi = {0}".format(river.centerlineVoronoi))
     '''
     print("\nCenterline Length = {0} km".format(river.centerlineLength))
     print("Centerline Length = {0} m".format(river.centerlineLength * 1000))
     print("Right Bank Length = {0} km".format(river.rightBankLength))
     print("Left Bank Length = {0} km".format(river.leftBankLength))
     print("ellipsoid = {0}".format(river.ellipsoid))
-    print("centerlineVoronoi = {0}".format(river.centerlineVoronoi))
     print("centerlineVoronoiRelative = {0}".format(
         river.centerlineVoronoiRelative))
     print("equalDistanceCenterline = {0}".format(

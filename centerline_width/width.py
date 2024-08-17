@@ -352,7 +352,7 @@ def width(river_object: centerline_width.CenterlineWidth = None,
     right_left_coords = {
     }  # used to track left/right bank coordinates when coordinate_reference=="Banks"
 
-    if river_object.centerlineVoronoi is None:
+    if river_object.centerline_voronoi is None:
         logger.critical(
             "\nCRITICAL ERROR, unable to find width without a valid centerline"
         )

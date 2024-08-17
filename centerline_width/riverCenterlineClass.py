@@ -145,7 +145,8 @@ class CenterlineWidth:
         self.y_voronoi_ridge_point_relative = y_relative_ridges  # Voronoi relative y positions
 
         # Voronoi Centerline Coordinates
-        self.centerlineVoronoi = shortest_path_coordinates
+        self.centerlineVoronoi = shortest_path_coordinates  # pending deprecation
+        self.centerline_voronoi = shortest_path_coordinates
 
         # Centerline length
         self.centerlineLength = centerline_width.centerlineLength(
@@ -155,11 +156,11 @@ class CenterlineWidth:
         # Set the different types of Centerline coordinates
         self.equal_distance = equal_distance
         self.centerlineEqualDistance = centerline_width.equalDistanceCenterline(
-            centerline_coordinates=self.centerlineVoronoi,
+            centerline_coordinates=self.centerline_voronoi,
             equal_distance=self.equal_distance,
             ellipsoid=self.ellipsoid)
         self.centerlineEvenlySpaced = centerline_width.evenlySpacedCenterline(
-            centerline_coordinates=self.centerlineVoronoi,
+            centerline_coordinates=self.centerline_voronoi,
             number_of_fixed_points=self.interpolate_n_centerpoints)
         self.centerlineSmoothed = centerline_width.smoothedCoordinates(
             river_object=self,
@@ -168,7 +169,7 @@ class CenterlineWidth:
 
         # Relative Distance from bottom left bank point to each Centerline coordinates
         self.centerlineVoronoiRelative = centerline_width.relativeCenterlineCoordinates(
-            self.left_bank_coordinates[0], self.centerlineVoronoi,
+            self.left_bank_coordinates[0], self.centerline_voronoi,
             self.ellipsoid)
         self.centerlineEqualDistanceRelative = centerline_width.relativeCenterlineCoordinates(
             self.left_bank_coordinates[0], self.centerlineEqualDistance,

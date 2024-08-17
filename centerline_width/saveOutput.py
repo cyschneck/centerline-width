@@ -53,7 +53,7 @@ def save_centerline_csv(river_object: centerline_width.CenterlineWidth = None,
     # set coordinate type and unit
     if coordinate_unit == "Decimal Degrees":
         if centerline_type == "Voronoi":
-            centerline_coordinates_by_type = river_object.centerlineVoronoi
+            centerline_coordinates_by_type = river_object.centerline_voronoi
         if centerline_type == "Equal Distance":
             centerline_coordinates_by_type = river_object.centerlineEqualDistance
         if centerline_type == "Evenly Spaced":
@@ -116,7 +116,7 @@ def save_centerline_mat(river_object: centerline_width.CenterlineWidth = None,
     # set coordinate type and unit
     if coordinate_unit == "Decimal Degrees":
         if centerline_type == "Voronoi":
-            centerline_coordinates_by_type = river_object.centerlineVoronoi
+            centerline_coordinates_by_type = river_object.centerline_voronoi
         if centerline_type == "Equal Distance":
             centerline_coordinates_by_type = river_object.centerlineEqualDistance
         if centerline_type == "Evenly Spaced":
