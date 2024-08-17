@@ -81,8 +81,14 @@ class CenterlineWidth:
         # Right/Length Bank Length
         self.rightBankLength = centerline_width.centerlineLength(
             centerline_coordinates=right_bank_coordinates,
+            ellipsoid=self.ellipsoid)  # Pending Deprecation
+        self.right_bank_length = centerline_width.centerlineLength(
+            centerline_coordinates=right_bank_coordinates,
             ellipsoid=self.ellipsoid)
         self.leftBankLength = centerline_width.centerlineLength(
+            centerline_coordinates=left_bank_coordinates,
+            ellipsoid=self.ellipsoid)  # Pending Deprecation
+        self.left_bank_length = centerline_width.centerlineLength(
             centerline_coordinates=left_bank_coordinates,
             ellipsoid=self.ellipsoid)
 
@@ -151,7 +157,7 @@ class CenterlineWidth:
         # Centerline length
         self.centerlineLength = centerline_width.centerlineLength(
             centerline_coordinates=shortest_path_coordinates,
-            ellipsoid=self.ellipsoid)
+            ellipsoid=self.ellipsoid)  # Pending Deprecation
         self.centerline_length = centerline_width.centerlineLength(
             centerline_coordinates=shortest_path_coordinates,
             ellipsoid=self.ellipsoid)

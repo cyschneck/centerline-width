@@ -116,12 +116,12 @@ def test_riverFeatures_centerlineLength():
 
 
 def test_riverFeatures_rightBankLength():
-    assert river_class_example.rightBankLength == pytest.approx(
+    assert river_class_example.right_bank_length == pytest.approx(
         0.09705816897006408)
 
 
 def test_riverFeatures_leftBankLength():
-    assert river_class_example.leftBankLength == pytest.approx(
+    assert river_class_example.left_bank_length == pytest.approx(
         0.10570962276643736)
 
 

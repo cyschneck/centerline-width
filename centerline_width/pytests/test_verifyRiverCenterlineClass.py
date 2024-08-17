@@ -239,9 +239,9 @@ def test_CenterlineWidth_default():
         pytest.approx((69.70659214132293, 133.54671863851024)),
         pytest.approx((74.46421931823045, 133.19494595720758))
     ]
-    assert river_class_example.rightBankLength == pytest.approx(
+    assert river_class_example.right_bank_length == pytest.approx(
         0.09705816897006408)
-    assert river_class_example.leftBankLength == pytest.approx(
+    assert river_class_example.left_bank_length == pytest.approx(
         0.10570962276643736)
     assert river_class_example.area == pytest.approx(11.4030195647527)
     assert river_class_example.starting_node == pytest.approx(
@@ -1548,9 +1548,9 @@ def test_CenterlineWidth_interpolateTrue():
         pytest.approx((74.46421931823045, 133.19494595720758)),
         pytest.approx((74.46421931823045, 133.19494595720758))
     ]
-    assert river_class_example.rightBankLength == pytest.approx(
+    assert river_class_example.right_bank_length == pytest.approx(
         0.09705816897212159)
-    assert river_class_example.leftBankLength == pytest.approx(
+    assert river_class_example.left_bank_length == pytest.approx(
         0.1057096227682203)
     assert river_class_example.area == pytest.approx(11.403019517285152)
     assert river_class_example.starting_node == pytest.approx(

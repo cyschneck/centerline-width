@@ -40,11 +40,11 @@ if __name__ == "__main__":
     print("centerline_evenly_spaced = {0}".format(
         river.centerline_evenly_spaced))
     print("centerline_smoothed = {0}".format(river.centerline_smoothed))
-    print("\nCenterline Length = {0} km".format(river.centerlineLength))
+    print("\nCenterline Length = {0} km".format(river.centerline_length))
+    print("Right Bank Length = {0} km".format(river.right_bank_length))
+    print("Left Bank Length = {0} km".format(river.left_bank_length))
     '''
     print("Centerline Length = {0} m".format(river.centerlineLength * 1000))
-    print("Right Bank Length = {0} km".format(river.rightBankLength))
-    print("Left Bank Length = {0} km".format(river.leftBankLength))
     print("ellipsoid = {0}".format(river.ellipsoid))
     print("centerlineVoronoiRelative = {0}".format(
         river.centerlineVoronoiRelative))
