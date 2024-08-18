@@ -34,35 +34,31 @@ if __name__ == "__main__":
 
     #print(river)
     #print(river.__dict__.keys())
-    print("centerline_voronoi = {0}".format(river.centerline_voronoi))
-    print("centerline_equal_distance = {0}".format(
-        river.centerline_equal_distance))
-    print("centerline_evenly_spaced = {0}".format(
-        river.centerline_evenly_spaced))
-    print("centerline_smoothed = {0}".format(river.centerline_smoothed))
-    print("\nCenterline Length = {0} km".format(river.centerline_length))
-    print("Right Bank Length = {0} km".format(river.right_bank_length))
-    print("Left Bank Length = {0} km".format(river.left_bank_length))
-    print("centerline_voronoi_relative = {0}".format(
-        river.centerline_voronoi_relative))
-    print("centerline_equal_distance_relative = {0}".format(
-        river.centerline_equal_distance_relative))
-    print("centerline_evenly_spaced_relative = {0}".format(
-        river.centerline_evenly_spaced_relative))
-    print("centerline_smoothed_relative = {0}".format(
-        river.centerline_smoothed_relative))
-    '''
-    print("Centerline Length = {0} m".format(river.centerlineLength * 1000))
-    print("ellipsoid = {0}".format(river.ellipsoid))
+    print(f"centerline_voronoi = {river.centerline_voronoi}")
+    print(f"centerline_equal_distance = {river.centerline_equal_distance}")
+    print(f"centerline_evenly_spaced = {river.centerline_evenly_spaced}")
+    print(f"centerline_smoothed = {river.centerline_smoothed}")
+    print(f"\nCenterline Length = {river.centerline_length} km")
+    print(f"Right Bank Length = {river.right_bank_length} km")
+    print(f"Left Bank Length = {river.left_bank_length} km")
+    print("centerline_voronoi_relative = {river.centerline_voronoi_relative}")
+    print(
+        f"centerline_equal_distance_relative = {river.centerline_equal_distance_relative}"
+    )
+    print(
+        f"centerline_evenly_spaced_relative = {river.centerline_evenly_spaced_relative}"
+    )
+    print(
+        f"centerline_smoothed_relative = {river.centerline_smoothed_relative}")
+    print(f"Centerline Length = {river.centerline_length * 1000} m")
+    print(f"ellipsoid = {river.ellipsoid}")
     print(river.right_bank_relative_coordinates)
     print(river.left_bank_relative_coordinates)
-    '''
     print(f"area = {river.area} km^2")
     print(f"sinuosity  = {river.sinuosity}")
     incremental_sinuosity = river.incremental_sinuosity(incremental_points=215,
                                                         save_to_csv=None)
     print(f"incremental sinuosity  = {incremental_sinuosity}")
-    #exit()
 
     #coord_type = "relative DIStance"
     coord_type = "decimal degrees"
@@ -87,7 +83,7 @@ if __name__ == "__main__":
                           dark_mode=True)
 
     # Plot river bank centerline
-    river.plot_centerline(save_plot_name=None,
+    river.plot_centerline(save_plot=None,
                           centerline_type=center_type,
                           marker_type="line",
                           centerline_color="black",
@@ -103,7 +99,7 @@ if __name__ == "__main__":
     slope_type = "average"
 
     # Plot river bank width line
-    river.plot_centerline_width(save_plot_name=None,
+    river.plot_centerline_width(save_plot=None,
                                 plot_title=None,
                                 display_true_centerline=False,
                                 transect_span_distance=transect,

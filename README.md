@@ -458,7 +458,7 @@ plot_centerline(centerline_type="Voronoi",
         equal_axis=False,
         display_all_possible_paths=False, 
         plot_title=None, 
-        save_plot_name=None, 
+        save_plot=None, 
         display_voronoi=False,
         show_plot=True,
         coordinate_unit="Decimal Degrees")
@@ -470,7 +470,7 @@ plot_centerline(centerline_type="Voronoi",
 * [OPTIONAL] equal_axis (bool): Set x/y axes in plot to be equal, defaults to False
 * [OPTIONAL] display_all_possible_paths (boolean): Display all possible paths, not just the centerline (useful for debugging), defaults to False
 * [OPTIONAL] plot_title (string): Change plot title, defaults to "River Coordinates: Valid Centerline = True/False, Valid Polygon = True/False, Interpolated = True/False"
-* [OPTIONAL] save_plot_name (string): Save the plot with a given name and location
+* [OPTIONAL] save_plot (string): Save the plot with a given name and location
 * [OPTIONAL] display_voronoi (boolean): Overlay Voronoi diagram used to generate centerline, defaults to False
 * [OPTIONAL] show_plot (boolean): display and open plots (plt.show() in Matplotlib), defaults to True
 * [OPTIONAL] coordinate_unit (string): Coordinates of the river are return as "Decimal Degrees" (latitude/longitude) or converted to a distance from the first point on the left bank as "Relative Distance", defaults to "Decimal Degrees"
@@ -554,7 +554,7 @@ Plot the width of the river based on the centerline
 
 ```
 plot_centerline_width(plot_title=None, 
-        save_plot_name=None, 
+        save_plot=None, 
         display_true_centerline=True,
         transect_span_distance=3,
         transect_slope="Average",
@@ -567,7 +567,7 @@ plot_centerline_width(plot_title=None,
         coordinate_unit="Decimal Degrees")
 ```
 * [OPTIONAL] plot_title (string): Change plot title, defaults to "River Width Coordinates: Valid Centerline = True/False, Valid Polygon = True/False, Centerline made of <interpolate_n_centerpoints> Fixed Points, width lines generated every <transect_span_distance> points, Interpolated = True/False"
-* [OPTIONAL] save_plot_name (string): Save the plot with a given name and location
+* [OPTIONAL] save_plot (string): Save the plot with a given name and location
 * [OPTIONAL] display_true_centerline (boolean): Display generated true centerline based on Voronoi diagrams, defaults to True
 * [OPTIONAL] transect_span_distance (int): Number n points around a center point to determine the slope (increase to decrease the impact of sudden changes), defaults to 3, must be greater than 1 (since the slope is found from the difference in position between two points)
 * [OPTIONAL] transect_slope (str): Determine how the width lines are generated, either by averaging all slopes "Average" or directly from the first to last point in the span distance as "Direct", defaults to "Average"

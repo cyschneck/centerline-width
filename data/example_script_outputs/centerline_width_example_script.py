@@ -39,14 +39,14 @@ def main():
     ro.plot_centerline(
         centerline_type="Equal Distance",
         display_all_possible_paths=False,
-        save_plot_name="43deg44_18dot23_N_101deg27_7dot61_W_centerline.png")
+        save_plot="43deg44_18dot23_N_101deg27_7dot61_W_centerline.png")
 
     # plot the centerline with Relative Distance
     ro.plot_centerline(
         centerline_type="Equal Distance",
         display_all_possible_paths=False,
         coordinate_unit="Relative Distance",
-        save_plot_name="43deg44_18dot23_N_101deg27_7dot61_W_centerline.png")
+        save_plot="43deg44_18dot23_N_101deg27_7dot61_W_centerline.png")
 
     # save to csv to import back into google earth pro
     ro.save_centerline_csv(save_to_csv="equal_distance_coordinates.csv",
@@ -66,7 +66,7 @@ def main():
         transect_span_distance=3,
         apply_smoothing=True,
         remove_intersections=True,
-        save_plot_name="43deg44_18dot23_N_101deg27_7dot61_W_width.png")
+        save_plot="43deg44_18dot23_N_101deg27_7dot61_W_width.png")
 
     # save width distance and coordinates to .csv
     river_width_dict = ro.width(transect_span_distance=3,

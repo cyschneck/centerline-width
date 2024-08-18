@@ -28,7 +28,7 @@ if __name__ == "__main__":
                 coord_option = coord_type.replace(" ", "_").lower()
                 marker_option = mark_type.lower()
                 river_object.plot_centerline(
-                    save_plot_name=
+                    save_plot=
                     f"centerline_width/pytests/baseline_plots/{centerline_option}_{coord_option}_{marker_option}",
                     centerline_type=center_type[0],
                     centerline_color=center_type[1],
@@ -43,7 +43,7 @@ if __name__ == "__main__":
     for is_display_paths in display_all_paths:
         display_option = str(is_display_paths).lower()
         river_object.plot_centerline(
-            save_plot_name=
+            save_plot=
             f"centerline_width/pytests/baseline_plots/display_all_possible_paths_{display_option}",
             display_all_possible_paths=is_display_paths,
             dark_mode=is_debug,
@@ -55,7 +55,7 @@ if __name__ == "__main__":
     for is_display_voronoi in display_voronoi_graph:
         voronoi_option = str(is_display_voronoi).lower()
         river_object.plot_centerline(
-            save_plot_name=
+            save_plot=
             f"centerline_width/pytests/baseline_plots/display_voronoi_graph_{voronoi_option}",
             display_voronoi=is_display_voronoi,
             dark_mode=is_debug,
@@ -67,7 +67,7 @@ if __name__ == "__main__":
     for is_dark_mode in dark_mode_option:
         dark_mode_option = str(is_dark_mode).lower()
         river_object.plot_centerline(
-            save_plot_name=
+            save_plot=
             f"centerline_width/pytests/baseline_plots/dark_mode_{dark_mode_option}",
             dark_mode=is_dark_mode,
             show_plot=is_debug)
@@ -78,7 +78,7 @@ if __name__ == "__main__":
     for is_equal_axis in equal_axis_option:
         equal_axis_option = str(is_equal_axis).lower()
         river_object.plot_centerline(
-            save_plot_name=
+            save_plot=
             f"centerline_width/pytests/baseline_plots/equal_axis_{equal_axis_option}",
             equal_axis=is_equal_axis,
             dark_mode=is_debug,
@@ -98,7 +98,7 @@ if __name__ == "__main__":
                 for is_remove in is_remove_intersections:
                     coord_option = coord_type.replace(" ", "_").lower()
                     river_object.plot_centerline_width(
-                        save_plot_name=
+                        save_plot=
                         f"centerline_width/pytests/baseline_plots/width_{coord_option}_removeIntersections{is_remove}_smoothed{is_smoothed}_transectSlope{transect_type}",
                         apply_smoothing=is_smoothed,
                         coordinate_unit=coord_type,
@@ -111,7 +111,7 @@ if __name__ == "__main__":
     display_centerline_options = [True, False]
     for show_centerline in display_centerline_options:
         river_object.plot_centerline_width(
-            save_plot_name=
+            save_plot=
             f"centerline_width/pytests/baseline_plots/width_displayCenterline{show_centerline}",
             display_true_centerline=show_centerline,
             show_plot=False)
@@ -121,7 +121,7 @@ if __name__ == "__main__":
     dark_mode_options = [True, False]
     for is_dark in dark_mode_options:
         river_object.plot_centerline_width(
-            save_plot_name=
+            save_plot=
             f"centerline_width/pytests/baseline_plots/width_isDarkMode{is_dark}",
             dark_mode=is_dark,
             show_plot=False)
@@ -131,7 +131,7 @@ if __name__ == "__main__":
     equal_axis_options = [True, False]
     for is_equal_axis in equal_axis_options:
         river_object.plot_centerline_width(
-            save_plot_name=
+            save_plot=
             f"centerline_width/pytests/baseline_plots/width_isEqualAxis{is_equal_axis}",
             equal_axis=is_equal_axis,
             show_plot=False)
@@ -141,7 +141,7 @@ if __name__ == "__main__":
     is_flag_intersections_options = [True, False]
     for flag_intersect in is_flag_intersections_options:
         river_object.plot_centerline_width(
-            save_plot_name=
+            save_plot=
             f"centerline_width/pytests/baseline_plots/width_flagIntersections{flag_intersect}",
             flag_intersections=flag_intersect,
             show_plot=False)

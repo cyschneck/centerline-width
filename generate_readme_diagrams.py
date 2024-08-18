@@ -29,19 +29,19 @@ if __name__ == "__main__":
         csv_data="data/river_coords.csv")
     river_object.plot_centerline(
         plot_title="Centerline with Riverbanks",
-        save_plot_name="data/doc_examples/river_example.png",
+        save_plot="data/doc_examples/river_example.png",
         show_plot=is_debug)
     ro_550.plot_centerline(
-        save_plot_name="data/doc_examples/river_coords_centerline.png",
+        save_plot="data/doc_examples/river_coords_centerline.png",
         show_plot=is_debug)
     ro_550.plot_centerline_width(
-        save_plot_name="data/doc_examples/river_coords_width.png",
+        save_plot="data/doc_examples/river_coords_width.png",
         apply_smoothing=True,
         remove_intersections=True,
         display_true_centerline=False,
         show_plot=is_debug)
     ro_550.plot_centerline(
-        save_plot_name=
+        save_plot=
         "data/doc_examples/river_relative_distance_coords_centerline.png",
         coordinate_unit="Relative Distance",
         show_plot=is_debug)
@@ -53,7 +53,7 @@ if __name__ == "__main__":
         cutoff=550,
         interpolate_n_centerpoints=75)
     ro_550_interpolate_centerline_75.plot_centerline(
-        save_plot_name="data/doc_examples/interpolate_n_centerpoints_75.png",
+        save_plot="data/doc_examples/interpolate_n_centerpoints_75.png",
         centerline_type="Evenly Spaced",
         centerline_color="fuchsia",
         marker_type="scatter",
@@ -63,7 +63,7 @@ if __name__ == "__main__":
         cutoff=550,
         interpolate_n_centerpoints=200)
     ro_550_interpolate_centerline_200.plot_centerline(
-        save_plot_name="data/doc_examples/interpolate_n_centerpoints_200.png",
+        save_plot="data/doc_examples/interpolate_n_centerpoints_200.png",
         centerline_type="Evenly Spaced",
         centerline_color="fuchsia",
         marker_type="scatter",
@@ -71,14 +71,14 @@ if __name__ == "__main__":
 
     ################### Types of Centerlines ################################################
     ro_550.plot_centerline(
-        save_plot_name="data/doc_examples/voronoi_centerline.png",
+        save_plot="data/doc_examples/voronoi_centerline.png",
         centerline_type="Voronoi",
         centerline_color="black",
         marker_type="scatter",
         plot_title="Centerline Formed by Voronoi Diagram",
         show_plot=is_debug)
     ro_550.plot_centerline(
-        save_plot_name="data/doc_examples/voronoi_centerline_relative.png",
+        save_plot="data/doc_examples/voronoi_centerline_relative.png",
         centerline_type="Voronoi",
         centerline_color="black",
         marker_type="scatter",
@@ -87,7 +87,7 @@ if __name__ == "__main__":
         "Centerline Formed by Voronoi Diagram with Relative Distance",
         show_plot=is_debug)
     ro_550.plot_centerline(
-        save_plot_name="data/doc_examples/equal_distance_centerline.png",
+        save_plot="data/doc_examples/equal_distance_centerline.png",
         centerline_type="Equal Distance",
         centerline_color="mediumorchid",
         marker_type="scatter",
@@ -95,8 +95,7 @@ if __name__ == "__main__":
         f"Centerline Formed by Points Equally Distanced Apart Every {ro_550.equal_distance} Meters",
         show_plot=is_debug)
     ro_550.plot_centerline(
-        save_plot_name=
-        "data/doc_examples/equal_distance_centerline_relative.png",
+        save_plot="data/doc_examples/equal_distance_centerline_relative.png",
         centerline_type="Equal Distance",
         centerline_color="mediumorchid",
         marker_type="scatter",
@@ -105,7 +104,7 @@ if __name__ == "__main__":
         f"Centerline Formed by Points Equally Distanced Apart Every {ro_550.equal_distance} Meters with Relative Distance",
         show_plot=is_debug)
     ro_550_interpolate_centerline_200.plot_centerline(
-        save_plot_name="data/doc_examples/evenly_spaced_centerline.png",
+        save_plot="data/doc_examples/evenly_spaced_centerline.png",
         centerline_type="Evenly Spaced",
         centerline_color="fuchsia",
         marker_type="scatter",
@@ -113,8 +112,7 @@ if __name__ == "__main__":
         f"Centerline Formed by {ro_550_interpolate_centerline_200.interpolate_n_centerpoints} Evenly Spaced Centerline Points",
         show_plot=is_debug)
     ro_550_interpolate_centerline_200.plot_centerline(
-        save_plot_name=
-        "data/doc_examples/evenly_spaced_centerline_relative.png",
+        save_plot="data/doc_examples/evenly_spaced_centerline_relative.png",
         centerline_type="Evenly Spaced",
         centerline_color="fuchsia",
         marker_type="scatter",
@@ -123,7 +121,7 @@ if __name__ == "__main__":
         f"Centerline Formed by {ro_550_interpolate_centerline_200.interpolate_n_centerpoints} Evenly Spaced Centerline Points with Relative Distance",
         show_plot=is_debug)
     ro_550_interpolate_centerline_200.plot_centerline(
-        save_plot_name="data/doc_examples/smoothed_centerline.png",
+        save_plot="data/doc_examples/smoothed_centerline.png",
         centerline_type="Smoothed",
         centerline_color="blue",
         marker_type="scatter",
@@ -131,7 +129,7 @@ if __name__ == "__main__":
         f"Centerline Formed by {ro_550_interpolate_centerline_200.interpolate_n_centerpoints} Smoothed Centerline Coordinates",
         show_plot=is_debug)
     ro_550_interpolate_centerline_200.plot_centerline(
-        save_plot_name="data/doc_examples/smoothed_centerline_relative.png",
+        save_plot="data/doc_examples/smoothed_centerline_relative.png",
         centerline_type="Smoothed",
         centerline_color="blue",
         marker_type="scatter",
@@ -144,154 +142,144 @@ if __name__ == "__main__":
 
     ro_550.plot_centerline(
         centerline_type="Smoothed",
-        save_plot_name="data/doc_examples/river_centerline_type_smoothed.png",
+        save_plot="data/doc_examples/river_centerline_type_smoothed.png",
         show_plot=is_debug)
     ro_550.plot_centerline(
         marker_type="Scatter",
-        save_plot_name="data/doc_examples/river_marker_type_scatter.png",
+        save_plot="data/doc_examples/river_marker_type_scatter.png",
         show_plot=is_debug)
     ro_550.plot_centerline(
         centerline_color="palegreen",
-        save_plot_name="data/doc_examples/river_centerline_color.png",
+        save_plot="data/doc_examples/river_centerline_color.png",
         show_plot=is_debug)
-    ro_550.plot_centerline(
-        dark_mode=True,
-        save_plot_name="data/doc_examples/river_dark_mode.png",
-        show_plot=is_debug)
+    ro_550.plot_centerline(dark_mode=True,
+                           save_plot="data/doc_examples/river_dark_mode.png",
+                           show_plot=is_debug)
     ro_15.plot_centerline(
         equal_axis=False,
-        save_plot_name="data/doc_examples/river_equal_axis_false.png",
+        save_plot="data/doc_examples/river_equal_axis_false.png",
         show_plot=is_debug)
     ro_15.plot_centerline(
         equal_axis=True,
-        save_plot_name="data/doc_examples/river_equal_axis_true.png",
+        save_plot="data/doc_examples/river_equal_axis_true.png",
         show_plot=is_debug)
     ro_550.plot_centerline(
         display_all_possible_paths=True,
-        save_plot_name=
-        "data/doc_examples/river_display_all_possible_paths_true.png",
+        save_plot="data/doc_examples/river_display_all_possible_paths_true.png",
         show_plot=is_debug)
     ro_15.plot_centerline(
         display_voronoi=False,
-        save_plot_name="data/doc_examples/river_display_voronoi_false.png",
+        save_plot="data/doc_examples/river_display_voronoi_false.png",
         show_plot=is_debug)
     ro_15.plot_centerline(
         display_voronoi=True,
-        save_plot_name="data/doc_examples/river_display_voronoi_true.png",
+        save_plot="data/doc_examples/river_display_voronoi_true.png",
         show_plot=is_debug)
     ro_550.plot_centerline(
         coordinate_unit="Relative Distance",
-        save_plot_name="data/doc_examples/river_coordinate_unit_rd.png",
+        save_plot="data/doc_examples/river_coordinate_unit_rd.png",
         show_plot=is_debug)
 
     ################### Plot plot_centerline_width() ########################################
 
     ro_550.plot_centerline_width(
-        save_plot_name="data/doc_examples/river_coords_with_centerline.png",
+        save_plot="data/doc_examples/river_coords_with_centerline.png",
         display_true_centerline=True,
         apply_smoothing=True,
         remove_intersections=True,
         show_plot=is_debug)
     ro_550.plot_centerline_width(
-        save_plot_name="data/doc_examples/river_coords_without_centerline.png",
+        save_plot="data/doc_examples/river_coords_without_centerline.png",
         display_true_centerline=False,
         apply_smoothing=True,
         remove_intersections=True,
         show_plot=is_debug)
     ro_550.plot_centerline_width(
-        save_plot_name=
-        "data/doc_examples/river_coords_width_without_smoothing.png",
+        save_plot="data/doc_examples/river_coords_width_without_smoothing.png",
         display_true_centerline=True,
         apply_smoothing=False,
         remove_intersections=True,
         show_plot=is_debug)
     ro_550.plot_centerline_width(
-        save_plot_name=
-        "data/doc_examples/river_coords_width_with_smoothing.png",
+        save_plot="data/doc_examples/river_coords_width_with_smoothing.png",
         display_true_centerline=False,
         apply_smoothing=True,
         remove_intersections=True,
         show_plot=is_debug)
     ro_550.plot_centerline_width(
-        save_plot_name="data/doc_examples/river_coords_width_transect_6.png",
+        save_plot="data/doc_examples/river_coords_width_transect_6.png",
         display_true_centerline=False,
         transect_span_distance=6,
         apply_smoothing=True,
         remove_intersections=True,
         show_plot=is_debug)
     ro_550.plot_centerline_width(
-        save_plot_name="data/doc_examples/river_coords_width_transect_30.png",
+        save_plot="data/doc_examples/river_coords_width_transect_30.png",
         display_true_centerline=False,
         transect_span_distance=30,
         apply_smoothing=True,
         remove_intersections=True,
         show_plot=is_debug)
     ro_550.plot_centerline_width(
-        save_plot_name="data/doc_examples/river_coords_transect_avg.png",
+        save_plot="data/doc_examples/river_coords_transect_avg.png",
         display_true_centerline=False,
         transect_slope="Average",
         apply_smoothing=True,
         remove_intersections=True,
         show_plot=is_debug)
     ro_550.plot_centerline_width(
-        save_plot_name="data/doc_examples/river_coords_transect_direct.png",
+        save_plot="data/doc_examples/river_coords_transect_direct.png",
         display_true_centerline=False,
         transect_slope="Direct",
         apply_smoothing=True,
         remove_intersections=True,
         show_plot=is_debug)
     ro_550.plot_centerline_width(
-        save_plot_name=
-        "data/doc_examples/river_coords_width_keep_intersections.png",
+        save_plot="data/doc_examples/river_coords_width_keep_intersections.png",
         display_true_centerline=False,
         remove_intersections=False,
         apply_smoothing=True,
         show_plot=is_debug)
     ro_550.plot_centerline_width(
-        save_plot_name=
+        save_plot=
         "data/doc_examples/river_coords_width_remove_intersections.png",
         display_true_centerline=False,
         remove_intersections=True,
         apply_smoothing=True,
         show_plot=is_debug)
     ro_550.plot_centerline_width(
-        save_plot_name=
-        "data/doc_examples/river_coords_width_dark_mode_false.png",
+        save_plot="data/doc_examples/river_coords_width_dark_mode_false.png",
         display_true_centerline=True,
         remove_intersections=False,
         dark_mode=False,
         show_plot=is_debug)
     ro_550.plot_centerline_width(
-        save_plot_name=
-        "data/doc_examples/river_coords_width_dark_mode_true.png",
+        save_plot="data/doc_examples/river_coords_width_dark_mode_true.png",
         display_true_centerline=True,
         remove_intersections=False,
         dark_mode=True,
         show_plot=is_debug)
     ro_10.plot_centerline_width(
-        save_plot_name=
-        "data/doc_examples/river_coords_not_equal_default_ax.png",
+        save_plot="data/doc_examples/river_coords_not_equal_default_ax.png",
         display_true_centerline=True,
         remove_intersections=True,
         equal_axis=False,
         show_plot=is_debug)
     ro_10.plot_centerline_width(
-        save_plot_name="data/doc_examples/river_coords_equal_ax.png",
+        save_plot="data/doc_examples/river_coords_equal_ax.png",
         display_true_centerline=True,
         remove_intersections=True,
         equal_axis=True,
         show_plot=is_debug)
     ro_550.plot_centerline_width(
-        save_plot_name=
-        "data/doc_examples/river_coords_width_decimal_degrees.png",
+        save_plot="data/doc_examples/river_coords_width_decimal_degrees.png",
         display_true_centerline=False,
         apply_smoothing=True,
         coordinate_unit="Decimal Degrees",
         remove_intersections=True,
         show_plot=is_debug)
     ro_550.plot_centerline_width(
-        save_plot_name=
-        "data/doc_examples/river_coords_width_relative_distance.png",
+        save_plot="data/doc_examples/river_coords_width_relative_distance.png",
         display_true_centerline=False,
         apply_smoothing=True,
         coordinate_unit="Relative Distance",
@@ -451,28 +439,26 @@ if __name__ == "__main__":
 
     ################### Debugging, Error Handling, and Edge Cases ###############################
 
-    ro_725.plot_centerline(
-        save_plot_name="data/doc_examples/invalid_too_wide.png",
-        display_all_possible_paths=True,
-        show_plot=is_debug)
+    ro_725.plot_centerline(save_plot="data/doc_examples/invalid_too_wide.png",
+                           display_all_possible_paths=True,
+                           show_plot=is_debug)
     ro_250.plot_centerline(
-        save_plot_name="data/doc_examples/invalid_minor_polygon.png",
+        save_plot="data/doc_examples/invalid_minor_polygon.png",
         display_all_possible_paths=True,
         show_plot=is_debug)
     ro_1000 = centerline_width.CenterlineWidth(
         csv_data="data/river_coords.csv", cutoff=1000)
     ro_1000.plot_centerline(
-        save_plot_name="data/doc_examples/invalid_major_polygon.png",
+        save_plot="data/doc_examples/invalid_major_polygon.png",
         display_all_possible_paths=True,
         show_plot=is_debug)
-    ro_5.plot_centerline(
-        save_plot_name="data/doc_examples/invalid_too_small.png",
-        display_voronoi=True,
-        show_plot=is_debug)
+    ro_5.plot_centerline(save_plot="data/doc_examples/invalid_too_small.png",
+                         display_voronoi=True,
+                         show_plot=is_debug)
 
     centerline_width.txt_to_csv(txt_input="data/river_coords.txt",
                                 flip_direction=False)
     ro_400 = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv")
     ro_400.plot_centerline(
-        save_plot_name="data/doc_examples/invalid_flipped_banks.png",
+        save_plot="data/doc_examples/invalid_flipped_banks.png",
         show_plot=is_debug)

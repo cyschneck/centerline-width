@@ -36,28 +36,25 @@ if __name__ == "__main__":
 
     #print(river)
     #print(river.__dict__.keys())
-    print("centerlineVoronoi = {0}".format(river.centerlineVoronoi))
-    print("equalDistanceCenterline = {0}".format(
-        river.centerlineEqualDistance))
-    print("centerlineEvenlySpaced = {0}".format(river.centerlineEvenlySpaced))
-    print("centerlineSmoothed = {0}".format(river.centerlineSmoothed))
-    print("\nCenterline Length = {0} km".format(river.centerlineLength))
-    print("Right Bank Length = {0} km".format(river.rightBankLength))
-    print("Left Bank Length = {0} km".format(river.leftBankLength))
-    print("centerlineVoronoiRelative = {0}".format(
-        river.centerlineVoronoiRelative))
-    print("equalDistanceCenterlineRelative = {0}".format(
-        river.centerlineEqualDistanceRelative))
-    print("centerlineEvenlySpacedRelative = {0}".format(
-        river.centerlineEvenlySpacedRelative))
-    print("centerlineSmoothedRelative = {0}".format(
-        river.centerlineSmoothedRelative))
-    '''
-    print("Centerline Length = {0} m".format(river.centerlineLength * 1000))
-    print("ellipsoid = {0}".format(river.ellipsoid))
+    print(f"centerlineVoronoi = {river.centerlineVoronoi}")
+    print(f"equalDistanceCenterline = {river.centerlineEqualDistance}")
+    print(f"centerlineEvenlySpaced = {river.centerlineEvenlySpaced}")
+    print(f"centerlineSmoothed = {river.centerlineSmoothed}")
+    print(f"\nCenterline Length = {river.centerlineLength} km")
+    print(f"Right Bank Length = {river.rightBankLength} km")
+    print(f"Left Bank Length = {river.leftBankLength} km")
+    print(f"centerlineVoronoiRelative = {river.centerlineVoronoiRelative}")
+    print(
+        f"equalDistanceCenterlineRelative = {river.centerlineEqualDistanceRelative}"
+    )
+    print(
+        f"centerlineEvenlySpacedRelative = {river.centerlineEvenlySpacedRelative}"
+    )
+    print(f"centerlineSmoothedRelative = {river.centerlineSmoothedRelative}")
+    print(f"Centerline Length = {river.centerlineLength * 1000} m")
+    print(f"ellipsoid = {river.ellipsoid}")
     print(river.right_bank_relative_coordinates)
     print(river.left_bank_relative_coordinates)
-    '''
     print(f"area = {river.area} km^2")
     print(f"sinuosity  = {river.sinuosity}")
     incremental_sinuosity = river.incremental_sinuosity(incremental_points=215,

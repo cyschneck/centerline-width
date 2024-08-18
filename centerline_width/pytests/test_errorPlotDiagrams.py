@@ -176,14 +176,14 @@ def test_plotCenterline_plotTitleInvalidTypes(invalid_input, error_output):
 
 @pytest.mark.parametrize("invalid_input, error_output",
                          invalid_non_str_options)
-def test_plotCenterline_savePlotNameInvalidTypes(invalid_input, error_output):
+def test_plotCenterline_savePlotInvalidTypes(invalid_input, error_output):
     with pytest.raises(
             ValueError,
             match=re.escape(
-                f"[save_plot_name]: Must be a str, current type = '{error_output}'"
-            )):
+                f"[save_plot]: Must be a str, current type = '{error_output}'")
+    ):
         centerline_width.plot_centerline(river_object=river_class_example,
-                                         save_plot_name=invalid_input)
+                                         save_plot=invalid_input)
 
 
 @pytest.mark.parametrize("invalid_input, error_output",
@@ -271,15 +271,14 @@ def test_plotCenterlineWidth_plotTitleInvalidTypes(invalid_input,
 
 @pytest.mark.parametrize("invalid_input, error_output",
                          invalid_non_str_options)
-def test_plotCenterlineWidth_savePlotNameInvalidTypes(invalid_input,
-                                                      error_output):
+def test_plotCenterlineWidth_savePlotInvalidTypes(invalid_input, error_output):
     with pytest.raises(
             ValueError,
             match=re.escape(
-                f"[save_plot_name]: Must be a str, current type = '{error_output}'"
-            )):
+                f"[save_plot]: Must be a str, current type = '{error_output}'")
+    ):
         centerline_width.plot_centerline_width(
-            river_object=river_class_example, save_plot_name=invalid_input)
+            river_object=river_class_example, save_plot=invalid_input)
 
 
 @pytest.mark.parametrize("invalid_input, error_output",

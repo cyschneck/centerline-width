@@ -35,7 +35,7 @@ def errorHandlingPlotCenterline(
         equal_axis: bool = None,
         display_all_possible_paths: bool = None,
         plot_title: str = None,
-        save_plot_name: str = None,
+        save_plot: str = None,
         display_voronoi: bool = None,
         show_plot: bool = None,
         coordinate_unit: str = None) -> None:
@@ -96,10 +96,9 @@ def errorHandlingPlotCenterline(
             f"[plot_title]: Must be a str, current type = '{type(plot_title)}'"
         )
 
-    if save_plot_name is not None and type(save_plot_name) != str:
+    if save_plot is not None and type(save_plot) != str:
         raise ValueError(
-            f"[save_plot_name]: Must be a str, current type = '{type(save_plot_name)}'"
-        )
+            f"[save_plot]: Must be a str, current type = '{type(save_plot)}'")
 
     if type(display_voronoi) != bool:
         raise ValueError(
@@ -125,7 +124,7 @@ def errorHandlingPlotCenterline(
 def errorHandlingPlotCenterlineWidth(
         river_object: centerline_width.CenterlineWidth = None,
         plot_title: str = None,
-        save_plot_name: str = None,
+        save_plot: str = None,
         display_true_centerline: bool = None,
         transect_span_distance: int = None,
         transect_slope: str = None,
@@ -152,10 +151,9 @@ def errorHandlingPlotCenterlineWidth(
             f"[plot_title]: Must be a str, current type = '{type(plot_title)}'"
         )
 
-    if save_plot_name is not None and type(save_plot_name) != str:
+    if save_plot is not None and type(save_plot) != str:
         raise ValueError(
-            f"[save_plot_name]: Must be a str, current type = '{type(save_plot_name)}'"
-        )
+            f"[save_plot]: Must be a str, current type = '{type(save_plot)}'")
 
     if type(display_true_centerline) != bool:
         raise ValueError(

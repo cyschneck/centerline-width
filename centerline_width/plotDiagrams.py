@@ -20,6 +20,7 @@
 # Built-in Python functions
 import math
 import logging
+import warnings  # Pending Deprecation
 
 # External Python libraries
 import matplotlib.pyplot as plt
@@ -190,10 +191,18 @@ def plot_centerline(river_object: centerline_width.CenterlineWidth = None,
                     display_all_possible_paths: bool = False,
                     plot_title: str = None,
                     save_plot_name: str = None,
+                    save_plot: str = None,
                     display_voronoi: bool = False,
                     show_plot: bool = True,
                     coordinate_unit: str = "Decimal Degrees") -> None:
     # Plot Centerline of River
+    if save_plot_name is not None and save_plot is None:
+        warnings.warn(
+            "save_plot_name has been replaced with save_plot and will be removed in the future",
+            FutureWarning,
+            stacklevel=2)
+        save_plot = save_plot_name
+
     centerline_width.errorHandlingPlotCenterline(
         river_object=river_object,
         centerline_type=centerline_type,
@@ -203,7 +212,7 @@ def plot_centerline(river_object: centerline_width.CenterlineWidth = None,
         equal_axis=equal_axis,
         display_all_possible_paths=display_all_possible_paths,
         plot_title=plot_title,
-        save_plot_name=save_plot_name,
+        save_plot=save_plot,
         display_voronoi=display_voronoi,
         show_plot=show_plot,
         coordinate_unit=coordinate_unit)
@@ -272,13 +281,14 @@ def plot_centerline(river_object: centerline_width.CenterlineWidth = None,
     plt.legend(loc="upper right")
     if show_plot: plt.show()
     if not show_plot: plt.close()
-    if save_plot_name: fig.savefig(save_plot_name)
+    if save_plot: fig.savefig(save_plot)
 
 
 def plot_centerline_width(
         river_object: centerline_width.CenterlineWidth = None,
         plot_title: str = None,
         save_plot_name: str = None,
+        save_plot: str = None,
         display_true_centerline: bool = True,
         transect_span_distance: int = 3,
         transect_slope: str = "Average",
@@ -290,10 +300,17 @@ def plot_centerline_width(
         show_plot: bool = True,
         coordinate_unit: str = "Decimal Degrees") -> None:
     # Plot Width Lines based on Centerline
+    if save_plot_name is not None and save_plot is None:
+        warnings.warn(
+            "save_plot_name has been replaced with save_plot and will be removed in the future",
+            FutureWarning,
+            stacklevel=2)
+        save_plot = save_plot_name
+
     centerline_width.errorHandlingPlotCenterlineWidth(
         river_object=river_object,
         plot_title=plot_title,
-        save_plot_name=save_plot_name,
+        save_plot=save_plot,
         display_true_centerline=display_true_centerline,
         transect_span_distance=transect_span_distance,
         transect_slope=transect_slope,
@@ -422,4 +439,4 @@ def plot_centerline_width(
     plt.legend(loc="upper right")
     if show_plot: plt.show()
     if not show_plot: plt.close()
-    if save_plot_name: fig.savefig(save_plot_name)
+    if save_plot: fig.savefig(save_plot)

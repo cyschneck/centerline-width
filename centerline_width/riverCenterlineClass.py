@@ -243,6 +243,7 @@ class CenterlineWidth:
                        display_all_possible_paths: bool = False,
                        plot_title: str = None,
                        save_plot_name: str = None,
+                       save_plot: str = None,
                        show_plot: bool = True,
                        display_voronoi: bool = False,
                        coordinate_unit: str = "Decimal Degrees"):
@@ -263,6 +264,7 @@ class CenterlineWidth:
             display_all_possible_paths=display_all_possible_paths,
             plot_title=plot_title,
             save_plot_name=save_plot_name,
+            save_plot=save_plot,
             display_voronoi=display_voronoi,
             show_plot=show_plot,
             coordinate_unit=coordinate_unit)
@@ -276,6 +278,7 @@ class CenterlineWidth:
                         display_all_possible_paths: bool = False,
                         plot_title: str = None,
                         save_plot_name: str = None,
+                        save_plot: str = None,
                         show_plot: bool = True,
                         display_voronoi: bool = False,
                         coordinate_unit: str = "Decimal Degrees"):
@@ -289,6 +292,7 @@ class CenterlineWidth:
             display_all_possible_paths=display_all_possible_paths,
             plot_title=plot_title,
             save_plot_name=save_plot_name,
+            save_plot=save_plot,
             display_voronoi=display_voronoi,
             show_plot=show_plot,
             coordinate_unit=coordinate_unit)
@@ -330,6 +334,7 @@ class CenterlineWidth:
 
     def plot_centerline_width(self,
                               plot_title: str = None,
+                              save_plot: str = None,
                               save_plot_name: str = None,
                               display_true_centerline: bool = True,
                               transect_span_distance: int = 3,
@@ -344,6 +349,7 @@ class CenterlineWidth:
         centerline_width.plot_centerline_width(
             river_object=self,
             plot_title=plot_title,
+            save_plot=save_plot,
             save_plot_name=save_plot_name,
             display_true_centerline=display_true_centerline,
             transect_span_distance=transect_span_distance,
