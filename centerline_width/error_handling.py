@@ -469,6 +469,7 @@ def errrorHandlingConvertColumnsToCSV(txt_input: str = None,
 
 def errorHandlingExtractPointsToTextFile(left_kml: str = None,
                                          right_kml: str = None,
+                                         flip_direction: bool = None,
                                          csv_output: str = None,
                                          text_output_name: str = None) -> None:
     # Error Handling for extractPointsToTextFile()
@@ -499,6 +500,11 @@ def errorHandlingExtractPointsToTextFile(left_kml: str = None,
     if right_kml == left_kml:
         raise ValueError(
             f"right_kml and left_kml are set to the same file (needs a separate left and right bank): right_kml='{right_kml}' and left_kml='{left_kml}'"
+        )
+
+    if type(flip_direction) != bool:
+        raise ValueError(
+            f"[flip_direction]: Must be a bool, current type = '{type(flip_direction)}'"
         )
 
     if csv_output is None and text_output_name is None:

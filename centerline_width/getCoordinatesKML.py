@@ -45,13 +45,16 @@ def extractPointsToTextFile(left_kml: str = None,
 
 
 def convertColumnsToCSV(text_file: str = None,
+                        txt_input: str = None,
                         flip_direction: bool = False) -> None:
     ### Pending Deprecation for function name: replaced with txt_to_csv
     warnings.warn(
         "convertColumnsToCSV() has been replaced with kml_to_csv() and will be removed in the future",
         FutureWarning,
         stacklevel=2)
-    txt_to_csv(text_file=text_file, flip_direction=flip_direction)
+    txt_to_csv(text_file=text_file,
+               txt_input=txt_input,
+               flip_direction=flip_direction)
 
 
 def kml_to_csv(left_kml: str = None,
@@ -66,6 +69,7 @@ def kml_to_csv(left_kml: str = None,
     centerline_width.errorHandlingExtractPointsToTextFile(
         left_kml=left_kml,
         right_kml=right_kml,
+        flip_direction=flip_direction,
         csv_output=csv_output,
         text_output_name=text_output_name)
 

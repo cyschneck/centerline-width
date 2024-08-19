@@ -1,8 +1,9 @@
 # Verify Outputs from plotDiagrams.py
 # centerline-width/: python -m pytest -v
-# python -m pytest -k test_verifyPlotDiagrams -xv
+# python -m pytest -k test_verifyPlotDiagrams.py -xv
 
 # Pytests to Compare and Verify Expected Outputs
+import re
 from io import StringIO
 import os
 from pathlib import Path
@@ -704,6 +705,48 @@ def test_plotCenterline_voronoi_relativeDistance_scatter(generate_plot_image):
         in_decorator=False) is None
 
 
+def test_plotCenterline_futureWarning_functionName(generate_plot_image):
+    # Pending Deprecation: TO BE REMOVED
+    with pytest.warns(
+            FutureWarning,
+            match=re.escape(
+                "plotCenterline() has been replaced with plot_centerline() and will be removed in the future"
+            )):
+        test_river.plotCenterline(save_plot=str(generate_plot_image),
+                                  dark_mode=False,
+                                  show_plot=False)
+        expected_png = (Path(__file__).parent).joinpath(
+            'baseline_plots', "dark_mode_false.png")
+        plt.close()
+        assert os.path.exists(expected_png)
+        assert matplotlib.testing.compare.compare_images(
+            expected_png,
+            str(generate_plot_image),
+            tol=0.001,
+            in_decorator=False) is None
+
+
+def test_plotCenterline_futureWarning_variableName(generate_plot_image):
+    # Pending Deprecation: TO BE REMOVED
+    with pytest.warns(
+            FutureWarning,
+            match=re.escape(
+                "save_plot_name has been replaced with save_plot and will be removed in the future"
+            )):
+        test_river.plot_centerline(save_plot_name=str(generate_plot_image),
+                                   dark_mode=False,
+                                   show_plot=False)
+        expected_png = (Path(__file__).parent).joinpath(
+            'baseline_plots', "dark_mode_false.png")
+        plt.close()
+        assert os.path.exists(expected_png)
+        assert matplotlib.testing.compare.compare_images(
+            expected_png,
+            str(generate_plot_image),
+            tol=0.001,
+            in_decorator=False) is None
+
+
 ################### plot_centerline_width() ########################################################
 
 
@@ -1113,3 +1156,54 @@ def test_plotCenterlineWidth_equalAxis_true(generate_plot_image):
     assert matplotlib.testing.compare.compare_images(
         expected_png, str(generate_plot_image), tol=0.001,
         in_decorator=False) is None
+
+
+def test_plotCenterlineWidth_futureWarning_functionName(generate_plot_image):
+    with pytest.warns(
+            FutureWarning,
+            match=re.escape(
+                "plotCenterlineWidth() has been replaced with plot_centerline_width() and will be removed in the future"
+            )):
+        test_river.plotCenterlineWidth(save_plot=str(generate_plot_image),
+                                       coordinate_unit="Decimal Degrees",
+                                       remove_intersections=False,
+                                       apply_smoothing=False,
+                                       transect_slope="Average",
+                                       show_plot=False)
+        expected_png = (Path(__file__).parent).joinpath(
+            'baseline_plots',
+            "width_decimal_degrees_removeIntersectionsFalse_smoothedFalse_transectSlopeAverage.png"
+        )
+        plt.close()
+        assert os.path.exists(expected_png)
+        assert matplotlib.testing.compare.compare_images(
+            expected_png,
+            str(generate_plot_image),
+            tol=0.001,
+            in_decorator=False) is None
+
+
+def test_plotCenterlineWidth_futureWarning_variableName(generate_plot_image):
+    with pytest.warns(
+            FutureWarning,
+            match=re.escape(
+                "save_plot_name has been replaced with save_plot and will be removed in the future"
+            )):
+        test_river.plot_centerline_width(
+            save_plot_name=str(generate_plot_image),
+            coordinate_unit="Decimal Degrees",
+            remove_intersections=False,
+            apply_smoothing=False,
+            transect_slope="Average",
+            show_plot=False)
+        expected_png = (Path(__file__).parent).joinpath(
+            'baseline_plots',
+            "width_decimal_degrees_removeIntersectionsFalse_smoothedFalse_transectSlopeAverage.png"
+        )
+        plt.close()
+        assert os.path.exists(expected_png)
+        assert matplotlib.testing.compare.compare_images(
+            expected_png,
+            str(generate_plot_image),
+            tol=0.001,
+            in_decorator=False) is None

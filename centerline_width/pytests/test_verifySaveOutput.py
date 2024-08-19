@@ -1,6 +1,9 @@
 # Verify Outputs from saveOutput.py
 # centerline-width/: python -m pytest -v
+# python -m pytest -k test_verifySaveOutput.py -xv
+
 # Pytests to Compare and Verify Expected Outputs
+import re
 from io import StringIO
 
 # External Python libraries (installed via pip install)
@@ -476,6 +479,58 @@ def test_saveOutput_centerlineRelativeDistanceSmoothedCSV(
              ))
 
 
+def test_saveCenterlineCSV_futureWarning_functionName(tmpdir_factory):
+    # Pending Deprecation: TO BE REMOVED
+    with pytest.warns(
+            FutureWarning,
+            match=re.escape(
+                "saveCenterlineCSV() has been replaced with save_centerline_csv() and will be removed in the future"
+            )):
+        temp_path = tmpdir_factory.mktemp("temp_data").join("pytest.csv")
+        river_class_example.saveCenterlineCSV(
+            save_to_csv=str(temp_path),
+            centerline_type="Smoothed",
+            coordinate_unit="Relative Distance")
+        expected_df = pd.DataFrame({
+            'Smoothed Relative Distance Y (from Latitude) (m)': [
+                72.49167057298256, 72.89719088368028, 73.13889337599008,
+                73.22651663345209, 73.16979925331094, 72.97847984747328,
+                72.66229702831498, 72.23098943594705, 71.69429571185793,
+                71.06195451243896, 70.34370450388619, 69.54928435982654,
+                68.68843277442548, 67.77088843133382, 66.8063900482929,
+                65.80467633557458, 64.77548601727342, 63.72855782918015,
+                62.6736305141248, 61.62044282701308, 60.578733527598864,
+                59.55824138584031, 58.5687051825966, 57.61986370968384,
+                56.721455760301126, 55.88322014553281, 55.11489568434156,
+                54.426221205172425, 53.82693554243374
+            ],
+            'Smoothed Relative Distance X (from Longitude) (m)': [
+                73.52246060342735, 70.47686340416793, 67.46092539809182,
+                64.47294278905704, 61.51121178204252, 58.57402859226012,
+                55.65968944059493, 52.76649055007566, 49.89272814233502,
+                47.03669844605679, 44.19669768853295, 41.3710220936643,
+                38.5579678858772, 35.755831292628294, 32.96290853185903,
+                30.177495823357827, 27.39788938294477, 24.62238542287834,
+                21.849280150901333, 19.076869773558865, 16.30345049014976,
+                13.527318499720732, 10.746769996134985, 7.960101170471288,
+                5.165608210991695, 2.361587302227178, -0.4536653713600583,
+                -3.281853627480111, -6.124681286895994
+            ]
+        })
+        csv_output_df = pd.read_csv(temp_path)
+        assert expected_df.columns.tolist() == csv_output_df.columns.tolist()
+        assert list(
+            expected_df["Smoothed Relative Distance Y (from Latitude) (m)"]
+        ) == pytest.approx(
+            list(csv_output_df[
+                "Smoothed Relative Distance Y (from Latitude) (m)"]))
+        assert list(
+            expected_df["Smoothed Relative Distance X (from Longitude) (m)"]
+        ) == pytest.approx(
+            list(csv_output_df[
+                "Smoothed Relative Distance X (from Longitude) (m)"]))
+
+
 ## saveOutput() MAT #####################################################
 
 
@@ -853,3 +908,56 @@ def test_saveOutput_centerlineRelativeDistanceSmoothedMAT(
     ) == pytest.approx(
         mat_output_dict["Smoothed_Relative_Distance_X_From_Longitude_m"]
         [0].tolist())
+
+
+def test_saveCenterlineMAT_futureWarning_functionName(tmpdir_factory):
+    # Pending Deprecation: TO BE REMOVED
+    with pytest.warns(
+            FutureWarning,
+            match=re.escape(
+                "saveCenterlineMAT() has been replaced with save_centerline_mat() and will be removed in the future"
+            )):
+        temp_path = tmpdir_factory.mktemp("temp_data").join("pytest.mat")
+        river_class_example.saveCenterlineMAT(
+            save_to_mat=str(temp_path),
+            centerline_type="Smoothed",
+            coordinate_unit="Relative Distance")
+        expected_df = pd.DataFrame({
+            'Smoothed_Relative_Distance_Y_From_Latitude_m': [
+                72.49167057298256, 72.89719088368028, 73.13889337599008,
+                73.22651663345209, 73.16979925331094, 72.97847984747328,
+                72.66229702831498, 72.23098943594705, 71.69429571185793,
+                71.06195451243896, 70.34370450388619, 69.54928435982654,
+                68.68843277442548, 67.77088843133382, 66.8063900482929,
+                65.80467633557458, 64.77548601727342, 63.72855782918015,
+                62.6736305141248, 61.62044282701308, 60.578733527598864,
+                59.55824138584031, 58.5687051825966, 57.61986370968384,
+                56.721455760301126, 55.88322014553281, 55.11489568434156,
+                54.426221205172425, 53.82693554243374
+            ],
+            'Smoothed_Relative_Distance_X_From_Longitude_m': [
+                73.52246060342735, 70.47686340416793, 67.46092539809182,
+                64.47294278905704, 61.51121178204252, 58.57402859226012,
+                55.65968944059493, 52.76649055007566, 49.89272814233502,
+                47.03669844605679, 44.19669768853295, 41.3710220936643,
+                38.5579678858772, 35.755831292628294, 32.96290853185903,
+                30.177495823357827, 27.39788938294477, 24.62238542287834,
+                21.849280150901333, 19.076869773558865, 16.30345049014976,
+                13.527318499720732, 10.746769996134985, 7.960101170471288,
+                5.165608210991695, 2.361587302227178, -0.4536653713600583,
+                -3.281853627480111, -6.124681286895994
+            ]
+        })
+        mat_output_dict = sio.loadmat(str(temp_path))
+        assert set(expected_df.columns.tolist()) <= set(
+            list(mat_output_dict.keys()))
+        assert list(
+            expected_df["Smoothed_Relative_Distance_Y_From_Latitude_m"]
+        ) == pytest.approx(
+            mat_output_dict["Smoothed_Relative_Distance_Y_From_Latitude_m"]
+            [0].tolist())
+        assert list(
+            expected_df["Smoothed_Relative_Distance_X_From_Longitude_m"]
+        ) == pytest.approx(
+            mat_output_dict["Smoothed_Relative_Distance_X_From_Longitude_m"]
+            [0].tolist())

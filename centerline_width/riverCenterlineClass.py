@@ -300,6 +300,7 @@ class CenterlineWidth:
     def plotCenterlineWidth(self,
                             plot_title: str = None,
                             save_plot_name: str = None,
+                            save_plot: str = None,
                             display_true_centerline: bool = True,
                             transect_span_distance: int = 3,
                             transect_slope: str = "Average",
@@ -320,6 +321,7 @@ class CenterlineWidth:
         centerline_width.plot_centerline_width(
             river_object=self,
             plot_title=plot_title,
+            save_plot=save_plot,
             save_plot_name=save_plot_name,
             display_true_centerline=display_true_centerline,
             transect_span_distance=transect_span_distance,

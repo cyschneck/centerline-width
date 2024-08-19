@@ -1,8 +1,9 @@
 # Verify Outputs from width.py
 # centerline-width/: python -m pytest -v
-# python -m pytest -k test_verifyWidth -xv
+# python -m pytest -k test_verifyWidth.py -xv
 
 # Pytests to Compare and Verify Expected Outputs
+import re
 from io import StringIO
 
 # External Python libraries (installed via pip install)
@@ -94,3 +95,27 @@ def test_width_transectSlopeDirect_RelativeCenterline():
         (-4.263272551474902, 48.281909175456114):
         0.47396221154877105
     })
+
+
+def test_width_futureWarning_functionName():
+    # Pending Deprecation: TO BE REMOVED
+    with pytest.warns(
+            FutureWarning,
+            match=re.escape(
+                "riverWidthFromCenterline() has been replaced with width() and will be removed in the future"
+            )):
+        river_width_dict = test_river.riverWidthFromCenterline(
+            transect_slope="Average",
+            transect_span_distance=span_distance,
+            coordinate_reference="Centerline",
+            apply_smoothing=False)
+        # Verify same keys are used
+        assert list(river_width_dict.keys()) == pytest.approx(
+            centerline_slope_expected)
+        # Verify output
+        assert river_width_dict == pytest.approx({
+            (-4.269872495291112, 48.28213146317461):
+            0.515263253111841,
+            (-4.263272551474902, 48.281909175456114):
+            0.47396221154877105
+        })
