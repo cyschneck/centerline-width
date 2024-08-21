@@ -133,8 +133,8 @@ def txt_to_csv(txt_input: str = None,
             stacklevel=2)
         txt_input = text_file
 
-    centerline_width.errrorHandlingConvertColumnsToCSV(
-        txt_input=txt_input, flip_direction=flip_direction)
+    centerline_width.errrorHandlingTxtToCSV(txt_input=txt_input,
+                                            flip_direction=flip_direction)
 
     left_rows = []
     right_rows = []

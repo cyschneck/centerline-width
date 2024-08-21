@@ -445,9 +445,9 @@ def errorHandlingSaveCenterlineMAT(
 
 
 # Error Handling: getCoordinatesKML.py
-def errrorHandlingConvertColumnsToCSV(txt_input: str = None,
-                                      flip_direction: bool = None) -> None:
-    # Error handling for convertColumnsToCSV()
+def errrorHandlingTxtToCSV(txt_input: str = None,
+                           flip_direction: bool = None) -> None:
+    # Error handling for txt_to_csv()
     if txt_input is None:
         raise ValueError("[txt_input]: Requires text file")
     else:

@@ -52,7 +52,7 @@ from .plotDiagrams import plot_centerline_width
 from .channelMigration import centerlineMigrationRate
 
 # error_handling.py function calls
-from .error_handling import errrorHandlingConvertColumnsToCSV
+from .error_handling import errrorHandlingTxtToCSV
 from .error_handling import errorHandlingPlotCenterline
 from .error_handling import errorHandlingPlotCenterlineWidth
 from .error_handling import errorHandlingWidth

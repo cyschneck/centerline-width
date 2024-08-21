@@ -199,6 +199,100 @@ def test_getCoordinatesKML_extractPointsToCSV(generate_kmlFile):
     assert list(expected_df["rlon"]) == list(kml_output_df["rlon"])
 
 
+def test_kmlToCSV_futureWarning_functionName(tmpdir, generate_kmlFile_right,
+                                             generate_kmlFile_left):
+    # Pending Deprecation: To Be Removed
+    with pytest.warns(
+            FutureWarning,
+            match=re.escape(
+                "extractPointsToTextFile() has been replaced with kml_to_csv() and will be removed in the future"
+            )):
+
+        temp_csv_file = tmpdir.join("pytest.csv")
+        centerline_width.extractPointsToTextFile(
+            left_kml=str(generate_kmlFile_left),
+            right_kml=str(generate_kmlFile_right),
+            csv_output=str(temp_csv_file))
+        expected_df = pd.DataFrame({
+            'llat': [
+                30.03758064742554, 30.03761289873068, 30.03764767910492,
+                30.03767440933011, 30.03770236278642, 30.03772919351539,
+                30.0377490549762, 30.03778301480612, 30.03781601910584,
+                30.03784317873953
+            ],
+            'llon': [
+                -92.86856870164004, -92.86854932864128, -92.86854615646304,
+                -92.86853555132092, -92.8685329553435, -92.86852225012414,
+                -92.86851215967346, -92.86850070336357, -92.86848128471485,
+                -92.86847053431237
+            ],
+            'rlat': [
+                30.03758064742554, 30.03761289873068, 30.03764767910492,
+                30.03767440933011, 30.03770236278642, 30.03772919351539,
+                30.0377490549762, 30.03778301480612, 30.03781601910584,
+                30.03784317873953
+            ],
+            'rlon': [
+                -92.86856870164004, -92.86854932864128, -92.86854615646304,
+                -92.86853555132092, -92.8685329553435, -92.86852225012414,
+                -92.86851215967346, -92.86850070336357, -92.86848128471485,
+                -92.86847053431237
+            ]
+        })
+        kml_output_df = pd.read_csv(temp_csv_file)
+        assert expected_df.columns.tolist() == kml_output_df.columns.tolist()
+        assert list(expected_df["llat"]) == list(kml_output_df["llat"])
+        assert list(expected_df["llon"]) == list(kml_output_df["llon"])
+        assert list(expected_df["rlat"]) == list(kml_output_df["rlat"])
+        assert list(expected_df["rlon"]) == list(kml_output_df["rlon"])
+
+
+def test_kmlToCSV_futureWarning_variableName(tmpdir, generate_kmlFile_right,
+                                             generate_kmlFile_left):
+    # Pending Deprecation: To Be Removed
+    with pytest.warns(
+            FutureWarning,
+            match=re.escape(
+                "text_output_name has been replaced with txt_to_csv() function and will be removed in the future"
+            )):
+        temp_txt_file = tmpdir.join("pytest.txt")
+        centerline_width.kml_to_csv(left_kml=str(generate_kmlFile_left),
+                                    right_kml=str(generate_kmlFile_right),
+                                    text_output_name=str(temp_txt_file))
+        expected_df = pd.DataFrame({
+            'llat': [
+                30.03758064742554, 30.03761289873068, 30.03764767910492,
+                30.03767440933011, 30.03770236278642, 30.03772919351539,
+                30.0377490549762, 30.03778301480612, 30.03781601910584,
+                30.03784317873953
+            ],
+            'llon': [
+                -92.86856870164004, -92.86854932864128, -92.86854615646304,
+                -92.86853555132092, -92.8685329553435, -92.86852225012414,
+                -92.86851215967346, -92.86850070336357, -92.86848128471485,
+                -92.86847053431237
+            ],
+            'rlat': [
+                30.03758064742554, 30.03761289873068, 30.03764767910492,
+                30.03767440933011, 30.03770236278642, 30.03772919351539,
+                30.0377490549762, 30.03778301480612, 30.03781601910584,
+                30.03784317873953
+            ],
+            'rlon': [
+                -92.86856870164004, -92.86854932864128, -92.86854615646304,
+                -92.86853555132092, -92.8685329553435, -92.86852225012414,
+                -92.86851215967346, -92.86850070336357, -92.86848128471485,
+                -92.86847053431237
+            ]
+        })
+        kml_output_df = pd.read_csv(temp_txt_file, sep='\\s+')
+        assert expected_df.columns.tolist() == kml_output_df.columns.tolist()
+        assert list(expected_df["llat"]) == list(kml_output_df["llat"])
+        assert list(expected_df["llon"]) == list(kml_output_df["llon"])
+        assert list(expected_df["rlat"]) == list(kml_output_df["rlat"])
+        assert list(expected_df["rlon"]) == list(kml_output_df["rlon"])
+
+
 def test_txtToCSV_futureWarning_functionName(tmpdir):
     # Pending Deprecation: To Be Removed
     with pytest.warns(

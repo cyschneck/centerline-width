@@ -157,3 +157,42 @@ def test_kmlToCSV_flipDirectionInvalidTypes(invalid_input, error_output):
                                     left_kml="left_kml.kml",
                                     right_kml="right_kml.kml",
                                     flip_direction=invalid_input)
+
+
+## txt_to_csv() #####################################################
+def test_txtToCSV_txtInputRequired():
+    with pytest.raises(ValueError,
+                       match=re.escape("[txt_input]: Requires text file")):
+        centerline_width.txt_to_csv(txt_input=None)
+
+
+@pytest.mark.parametrize("invalid_input, error_output",
+                         invalid_non_str_options)
+def test_txtToCSV_txtInputInvalidTypes(invalid_input, error_output):
+    with pytest.raises(
+            ValueError,
+            match=re.escape(
+                f"[txt_input]: Must be a str, current type = '{error_output}'")
+    ):
+        centerline_width.txt_to_csv(txt_input=invalid_input)
+
+
+def test_txtToCSV_textFileInvalidExtensions():
+    with pytest.raises(
+            ValueError,
+            match=re.escape(
+                "[txt_input]: Extension must be a .txt file, current extension = 'csv'"
+            )):
+        centerline_width.txt_to_csv(txt_input="csv_file.csv")
+
+
+@pytest.mark.parametrize("invalid_input, error_output",
+                         invalid_non_bool_options)
+def test_txtToCSV_flipDirectionInvalidTypes(invalid_input, error_output):
+    with pytest.raises(
+            ValueError,
+            match=re.escape(
+                f"[flip_direction]: Must be a bool, current type = '{error_output}'"
+            )):
+        centerline_width.txt_to_csv(txt_input="text_file.txt",
+                                    flip_direction=invalid_input)
