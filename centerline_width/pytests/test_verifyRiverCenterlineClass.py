@@ -1057,6 +1057,198 @@ def test_CenterlineWidth_futureWarning_functionName():
     assert river_class_example.sinuosity == pytest.approx(1.0124452966878812)
 
 
+def test_CenterlineWidth_futureWarning_variableName():
+    # Pending Deprecation: TO BE REMOVED
+    with pytest.warns(
+            FutureWarning,
+            match=re.escape(
+                "optional_cutoff has been replaced with cutoff and will be removed in the future"
+            )):
+        river_class_example = centerline_width.CenterlineWidth(
+            csv_data=csv_data(), optional_cutoff=10)
+    assert river_class_example.interpolate_data is False
+    assert river_class_example.interpolate_n == 5
+    assert river_class_example.df_len == 10
+    assert river_class_example.interpolate_n_centerpoints == 10
+    assert river_class_example.df_len == river_class_example.interpolate_n_centerpoints
+    assert river_class_example.ellipsoid == "WGS84"
+    assert river_class_example.left_bank_coordinates == [
+        pytest.approx([-92.86856870164004, 30.03758064742554]),
+        pytest.approx([-92.86854932864128, 30.03761289873068]),
+        pytest.approx([-92.86854615646304, 30.03764767910492]),
+        pytest.approx([-92.86853555132092, 30.03767440933011]),
+        pytest.approx([-92.8685329553435, 30.03770236278642]),
+        pytest.approx([-92.86852225012414, 30.03772919351539]),
+        pytest.approx([-92.86851215967346, 30.0377490549762]),
+        pytest.approx([-92.86850070336357, 30.03778301480612]),
+        pytest.approx([-92.86848128471485, 30.03781601910584]),
+        pytest.approx([-92.86847053431237, 30.03784317873953])
+    ]
+    assert river_class_example.right_bank_coordinates == [
+        pytest.approx([-92.867475846432, 30.03744106431763]),
+        pytest.approx([-92.86747357248916, 30.03744779451432]),
+        pytest.approx([-92.86744912321454, 30.03748158510661]),
+        pytest.approx([-92.86743200196584, 30.03750644719021]),
+        pytest.approx([-92.86743019872144, 30.03752454918347]),
+        pytest.approx([-92.8674152219088, 30.0375426005056]),
+        pytest.approx([-92.8674007572212, 30.0375721590616]),
+        pytest.approx([-92.86738399853574, 30.03760885519144]),
+        pytest.approx([-92.86736152540908, 30.03763647218977]),
+        pytest.approx([-92.86733658820408, 30.0376710739572])
+    ]
+    assert river_class_example.left_bank_relative_coordinates == [
+        (0.0, 0.0),
+        pytest.approx((3.5751565498267706, 1.8685232872800528)),
+        pytest.approx((7.430668106736567, 2.1744787187346564)),
+        pytest.approx((10.393796078619014, 3.1973421235928603)),
+        pytest.approx((13.492522825788607, 3.447722696303108)),
+        pytest.approx((16.46679209719587, 4.4802376180320564)),
+        pytest.approx((18.668496614410742, 5.4534580897883)),
+        pytest.approx((22.433048932416597, 6.5584139868999225)),
+        pytest.approx((26.09167847287943, 8.431334212903316)),
+        pytest.approx((29.102408368196336, 9.468204479555887))
+    ]
+    assert river_class_example.right_bank_relative_coordinates == [
+        pytest.approx((-15.47271352150741, 105.40592884424659)),
+        pytest.approx((-14.726648435102671, 105.62524358470733)),
+        pytest.approx((-10.980834588706166, 107.98334030850498)),
+        pytest.approx((-8.224779903906521, 109.63465739390857)),
+        pytest.approx((-6.218116559125793, 109.80856031565474)),
+        pytest.approx((-4.2170575255238525, 111.25305312138605)),
+        pytest.approx((-0.9403865325118183, 112.64813796581723)),
+        pytest.approx((3.1275089584774993, 114.26446962246438)),
+        pytest.approx((6.188960842797235, 116.43196765474976)),
+        pytest.approx((10.024698871772665, 118.8371160736737))
+    ]
+    assert river_class_example.right_bank_length == pytest.approx(
+        0.0291159670403472)
+    assert river_class_example.left_bank_length == pytest.approx(
+        0.03091855487702919)
+    assert river_class_example.area == pytest.approx(3.1320671725985596)
+    assert river_class_example.starting_node == pytest.approx(
+        (-92.86792843577895, 30.037755468515407))
+    assert river_class_example.ending_node == pytest.approx(
+        (-92.86801289742837, 30.03752504557166))
+    assert river_class_example.x_voronoi_ridge_point == [
+        pytest.approx((-92.86792843577895, -92.86797730665528)),
+        pytest.approx((-92.86792843577895, -92.86763066313195)),
+        pytest.approx((-92.86800558484293, -92.8679831604442)),
+        pytest.approx((-92.86800558484293, -92.86800742482134)),
+        pytest.approx((-92.86797730665528, -92.8679831604442)),
+        pytest.approx((-92.86800742482134, -92.86836579067878)),
+        pytest.approx((-92.86801289742837, -92.86800742482134))
+    ]
+    assert river_class_example.y_voronoi_ridge_point == [
+        pytest.approx((30.037755468515407, 30.037632240539036)),
+        pytest.approx((30.037755468515407, 30.037587198340198)),
+        pytest.approx((30.037556089755398, 30.037616220602295)),
+        pytest.approx((30.037556089755398, 30.03754989867807)),
+        pytest.approx((30.037632240539036, 30.037616220602295)),
+        pytest.approx((30.03754989867807, 30.037662199505217)),
+        pytest.approx((30.03752504557166, 30.03754989867807))
+    ]
+    assert river_class_example.starting_node_relative == pytest.approx(
+        (19.37962855169771, 61.75347314188457))
+    assert river_class_example.ending_node_relative == pytest.approx(
+        (-6.163506358375243, 53.60729340259522))
+    assert river_class_example.x_voronoi_ridge_point_relative == [
+        pytest.approx((19.37962855169771, 5.719402714977766)),
+        pytest.approx((19.37962855169771, 0.7265597682606407)),
+        pytest.approx((-2.722159670063122, 3.943540534289469)),
+        pytest.approx((-2.722159670063122, -3.4084605052625445)),
+        pytest.approx((5.719402714977766, 3.943540534289469)),
+        pytest.approx((-3.4084605052625445, 9.040316297491838)),
+        pytest.approx((-6.163506358375243, -3.4084605052625445))
+    ]
+    assert river_class_example.y_voronoi_ridge_point_relative == [
+        pytest.approx((61.75347314188457, 57.03996061049505)),
+        pytest.approx((61.75347314188457, 90.47371913953327)),
+        pytest.approx((54.31257503764738, 56.47537260188891)),
+        pytest.approx((54.31257503764738, 54.1351126169003)),
+        pytest.approx((57.03996061049505, 56.47537260188891)),
+        pytest.approx((54.1351126169003, 19.57072693253479)),
+        pytest.approx((53.60729340259522, 54.1351126169003))
+    ]
+    assert river_class_example.centerline_voronoi == [
+        pytest.approx((-92.86792843577895, 30.037755468515407)),
+        pytest.approx((-92.86797730665528, 30.037632240539036)),
+        pytest.approx((-92.8679831604442, 30.037616220602295)),
+        pytest.approx((-92.86800558484293, 30.037556089755398)),
+        pytest.approx((-92.86800742482134, 30.03754989867807)),
+        pytest.approx((-92.86801289742837, 30.03752504557166))
+    ]
+    assert river_class_example.centerline_length == pytest.approx(
+        0.0268358436902184)
+    assert river_class_example.equal_distance == 10
+    assert river_class_example.centerline_equal_distance == [
+        pytest.approx((-92.86792843577895, 30.037755468515407)),
+        pytest.approx((-92.86796225513369, 30.0376701930044)),
+        pytest.approx((-92.8679947819878, 30.03758453771908))
+    ]
+    assert river_class_example.centerline_evenly_spaced == [
+        pytest.approx((-92.86792843577895, 30.037755468515407)),
+        pytest.approx((-92.86793850025879, 30.037730090916774)),
+        pytest.approx((-92.86794856473864, 30.037704713318142)),
+        pytest.approx((-92.86795862921848, 30.03767933571951)),
+        pytest.approx((-92.86796869369832, 30.037653958120877)),
+        pytest.approx((-92.8679786579938, 30.037628542360324)),
+        pytest.approx((-92.86798811587208, 30.03760293266184)),
+        pytest.approx((-92.86799765519947, 30.03757735303128)),
+        pytest.approx((-92.86800689722405, 30.037551673913928)),
+        pytest.approx((-92.86801289742837, 30.03752504557166))
+    ]
+    assert river_class_example.centerline_smoothed == [
+        pytest.approx((-92.86792864517531, 30.03775552495917)),
+        pytest.approx((-92.86793830351385, 30.037730038227725)),
+        pytest.approx((-92.86794834164479, 30.037704658553707)),
+        pytest.approx((-92.8679585709002, 30.037679328615422)),
+        pytest.approx((-92.8679688026121, 30.037653991091172)),
+        pytest.approx((-92.86797884811266, 30.037628588659278)),
+        pytest.approx((-92.86798851873392, 30.03760306399804)),
+        pytest.approx((-92.86799762580799, 30.03757735978578)),
+        pytest.approx((-92.86800598066694, 30.037551418700797)),
+        pytest.approx((-92.86801339464283, 30.037525183421394))
+    ]
+    assert river_class_example.centerline_voronoi_relative == [
+        pytest.approx((19.37962855169771, 61.75347314188457)),
+        pytest.approx((5.719402714977766, 57.03996061049505)),
+        pytest.approx((3.943540534289469, 56.47537260188891)),
+        pytest.approx((-2.722159670063122, 54.31257503764738)),
+        pytest.approx((-3.4084605052625445, 54.1351126169003)),
+        pytest.approx((-6.163506358375243, 53.60729340259522))
+    ]
+    assert river_class_example.centerline_equal_distance_relative == [
+        pytest.approx((19.37962855169771, 61.75347314188457)),
+        pytest.approx((9.926557886575461, 58.491655396579134)),
+        pytest.approx((0.43138978280792034, 55.35449383456564))
+    ]
+    assert river_class_example.centerline_evenly_spaced_relative == [
+        pytest.approx((19.37962855169771, 61.75347314188457)),
+        pytest.approx((16.566438223196965, 60.782772210259715)),
+        pytest.approx((13.75324799118586, 59.81207078062485)),
+        pytest.approx((10.940057853530279, 58.8413688592248)),
+        pytest.approx((8.126867813965323, 57.87066644099266)),
+        pytest.approx((5.309447553845384, 56.90962631910795)),
+        pytest.approx((2.4705290187939486, 55.99742969527903)),
+        pytest.approx((-0.36505634661324626, 55.07737682589534)),
+        pytest.approx((-3.211669900810025, 54.185998374970055)),
+        pytest.approx((-6.163506358375243, 53.60729340259522))
+    ]
+    assert river_class_example.centerline_smoothed_relative == [
+        pytest.approx((19.38588540411508, 61.73327688441957)),
+        pytest.approx((16.56059758465421, 60.801748243230456)),
+        pytest.approx((13.747177300992124, 59.83358816671705)),
+        pytest.approx((10.939270373724167, 58.84699365006703)),
+        pytest.approx((8.130522617001684, 57.8601617063664)),
+        pytest.approx((5.314579839859855, 56.89128935609742)),
+        pytest.approx((2.4850878432378534, 55.95857364348811)),
+        pytest.approx((-0.3643075754810865, 55.08021162834345)),
+        pytest.approx((-3.2399606268696415, 54.27440038709772)),
+        pytest.approx((-6.148225524463743, 53.55933701482967))
+    ]
+    assert river_class_example.sinuosity == pytest.approx(1.0008911599991046)
+
+
 def test_CenterlineWidth_default_incrementalSinuosity():
     river_class_example = centerline_width.CenterlineWidth(csv_data=csv_data())
     assert river_class_example.incremental_sinuosity() == {

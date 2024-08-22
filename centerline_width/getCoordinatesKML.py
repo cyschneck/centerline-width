@@ -66,12 +66,11 @@ def kml_to_csv(left_kml: str = None,
 
     ### Pending Deprecated argument "text_output_name" replaced with "csv_output"
 
-    centerline_width.errorHandlingExtractPointsToTextFile(
-        left_kml=left_kml,
-        right_kml=right_kml,
-        flip_direction=flip_direction,
-        csv_output=csv_output,
-        text_output_name=text_output_name)
+    centerline_width.errorHandlingKmlToCSV(left_kml=left_kml,
+                                           right_kml=right_kml,
+                                           flip_direction=flip_direction,
+                                           csv_output=csv_output,
+                                           text_output_name=text_output_name)
 
     def extractKML(kml_file: str = None) -> (list, list):
         # extract points from kml file for the given bank
@@ -170,8 +169,6 @@ def txt_to_csv(txt_input: str = None,
         rlon = rlon[::-1]
 
     # account for relative and absolute paths to use txt_input name and location for .csv
-    if text_file is not None and txt_input is None:
-        txt_input = text_file  # Pending Deprecation
     full_path, filename = os.path.split(os.path.abspath(txt_input))
     csv_file_name = filename.split(".")[0] + ".csv"
 

@@ -77,14 +77,40 @@ def test_kmlToCSV_rightKMLInvalidExtension():
 
 
 def test_kmlToCSV_textOutputNameRequired():
+    # Pending Deprecation
     with pytest.raises(
             ValueError,
             match=re.escape(
                 "[csv_output/text_output_name]: Requires output file name")):
-        # Update Pending Deprecation ValueError
         centerline_width.kml_to_csv(left_kml="left_kml.kml",
                                     right_kml="right_kml.kml",
                                     text_output_name=None)
+
+
+@pytest.mark.parametrize("invalid_input, error_output",
+                         invalid_non_str_options)
+def test_kmlToCSV_TxtOutputNameInvalidTypes(invalid_input, error_output):
+    # Pending Deprecation
+    with pytest.raises(
+            ValueError,
+            match=re.escape(
+                f"[text_output_name]: Must be a str, current type = '{error_output}'"
+            )):
+        centerline_width.kml_to_csv(left_kml="left_kml.kml",
+                                    right_kml="right_kml.kml",
+                                    text_output_name=invalid_input)
+
+
+def test_kmlToCSV_textOutputNameInvalidExtension():
+    # Pending Deprecation
+    with pytest.raises(
+            ValueError,
+            match=re.escape(
+                "[text_output_name]: Extension must be a .txt file, current extension = 'csv"
+            )):
+        centerline_width.kml_to_csv(left_kml="left_kml.kml",
+                                    right_kml="right_kml.kml",
+                                    text_output_name="csv_output.csv")
 
 
 @pytest.mark.parametrize("invalid_input, error_output",

@@ -467,12 +467,12 @@ def errrorHandlingTxtToCSV(txt_input: str = None,
         )
 
 
-def errorHandlingExtractPointsToTextFile(left_kml: str = None,
-                                         right_kml: str = None,
-                                         flip_direction: bool = None,
-                                         csv_output: str = None,
-                                         text_output_name: str = None) -> None:
-    # Error Handling for extractPointsToTextFile()
+def errorHandlingKmlToCSV(left_kml: str = None,
+                          right_kml: str = None,
+                          flip_direction: bool = None,
+                          csv_output: str = None,
+                          text_output_name: str = None) -> None:
+    # Error Handling for kml_to_csv()
     if left_kml is None:
         raise ValueError("[left_kml]: Requires left_kml file")
     else:
@@ -521,22 +521,18 @@ def errorHandlingExtractPointsToTextFile(left_kml: str = None,
                     raise ValueError(
                         f"[csv_output]: Extension must be a .csv file, current extension = '{csv_output.split('.')[1]}'"
                     )
-
-    # TEMP: Pending Deprecation
-    if csv_output is None and text_output_name is None:
-        raise ValueError(
-            "[csv_output/text_output_name]: Requires output file name")
-    else:
-        if text_output_name is not None:
-            if type(text_output_name) != str:
-                raise ValueError(
-                    f"[text_output_name]: Must be a str, current type = '{type(text_output_name)}'"
-                )
-            else:
-                if not text_output_name.lower().endswith(".txt"):
+        else:
+            # Pending Deprecation
+            if text_output_name is not None:
+                if type(text_output_name) != str:
                     raise ValueError(
-                        f"[text_output_name]: Extension must be a .txt file, current extension = '{text_output_name.split('.')[1]}'"
+                        f"[text_output_name]: Must be a str, current type = '{type(text_output_name)}'"
                     )
+                else:
+                    if not text_output_name.lower().endswith(".txt"):
+                        raise ValueError(
+                            f"[text_output_name]: Extension must be a .txt file, current extension = '{text_output_name.split('.')[1]}'"
+                        )
 
 
 ## Error Handling: riverCenterlineClass.py

@@ -58,6 +58,6 @@ from .error_handling import errorHandlingPlotCenterlineWidth
 from .error_handling import errorHandlingWidth
 from .error_handling import errorHandlingSaveCenterlineCSV
 from .error_handling import errorHandlingSaveCenterlineMAT
-from .error_handling import errorHandlingExtractPointsToTextFile
+from .error_handling import errorHandlingKmlToCSV
 from .error_handling import errorHandlingCenterlineWidth
 from .error_handling import errorHandlingIncrementalSinuosity
