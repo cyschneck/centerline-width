@@ -18,14 +18,10 @@ def main():
             "Calling function in a context other than __main__ is not supported."
         )
 
-    # create txt file of bank points
-    cw.extractPointsToTextFile(
-        left_kml="43deg44_18dot23_N_101deg27_7dot61_W_lb.kml",
-        right_kml="43deg44_18dot23_N_101deg27_7dot61_W_rb.kml",
-        text_output_name="43deg44_18dot23_N_101deg27_7dot61_W.txt")
-
-    # convert txt file to csv file for digesting with centerline-width
-    cw.convertColumnsToCSV(text_file="43deg44_18dot23_N_101deg27_7dot61_W.txt")
+    # create txt file of bank points to csv file for digesting with centerline-width
+    cw.kml_to_csv(left_kml="43deg44_18dot23_N_101deg27_7dot61_W_lb.kml",
+                  right_kml="43deg44_18dot23_N_101deg27_7dot61_W_rb.kml",
+                  csv_output="43deg44_18dot23_N_101deg27_7dot61_W.csv")
 
     # create river object
     ro = cw.CenterlineWidth(csv_data="43deg44_18dot23_N_101deg27_7dot61_W.csv",
@@ -39,14 +35,14 @@ def main():
     ro.plot_centerline(
         centerline_type="Equal Distance",
         display_all_possible_paths=False,
-        save_plot="43deg44_18dot23_N_101deg27_7dot61_W_centerline.png")
+        save_plot="43deg44_18dot23_N_101deg27_7dot61_W_dd_centerline.png")
 
     # plot the centerline with Relative Distance
     ro.plot_centerline(
         centerline_type="Equal Distance",
         display_all_possible_paths=False,
         coordinate_unit="Relative Distance",
-        save_plot="43deg44_18dot23_N_101deg27_7dot61_W_centerline.png")
+        save_plot="43deg44_18dot23_N_101deg27_7dot61_W_rd_centerline.png")
 
     # save to csv to import back into google earth pro
     ro.save_centerline_csv(save_to_csv="equal_distance_coordinates.csv",
