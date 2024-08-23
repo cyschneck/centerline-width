@@ -328,7 +328,7 @@ if __name__ == "__main__":
                             point_size=1,
                             ax=ax)
         if plot_all_possible_paths:
-            starting_node, ending_node, x_ridge_point, y_ridge_point, shortest_path_coordinates = centerline_width.centerlinePath(
+            starting_node, ending_node, x_ridge_point, y_ridge_point, shortest_path_coordinates = centerline_width._centerline_path(
                 ro_15.bank_voronoi, ro_15.bank_polygon, ro_15.top_bank,
                 ro_15.bottom_bank, total_number_of_connections)
             for i in range(len(x_ridge_point)):
@@ -392,7 +392,7 @@ if __name__ == "__main__":
         ax = fig.add_subplot(111)
         start_end_points_dict = centerline_width.pointsFromVoronoi(
             ro_15.bank_voronoi, ro_15.bank_polygon)
-        nx_graphs, largest_subgraph_nodes = centerline_width.generateNXGraph(
+        nx_graphs, largest_subgraph_nodes = centerline_width._generate_nx_graph(
             start_end_points_dict)
         nx.draw(nx_graphs, with_labels=True, font_size=10)
         plt.draw()

@@ -23,12 +23,12 @@ from .relativeDistance import relativeRidgeCoordinates
 from .relativeDistance import relativeWidthCoordinates
 
 # centerline.py function calls
-from .centerline import centerlinePath
-from .centerline import generateNXGraph
-from .centerline import networkXGraphShortestPath
-from .centerline import equalDistanceCenterline
-from .centerline import evenlySpacedCenterline
-from .centerline import smoothedCoordinates
+from .centerline import _generate_nx_graph
+from .centerline import _networkx_graph_shortest_path
+from .centerline import _centerline_path
+from .centerline import _equal_distance_centerline
+from .centerline import _evenly_spaced_centerline
+from .centerline import _smoothed_centerline
 
 # riverFeatures.py function calls
 from .riverFeatures import centerlineLength

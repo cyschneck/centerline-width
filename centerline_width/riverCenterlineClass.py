@@ -129,7 +129,7 @@ class CenterlineWidth:
         self.bank_voronoi_relative = river_bank_voronoi
 
         # Decimal Degrees all possible paths: starting/ending node, all possible paths (ridges), paths dictionary
-        starting_node, ending_node, x_ridge_point, y_ridge_point, shortest_path_coordinates = centerline_width.centerlinePath(
+        starting_node, ending_node, x_ridge_point, y_ridge_point, shortest_path_coordinates = centerline_width._centerline_path(
             self.bank_voronoi, self.bank_polygon, self.top_bank,
             self.bottom_bank)
         self.starting_node = starting_node  # starting position for centerline
@@ -165,29 +165,29 @@ class CenterlineWidth:
         # Set the different types of Centerline coordinates
         self.equal_distance = equal_distance
 
-        self.centerlineEqualDistance = centerline_width.equalDistanceCenterline(
+        self.centerlineEqualDistance = centerline_width._equal_distance_centerline(
             centerline_coordinates=self.centerline_voronoi,
             equal_distance=self.equal_distance,
             ellipsoid=self.ellipsoid)  # Pending Deprecation
-        self.centerline_equal_distance = centerline_width.equalDistanceCenterline(
+        self.centerline_equal_distance = centerline_width._equal_distance_centerline(
             centerline_coordinates=self.centerline_voronoi,
             equal_distance=self.equal_distance,
             ellipsoid=self.ellipsoid)
 
-        self.centerlineEvenlySpaced = centerline_width.evenlySpacedCenterline(
+        self.centerlineEvenlySpaced = centerline_width._evenly_spaced_centerline(
             centerline_coordinates=self.centerline_voronoi,
             number_of_fixed_points=self.interpolate_n_centerpoints
         )  # Pending Deprecation
-        self.centerline_evenly_spaced = centerline_width.evenlySpacedCenterline(
+        self.centerline_evenly_spaced = centerline_width._evenly_spaced_centerline(
             centerline_coordinates=self.centerline_voronoi,
             number_of_fixed_points=self.interpolate_n_centerpoints)
 
-        self.centerlineSmoothed = centerline_width.smoothedCoordinates(
+        self.centerlineSmoothed = centerline_width._smoothed_centerline(
             river_object=self,
             centerline_coordinates=self.centerline_evenly_spaced,
             interprolate_num=self.interpolate_n_centerpoints
         )  # Pending Deprecation
-        self.centerline_smoothed = centerline_width.smoothedCoordinates(
+        self.centerline_smoothed = centerline_width._smoothed_centerline(
             river_object=self,
             centerline_coordinates=self.centerline_evenly_spaced,
             interprolate_num=self.interpolate_n_centerpoints)
