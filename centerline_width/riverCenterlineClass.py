@@ -35,7 +35,7 @@ class CenterlineWidth:
                  equal_distance: int = 10,
                  ellipsoid: str = "WGS84"):
 
-        centerline_width.errorHandlingCenterlineWidth(
+        centerline_width._error_handling_centerline_width(
             csv_data=csv_data,
             cutoff=cutoff,
             interpolate_data=interpolate_data,

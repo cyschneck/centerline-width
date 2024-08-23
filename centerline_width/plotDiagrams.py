@@ -203,7 +203,7 @@ def plot_centerline(river_object: centerline_width.CenterlineWidth = None,
             stacklevel=2)
         save_plot = save_plot_name
 
-    centerline_width.errorHandlingPlotCenterline(
+    centerline_width._error_handling_plot_centerline(
         river_object=river_object,
         centerline_type=centerline_type,
         marker_type=marker_type,
@@ -307,7 +307,7 @@ def plot_centerline_width(
             stacklevel=2)
         save_plot = save_plot_name
 
-    centerline_width.errorHandlingPlotCenterlineWidth(
+    centerline_width._error_handling_plot_centerline_width(
         river_object=river_object,
         plot_title=plot_title,
         save_plot=save_plot,

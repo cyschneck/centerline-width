@@ -79,7 +79,7 @@ def incremental_sinuosity(
     # Return the sinuosity of the river in increments
     # (Centerline Coordinate Start, Centerline Coordinate End Longtiude, Sinuosity)
 
-    centerline_width.errorHandlingIncrementalSinuosity(
+    centerline_width._error_handling_incremental_sinuosity(
         river_object=river_object,
         incremental_points=incremental_points,
         save_to_csv=save_to_csv)

@@ -17,7 +17,7 @@ from pyproj import Geod
 import centerline_width
 
 
-def centerlineMigrationRate(start: centerline_width.CenterlineWidth = None,
-                            end: centerline_width.CenterlineWidth = None):
+def _centerline_migration_rate(start: centerline_width.CenterlineWidth = None,
+                               end: centerline_width.CenterlineWidth = None):
     # Calculate the river channel migration through the lateral migration of the centerline
     pass

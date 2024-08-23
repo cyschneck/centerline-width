@@ -49,15 +49,15 @@ from .plotDiagrams import plot_centerline
 from .plotDiagrams import plot_centerline_width
 
 # channelMigration.py function calls
-from .channelMigration import centerlineMigrationRate
+from .channelMigration import _centerline_migration_rate
 
 # error_handling.py function calls
-from .error_handling import errrorHandlingTxtToCSV
-from .error_handling import errorHandlingPlotCenterline
-from .error_handling import errorHandlingPlotCenterlineWidth
-from .error_handling import errorHandlingWidth
-from .error_handling import errorHandlingSaveCenterlineCSV
-from .error_handling import errorHandlingSaveCenterlineMAT
-from .error_handling import errorHandlingKmlToCSV
-from .error_handling import errorHandlingCenterlineWidth
-from .error_handling import errorHandlingIncrementalSinuosity
+from .error_handling import _error_handling_plot_centerline
+from .error_handling import _error_handling_plot_centerline_width
+from .error_handling import _error_handling_width
+from .error_handling import _error_handling_save_centerline_csv
+from .error_handling import _error_handling_save_centerline_mat
+from .error_handling import _errror_handling_txt_to_csv
+from .error_handling import _error_handling_kml_to_csv
+from .error_handling import _error_handling_centerline_width
+from .error_handling import _error_handling_incremental_sinuosity

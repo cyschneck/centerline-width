@@ -66,11 +66,12 @@ def kml_to_csv(left_kml: str = None,
 
     ### Pending Deprecated argument "text_output_name" replaced with "csv_output"
 
-    centerline_width.errorHandlingKmlToCSV(left_kml=left_kml,
-                                           right_kml=right_kml,
-                                           flip_direction=flip_direction,
-                                           csv_output=csv_output,
-                                           text_output_name=text_output_name)
+    centerline_width._error_handling_kml_to_csv(
+        left_kml=left_kml,
+        right_kml=right_kml,
+        flip_direction=flip_direction,
+        csv_output=csv_output,
+        text_output_name=text_output_name)
 
     def extractKML(kml_file: str = None) -> (list, list):
         # extract points from kml file for the given bank
@@ -132,8 +133,8 @@ def txt_to_csv(txt_input: str = None,
             stacklevel=2)
         txt_input = text_file
 
-    centerline_width.errrorHandlingTxtToCSV(txt_input=txt_input,
-                                            flip_direction=flip_direction)
+    centerline_width._errror_handling_txt_to_csv(txt_input=txt_input,
+                                                 flip_direction=flip_direction)
 
     left_rows = []
     right_rows = []

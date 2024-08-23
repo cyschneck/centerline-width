@@ -336,7 +336,7 @@ def width(river_object: centerline_width.CenterlineWidth = None,
     # Width is measured to the bank, relative to the center point (normal of the centerline)
     # { [centerline latitude, centerline longitude] : widthValue }
 
-    centerline_width.errorHandlingWidth(
+    centerline_width._error_handling_width(
         river_object=river_object,
         transect_span_distance=transect_span_distance,
         transect_slope=transect_slope,
