@@ -121,7 +121,7 @@ def _centerline_path(river_voronoi=None,
                      bottom_polygon_line: LineString = None,
                      multiple_connections: int = 0):
     # Return the starting node, ending node, all possible paths positions, and all paths starting/end position as a dictionary
-    start_end_points_dict = centerline_width.pointsFromVoronoi(
+    start_end_points_dict = centerline_width._points_from_voronoi(
         river_voronoi,
         river_polygon)  # All possible path connections from Voronoi
     nx_graphs, largest_subgraph_nodes = _generate_nx_graph(

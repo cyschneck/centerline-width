@@ -390,7 +390,7 @@ if __name__ == "__main__":
         # Draw NetworkX Graph
         fig = plt.figure(figsize=(10, 10))
         ax = fig.add_subplot(111)
-        start_end_points_dict = centerline_width.pointsFromVoronoi(
+        start_end_points_dict = centerline_width._points_from_voronoi(
             ro_15.bank_voronoi, ro_15.bank_polygon)
         nx_graphs, largest_subgraph_nodes = centerline_width._generate_nx_graph(
             start_end_points_dict)
