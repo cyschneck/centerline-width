@@ -21,19 +21,19 @@
 #                                                                                                 #
 #                                                                                                 #
 
-# Built-in Python functions
+# Standard Library Imports
+from collections import Counter
 import csv
 import logging
 import math
 import os
-from collections import Counter
 
-# External Python libraries
+# Related Third Party Imports
 import numpy as np
 from shapely.geometry import Point, Polygon, LineString
 from scipy.spatial import Voronoi
 
-# Internal centerline_width reference to access functions, global variables, and error handling
+# Internal Local Imports
 import centerline_width
 
 ## Logging set up for .INFO

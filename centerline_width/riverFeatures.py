@@ -6,13 +6,15 @@
 #      sinuosity                                                                                  #
 #                                                                                                 #
 #      This includes the functions for:                                                           #
-#                                       - _calculate_river_area: returns the area contains        #
-#                                              within the river polygon/coordinates               #
+#                                       - _calculate_river_area: backend function to              #
+#                                              calculate area within the river                    #
+#                                              polygon/coordinates                                #
 #                                                                                                 #
-#                                       - _centerline_length: returns the length of               #
-#                                                centerline                                       #
+#                                       - _centerline_length: backend function to                 #
+#                                                calculate the length of a line                   #
 #                                                                                                 #
-#                                       - _calculate_sinuosity: returns the total sinuosity       #
+#                                       - _calculate_sinuosity: backend to calculate              #
+#                                                 the total sinuosity                             #
 #                                                                                                 #
 #                                       - incremental_sinuosity: returns the incremental          #
 #                                                 sinuosity along the length of the river         #
@@ -20,14 +22,14 @@
 #                                                                                                 #
 #                                                                                                 #
 
-# Built-in Python functions
+# Standard Library Imports
 import csv
 
-# External Python libraries
+# Related Third Party Imports
 from pyproj import Geod
 from shapely.geometry import Point, LineString
 
-# Internal centerline_width reference to access functions, global variables, and error handling
+# Internal Local Imports
 import centerline_width
 
 
@@ -44,7 +46,7 @@ def _calculate_river_area(bank_polygon=None,
 
 def _centerline_length(centerline_coordinates: list = None,
                        ellipsoid: str = "WGS84") -> float:
-    # Return the length/distance for all the centerline coordinates in km
+    # Return the length/distance for all the centerline coordinates (km)
     if centerline_coordinates is None:
         return 0
 

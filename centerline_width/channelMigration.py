@@ -10,10 +10,10 @@
 #                                                                                                 #
 #                                                                                                 #
 
-# External Python libraries
+# Related Third Party Imports
 from pyproj import Geod
 
-# Internal centerline_width reference to access functions, global variables, and error handling
+# Internal Local Imports
 import centerline_width
 
 

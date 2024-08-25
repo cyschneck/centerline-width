@@ -7,11 +7,11 @@
 #                                                                                                 #
 #                                                                                                 #
 
-# Built-in Python functions
-import logging
+# Standard Library Imports
 from io import StringIO
+import logging
 
-# Internal centerline_width reference to access functions, global variables, and error handling
+# Internal Local Imports
 import centerline_width
 
 ## Logging set up for .CRITICAL

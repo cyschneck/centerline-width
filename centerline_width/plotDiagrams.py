@@ -4,9 +4,8 @@
 #      plotDiagrams.py plots river coordinates and width with Matplotlib                          #
 #                                                                                                 #
 #      This includes the functions for:                                                           #
-#                                       - plotCenterlineBackend: backend share                    #
+#                                       - _plot_centerline_backend: backend shared                #
 #                                              components for each plot                           #
-#                                              csv                                                #
 #                                                                                                 #
 #                                       - plot_centerline: plot centerline and                    #
 #                                              river points/polygons                              #
@@ -17,16 +16,16 @@
 #                                                                                                 #
 #                                                                                                 #
 
-# Built-in Python functions
-import math
+# Standard Library Imports
 import logging
+import math
 import warnings  # Pending Deprecation
 
-# External Python libraries
+# Related Third Party Imports
 import matplotlib.pyplot as plt
 from scipy.spatial import voronoi_plot_2d
 
-# Internal centerline_width reference to access functions, global variables, and error handling
+# Internal Local Imports
 import centerline_width
 
 ## Logging set up for .INFO
@@ -36,14 +35,14 @@ stream_handler = logging.StreamHandler()
 logger.addHandler(stream_handler)
 
 
-def plotCenterlineBackend(river_object=None,
-                          display_true_centerline: bool = True,
-                          centerline_type: str = "Voronoi",
-                          marker_type: str = "line",
-                          centerline_color: str = "black",
-                          dark_mode: bool = False,
-                          equal_axis: bool = False,
-                          coordinate_unit: str = None):
+def _plot_centerline_backend(river_object=None,
+                             display_true_centerline: bool = True,
+                             centerline_type: str = "Voronoi",
+                             marker_type: str = "line",
+                             centerline_color: str = "black",
+                             dark_mode: bool = False,
+                             equal_axis: bool = False,
+                             coordinate_unit: str = None):
     # Shared components between plot_centerline() and plotCenterlineWidth
     coordinate_unit = coordinate_unit.title()
 
@@ -216,7 +215,7 @@ def plot_centerline(river_object=None,
         show_plot=show_plot,
         coordinate_unit=coordinate_unit)
 
-    fig, ax, valid_path_through = plotCenterlineBackend(
+    fig, ax, valid_path_through = _plot_centerline_backend(
         river_object=river_object,
         display_true_centerline=True,
         centerline_type=centerline_type,
@@ -320,7 +319,7 @@ def plot_centerline_width(river_object=None,
         show_plot=show_plot,
         coordinate_unit=coordinate_unit)
 
-    fig, ax, valid_path_through = plotCenterlineBackend(
+    fig, ax, valid_path_through = _plot_centerline_backend(
         river_object=river_object,
         display_true_centerline=display_true_centerline,
         centerline_type="Voronoi",

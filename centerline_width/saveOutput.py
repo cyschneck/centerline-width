@@ -14,15 +14,15 @@
 #                                                                                                 #
 #                                                                                                 #
 
-# Built-in Python functions
+# Standard Library Imports
 import csv
 import logging
 
-# External Python libraries
+# Related Third Party Imports
 import numpy as np
 from scipy.io import savemat
 
-# Internal centerline_width reference to access functions, global variables, and error handling
+# Internal Local Imports
 import centerline_width
 
 ## Logging set up for .CRITICAL

@@ -11,15 +11,13 @@
 #                                                                                                 #
 #                                                                                                 #
 
-# River object class used for all functions and centerline functions
-
-# Built-in Python functions
+# Standard Library Imports
 import warnings  # Pending Deprecation
 
-# External Python libraries
+# Related Third Party Imports
 import pandas as pd
 
-# Internal centerline_width reference to access functions, global variables, and error handling
+# Internal Local Imports
 import centerline_width
 
 

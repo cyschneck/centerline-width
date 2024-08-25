@@ -31,10 +31,10 @@
 #                                                                                                 #
 #                                                                                                 #
 
-# Built-in Python functions
+# Standard Library Imports
 import math
 
-# External Python libraries
+# Related Third Party Imports
 import numpy as np
 import pyproj
 import geopy.distance

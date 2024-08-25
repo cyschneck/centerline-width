@@ -13,17 +13,17 @@
 #                                                                                                 #
 #                                                                                                 #
 
-# Built-in Python functions
-import re
+# Standard Library Imports
 import os
+import re
 import warnings  # Pending Deprecation
 
-# External Python libraries
-import pandas as pd
+# Related Third Party Imports
 import numpy as np
+import pandas as pd
 from pykml import parser
 
-# Internal centerline_width reference to access functions, global variables, and error handling
+# Internal Local Imports
 import centerline_width
 
 

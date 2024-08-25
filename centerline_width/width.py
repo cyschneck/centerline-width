@@ -17,19 +17,19 @@
 #                                                                                                 #
 #                                                                                                 #
 
-# Built-in Python functions
-import logging
+# Standard Library Imports
 import csv
+import logging
 import math
 
-# External Python libraries
+# Related Third Party Imports
+import geopy.distance
 import numpy as np
+from pyproj import Geod
 from shapely.geometry import Point, LineString
 from shapely.ops import split
-import geopy.distance
-from pyproj import Geod
 
-# Internal centerline_width reference to access functions, global variables, and error handling
+# Internal Local Imports
 import centerline_width
 
 ## Logging set up for .INFO
@@ -123,7 +123,7 @@ def _width_from_centerline_coordinates(
                     ) // 2  # set centerline point to be the middle point being averaged
                     centerline_slope[group_points[0]] = normal_of_slope
 
-    def intersectsTopOrBottomOfBank(point1, point2):
+    def _intersects_top_or_bottom_of_bank(point1, point2):
         # returns True/False if the points lie on the 'false' top/bottom of the river
         points_intersect_false_edges = False
 
@@ -166,7 +166,7 @@ def _width_from_centerline_coordinates(
         ) != "LINESTRING Z EMPTY":  # if linestring has intersect (not empty)
             if len(line_intersection_points.geoms) == 2:
                 # only save width lines that do not touch the artificial top/bottom
-                if not intersectsTopOrBottomOfBank(
+                if not _intersects_top_or_bottom_of_bank(
                         line_intersection_points.geoms[0],
                         line_intersection_points.geoms[1]):
                     left_width_coordinates[centerline_point] = (
@@ -197,7 +197,7 @@ def _width_from_centerline_coordinates(
                     # linestring contains the centerline, save coordinates
                     if left_point is not None and right_point is not None:
                         # only save width lines that do not touch the artificial top/bottom
-                        if not intersectsTopOrBottomOfBank(
+                        if not _intersects_top_or_bottom_of_bank(
                                 left_point, right_point):
                             left_width_coordinates[centerline_point] = (
                                 left_point.x, left_point.y)
