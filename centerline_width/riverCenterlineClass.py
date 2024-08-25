@@ -67,28 +67,28 @@ class CenterlineWidth:
         self.ellipsoid = ellipsoid
 
         # Left and Right Coordinates from the given csv data and data cutoff
-        left_bank_coordinates, right_bank_coordinates = centerline_width.left_right_coordinates(
+        left_bank_coordinates, right_bank_coordinates = centerline_width._left_right_coordinates(
             df)
         if interpolate_data:
             right_bank_coordinates, left_bank_coordinates = centerline_width._interpolate_between_points(
                 left_bank_coordinates, right_bank_coordinates, interpolate_n)
         self.left_bank_coordinates = left_bank_coordinates
         self.right_bank_coordinates = right_bank_coordinates
-        self.left_bank_relative_coordinates, self.right_bank_relative_coordinates = centerline_width.relativeBankCoordinates(
+        self.left_bank_relative_coordinates, self.right_bank_relative_coordinates = centerline_width._relative_bank_coordinates(
             self.left_bank_coordinates, self.right_bank_coordinates,
             self.ellipsoid)
 
         # Right/Length Bank Length
-        self.rightBankLength = centerline_width.centerlineLength(
+        self.rightBankLength = centerline_width._centerline_length(
             centerline_coordinates=right_bank_coordinates,
             ellipsoid=self.ellipsoid)  # Pending Deprecation
-        self.right_bank_length = centerline_width.centerlineLength(
+        self.right_bank_length = centerline_width._centerline_length(
             centerline_coordinates=right_bank_coordinates,
             ellipsoid=self.ellipsoid)
-        self.leftBankLength = centerline_width.centerlineLength(
+        self.leftBankLength = centerline_width._centerline_length(
             centerline_coordinates=left_bank_coordinates,
             ellipsoid=self.ellipsoid)  # Pending Deprecation
-        self.left_bank_length = centerline_width.centerlineLength(
+        self.left_bank_length = centerline_width._centerline_length(
             centerline_coordinates=left_bank_coordinates,
             ellipsoid=self.ellipsoid)
 
@@ -102,7 +102,7 @@ class CenterlineWidth:
         self.bottom_bank = bottom_bank
 
         # Area contained within river polygon
-        self.area = centerline_width.calculateRiverArea(
+        self.area = centerline_width._calculate_river_area(
             self.bank_polygon, self.ellipsoid)
 
         # Relative Coordinates: River polygon, position of the top/bottom polygon
@@ -138,13 +138,13 @@ class CenterlineWidth:
         self.y_voronoi_ridge_point = y_ridge_point  # Voronoi y positions
 
         # Relative Distances all possible paths: starting/ending node, all possible paths (ridges), paths dictionary
-        self.starting_node_relative = centerline_width.relativeSingleCoordinate(
+        self.starting_node_relative = centerline_width._relative_single_coordinate(
             self.left_bank_coordinates[0], self.starting_node,
             self.ellipsoid)  # starting position for centerline
-        self.ending_node_relative = centerline_width.relativeSingleCoordinate(
+        self.ending_node_relative = centerline_width._relative_single_coordinate(
             self.left_bank_coordinates[0], self.ending_node,
             self.ellipsoid)  # ending position for centerline
-        x_relative_ridges, y_relative_ridges = centerline_width.relativeRidgeCoordinates(
+        x_relative_ridges, y_relative_ridges = centerline_width._relative_ridge_coordinates(
             self.left_bank_coordinates[0], self.x_voronoi_ridge_point,
             self.y_voronoi_ridge_point, self.ellipsoid)
         self.x_voronoi_ridge_point_relative = x_relative_ridges  # Voronoi relative x positions
@@ -155,10 +155,10 @@ class CenterlineWidth:
         self.centerline_voronoi = shortest_path_coordinates
 
         # Centerline length
-        self.centerlineLength = centerline_width.centerlineLength(
+        self.centerlineLength = centerline_width._centerline_length(
             centerline_coordinates=shortest_path_coordinates,
             ellipsoid=self.ellipsoid)  # Pending Deprecation
-        self.centerline_length = centerline_width.centerlineLength(
+        self.centerline_length = centerline_width._centerline_length(
             centerline_coordinates=shortest_path_coordinates,
             ellipsoid=self.ellipsoid)
 
@@ -193,36 +193,36 @@ class CenterlineWidth:
             interprolate_num=self.interpolate_n_centerpoints)
 
         # Relative Distance from bottom left bank point to each Centerline coordinates
-        self.centerlineVoronoiRelative = centerline_width.relativeCenterlineCoordinates(
+        self.centerlineVoronoiRelative = centerline_width._relative_centerline_coordinates(
             self.left_bank_coordinates[0], self.centerline_voronoi,
             self.ellipsoid)  # Pending Deprecation
-        self.centerline_voronoi_relative = centerline_width.relativeCenterlineCoordinates(
+        self.centerline_voronoi_relative = centerline_width._relative_centerline_coordinates(
             self.left_bank_coordinates[0], self.centerline_voronoi,
             self.ellipsoid)
 
-        self.centerlineEqualDistanceRelative = centerline_width.relativeCenterlineCoordinates(
+        self.centerlineEqualDistanceRelative = centerline_width._relative_centerline_coordinates(
             self.left_bank_coordinates[0], self.centerline_equal_distance,
             self.ellipsoid)  # Pending Deprecation
-        self.centerline_equal_distance_relative = centerline_width.relativeCenterlineCoordinates(
+        self.centerline_equal_distance_relative = centerline_width._relative_centerline_coordinates(
             self.left_bank_coordinates[0], self.centerline_equal_distance,
             self.ellipsoid)
 
-        self.centerlineEvenlySpacedRelative = centerline_width.relativeCenterlineCoordinates(
+        self.centerlineEvenlySpacedRelative = centerline_width._relative_centerline_coordinates(
             self.left_bank_coordinates[0], self.centerline_evenly_spaced,
             self.ellipsoid)  # Pending Deprecation
-        self.centerline_evenly_spaced_relative = centerline_width.relativeCenterlineCoordinates(
+        self.centerline_evenly_spaced_relative = centerline_width._relative_centerline_coordinates(
             self.left_bank_coordinates[0], self.centerline_evenly_spaced,
             self.ellipsoid)
 
-        self.centerlineSmoothedRelative = centerline_width.relativeCenterlineCoordinates(
+        self.centerlineSmoothedRelative = centerline_width._relative_centerline_coordinates(
             self.left_bank_coordinates[0], self.centerline_smoothed,
             self.ellipsoid)  # Pending Deprecation
-        self.centerline_smoothed_relative = centerline_width.relativeCenterlineCoordinates(
+        self.centerline_smoothed_relative = centerline_width._relative_centerline_coordinates(
             self.left_bank_coordinates[0], self.centerline_smoothed,
             self.ellipsoid)
 
         # Overall Sinuosity
-        self.sinuosity = centerline_width.calculateSinuosity(
+        self.sinuosity = centerline_width._calculate_sinuosity(
             self.centerline_evenly_spaced, self.ellipsoid)
 
     def incremental_sinuosity(self,

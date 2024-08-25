@@ -248,7 +248,7 @@ def _evenly_spaced_centerline(centerline_coordinates: list = None,
     return interpolated_centerline_coordinates
 
 
-def _smoothed_centerline(river_object: centerline_width.CenterlineWidth = None,
+def _smoothed_centerline(river_object=None,
                          centerline_coordinates: list = None,
                          interprolate_num: int = None) -> list:
     # return a list coordinates after applying b-spline (smoothing)

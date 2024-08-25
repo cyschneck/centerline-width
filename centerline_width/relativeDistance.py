@@ -6,21 +6,27 @@
 #      the left bank                                                                              #
 #                                                                                                 #
 #      This includes the functions for:                                                           #
-#                                       - relativeSingleCoordinate: backend function              #
+#                                       - _relative_single_coordinate: backend function           #
 #                                              converts a single point to a relative              #
 #                                              distance from first                                #
 #                                              point on the left bank                             #
 #                                                                                                 #
-#                                       - relativeBankCoordinates: convert latitude               #
-#                                              and longitude coordinates as a                     #
+#                                       - _relative_bank_coordinates: backend convert             #
+#                                              latitude and longitude coordinates as a            #
 #                                              relative distance                                  #
 #                                                                                                 #
-#                                       - relativeRidgeCoordinates: convert Voronoi               #
-#                                              ridges coordinates to a relative                   #
+#                                                                                                 #
+#                                       - _relative_centerline_coordinates: backend               #
+#                                              convert centerline coordinates to relative         #
+#                                              distance from the first point on the               #
+#                                              left bank                                          #
+#                                                                                                 #
+#                                       - _relative_ridge_coordinates: backend convert            #
+#                                              Voronoi ridges coordinates to a relative           #
 #                                              distance                                           #
 #                                                                                                 #
-#                                       - relativeWidthCoordinates: convert width                 #
-#                                              dictionary to a relative distance                  #
+#                                       - _relative_width_coordinates: backend convert            #
+#                                              width dictionary to a relative distance            #
 #                                                                                                 #
 #                                                                                                 #
 #                                                                                                 #
@@ -34,9 +40,9 @@ import pyproj
 import geopy.distance
 
 
-def relativeSingleCoordinate(first_point=None,
-                             lat_lon_coord=None,
-                             ellipsoid: str = "WGS84") -> tuple:
+def _relative_single_coordinate(first_point=None,
+                                lat_lon_coord=None,
+                                ellipsoid: str = "WGS84") -> tuple:
     # Convert a single point to relative position
     if lat_lon_coord is None:
         return None
@@ -49,9 +55,9 @@ def relativeSingleCoordinate(first_point=None,
     return (x, y)
 
 
-def relativeBankCoordinates(left_lon_lat_coordinates=None,
-                            right_lon_lat_coordinates=None,
-                            ellipsoid: str = "WGS84"):
+def _relative_bank_coordinates(left_lon_lat_coordinates=None,
+                               right_lon_lat_coordinates=None,
+                               ellipsoid: str = "WGS84"):
     # Convert bank latitude/longtiude coordinates to relative coordinates
     if left_lon_lat_coordinates is None or right_lon_lat_coordinates is None:
         return None, None
@@ -67,22 +73,22 @@ def relativeBankCoordinates(left_lon_lat_coordinates=None,
         if left_point == first_point:
             coord_pair = (0.0, 0.0)
         else:
-            coord_pair = relativeSingleCoordinate(first_point, left_point,
-                                                  ellipsoid)
+            coord_pair = _relative_single_coordinate(first_point, left_point,
+                                                     ellipsoid)
         left_relative_coordinates.append(coord_pair)
 
     right_relative_coordinates = []
     for right_point in right_lon_lat_coordinates:
-        coord_pair = relativeSingleCoordinate(first_point, right_point,
-                                              ellipsoid)
+        coord_pair = _relative_single_coordinate(first_point, right_point,
+                                                 ellipsoid)
         right_relative_coordinates.append(coord_pair)
 
     return left_relative_coordinates, right_relative_coordinates
 
 
-def relativeCenterlineCoordinates(first_point=None,
-                                  centerline_coordinates=None,
-                                  ellipsoid: str = "WGS84"):
+def _relative_centerline_coordinates(first_point=None,
+                                     centerline_coordinates=None,
+                                     ellipsoid: str = "WGS84"):
     # Convert centerline coordinates to relative distance from the first point on the left bank
     centerline_relative_coordinates = []
 
@@ -90,31 +96,29 @@ def relativeCenterlineCoordinates(first_point=None,
         return None
 
     for centerline_coords in centerline_coordinates:
-        coord_pair = relativeSingleCoordinate(first_point, centerline_coords,
-                                              ellipsoid)
+        coord_pair = _relative_single_coordinate(first_point,
+                                                 centerline_coords, ellipsoid)
         centerline_relative_coordinates.append(coord_pair)
 
     return centerline_relative_coordinates
 
 
-def relativeRidgeCoordinates(first_point=None,
-                             x_ridge=None,
-                             y_ridge=None,
-                             ellipsoid: str = "WGS84"):
+def _relative_ridge_coordinates(first_point=None,
+                                x_ridge=None,
+                                y_ridge=None,
+                                ellipsoid: str = "WGS84"):
     # Convert Voronoi ridges from Decimal Degree to Relative Distance
 
     x_relative_ridges = []
     y_relative_ridges = []
     for i in range(len(x_ridge)):
         # Coordinates are saved as a pair (x1, x2) and (y1, y2)
-        coord_pair = relativeSingleCoordinate(first_point,
-                                              (x_ridge[i][0], y_ridge[i][0]),
-                                              ellipsoid)
+        coord_pair = _relative_single_coordinate(
+            first_point, (x_ridge[i][0], y_ridge[i][0]), ellipsoid)
         x1 = coord_pair[0]
         y1 = coord_pair[1]
-        coord_pair = relativeSingleCoordinate(first_point,
-                                              (x_ridge[i][1], y_ridge[i][1]),
-                                              ellipsoid)
+        coord_pair = _relative_single_coordinate(
+            first_point, (x_ridge[i][1], y_ridge[i][1]), ellipsoid)
         x2 = coord_pair[0]
         y2 = coord_pair[1]
         x_relative_ridges.append((x1, x2))
@@ -123,19 +127,20 @@ def relativeRidgeCoordinates(first_point=None,
     return x_relative_ridges, y_relative_ridges
 
 
-def relativeWidthCoordinates(first_point=None,
-                             width_dictionary: dict = None,
-                             ellipsoid: str = "WGS84") -> dict:
+def _relative_width_coordinates(first_point=None,
+                                width_dictionary: dict = None,
+                                ellipsoid: str = "WGS84") -> dict:
     # Convert width dictionary from Decimal Degree to Relative Distance
 
     relative_width_dictionary = {}
     for k, v in width_dictionary.items():
         # Setup relative distance for key
-        coord_pair_k = relativeSingleCoordinate(first_point, k, ellipsoid)
+        coord_pair_k = _relative_single_coordinate(first_point, k, ellipsoid)
         # Setup relative distance for value
         if type(v) == tuple:
             # converting a coordinate -> coordinate dictionary
-            coord_pair_v = relativeSingleCoordinate(first_point, v, ellipsoid)
+            coord_pair_v = _relative_single_coordinate(first_point, v,
+                                                       ellipsoid)
             relative_width_dictionary[coord_pair_k] = coord_pair_v
         else:
             # converting a coordinate -> int dictionary

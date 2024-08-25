@@ -42,20 +42,20 @@ from .riverCenterlineClass import riverCenterline  # pending deprecation
 from .riverCenterlineClass import CenterlineWidth
 
 # relativeDistance.py function calls
-from .relativeDistance import relativeSingleCoordinate
-from .relativeDistance import relativeBankCoordinates
-from .relativeDistance import relativeCenterlineCoordinates
-from .relativeDistance import relativeRidgeCoordinates
-from .relativeDistance import relativeWidthCoordinates
+from .relativeDistance import _relative_single_coordinate
+from .relativeDistance import _relative_bank_coordinates
+from .relativeDistance import _relative_centerline_coordinates
+from .relativeDistance import _relative_ridge_coordinates
+from .relativeDistance import _relative_width_coordinates
 
 # riverFeatures.py function calls
-from .riverFeatures import centerlineLength
-from .riverFeatures import calculateRiverArea
-from .riverFeatures import calculateSinuosity
+from .riverFeatures import _calculate_river_area
+from .riverFeatures import _centerline_length
+from .riverFeatures import _calculate_sinuosity
 from .riverFeatures import incremental_sinuosity
 
 # width.py function calls
-from .width import riverWidthFromCenterlineCoordinates
+from .width import _width_from_centerline_coordinates
 from .width import width
 
 # saveOutput.py function calls

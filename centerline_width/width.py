@@ -6,7 +6,7 @@
 #      the width line intersects the banks                                                        #
 #                                                                                                 #
 #      This includes the functions for:                                                           #
-#                                       - riverWidthFromCenterlineCoordinates: backend for        #
+#                                       - _width_from_centerline_coordinates: backend for         #
 #                                              plotCenterlineWidth, returns the coordinates       #
 #                                              for the width intersection points                  #
 #                                                                                                 #
@@ -39,7 +39,7 @@ stream_handler = logging.StreamHandler()
 logger.addHandler(stream_handler)
 
 
-def riverWidthFromCenterlineCoordinates(
+def _width_from_centerline_coordinates(
         river_object: centerline_width.CenterlineWidth = None,
         centerline_coordinates: list = None,
         transect_span_distance: int = 3,
@@ -311,13 +311,13 @@ def riverWidthFromCenterlineCoordinates(
 
     # if using Relative Distance, convert points from Decimal Degrees to Relative Distance
     if coordinate_unit == "Relative Distance":
-        right_width_coordinates = centerline_width.relativeWidthCoordinates(
+        right_width_coordinates = centerline_width._relative_width_coordinates(
             river_object.left_bank_coordinates[0], right_width_coordinates,
             river_object.ellipsoid)
-        left_width_coordinates = centerline_width.relativeWidthCoordinates(
+        left_width_coordinates = centerline_width._relative_width_coordinates(
             river_object.left_bank_coordinates[0], left_width_coordinates,
             river_object.ellipsoid)
-        num_intersection_coordinates = centerline_width.relativeWidthCoordinates(
+        num_intersection_coordinates = centerline_width._relative_width_coordinates(
             river_object.left_bank_coordinates[0],
             num_intersection_coordinates, river_object.ellipsoid)
 
@@ -368,7 +368,7 @@ def width(river_object: centerline_width.CenterlineWidth = None,
             remove_intersections=remove_intersections,
             coordinate_unit="Decimal Degrees")
     else:
-        right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(
+        right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width._width_from_centerline_coordinates(
             river_object=river_object,
             centerline_coordinates=river_object.centerline_evenly_spaced,
             transect_span_distance=transect_span_distance,

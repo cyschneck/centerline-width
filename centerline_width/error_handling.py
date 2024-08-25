@@ -26,19 +26,18 @@ centerline_type_options = [
 
 
 ## Error Handling: plotDiagrams.py
-def _error_handling_plot_centerline(
-        river_object: centerline_width.CenterlineWidth = None,
-        centerline_type: str = None,
-        marker_type: str = None,
-        centerline_color: str = None,
-        dark_mode: bool = None,
-        equal_axis: bool = None,
-        display_all_possible_paths: bool = None,
-        plot_title: str = None,
-        save_plot: str = None,
-        display_voronoi: bool = None,
-        show_plot: bool = None,
-        coordinate_unit: str = None) -> None:
+def _error_handling_plot_centerline(river_object=None,
+                                    centerline_type: str = None,
+                                    marker_type: str = None,
+                                    centerline_color: str = None,
+                                    dark_mode: bool = None,
+                                    equal_axis: bool = None,
+                                    display_all_possible_paths: bool = None,
+                                    plot_title: str = None,
+                                    save_plot: str = None,
+                                    display_voronoi: bool = None,
+                                    show_plot: bool = None,
+                                    coordinate_unit: str = None) -> None:
 
     # Error handling for plot_centerline()
     if river_object is None:
@@ -122,20 +121,19 @@ def _error_handling_plot_centerline(
 
 
 ## Error Handling: plotDiagrams.py
-def _error_handling_plot_centerline_width(
-        river_object: centerline_width.CenterlineWidth = None,
-        plot_title: str = None,
-        save_plot: str = None,
-        display_true_centerline: bool = None,
-        transect_span_distance: int = None,
-        transect_slope: str = None,
-        apply_smoothing: bool = None,
-        flag_intersections: bool = None,
-        remove_intersections: bool = None,
-        dark_mode: bool = None,
-        equal_axis: bool = None,
-        show_plot: bool = None,
-        coordinate_unit: str = None):
+def _error_handling_plot_centerline_width(river_object=None,
+                                          plot_title: str = None,
+                                          save_plot: str = None,
+                                          display_true_centerline: bool = None,
+                                          transect_span_distance: int = None,
+                                          transect_slope: str = None,
+                                          apply_smoothing: bool = None,
+                                          flag_intersections: bool = None,
+                                          remove_intersections: bool = None,
+                                          dark_mode: bool = None,
+                                          equal_axis: bool = None,
+                                          show_plot: bool = None,
+                                          coordinate_unit: str = None):
     # Error handling for plot_centerline_width()
     if river_object is None:
         raise ValueError(
@@ -224,15 +222,14 @@ def _error_handling_plot_centerline_width(
 
 
 ## Error Handling: width.py
-def _error_handling_width(
-        river_object: centerline_width.CenterlineWidth = None,
-        transect_span_distance: int = None,
-        transect_slope: str = None,
-        apply_smoothing: bool = None,
-        remove_intersections: bool = None,
-        coordinate_unit: str = None,
-        coordinate_reference: str = None,
-        save_to_csv: str = None) -> None:
+def _error_handling_width(river_object=None,
+                          transect_span_distance: int = None,
+                          transect_slope: str = None,
+                          apply_smoothing: bool = None,
+                          remove_intersections: bool = None,
+                          coordinate_unit: str = None,
+                          coordinate_reference: str = None,
+                          save_to_csv: str = None) -> None:
     # Error Handling for width()
     if river_object is None:
         raise ValueError(
@@ -310,13 +307,12 @@ def _error_handling_width(
 
 
 ## Error Handling: saveOutput.py
-def _error_handling_save_centerline_csv(
-        river_object: centerline_width.CenterlineWidth = None,
-        latitude_header: str = None,
-        longitude_header: str = None,
-        save_to_csv: str = None,
-        centerline_type: str = None,
-        coordinate_unit: str = None) -> None:
+def _error_handling_save_centerline_csv(river_object=None,
+                                        latitude_header: str = None,
+                                        longitude_header: str = None,
+                                        save_to_csv: str = None,
+                                        centerline_type: str = None,
+                                        coordinate_unit: str = None) -> None:
     # Error Handling for save_centerline_csv()
     if river_object is None:
         raise ValueError(
@@ -374,13 +370,12 @@ def _error_handling_save_centerline_csv(
 
 
 ## Error Handling: saveOutput.py
-def _error_handling_save_centerline_mat(
-        river_object: centerline_width.CenterlineWidth = None,
-        latitude_header: str = None,
-        longitude_header: str = None,
-        save_to_mat: str = None,
-        centerline_type: str = None,
-        coordinate_unit: str = None) -> None:
+def _error_handling_save_centerline_mat(river_object=None,
+                                        latitude_header: str = None,
+                                        longitude_header: str = None,
+                                        save_to_mat: str = None,
+                                        centerline_type: str = None,
+                                        coordinate_unit: str = None) -> None:
     # Error Handling for save_centerline_mat()
     if river_object is None:
         raise ValueError(
@@ -612,10 +607,9 @@ def _error_handling_centerline_width(csv_data: str = None,
 
 
 ## Error Handling: riverFeatures.py
-def _error_handling_incremental_sinuosity(
-        river_object: centerline_width.CenterlineWidth = None,
-        incremental_points: int = 10,
-        save_to_csv: str = None) -> None:
+def _error_handling_incremental_sinuosity(river_object=None,
+                                          incremental_points: int = 10,
+                                          save_to_csv: str = None) -> None:
     # Error Handling for incremental_sinuosity()
     if river_object is None:
         raise ValueError(

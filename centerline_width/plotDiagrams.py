@@ -36,15 +36,14 @@ stream_handler = logging.StreamHandler()
 logger.addHandler(stream_handler)
 
 
-def plotCenterlineBackend(
-        river_object: centerline_width.CenterlineWidth = None,
-        display_true_centerline: bool = True,
-        centerline_type: str = "Voronoi",
-        marker_type: str = "line",
-        centerline_color: str = "black",
-        dark_mode: bool = False,
-        equal_axis: bool = False,
-        coordinate_unit: str = None):
+def plotCenterlineBackend(river_object=None,
+                          display_true_centerline: bool = True,
+                          centerline_type: str = "Voronoi",
+                          marker_type: str = "line",
+                          centerline_color: str = "black",
+                          dark_mode: bool = False,
+                          equal_axis: bool = False,
+                          coordinate_unit: str = None):
     # Shared components between plot_centerline() and plotCenterlineWidth
     coordinate_unit = coordinate_unit.title()
 
@@ -182,7 +181,7 @@ def plotCenterlineBackend(
     return fig, ax, valid_path_through
 
 
-def plot_centerline(river_object: centerline_width.CenterlineWidth = None,
+def plot_centerline(river_object=None,
                     centerline_type: str = "Voronoi",
                     marker_type: str = "line",
                     centerline_color: str = "black",
@@ -284,21 +283,20 @@ def plot_centerline(river_object: centerline_width.CenterlineWidth = None,
     if save_plot: fig.savefig(save_plot)
 
 
-def plot_centerline_width(
-        river_object: centerline_width.CenterlineWidth = None,
-        plot_title: str = None,
-        save_plot_name: str = None,
-        save_plot: str = None,
-        display_true_centerline: bool = True,
-        transect_span_distance: int = 3,
-        transect_slope: str = "Average",
-        apply_smoothing: bool = False,
-        flag_intersections: bool = True,
-        remove_intersections: bool = False,
-        dark_mode: bool = False,
-        equal_axis: bool = False,
-        show_plot: bool = True,
-        coordinate_unit: str = "Decimal Degrees") -> None:
+def plot_centerline_width(river_object=None,
+                          plot_title: str = None,
+                          save_plot_name: str = None,
+                          save_plot: str = None,
+                          display_true_centerline: bool = True,
+                          transect_span_distance: int = 3,
+                          transect_slope: str = "Average",
+                          apply_smoothing: bool = False,
+                          flag_intersections: bool = True,
+                          remove_intersections: bool = False,
+                          dark_mode: bool = False,
+                          equal_axis: bool = False,
+                          show_plot: bool = True,
+                          coordinate_unit: str = "Decimal Degrees") -> None:
     # Plot Width Lines based on Centerline
     if save_plot_name is not None and save_plot is None:
         warnings.warn(
@@ -344,7 +342,7 @@ def plot_centerline_width(
 
             # if using smoothing, replace left/right coordinates with the smoothed variation
             if apply_smoothing:
-                right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(
+                right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width._width_from_centerline_coordinates(
                     river_object=river_object,
                     centerline_coordinates=river_object.centerline_smoothed,
                     transect_span_distance=transect_span_distance,
@@ -367,7 +365,7 @@ def plot_centerline_width(
                             s=5)
             else:
                 # recreate the centerline with evenly spaced points
-                right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(
+                right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width._width_from_centerline_coordinates(
                     river_object=river_object,
                     centerline_coordinates=river_object.
                     centerline_evenly_spaced,
