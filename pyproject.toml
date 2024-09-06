@@ -1,6 +1,6 @@
 [project]
 name = "centerline-width"
-version = "v1.7.0"
+version = "v2.0.0"
 authors = [
   { name="Cora Schneck", email="cyschneck@gmail.com" },
   { name="Una Schneck", email="ugschneck@gmail.com" }
