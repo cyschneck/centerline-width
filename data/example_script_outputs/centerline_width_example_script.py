@@ -18,18 +18,13 @@ def main():
             "Calling function in a context other than __main__ is not supported."
         )
 
-    # create txt file of bank points
-    cw.extractPointsToTextFile(
-        left_kml="43deg44_18dot23_N_101deg27_7dot61_W_lb.kml",
-        right_kml="43deg44_18dot23_N_101deg27_7dot61_W_rb.kml",
-        text_output_name="43deg44_18dot23_N_101deg27_7dot61_W.txt")
-
-    # convert txt file to csv file for digesting with centerline-width
-    cw.convertColumnsToCSV(text_file="43deg44_18dot23_N_101deg27_7dot61_W.txt")
+    # create txt file of bank points to csv file for digesting with centerline-width
+    cw.kml_to_csv(left_kml="43deg44_18dot23_N_101deg27_7dot61_W_lb.kml",
+                  right_kml="43deg44_18dot23_N_101deg27_7dot61_W_rb.kml",
+                  csv_output="43deg44_18dot23_N_101deg27_7dot61_W.csv")
 
     # create river object
-    ro = cw.riverCenterline(csv_data="43deg44_18dot23_N_101deg27_7dot61_W.csv",
-                            optional_cutoff=None,
+    ro = cw.CenterlineWidth(csv_data="43deg44_18dot23_N_101deg27_7dot61_W.csv",
                             interpolate_data=True,
                             interpolate_n=7,
                             interpolate_n_centerpoints=1200,
@@ -37,44 +32,43 @@ def main():
                             ellipsoid="WGS84")
 
     # plot the centerline with Decimal Degrees (by default)
-    ro.plotCenterline(
+    ro.plot_centerline(
         centerline_type="Equal Distance",
         display_all_possible_paths=False,
-        save_plot_name="43deg44_18dot23_N_101deg27_7dot61_W_centerline.png")
+        save_plot="43deg44_18dot23_N_101deg27_7dot61_W_dd_centerline.png")
 
     # plot the centerline with Relative Distance
-    ro.plotCenterline(
+    ro.plot_centerline(
         centerline_type="Equal Distance",
         display_all_possible_paths=False,
         coordinate_unit="Relative Distance",
-        save_plot_name="43deg44_18dot23_N_101deg27_7dot61_W_centerline.png")
+        save_plot="43deg44_18dot23_N_101deg27_7dot61_W_rd_centerline.png")
 
     # save to csv to import back into google earth pro
-    ro.saveCenterlineCSV(save_to_csv="equal_distance_coordinates.csv",
-                         centerline_type="Equal Distance",
-                         latitude_header="lat",
-                         longitude_header="lon")
+    ro.save_centerline_csv(save_to_csv="equal_distance_coordinates.csv",
+                           centerline_type="Equal Distance",
+                           latitude_header="lat",
+                           longitude_header="lon")
 
     # save to mat to import into matlab
-    ro.saveCenterlineMAT(save_to_mat="equal_distance_coordinates.mat",
-                         centerline_type="Equal Distance",
-                         latitude_header="lat",
-                         longitude_header="lon")
+    ro.save_centerline_mat(save_to_mat="equal_distance_coordinates.mat",
+                           centerline_type="Equal Distance",
+                           latitude_header="lat",
+                           longitude_header="lon")
 
     # plot width lines
-    ro.plotCenterlineWidth(
+    ro.plot_centerline_width(
         display_true_centerline=True,
         transect_span_distance=3,
         apply_smoothing=True,
         remove_intersections=True,
-        save_plot_name="43deg44_18dot23_N_101deg27_7dot61_W_width.png")
+        save_plot="43deg44_18dot23_N_101deg27_7dot61_W_width.png")
 
     # save width distance and coordinates to .csv
-    river_width_dict = ro.riverWidthFromCenterline(
-        transect_span_distance=3,
-        apply_smoothing=True,
-        remove_intersections=True,
-        save_to_csv="width_distance.csv")
+    river_width_dict = ro.width(transect_span_distance=3,
+                                apply_smoothing=True,
+                                remove_intersections=True,
+                                save_to_csv="width_distance.csv")
 
 
 if __name__ == '__main__':

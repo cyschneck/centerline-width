@@ -1,8 +1,9 @@
 # Verify Outputs from plotDiagrams.py
 # centerline-width/: python -m pytest -v
-# python -m pytest -k test_verifyPlotDiagrams-xv
+# python -m pytest -k test_verifyPlotDiagrams.py -xv
 
 # Pytests to Compare and Verify Expected Outputs
+import re
 from io import StringIO
 import os
 from pathlib import Path
@@ -323,7 +324,7 @@ def generate_testRiver():
     )
     csv_example.seek(0)
 
-    return centerline_width.riverCenterline(csv_data=csv_example)
+    return centerline_width.CenterlineWidth(csv_data=csv_example)
 
 
 test_river = generate_testRiver()
@@ -335,13 +336,13 @@ def generate_plot_image(tmp_path_factory):
     return plt_file_path
 
 
-################### plotCenterline() ##########################################################
+################### plot_centerline() ##########################################################
 
 
 def test_plotCenterline_darkMode_false(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              dark_mode=False,
-                              show_plot=False)
+    test_river.plot_centerline(save_plot=str(generate_plot_image),
+                               dark_mode=False,
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath('baseline_plots',
                                                     "dark_mode_false.png")
     plt.close()
@@ -352,9 +353,9 @@ def test_plotCenterline_darkMode_false(generate_plot_image):
 
 
 def test_plotCenterline_darkMode_true(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              dark_mode=True,
-                              show_plot=False)
+    test_river.plot_centerline(save_plot=str(generate_plot_image),
+                               dark_mode=True,
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath('baseline_plots',
                                                     "dark_mode_true.png")
     plt.close()
@@ -365,9 +366,9 @@ def test_plotCenterline_darkMode_true(generate_plot_image):
 
 
 def test_plotCenterline_displayAllPossiblePaths_false(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              display_all_possible_paths=False,
-                              show_plot=False)
+    test_river.plot_centerline(save_plot=str(generate_plot_image),
+                               display_all_possible_paths=False,
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "display_all_possible_paths_false.png")
     plt.close()
@@ -378,9 +379,9 @@ def test_plotCenterline_displayAllPossiblePaths_false(generate_plot_image):
 
 
 def test_plotCenterline_displayVoronoiGraph_false(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              display_voronoi=False,
-                              show_plot=False)
+    test_river.plot_centerline(save_plot=str(generate_plot_image),
+                               display_voronoi=False,
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "display_voronoi_graph_false.png")
     plt.close()
@@ -391,9 +392,9 @@ def test_plotCenterline_displayVoronoiGraph_false(generate_plot_image):
 
 
 def test_plotCenterline_displayAllPossiblePaths_true(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              display_all_possible_paths=True,
-                              show_plot=False)
+    test_river.plot_centerline(save_plot=str(generate_plot_image),
+                               display_all_possible_paths=True,
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "display_all_possible_paths_true.png")
     plt.close()
@@ -404,9 +405,9 @@ def test_plotCenterline_displayAllPossiblePaths_true(generate_plot_image):
 
 
 def test_plotCenterline_displayVoronoiGraph_true(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              display_voronoi=True,
-                              show_plot=False)
+    test_river.plot_centerline(save_plot=str(generate_plot_image),
+                               display_voronoi=True,
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "display_voronoi_graph_true.png")
     plt.close()
@@ -417,9 +418,9 @@ def test_plotCenterline_displayVoronoiGraph_true(generate_plot_image):
 
 
 def test_plotCenterline_equalAxis_false(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              equal_axis=False,
-                              show_plot=False)
+    test_river.plot_centerline(save_plot=str(generate_plot_image),
+                               equal_axis=False,
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath('baseline_plots',
                                                     "equal_axis_false.png")
     plt.close()
@@ -430,9 +431,9 @@ def test_plotCenterline_equalAxis_false(generate_plot_image):
 
 
 def test_plotCenterline_equalAxis_true(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              equal_axis=True,
-                              show_plot=False)
+    test_river.plot_centerline(save_plot=str(generate_plot_image),
+                               equal_axis=True,
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath('baseline_plots',
                                                     "equal_axis_true.png")
     plt.close()
@@ -443,12 +444,12 @@ def test_plotCenterline_equalAxis_true(generate_plot_image):
 
 
 def test_plotCenterline_equalDistance_decimalDegrees_line(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Equal Distance",
-                              centerline_color="mediumorchid",
-                              coordinate_unit="Decimal Degrees",
-                              marker_type="Line",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot=str(generate_plot_image),
+                               centerline_type="Equal Distance",
+                               centerline_color="mediumorchid",
+                               coordinate_unit="Decimal Degrees",
+                               marker_type="Line",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "equal_distance_decimal_degrees_line.png")
     plt.close()
@@ -460,12 +461,12 @@ def test_plotCenterline_equalDistance_decimalDegrees_line(generate_plot_image):
 
 def test_plotCenterline_equalDistance_decimalDegrees_scatter(
         generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Equal Distance",
-                              centerline_color="mediumorchid",
-                              coordinate_unit="Decimal Degrees",
-                              marker_type="Scatter",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot=str(generate_plot_image),
+                               centerline_type="Equal Distance",
+                               centerline_color="mediumorchid",
+                               coordinate_unit="Decimal Degrees",
+                               marker_type="Scatter",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "equal_distance_decimal_degrees_scatter.png")
     plt.close()
@@ -477,12 +478,12 @@ def test_plotCenterline_equalDistance_decimalDegrees_scatter(
 
 def test_plotCenterline_equalDistance_relativeDistance_line(
         generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Equal Distance",
-                              centerline_color="mediumorchid",
-                              coordinate_unit="Relative Distance",
-                              marker_type="Line",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot=str(generate_plot_image),
+                               centerline_type="Equal Distance",
+                               centerline_color="mediumorchid",
+                               coordinate_unit="Relative Distance",
+                               marker_type="Line",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "equal_distance_relative_distance_line.png")
     plt.close()
@@ -494,12 +495,12 @@ def test_plotCenterline_equalDistance_relativeDistance_line(
 
 def test_plotCenterline_equalDistance_relativeDistance_scatter(
         generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Equal Distance",
-                              centerline_color="mediumorchid",
-                              coordinate_unit="Relative Distance",
-                              marker_type="Scatter",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot=str(generate_plot_image),
+                               centerline_type="Equal Distance",
+                               centerline_color="mediumorchid",
+                               coordinate_unit="Relative Distance",
+                               marker_type="Scatter",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "equal_distance_relative_distance_scatter.png")
     plt.close()
@@ -510,12 +511,12 @@ def test_plotCenterline_equalDistance_relativeDistance_scatter(
 
 
 def test_plotCenterline_evenlySpaced_decimalDegrees_line(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Evenly Spaced",
-                              centerline_color="fuchsia",
-                              coordinate_unit="Decimal Degrees",
-                              marker_type="Line",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot=str(generate_plot_image),
+                               centerline_type="Evenly Spaced",
+                               centerline_color="fuchsia",
+                               coordinate_unit="Decimal Degrees",
+                               marker_type="Line",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "evenly_spaced_decimal_degrees_line.png")
     plt.close()
@@ -527,12 +528,12 @@ def test_plotCenterline_evenlySpaced_decimalDegrees_line(generate_plot_image):
 
 def test_plotCenterline_evenlySpaced_decimalDegrees_scatter(
         generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Evenly Spaced",
-                              centerline_color="fuchsia",
-                              coordinate_unit="Decimal Degrees",
-                              marker_type="Scatter",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot=str(generate_plot_image),
+                               centerline_type="Evenly Spaced",
+                               centerline_color="fuchsia",
+                               coordinate_unit="Decimal Degrees",
+                               marker_type="Scatter",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "evenly_spaced_decimal_degrees_scatter.png")
     plt.close()
@@ -544,12 +545,12 @@ def test_plotCenterline_evenlySpaced_decimalDegrees_scatter(
 
 def test_plotCenterline_evenlySpaced_relativeDistance_line(
         generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Evenly Spaced",
-                              centerline_color="fuchsia",
-                              coordinate_unit="Relative Distance",
-                              marker_type="Line",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot=str(generate_plot_image),
+                               centerline_type="Evenly Spaced",
+                               centerline_color="fuchsia",
+                               coordinate_unit="Relative Distance",
+                               marker_type="Line",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "evenly_spaced_relative_distance_line.png")
     plt.close()
@@ -561,12 +562,12 @@ def test_plotCenterline_evenlySpaced_relativeDistance_line(
 
 def test_plotCenterline_evenlySpaced_relativeDistance_scatter(
         generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Evenly Spaced",
-                              centerline_color="fuchsia",
-                              coordinate_unit="Relative Distance",
-                              marker_type="Scatter",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot=str(generate_plot_image),
+                               centerline_type="Evenly Spaced",
+                               centerline_color="fuchsia",
+                               coordinate_unit="Relative Distance",
+                               marker_type="Scatter",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "evenly_spaced_relative_distance_scatter.png")
     plt.close()
@@ -577,12 +578,12 @@ def test_plotCenterline_evenlySpaced_relativeDistance_scatter(
 
 
 def test_plotCenterline_smoothed_decimalDegrees_line(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Smoothed",
-                              centerline_color="blue",
-                              coordinate_unit="Decimal Degrees",
-                              marker_type="Line",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot=str(generate_plot_image),
+                               centerline_type="Smoothed",
+                               centerline_color="blue",
+                               coordinate_unit="Decimal Degrees",
+                               marker_type="Line",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "smoothed_decimal_degrees_line.png")
     plt.close()
@@ -593,12 +594,12 @@ def test_plotCenterline_smoothed_decimalDegrees_line(generate_plot_image):
 
 
 def test_plotCenterline_smoothed_decimalDegrees_scatter(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Smoothed",
-                              centerline_color="blue",
-                              coordinate_unit="Decimal Degrees",
-                              marker_type="Scatter",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot=str(generate_plot_image),
+                               centerline_type="Smoothed",
+                               centerline_color="blue",
+                               coordinate_unit="Decimal Degrees",
+                               marker_type="Scatter",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "smoothed_decimal_degrees_scatter.png")
     plt.close()
@@ -609,12 +610,12 @@ def test_plotCenterline_smoothed_decimalDegrees_scatter(generate_plot_image):
 
 
 def test_plotCenterline_smoothed_relativeDistance_line(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Smoothed",
-                              centerline_color="blue",
-                              coordinate_unit="Relative Distance",
-                              marker_type="Line",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot=str(generate_plot_image),
+                               centerline_type="Smoothed",
+                               centerline_color="blue",
+                               coordinate_unit="Relative Distance",
+                               marker_type="Line",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "smoothed_relative_distance_line.png")
     plt.close()
@@ -625,12 +626,12 @@ def test_plotCenterline_smoothed_relativeDistance_line(generate_plot_image):
 
 
 def test_plotCenterline_smoothed_relativeDistance_scatter(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Smoothed",
-                              centerline_color="blue",
-                              coordinate_unit="Relative Distance",
-                              marker_type="Scatter",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot=str(generate_plot_image),
+                               centerline_type="Smoothed",
+                               centerline_color="blue",
+                               coordinate_unit="Relative Distance",
+                               marker_type="Scatter",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "smoothed_relative_distance_scatter.png")
     plt.close()
@@ -641,12 +642,12 @@ def test_plotCenterline_smoothed_relativeDistance_scatter(generate_plot_image):
 
 
 def test_plotCenterline_voronoi_decimalDegrees_line(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Voronoi",
-                              centerline_color="Black",
-                              coordinate_unit="Decimal Degrees",
-                              marker_type="Line",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot=str(generate_plot_image),
+                               centerline_type="Voronoi",
+                               centerline_color="Black",
+                               coordinate_unit="Decimal Degrees",
+                               marker_type="Line",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "voronoi_decimal_degrees_line.png")
     plt.close()
@@ -657,12 +658,12 @@ def test_plotCenterline_voronoi_decimalDegrees_line(generate_plot_image):
 
 
 def test_plotCenterline_voronoi_decimalDegrees_scatter(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Voronoi",
-                              centerline_color="Black",
-                              coordinate_unit="Decimal Degrees",
-                              marker_type="Scatter",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot=str(generate_plot_image),
+                               centerline_type="Voronoi",
+                               centerline_color="Black",
+                               coordinate_unit="Decimal Degrees",
+                               marker_type="Scatter",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "voronoi_decimal_degrees_scatter.png")
     plt.close()
@@ -673,12 +674,12 @@ def test_plotCenterline_voronoi_decimalDegrees_scatter(generate_plot_image):
 
 
 def test_plotCenterline_voronoi_relativeDistance_line(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Voronoi",
-                              centerline_color="Black",
-                              coordinate_unit="Relative Distance",
-                              marker_type="Line",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot=str(generate_plot_image),
+                               centerline_type="Voronoi",
+                               centerline_color="Black",
+                               coordinate_unit="Relative Distance",
+                               marker_type="Line",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "voronoi_relative_distance_line.png")
     plt.close()
@@ -689,12 +690,12 @@ def test_plotCenterline_voronoi_relativeDistance_line(generate_plot_image):
 
 
 def test_plotCenterline_voronoi_relativeDistance_scatter(generate_plot_image):
-    test_river.plotCenterline(save_plot_name=str(generate_plot_image),
-                              centerline_type="Voronoi",
-                              centerline_color="Black",
-                              coordinate_unit="Relative Distance",
-                              marker_type="Scatter",
-                              show_plot=False)
+    test_river.plot_centerline(save_plot=str(generate_plot_image),
+                               centerline_type="Voronoi",
+                               centerline_color="Black",
+                               coordinate_unit="Relative Distance",
+                               marker_type="Scatter",
+                               show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "voronoi_relative_distance_scatter.png")
     plt.close()
@@ -704,17 +705,59 @@ def test_plotCenterline_voronoi_relativeDistance_scatter(generate_plot_image):
         in_decorator=False) is None
 
 
-################### plotCenterlineWidth() ########################################################
+def test_plotCenterline_futureWarning_functionName(generate_plot_image):
+    # Pending Deprecation: TO BE REMOVED
+    with pytest.warns(
+            FutureWarning,
+            match=re.escape(
+                "plotCenterline() has been replaced with plot_centerline() and will be removed in the future"
+            )):
+        test_river.plotCenterline(save_plot=str(generate_plot_image),
+                                  dark_mode=False,
+                                  show_plot=False)
+        expected_png = (Path(__file__).parent).joinpath(
+            'baseline_plots', "dark_mode_false.png")
+        plt.close()
+        assert os.path.exists(expected_png)
+        assert matplotlib.testing.compare.compare_images(
+            expected_png,
+            str(generate_plot_image),
+            tol=0.001,
+            in_decorator=False) is None
+
+
+def test_plotCenterline_futureWarning_variableName(generate_plot_image):
+    # Pending Deprecation: TO BE REMOVED
+    with pytest.warns(
+            FutureWarning,
+            match=re.escape(
+                "save_plot_name has been replaced with save_plot and will be removed in the future"
+            )):
+        test_river.plot_centerline(save_plot_name=str(generate_plot_image),
+                                   dark_mode=False,
+                                   show_plot=False)
+        expected_png = (Path(__file__).parent).joinpath(
+            'baseline_plots', "dark_mode_false.png")
+        plt.close()
+        assert os.path.exists(expected_png)
+        assert matplotlib.testing.compare.compare_images(
+            expected_png,
+            str(generate_plot_image),
+            tol=0.001,
+            in_decorator=False) is None
+
+
+################### plot_centerline_width() ########################################################
 
 
 def test_plotCenterlineWidth_decimalDegrees_removeIntersectionsFalse_smoothedFalse_transectSlopeAverage(
         generate_plot_image):
-    test_river.plotCenterlineWidth(save_plot_name=str(generate_plot_image),
-                                   coordinate_unit="Decimal Degrees",
-                                   remove_intersections=False,
-                                   apply_smoothing=False,
-                                   transect_slope="Average",
-                                   show_plot=False)
+    test_river.plot_centerline_width(save_plot=str(generate_plot_image),
+                                     coordinate_unit="Decimal Degrees",
+                                     remove_intersections=False,
+                                     apply_smoothing=False,
+                                     transect_slope="Average",
+                                     show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots',
         "width_decimal_degrees_removeIntersectionsFalse_smoothedFalse_transectSlopeAverage.png"
@@ -728,12 +771,12 @@ def test_plotCenterlineWidth_decimalDegrees_removeIntersectionsFalse_smoothedFal
 
 def test_plotCenterlineWidth_decimalDegrees_removeIntersectionsFalse_smoothedFalse_transectSlopeDirect(
         generate_plot_image):
-    test_river.plotCenterlineWidth(save_plot_name=str(generate_plot_image),
-                                   coordinate_unit="Decimal Degrees",
-                                   remove_intersections=False,
-                                   apply_smoothing=False,
-                                   transect_slope="Direct",
-                                   show_plot=False)
+    test_river.plot_centerline_width(save_plot=str(generate_plot_image),
+                                     coordinate_unit="Decimal Degrees",
+                                     remove_intersections=False,
+                                     apply_smoothing=False,
+                                     transect_slope="Direct",
+                                     show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots',
         "width_decimal_degrees_removeIntersectionsFalse_smoothedFalse_transectSlopeDirect.png"
@@ -747,12 +790,12 @@ def test_plotCenterlineWidth_decimalDegrees_removeIntersectionsFalse_smoothedFal
 
 def test_plotCenterlineWidth_decimalDegrees_removeIntersectionsFalse_smoothedTrue_transectSlopeAverage(
         generate_plot_image):
-    test_river.plotCenterlineWidth(save_plot_name=str(generate_plot_image),
-                                   coordinate_unit="Decimal Degrees",
-                                   remove_intersections=False,
-                                   apply_smoothing=True,
-                                   transect_slope="Average",
-                                   show_plot=False)
+    test_river.plot_centerline_width(save_plot=str(generate_plot_image),
+                                     coordinate_unit="Decimal Degrees",
+                                     remove_intersections=False,
+                                     apply_smoothing=True,
+                                     transect_slope="Average",
+                                     show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots',
         "width_decimal_degrees_removeIntersectionsFalse_smoothedTrue_transectSlopeAverage.png"
@@ -766,12 +809,12 @@ def test_plotCenterlineWidth_decimalDegrees_removeIntersectionsFalse_smoothedTru
 
 def test_plotCenterlineWidth_decimalDegrees_removeIntersectionsFalse_smoothedTrue_transectSlopeDirect(
         generate_plot_image):
-    test_river.plotCenterlineWidth(save_plot_name=str(generate_plot_image),
-                                   coordinate_unit="Decimal Degrees",
-                                   remove_intersections=False,
-                                   apply_smoothing=True,
-                                   transect_slope="Direct",
-                                   show_plot=False)
+    test_river.plot_centerline_width(save_plot=str(generate_plot_image),
+                                     coordinate_unit="Decimal Degrees",
+                                     remove_intersections=False,
+                                     apply_smoothing=True,
+                                     transect_slope="Direct",
+                                     show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots',
         "width_decimal_degrees_removeIntersectionsFalse_smoothedTrue_transectSlopeDirect.png"
@@ -785,12 +828,12 @@ def test_plotCenterlineWidth_decimalDegrees_removeIntersectionsFalse_smoothedTru
 
 def test_plotCenterlineWidth_decimalDegrees_removeIntersectionsTrue_smoothedFalse_transectSlopeAverage(
         generate_plot_image):
-    test_river.plotCenterlineWidth(save_plot_name=str(generate_plot_image),
-                                   coordinate_unit="Decimal Degrees",
-                                   remove_intersections=True,
-                                   apply_smoothing=False,
-                                   transect_slope="Average",
-                                   show_plot=False)
+    test_river.plot_centerline_width(save_plot=str(generate_plot_image),
+                                     coordinate_unit="Decimal Degrees",
+                                     remove_intersections=True,
+                                     apply_smoothing=False,
+                                     transect_slope="Average",
+                                     show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots',
         "width_decimal_degrees_removeIntersectionsTrue_smoothedFalse_transectSlopeAverage.png"
@@ -804,12 +847,12 @@ def test_plotCenterlineWidth_decimalDegrees_removeIntersectionsTrue_smoothedFals
 
 def test_plotCenterlineWidth_decimalDegrees_removeIntersectionsTrue_smoothedFalse_transectSlopeDirect(
         generate_plot_image):
-    test_river.plotCenterlineWidth(save_plot_name=str(generate_plot_image),
-                                   coordinate_unit="Decimal Degrees",
-                                   remove_intersections=True,
-                                   apply_smoothing=False,
-                                   transect_slope="Direct",
-                                   show_plot=False)
+    test_river.plot_centerline_width(save_plot=str(generate_plot_image),
+                                     coordinate_unit="Decimal Degrees",
+                                     remove_intersections=True,
+                                     apply_smoothing=False,
+                                     transect_slope="Direct",
+                                     show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots',
         "width_decimal_degrees_removeIntersectionsTrue_smoothedFalse_transectSlopeDirect.png"
@@ -823,12 +866,12 @@ def test_plotCenterlineWidth_decimalDegrees_removeIntersectionsTrue_smoothedFals
 
 def test_plotCenterlineWidth_decimalDegrees_removeIntersectionsTrue_smoothedTrue_transectSlopeAverage(
         generate_plot_image):
-    test_river.plotCenterlineWidth(save_plot_name=str(generate_plot_image),
-                                   coordinate_unit="Decimal Degrees",
-                                   remove_intersections=True,
-                                   apply_smoothing=True,
-                                   transect_slope="Average",
-                                   show_plot=False)
+    test_river.plot_centerline_width(save_plot=str(generate_plot_image),
+                                     coordinate_unit="Decimal Degrees",
+                                     remove_intersections=True,
+                                     apply_smoothing=True,
+                                     transect_slope="Average",
+                                     show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots',
         "width_decimal_degrees_removeIntersectionsTrue_smoothedTrue_transectSlopeAverage.png"
@@ -842,12 +885,12 @@ def test_plotCenterlineWidth_decimalDegrees_removeIntersectionsTrue_smoothedTrue
 
 def test_plotCenterlineWidth_decimalDegrees_removeIntersectionsTrue_smoothedTrue_transectSlopeDirect(
         generate_plot_image):
-    test_river.plotCenterlineWidth(save_plot_name=str(generate_plot_image),
-                                   coordinate_unit="Decimal Degrees",
-                                   remove_intersections=True,
-                                   apply_smoothing=True,
-                                   transect_slope="Direct",
-                                   show_plot=False)
+    test_river.plot_centerline_width(save_plot=str(generate_plot_image),
+                                     coordinate_unit="Decimal Degrees",
+                                     remove_intersections=True,
+                                     apply_smoothing=True,
+                                     transect_slope="Direct",
+                                     show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots',
         "width_decimal_degrees_removeIntersectionsTrue_smoothedTrue_transectSlopeDirect.png"
@@ -861,12 +904,12 @@ def test_plotCenterlineWidth_decimalDegrees_removeIntersectionsTrue_smoothedTrue
 
 def test_plotCenterlineWidth_relativeDistance_removeIntersectionsFalse_smoothedFalse_transectSlopeAverage(
         generate_plot_image):
-    test_river.plotCenterlineWidth(save_plot_name=str(generate_plot_image),
-                                   coordinate_unit="Relative Distance",
-                                   remove_intersections=False,
-                                   apply_smoothing=False,
-                                   transect_slope="Average",
-                                   show_plot=False)
+    test_river.plot_centerline_width(save_plot=str(generate_plot_image),
+                                     coordinate_unit="Relative Distance",
+                                     remove_intersections=False,
+                                     apply_smoothing=False,
+                                     transect_slope="Average",
+                                     show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots',
         "width_relative_distance_removeIntersectionsFalse_smoothedFalse_transectSlopeAverage.png"
@@ -880,12 +923,12 @@ def test_plotCenterlineWidth_relativeDistance_removeIntersectionsFalse_smoothedF
 
 def test_plotCenterlineWidth_relativeDistance_removeIntersectionsFalse_smoothedFalse_transectSlopeDirect(
         generate_plot_image):
-    test_river.plotCenterlineWidth(save_plot_name=str(generate_plot_image),
-                                   coordinate_unit="Relative Distance",
-                                   remove_intersections=False,
-                                   apply_smoothing=False,
-                                   transect_slope="Direct",
-                                   show_plot=False)
+    test_river.plot_centerline_width(save_plot=str(generate_plot_image),
+                                     coordinate_unit="Relative Distance",
+                                     remove_intersections=False,
+                                     apply_smoothing=False,
+                                     transect_slope="Direct",
+                                     show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots',
         "width_relative_distance_removeIntersectionsFalse_smoothedFalse_transectSlopeDirect.png"
@@ -899,12 +942,12 @@ def test_plotCenterlineWidth_relativeDistance_removeIntersectionsFalse_smoothedF
 
 def test_plotCenterlineWidth_relativeDistance_removeIntersectionsFalse_smoothedTrue_transectSlopeAverage(
         generate_plot_image):
-    test_river.plotCenterlineWidth(save_plot_name=str(generate_plot_image),
-                                   coordinate_unit="Relative Distance",
-                                   remove_intersections=False,
-                                   apply_smoothing=True,
-                                   transect_slope="Average",
-                                   show_plot=False)
+    test_river.plot_centerline_width(save_plot=str(generate_plot_image),
+                                     coordinate_unit="Relative Distance",
+                                     remove_intersections=False,
+                                     apply_smoothing=True,
+                                     transect_slope="Average",
+                                     show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots',
         "width_relative_distance_removeIntersectionsFalse_smoothedTrue_transectSlopeAverage.png"
@@ -918,12 +961,12 @@ def test_plotCenterlineWidth_relativeDistance_removeIntersectionsFalse_smoothedT
 
 def test_plotCenterlineWidth_relativeDistance_removeIntersectionsFalse_smoothedTrue_transectSlopeDirect(
         generate_plot_image):
-    test_river.plotCenterlineWidth(save_plot_name=str(generate_plot_image),
-                                   coordinate_unit="Relative Distance",
-                                   remove_intersections=False,
-                                   apply_smoothing=True,
-                                   transect_slope="Direct",
-                                   show_plot=False)
+    test_river.plot_centerline_width(save_plot=str(generate_plot_image),
+                                     coordinate_unit="Relative Distance",
+                                     remove_intersections=False,
+                                     apply_smoothing=True,
+                                     transect_slope="Direct",
+                                     show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots',
         "width_relative_distance_removeIntersectionsFalse_smoothedTrue_transectSlopeDirect.png"
@@ -937,12 +980,12 @@ def test_plotCenterlineWidth_relativeDistance_removeIntersectionsFalse_smoothedT
 
 def test_plotCenterlineWidth_relativeDistance_removeIntersectionsTrue_smoothedFalse_transectSlopeAverage(
         generate_plot_image):
-    test_river.plotCenterlineWidth(save_plot_name=str(generate_plot_image),
-                                   coordinate_unit="Relative Distance",
-                                   remove_intersections=True,
-                                   apply_smoothing=False,
-                                   transect_slope="Average",
-                                   show_plot=False)
+    test_river.plot_centerline_width(save_plot=str(generate_plot_image),
+                                     coordinate_unit="Relative Distance",
+                                     remove_intersections=True,
+                                     apply_smoothing=False,
+                                     transect_slope="Average",
+                                     show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots',
         "width_relative_distance_removeIntersectionsTrue_smoothedFalse_transectSlopeAverage.png"
@@ -956,12 +999,12 @@ def test_plotCenterlineWidth_relativeDistance_removeIntersectionsTrue_smoothedFa
 
 def test_plotCenterlineWidth_relativeDistance_removeIntersectionsTrue_smoothedFalse_transectSlopeDirect(
         generate_plot_image):
-    test_river.plotCenterlineWidth(save_plot_name=str(generate_plot_image),
-                                   coordinate_unit="Relative Distance",
-                                   remove_intersections=True,
-                                   apply_smoothing=False,
-                                   transect_slope="Direct",
-                                   show_plot=False)
+    test_river.plot_centerline_width(save_plot=str(generate_plot_image),
+                                     coordinate_unit="Relative Distance",
+                                     remove_intersections=True,
+                                     apply_smoothing=False,
+                                     transect_slope="Direct",
+                                     show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots',
         "width_relative_distance_removeIntersectionsTrue_smoothedFalse_transectSlopeDirect.png"
@@ -975,12 +1018,12 @@ def test_plotCenterlineWidth_relativeDistance_removeIntersectionsTrue_smoothedFa
 
 def test_plotCenterlineWidth_relativeDistance_removeIntersectionsTrue_smoothedTrue_transectSlopeAverage(
         generate_plot_image):
-    test_river.plotCenterlineWidth(save_plot_name=str(generate_plot_image),
-                                   coordinate_unit="Relative Distance",
-                                   remove_intersections=True,
-                                   apply_smoothing=True,
-                                   transect_slope="Average",
-                                   show_plot=False)
+    test_river.plot_centerline_width(save_plot=str(generate_plot_image),
+                                     coordinate_unit="Relative Distance",
+                                     remove_intersections=True,
+                                     apply_smoothing=True,
+                                     transect_slope="Average",
+                                     show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots',
         "width_relative_distance_removeIntersectionsTrue_smoothedTrue_transectSlopeAverage.png"
@@ -994,12 +1037,12 @@ def test_plotCenterlineWidth_relativeDistance_removeIntersectionsTrue_smoothedTr
 
 def test_plotCenterlineWidth_relativeDistance_removeIntersectionsTrue_smoothedTrue_transectSlopeDirect(
         generate_plot_image):
-    test_river.plotCenterlineWidth(save_plot_name=str(generate_plot_image),
-                                   coordinate_unit="Relative Distance",
-                                   remove_intersections=True,
-                                   apply_smoothing=True,
-                                   transect_slope="Direct",
-                                   show_plot=False)
+    test_river.plot_centerline_width(save_plot=str(generate_plot_image),
+                                     coordinate_unit="Relative Distance",
+                                     remove_intersections=True,
+                                     apply_smoothing=True,
+                                     transect_slope="Direct",
+                                     show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots',
         "width_relative_distance_removeIntersectionsTrue_smoothedTrue_transectSlopeDirect.png"
@@ -1012,9 +1055,9 @@ def test_plotCenterlineWidth_relativeDistance_removeIntersectionsTrue_smoothedTr
 
 
 def test_plotCenterlineWidth_displayCenterline_false(generate_plot_image):
-    test_river.plotCenterlineWidth(save_plot_name=str(generate_plot_image),
-                                   display_true_centerline=False,
-                                   show_plot=False)
+    test_river.plot_centerline_width(save_plot=str(generate_plot_image),
+                                     display_true_centerline=False,
+                                     show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "width_displayCenterlineFalse.png")
     plt.close()
@@ -1025,9 +1068,9 @@ def test_plotCenterlineWidth_displayCenterline_false(generate_plot_image):
 
 
 def test_plotCenterlineWidth_displayCenterline_true(generate_plot_image):
-    test_river.plotCenterlineWidth(save_plot_name=str(generate_plot_image),
-                                   display_true_centerline=True,
-                                   show_plot=False)
+    test_river.plot_centerline_width(save_plot=str(generate_plot_image),
+                                     display_true_centerline=True,
+                                     show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "width_displayCenterlineTrue.png")
     plt.close()
@@ -1038,9 +1081,9 @@ def test_plotCenterlineWidth_displayCenterline_true(generate_plot_image):
 
 
 def test_plotCenterlineWidth_flagIntersections_false(generate_plot_image):
-    test_river.plotCenterlineWidth(save_plot_name=str(generate_plot_image),
-                                   flag_intersections=False,
-                                   show_plot=False)
+    test_river.plot_centerline_width(save_plot=str(generate_plot_image),
+                                     flag_intersections=False,
+                                     show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "width_flagIntersectionsFalse.png")
     plt.close()
@@ -1051,9 +1094,9 @@ def test_plotCenterlineWidth_flagIntersections_false(generate_plot_image):
 
 
 def test_plotCenterlineWidth_flagIntersections_true(generate_plot_image):
-    test_river.plotCenterlineWidth(save_plot_name=str(generate_plot_image),
-                                   flag_intersections=True,
-                                   show_plot=False)
+    test_river.plot_centerline_width(save_plot=str(generate_plot_image),
+                                     flag_intersections=True,
+                                     show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "width_flagIntersectionsTrue.png")
     plt.close()
@@ -1064,9 +1107,9 @@ def test_plotCenterlineWidth_flagIntersections_true(generate_plot_image):
 
 
 def test_plotCenterlineWidth_darkMode_false(generate_plot_image):
-    test_river.plotCenterlineWidth(save_plot_name=str(generate_plot_image),
-                                   dark_mode=False,
-                                   show_plot=False)
+    test_river.plot_centerline_width(save_plot=str(generate_plot_image),
+                                     dark_mode=False,
+                                     show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "width_isDarkModeFalse.png")
     plt.close()
@@ -1077,9 +1120,9 @@ def test_plotCenterlineWidth_darkMode_false(generate_plot_image):
 
 
 def test_plotCenterlineWidth_darkMode_true(generate_plot_image):
-    test_river.plotCenterlineWidth(save_plot_name=str(generate_plot_image),
-                                   dark_mode=True,
-                                   show_plot=False)
+    test_river.plot_centerline_width(save_plot=str(generate_plot_image),
+                                     dark_mode=True,
+                                     show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "width_isDarkModeTrue.png")
     plt.close()
@@ -1090,9 +1133,9 @@ def test_plotCenterlineWidth_darkMode_true(generate_plot_image):
 
 
 def test_plotCenterlineWidth_equalAxis_false(generate_plot_image):
-    test_river.plotCenterlineWidth(save_plot_name=str(generate_plot_image),
-                                   equal_axis=False,
-                                   show_plot=False)
+    test_river.plot_centerline_width(save_plot=str(generate_plot_image),
+                                     equal_axis=False,
+                                     show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "width_isEqualAxisFalse.png")
     plt.close()
@@ -1103,9 +1146,9 @@ def test_plotCenterlineWidth_equalAxis_false(generate_plot_image):
 
 
 def test_plotCenterlineWidth_equalAxis_true(generate_plot_image):
-    test_river.plotCenterlineWidth(save_plot_name=str(generate_plot_image),
-                                   equal_axis=True,
-                                   show_plot=False)
+    test_river.plot_centerline_width(save_plot=str(generate_plot_image),
+                                     equal_axis=True,
+                                     show_plot=False)
     expected_png = (Path(__file__).parent).joinpath(
         'baseline_plots', "width_isEqualAxisTrue.png")
     plt.close()
@@ -1113,3 +1156,54 @@ def test_plotCenterlineWidth_equalAxis_true(generate_plot_image):
     assert matplotlib.testing.compare.compare_images(
         expected_png, str(generate_plot_image), tol=0.001,
         in_decorator=False) is None
+
+
+def test_plotCenterlineWidth_futureWarning_functionName(generate_plot_image):
+    with pytest.warns(
+            FutureWarning,
+            match=re.escape(
+                "plotCenterlineWidth() has been replaced with plot_centerline_width() and will be removed in the future"
+            )):
+        test_river.plotCenterlineWidth(save_plot=str(generate_plot_image),
+                                       coordinate_unit="Decimal Degrees",
+                                       remove_intersections=False,
+                                       apply_smoothing=False,
+                                       transect_slope="Average",
+                                       show_plot=False)
+        expected_png = (Path(__file__).parent).joinpath(
+            'baseline_plots',
+            "width_decimal_degrees_removeIntersectionsFalse_smoothedFalse_transectSlopeAverage.png"
+        )
+        plt.close()
+        assert os.path.exists(expected_png)
+        assert matplotlib.testing.compare.compare_images(
+            expected_png,
+            str(generate_plot_image),
+            tol=0.001,
+            in_decorator=False) is None
+
+
+def test_plotCenterlineWidth_futureWarning_variableName(generate_plot_image):
+    with pytest.warns(
+            FutureWarning,
+            match=re.escape(
+                "save_plot_name has been replaced with save_plot and will be removed in the future"
+            )):
+        test_river.plot_centerline_width(
+            save_plot_name=str(generate_plot_image),
+            coordinate_unit="Decimal Degrees",
+            remove_intersections=False,
+            apply_smoothing=False,
+            transect_slope="Average",
+            show_plot=False)
+        expected_png = (Path(__file__).parent).joinpath(
+            'baseline_plots',
+            "width_decimal_degrees_removeIntersectionsFalse_smoothedFalse_transectSlopeAverage.png"
+        )
+        plt.close()
+        assert os.path.exists(expected_png)
+        assert matplotlib.testing.compare.compare_images(
+            expected_png,
+            str(generate_plot_image),
+            tol=0.001,
+            in_decorator=False) is None

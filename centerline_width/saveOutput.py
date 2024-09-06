@@ -5,24 +5,24 @@
 #      intersections) and returning the values as either a .csv or .mat format                    #
 #                                                                                                 #
 #      This includes the functions for:                                                           #
-#                                       - saveCenterlineCSV: saves the centerline                 #
+#                                       - save_centerline_csv: saves the centerline               #
 #                                              coordinates to a .csv file                         #
 #                                                                                                 #
-#                                       - saveCenterlineMAT: saves the centerline                 #
+#                                       - save_centerline_mat: saves the centerline               #
 #                                              coordinates to a .mat file                         #
 #                                                                                                 #
 #                                                                                                 #
 #                                                                                                 #
 
-# Built-in Python functions
+# Standard Library Imports
 import csv
 import logging
 
-# External Python libraries
+# Related Third Party Imports
 import numpy as np
 from scipy.io import savemat
 
-# Internal centerline_width reference to access functions, global variables, and error handling
+# Internal Local Imports
 import centerline_width
 
 ## Logging set up for .CRITICAL
@@ -32,15 +32,15 @@ stream_handler = logging.StreamHandler()
 logger.addHandler(stream_handler)
 
 
-def saveCenterlineCSV(river_object: centerline_width.riverCenterline = None,
-                      save_to_csv: str = None,
-                      latitude_header: str = None,
-                      longitude_header: str = None,
-                      centerline_type: str = "Voronoi",
-                      coordinate_unit: str = "Decimal Degrees") -> None:
+def save_centerline_csv(river_object: centerline_width.CenterlineWidth = None,
+                        save_to_csv: str = None,
+                        latitude_header: str = None,
+                        longitude_header: str = None,
+                        centerline_type: str = "Voronoi",
+                        coordinate_unit: str = "Decimal Degrees") -> None:
     # Save Centerline Coordinates to .CSV
 
-    centerline_width.errorHandlingSaveCenterlineCSV(
+    centerline_width._error_handling_save_centerline_csv(
         river_object=river_object,
         save_to_csv=save_to_csv,
         latitude_header=latitude_header,
@@ -53,22 +53,22 @@ def saveCenterlineCSV(river_object: centerline_width.riverCenterline = None,
     # set coordinate type and unit
     if coordinate_unit == "Decimal Degrees":
         if centerline_type == "Voronoi":
-            centerline_coordinates_by_type = river_object.centerlineVoronoi
+            centerline_coordinates_by_type = river_object.centerline_voronoi
         if centerline_type == "Equal Distance":
-            centerline_coordinates_by_type = river_object.centerlineEqualDistance
+            centerline_coordinates_by_type = river_object.centerline_equal_distance
         if centerline_type == "Evenly Spaced":
-            centerline_coordinates_by_type = river_object.centerlineEvenlySpaced
+            centerline_coordinates_by_type = river_object.centerline_evenly_spaced
         if centerline_type == "Smoothed":
-            centerline_coordinates_by_type = river_object.centerlineSmoothed
+            centerline_coordinates_by_type = river_object.centerline_smoothed
     if coordinate_unit == "Relative Distance":
         if centerline_type == "Voronoi":
-            centerline_coordinates_by_type = river_object.centerlineVoronoiRelative
+            centerline_coordinates_by_type = river_object.centerline_voronoi_relative
         if centerline_type == "Equal Distance":
-            centerline_coordinates_by_type = river_object.centerlineEqualDistanceRelative
+            centerline_coordinates_by_type = river_object.centerline_equal_distance_relative
         if centerline_type == "Evenly Spaced":
-            centerline_coordinates_by_type = river_object.centerlineEvenlySpacedRelative
+            centerline_coordinates_by_type = river_object.centerline_evenly_spaced_relative
         if centerline_type == "Smoothed":
-            centerline_coordinates_by_type = river_object.centerlineSmoothedRelative
+            centerline_coordinates_by_type = river_object.centerline_smoothed_relative
 
     # set default latitude/longitude headers
     if coordinate_unit == "Decimal Degrees":
@@ -95,15 +95,15 @@ def saveCenterlineCSV(river_object: centerline_width.riverCenterline = None,
             )
 
 
-def saveCenterlineMAT(river_object: centerline_width.riverCenterline = None,
-                      save_to_mat: str = None,
-                      latitude_header: str = None,
-                      longitude_header: str = None,
-                      centerline_type: str = "Voronoi",
-                      coordinate_unit: str = "Decimal Degrees") -> None:
+def save_centerline_mat(river_object: centerline_width.CenterlineWidth = None,
+                        save_to_mat: str = None,
+                        latitude_header: str = None,
+                        longitude_header: str = None,
+                        centerline_type: str = "Voronoi",
+                        coordinate_unit: str = "Decimal Degrees") -> None:
     # Save Centerline Coordinates generated by Voronoi Diagram to .MAT
 
-    centerline_width.errorHandlingSaveCenterlineMAT(
+    centerline_width._error_handling_save_centerline_mat(
         river_object=river_object,
         save_to_mat=save_to_mat,
         latitude_header=latitude_header,
@@ -116,22 +116,22 @@ def saveCenterlineMAT(river_object: centerline_width.riverCenterline = None,
     # set coordinate type and unit
     if coordinate_unit == "Decimal Degrees":
         if centerline_type == "Voronoi":
-            centerline_coordinates_by_type = river_object.centerlineVoronoi
+            centerline_coordinates_by_type = river_object.centerline_voronoi
         if centerline_type == "Equal Distance":
-            centerline_coordinates_by_type = river_object.centerlineEqualDistance
+            centerline_coordinates_by_type = river_object.centerline_equal_distance
         if centerline_type == "Evenly Spaced":
-            centerline_coordinates_by_type = river_object.centerlineEvenlySpaced
+            centerline_coordinates_by_type = river_object.centerline_evenly_spaced
         if centerline_type == "Smoothed":
-            centerline_coordinates_by_type = river_object.centerlineSmoothed
+            centerline_coordinates_by_type = river_object.centerline_smoothed
     if coordinate_unit == "Relative Distance":
         if centerline_type == "Voronoi":
-            centerline_coordinates_by_type = river_object.centerlineVoronoiRelative
+            centerline_coordinates_by_type = river_object.centerline_voronoi_relative
         if centerline_type == "Equal Distance":
-            centerline_coordinates_by_type = river_object.centerlineEqualDistanceRelative
+            centerline_coordinates_by_type = river_object.centerline_equal_distance_relative
         if centerline_type == "Evenly Spaced":
-            centerline_coordinates_by_type = river_object.centerlineEvenlySpacedRelative
+            centerline_coordinates_by_type = river_object.centerline_evenly_spaced_relative
         if centerline_type == "Smoothed":
-            centerline_coordinates_by_type = river_object.centerlineSmoothedRelative
+            centerline_coordinates_by_type = river_object.centerline_smoothed_relative
 
     # .mat files do not allow for spaces or special characters in the header
     # convert spaces/special characters to underscores

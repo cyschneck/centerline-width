@@ -103,37 +103,37 @@ def river_class_object():
         "30.03849208414191,-92.86856303294287,30.03825237810393,-92.8671877169286\n"
     )
     csv_example.seek(0)
-    return centerline_width.riverCenterline(csv_data=csv_example)
+    return centerline_width.CenterlineWidth(csv_data=csv_example)
 
 
 river_class_example = river_class_object()
 
 
 ## riverFeatures() #####################################################
-def test_riverCenterline_centerlineLength():
-    assert river_class_example.centerlineLength == pytest.approx(
+def test_riverFeatures_centerlineLength():
+    assert river_class_example.centerline_length == pytest.approx(
         0.08284102060354828)
 
 
-def test_riverCenterline_rightBankLength():
-    assert river_class_example.rightBankLength == pytest.approx(
+def test_riverFeatures_rightBankLength():
+    assert river_class_example.right_bank_length == pytest.approx(
         0.09705816897006408)
 
 
-def test_riverCenterline_leftBankLength():
-    assert river_class_example.leftBankLength == pytest.approx(
+def test_riverFeatures_leftBankLength():
+    assert river_class_example.left_bank_length == pytest.approx(
         0.10570962276643736)
 
 
-def test_riverCenterline_area():
+def test_riverFeatures_area():
     assert river_class_example.area == pytest.approx(11.4030195647527)
 
 
-def test_riverCenterline_riverSinuosity():
+def test_riverFeatures_riverSinuosity():
     assert river_class_example.sinuosity == pytest.approx(1.0124452966878812)
 
 
-def test_riverCenterline_riverIncrementalSinuosity():
+def test_riverFeatures_riverIncrementalSinuosity():
     assert river_class_example.incremental_sinuosity() == pytest.approx({
         ((-92.86781591391708, 30.038216571334427), (-92.8678415323492, 30.037979489365142)):
         1.0143354378572471,

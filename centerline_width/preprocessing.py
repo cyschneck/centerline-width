@@ -4,39 +4,36 @@
 #      preprocessing.py calculates and processes river data input data                            #
 #                                                                                                 #
 #      This includes the functions for:                                                           #
-#                                       - convertColumnsToCSV: converts txt file to               #
-#                                              csv                                                #
-#                                                                                                 #
-#                                       - leftRightCoordinates: input left and right              #
+#                                       - _left_right_coordinates: input left and right           #
 #                                              coordinates from the input values                  #
 #                                                                                                 #
-#                                       - generatePolygon: generate river polygon                 #
+#                                       - _generate_polygon: generate river polygon               #
 #                                              based on input values                              #
 #                                              distance                                           #
 #                                                                                                 #
-#                                       - generateVoronoi: generate Voronoi diagram               #
+#                                       - _generate_voronoi: generate Voronoi diagram             #
 #                                              based on the left/right bank points                #
 #                                                                                                 #
-#                                       - interpolateBetweenPoints: interpolates                  #
+#                                       - _interpolate_between_points: interpolates               #
 #                                              additional points at an even distance              #
 #                                              along river banks                                  #
 #                                                                                                 #
 #                                                                                                 #
 #                                                                                                 #
 
-# Built-in Python functions
+# Standard Library Imports
+from collections import Counter
 import csv
 import logging
 import math
 import os
-from collections import Counter
 
-# External Python libraries
+# Related Third Party Imports
 import numpy as np
 from shapely.geometry import Point, Polygon, LineString
 from scipy.spatial import Voronoi
 
-# Internal centerline_width reference to access functions, global variables, and error handling
+# Internal Local Imports
 import centerline_width
 
 ## Logging set up for .INFO
@@ -46,45 +43,7 @@ stream_handler = logging.StreamHandler()
 logger.addHandler(stream_handler)
 
 
-def convertColumnsToCSV(text_file: str = None,
-                        flip_direction: bool = False) -> None:
-    # Convert txt file to a comma-separated version of the file
-    centerline_width.errrorHandlingConvertColumnsToCSV(
-        text_file=text_file, flip_direction=flip_direction)
-
-    left_rows = []
-    right_rows = []
-    with open(text_file) as input_file:
-        lines = input_file.readlines()
-        for i, line in enumerate(lines):
-            line = line.strip().split(" ")
-            line = [x for x in line if x != '']
-            if i == 0:
-                header_fields = line
-            else:
-                left_rows.append(line[:2])
-                right_rows.append(line[2:])
-
-    # reverse the direction for the right bank
-    if flip_direction:
-        right_rows = right_rows[::-1]
-
-    total_rows = []
-    for i, row in enumerate(left_rows):
-        total_rows.append(row + right_rows[i])
-
-    # account for relative and absolute paths to use text_file name and location for .csv
-    full_path, filename = os.path.split(os.path.abspath(text_file))
-    csv_file_name = filename.split(".")[0] + ".csv"
-    write_file_name = os.path.join(full_path, csv_file_name)
-
-    with open(write_file_name, "w") as f:
-        write = csv.writer(f)
-        write.writerow(header_fields)
-        write.writerows(total_rows)
-
-
-def leftRightCoordinates(dataframe=None):
+def _left_right_coordinates(dataframe=None):
     # returns the left and right coordinates from the input values
     right_bank_coordinates = []
     left_bank_coordinates = []
@@ -99,7 +58,7 @@ def leftRightCoordinates(dataframe=None):
     return left_bank_coordinates, right_bank_coordinates
 
 
-def generatePolygon(
+def _generate_polygon(
         left_bank_lst: list = None,
         right_bank_lst: list = None,
         coord_type: str = None,
@@ -128,7 +87,7 @@ def generatePolygon(
             f"[FAILED]  Invalid Polygon may need to be corrected - {coord_type}"
         )
         # only run once with recursion_check set (just to check if reverse banks fixes issue)
-        polygon_check, _, _ = generatePolygon(
+        polygon_check, _, _ = _generate_polygon(
             left_bank_lst=left_bank_lst,
             right_bank_lst=right_bank_lst[::-1],
             coord_type=coord_type,
@@ -143,9 +102,9 @@ def generatePolygon(
     return river_polygon, top_river, bottom_river
 
 
-def generateVoronoi(left_bank_lst: list = None,
-                    right_bank_lst: list = None,
-                    coord_type: str = None) -> Voronoi:
+def _generate_voronoi(left_bank_lst: list = None,
+                      right_bank_lst: list = None,
+                      coord_type: str = None) -> Voronoi:
     # Generate a Voronoi diagram based on the left/right bank points
     all_banks_points = left_bank_lst + right_bank_lst
     all_banks_points = np.array(all_banks_points)
@@ -155,8 +114,8 @@ def generateVoronoi(left_bank_lst: list = None,
     return river_voronoi
 
 
-def pointsFromVoronoi(river_voronoi: Voronoi = None,
-                      river_polygon: Polygon = None) -> dict:
+def _points_from_voronoi(river_voronoi: Voronoi = None,
+                         river_polygon: Polygon = None) -> dict:
     # Returns a dictionary list of all the voronoi points: {start point : [list of end points]}
     points_dict = {}
     all_connections_start_to_end = []
@@ -195,9 +154,9 @@ def pointsFromVoronoi(river_voronoi: Voronoi = None,
     return points_dict
 
 
-def interpolateBetweenPoints(left_bank_coordinates: list = None,
-                             right_bank_coordinates: list = None,
-                             interpolate_n: int = 5) -> [list, list]:
+def _interpolate_between_points(left_bank_coordinates: list = None,
+                                right_bank_coordinates: list = None,
+                                interpolate_n: int = 5) -> [list, list]:
     # Interpolated between points at an even distance along the river banks to attempt to even out Voronoi diagrams
     interpolate_n += 2  # adds two exta points, to ensure that interpolating is adding the points between the existing points
 

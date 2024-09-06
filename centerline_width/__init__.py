@@ -1,60 +1,63 @@
-# get_coordinates_kml.py function calls
-from .getCoordinatesKML import extractPointsToTextFile
+# centerline.py function calls
+from .centerline import _generate_nx_graph
+from .centerline import _networkx_graph_shortest_path
+from .centerline import _centerline_path
+from .centerline import _equal_distance_centerline
+from .centerline import _evenly_spaced_centerline
+from .centerline import _smoothed_centerline
+
+# channelMigration.py function calls
+from .channelMigration import _centerline_migration_rate
+
+# error_handling.py function calls
+from .error_handling import _error_handling_plot_centerline
+from .error_handling import _error_handling_plot_centerline_width
+from .error_handling import _error_handling_width
+from .error_handling import _error_handling_save_centerline_csv
+from .error_handling import _error_handling_save_centerline_mat
+from .error_handling import _errror_handling_txt_to_csv
+from .error_handling import _error_handling_kml_to_csv
+from .error_handling import _error_handling_centerline_width
+from .error_handling import _error_handling_incremental_sinuosity
+
+# getCoordinatesKML.py function calls
+from .getCoordinatesKML import kml_to_csv
+from .getCoordinatesKML import txt_to_csv
+from .getCoordinatesKML import extractPointsToTextFile  # pending deprecation
+from .getCoordinatesKML import convertColumnsToCSV  # pending deprecation
+
+# plotDiagrams.py function calls
+from .plotDiagrams import plot_centerline
+from .plotDiagrams import plot_centerline_width
 
 # preprocessing.py function calls
-from .preprocessing import convertColumnsToCSV
-from .preprocessing import leftRightCoordinates
-from .preprocessing import generatePolygon
-from .preprocessing import generateVoronoi
-from .preprocessing import pointsFromVoronoi
-from .preprocessing import interpolateBetweenPoints
+from .preprocessing import _left_right_coordinates
+from .preprocessing import _generate_polygon
+from .preprocessing import _generate_voronoi
+from .preprocessing import _points_from_voronoi
+from .preprocessing import _interpolate_between_points
 
-# riverObject.py function calls
-from .riverCenterlineClass import riverCenterline
+# riverCenterlineClass.py function calls
+from .riverCenterlineClass import riverCenterline  # pending deprecation
+from .riverCenterlineClass import CenterlineWidth
 
 # relativeDistance.py function calls
-from .relativeDistance import relativeSingleCoordinate
-from .relativeDistance import relativeBankCoordinates
-from .relativeDistance import relativeCenterlineCoordinates
-from .relativeDistance import relativeRidgeCoordinates
-from .relativeDistance import relativeWidthCoordinates
-
-# centerline.py function calls
-from .centerline import centerlinePath
-from .centerline import generateNXGraph
-from .centerline import networkXGraphShortestPath
-from .centerline import equalDistanceCenterline
-from .centerline import evenlySpacedCenterline
-from .centerline import smoothedCoordinates
+from .relativeDistance import _relative_single_coordinate
+from .relativeDistance import _relative_bank_coordinates
+from .relativeDistance import _relative_centerline_coordinates
+from .relativeDistance import _relative_ridge_coordinates
+from .relativeDistance import _relative_width_coordinates
 
 # riverFeatures.py function calls
-from .riverFeatures import centerlineLength
-from .riverFeatures import calculateRiverArea
-from .riverFeatures import calculateSinuosity
+from .riverFeatures import _calculate_river_area
+from .riverFeatures import _centerline_length
+from .riverFeatures import _calculate_sinuosity
 from .riverFeatures import incremental_sinuosity
 
 # width.py function calls
-from .width import riverWidthFromCenterlineCoordinates
-from .width import riverWidthFromCenterline
+from .width import _width_from_centerline_coordinates
+from .width import width
 
 # saveOutput.py function calls
-from .saveOutput import saveCenterlineCSV
-from .saveOutput import saveCenterlineMAT
-
-# plotDiagrams.py function calls
-from .plotDiagrams import plotCenterline
-from .plotDiagrams import plotCenterlineWidth
-
-# channelMigration.py function calls
-from .channelMigration import centerlineMigrationRate
-
-# error_handling.py function calls
-from .error_handling import errrorHandlingConvertColumnsToCSV
-from .error_handling import errorHandlingPlotCenterline
-from .error_handling import errorHandlingPlotCenterlineWidth
-from .error_handling import errorHandlingRiverWidthFromCenterline
-from .error_handling import errorHandlingSaveCenterlineCSV
-from .error_handling import errorHandlingSaveCenterlineMAT
-from .error_handling import errorHandlingExtractPointsToTextFile
-from .error_handling import errorHandlingRiverCenterlineClass
-from .error_handling import errorHandlingIncrementalSinuosity
+from .saveOutput import save_centerline_csv
+from .saveOutput import save_centerline_mat

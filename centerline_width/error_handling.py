@@ -7,11 +7,11 @@
 #                                                                                                 #
 #                                                                                                 #
 
-# Built-in Python functions
-import logging
+# Standard Library Imports
 from io import StringIO
+import logging
 
-# Internal centerline_width reference to access functions, global variables, and error handling
+# Internal Local Imports
 import centerline_width
 
 ## Logging set up for .CRITICAL
@@ -25,53 +25,29 @@ centerline_type_options = [
 ]
 
 
-## Error Handling: preprocessing.py
-def errrorHandlingConvertColumnsToCSV(text_file: str = None,
-                                      flip_direction: bool = None) -> None:
-    # Error handling for convertColumnsToCSV()
-    if text_file is None:
-        raise ValueError("[text_file]: Requires text file")
-    else:
-        if type(text_file) != str:
-            raise ValueError(
-                f"[text_file]: Must be a str, current type = '{type(text_file)}'"
-            )
-        else:
-            if not text_file.lower().endswith(".txt"):
-                raise ValueError(
-                    f"[text_file]: Extension must be a .txt file, current extension = '{text_file.split('.')[1]}'"
-                )
-
-    if type(flip_direction) != bool:
-        raise ValueError(
-            f"[flip_direction]: Must be a bool, current type = '{type(flip_direction)}'"
-        )
-
-
 ## Error Handling: plotDiagrams.py
-def errorHandlingPlotCenterline(
-        river_object: centerline_width.riverCenterline = None,
-        centerline_type: str = None,
-        marker_type: str = None,
-        centerline_color: str = None,
-        dark_mode: bool = None,
-        equal_axis: bool = None,
-        display_all_possible_paths: bool = None,
-        plot_title: str = None,
-        save_plot_name: str = None,
-        display_voronoi: bool = None,
-        show_plot: bool = None,
-        coordinate_unit: str = None) -> None:
+def _error_handling_plot_centerline(river_object=None,
+                                    centerline_type: str = None,
+                                    marker_type: str = None,
+                                    centerline_color: str = None,
+                                    dark_mode: bool = None,
+                                    equal_axis: bool = None,
+                                    display_all_possible_paths: bool = None,
+                                    plot_title: str = None,
+                                    save_plot: str = None,
+                                    display_voronoi: bool = None,
+                                    show_plot: bool = None,
+                                    coordinate_unit: str = None) -> None:
 
-    # Error handling for plotCenterline()
+    # Error handling for plot_centerline()
     if river_object is None:
         raise ValueError(
-            "[river_object]: Requires a river object (see: centerline_width.riverCenterline)"
+            "[river_object]: Requires a river object (see: centerline_width.CenterlineWidth)"
         )
     else:
-        if not isinstance(river_object, centerline_width.riverCenterline):
+        if not isinstance(river_object, centerline_width.CenterlineWidth):
             raise ValueError(
-                f"[river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{type(river_object)}'"
+                f"[river_object]: Must be a river object (see: centerline_width.CenterlineWidth), current type = '{type(river_object)}'"
             )
 
     if type(centerline_type) != str:
@@ -119,10 +95,9 @@ def errorHandlingPlotCenterline(
             f"[plot_title]: Must be a str, current type = '{type(plot_title)}'"
         )
 
-    if save_plot_name is not None and type(save_plot_name) != str:
+    if save_plot is not None and type(save_plot) != str:
         raise ValueError(
-            f"[save_plot_name]: Must be a str, current type = '{type(save_plot_name)}'"
-        )
+            f"[save_plot]: Must be a str, current type = '{type(save_plot)}'")
 
     if type(display_voronoi) != bool:
         raise ValueError(
@@ -145,29 +120,29 @@ def errorHandlingPlotCenterline(
             )
 
 
-def errorHandlingPlotCenterlineWidth(
-        river_object: centerline_width.riverCenterline = None,
-        plot_title: str = None,
-        save_plot_name: str = None,
-        display_true_centerline: bool = None,
-        transect_span_distance: int = None,
-        transect_slope: str = None,
-        apply_smoothing: bool = None,
-        flag_intersections: bool = None,
-        remove_intersections: bool = None,
-        dark_mode: bool = None,
-        equal_axis: bool = None,
-        show_plot: bool = None,
-        coordinate_unit: str = None):
-    # Error handling for plotCenterlineWidth()
+## Error Handling: plotDiagrams.py
+def _error_handling_plot_centerline_width(river_object=None,
+                                          plot_title: str = None,
+                                          save_plot: str = None,
+                                          display_true_centerline: bool = None,
+                                          transect_span_distance: int = None,
+                                          transect_slope: str = None,
+                                          apply_smoothing: bool = None,
+                                          flag_intersections: bool = None,
+                                          remove_intersections: bool = None,
+                                          dark_mode: bool = None,
+                                          equal_axis: bool = None,
+                                          show_plot: bool = None,
+                                          coordinate_unit: str = None):
+    # Error handling for plot_centerline_width()
     if river_object is None:
         raise ValueError(
-            "[river_object]: Requires a river object (see: centerline_width.riverCenterline)"
+            "[river_object]: Requires a river object (see: centerline_width.CenterlineWidth)"
         )
     else:
-        if not isinstance(river_object, centerline_width.riverCenterline):
+        if not isinstance(river_object, centerline_width.CenterlineWidth):
             raise ValueError(
-                f"[river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{type(river_object)}'"
+                f"[river_object]: Must be a river object (see: centerline_width.CenterlineWidth), current type = '{type(river_object)}'"
             )
 
     if plot_title is not None and type(plot_title) != str:
@@ -175,10 +150,9 @@ def errorHandlingPlotCenterlineWidth(
             f"[plot_title]: Must be a str, current type = '{type(plot_title)}'"
         )
 
-    if save_plot_name is not None and type(save_plot_name) != str:
+    if save_plot is not None and type(save_plot) != str:
         raise ValueError(
-            f"[save_plot_name]: Must be a str, current type = '{type(save_plot_name)}'"
-        )
+            f"[save_plot]: Must be a str, current type = '{type(save_plot)}'")
 
     if type(display_true_centerline) != bool:
         raise ValueError(
@@ -247,25 +221,24 @@ def errorHandlingPlotCenterlineWidth(
             )
 
 
-## Error Handling: centerline.py
-def errorHandlingRiverWidthFromCenterline(
-        river_object: centerline_width.riverCenterline = None,
-        transect_span_distance: int = None,
-        transect_slope: str = None,
-        apply_smoothing: bool = None,
-        remove_intersections: bool = None,
-        coordinate_unit: str = None,
-        coordinate_reference: str = None,
-        save_to_csv: str = None) -> None:
-    # Error Handling for riverWidthFromCenterline()
+## Error Handling: width.py
+def _error_handling_width(river_object=None,
+                          transect_span_distance: int = None,
+                          transect_slope: str = None,
+                          apply_smoothing: bool = None,
+                          remove_intersections: bool = None,
+                          coordinate_unit: str = None,
+                          coordinate_reference: str = None,
+                          save_to_csv: str = None) -> None:
+    # Error Handling for width()
     if river_object is None:
         raise ValueError(
-            "[river_object]: Requires a river object (see: centerline_width.riverCenterline)"
+            "[river_object]: Requires a river object (see: centerline_width.CenterlineWidth)"
         )
     else:
-        if not isinstance(river_object, centerline_width.riverCenterline):
+        if not isinstance(river_object, centerline_width.CenterlineWidth):
             raise ValueError(
-                f"[river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{type(river_object)}'"
+                f"[river_object]: Must be a river object (see: centerline_width.CenterlineWidth), current type = '{type(river_object)}'"
             )
 
     if transect_span_distance is not None:
@@ -333,22 +306,22 @@ def errorHandlingRiverWidthFromCenterline(
             )
 
 
-def errorHandlingSaveCenterlineCSV(
-        river_object: centerline_width.riverCenterline = None,
-        latitude_header: str = None,
-        longitude_header: str = None,
-        save_to_csv: str = None,
-        centerline_type: str = None,
-        coordinate_unit: str = None) -> None:
-    # Error Handling for saveCenterlineCSV()
+## Error Handling: saveOutput.py
+def _error_handling_save_centerline_csv(river_object=None,
+                                        latitude_header: str = None,
+                                        longitude_header: str = None,
+                                        save_to_csv: str = None,
+                                        centerline_type: str = None,
+                                        coordinate_unit: str = None) -> None:
+    # Error Handling for save_centerline_csv()
     if river_object is None:
         raise ValueError(
-            "[river_object]: Requires a river object (see: centerline_width.riverCenterline)"
+            "[river_object]: Requires a river object (see: centerline_width.CenterlineWidth)"
         )
     else:
-        if not isinstance(river_object, centerline_width.riverCenterline):
+        if not isinstance(river_object, centerline_width.CenterlineWidth):
             raise ValueError(
-                f"[river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{type(river_object)}'"
+                f"[river_object]: Must be a river object (see: centerline_width.CenterlineWidth), current type = '{type(river_object)}'"
             )
 
     if latitude_header is not None and type(latitude_header) != str:
@@ -396,22 +369,22 @@ def errorHandlingSaveCenterlineCSV(
             )
 
 
-def errorHandlingSaveCenterlineMAT(
-        river_object: centerline_width.riverCenterline = None,
-        latitude_header: str = None,
-        longitude_header: str = None,
-        save_to_mat: str = None,
-        centerline_type: str = None,
-        coordinate_unit: str = None) -> None:
-    # Error Handling for saveCenterlineMAT()
+## Error Handling: saveOutput.py
+def _error_handling_save_centerline_mat(river_object=None,
+                                        latitude_header: str = None,
+                                        longitude_header: str = None,
+                                        save_to_mat: str = None,
+                                        centerline_type: str = None,
+                                        coordinate_unit: str = None) -> None:
+    # Error Handling for save_centerline_mat()
     if river_object is None:
         raise ValueError(
-            "[river_object]: Requires a river object (see: centerline_width.riverCenterline)"
+            "[river_object]: Requires a river object (see: centerline_width.CenterlineWidth)"
         )
     else:
-        if not isinstance(river_object, centerline_width.riverCenterline):
+        if not isinstance(river_object, centerline_width.CenterlineWidth):
             raise ValueError(
-                f"[river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{type(river_object)}'"
+                f"[river_object]: Must be a river object (see: centerline_width.CenterlineWidth), current type = '{type(river_object)}'"
             )
 
     if latitude_header is not None:
@@ -471,10 +444,35 @@ def errorHandlingSaveCenterlineMAT(
 
 
 # Error Handling: getCoordinatesKML.py
-def errorHandlingExtractPointsToTextFile(left_kml: str = None,
-                                         right_kml: str = None,
-                                         text_output_name: str = None) -> None:
-    # Error Handling for extractPointsToTextFile()
+def _errror_handling_txt_to_csv(txt_input: str = None,
+                                flip_direction: bool = None) -> None:
+    # Error handling for txt_to_csv()
+    if txt_input is None:
+        raise ValueError("[txt_input]: Requires text file")
+    else:
+        if type(txt_input) != str:
+            raise ValueError(
+                f"[txt_input]: Must be a str, current type = '{type(txt_input)}'"
+            )
+        else:
+            if not txt_input.lower().endswith(".txt"):
+                raise ValueError(
+                    f"[txt_input]: Extension must be a .txt file, current extension = '{txt_input.split('.')[1]}'"
+                )
+
+    if type(flip_direction) != bool:
+        raise ValueError(
+            f"[flip_direction]: Must be a bool, current type = '{type(flip_direction)}'"
+        )
+
+
+# Error Handling: getCoordinatesKML.py
+def _error_handling_kml_to_csv(left_kml: str = None,
+                               right_kml: str = None,
+                               flip_direction: bool = None,
+                               csv_output: str = None,
+                               text_output_name: str = None) -> None:
+    # Error Handling for kml_to_csv()
     if left_kml is None:
         raise ValueError("[left_kml]: Requires left_kml file")
     else:
@@ -504,24 +502,48 @@ def errorHandlingExtractPointsToTextFile(left_kml: str = None,
             f"right_kml and left_kml are set to the same file (needs a separate left and right bank): right_kml='{right_kml}' and left_kml='{left_kml}'"
         )
 
-    if text_output_name is None:
-        raise ValueError("[text_output_name]: Requires output file name")
+    if type(flip_direction) != bool:
+        raise ValueError(
+            f"[flip_direction]: Must be a bool, current type = '{type(flip_direction)}'"
+        )
+
+    if csv_output is None and text_output_name is None:
+        raise ValueError(
+            "[csv_output/text_output_name]: Requires output file name")
     else:
-        if type(text_output_name) != str:
-            raise ValueError(
-                f"[text_output_name]: Must be a str, current type = '{type(text_output_name)}'"
-            )
+        if csv_output is not None:  # pending deprecation of text_output_name
+            if type(csv_output) != str:
+                raise ValueError(
+                    f"[csv_output]: Must be a str, current type = '{type(csv_output)}'"
+                )
+            else:
+                if not csv_output.lower().endswith(".csv"):
+                    raise ValueError(
+                        f"[csv_output]: Extension must be a .csv file, current extension = '{csv_output.split('.')[1]}'"
+                    )
+        else:
+            # Pending Deprecation
+            if text_output_name is not None:
+                if type(text_output_name) != str:
+                    raise ValueError(
+                        f"[text_output_name]: Must be a str, current type = '{type(text_output_name)}'"
+                    )
+                else:
+                    if not text_output_name.lower().endswith(".txt"):
+                        raise ValueError(
+                            f"[text_output_name]: Extension must be a .txt file, current extension = '{text_output_name.split('.')[1]}'"
+                        )
 
 
 ## Error Handling: riverCenterlineClass.py
-def errorHandlingRiverCenterlineClass(csv_data: str = None,
-                                      optional_cutoff: int = None,
-                                      interpolate_data: bool = None,
-                                      interpolate_n: int = None,
-                                      interpolate_n_centerpoints: int = None,
-                                      equal_distance: [int, float] = None,
-                                      ellipsoid: str = None) -> None:
-    # Error Handling for riverCenterlineClass()
+def _error_handling_centerline_width(csv_data: str = None,
+                                     cutoff: int = None,
+                                     interpolate_data: bool = None,
+                                     interpolate_n: int = None,
+                                     interpolate_n_centerpoints: int = None,
+                                     equal_distance: [int, float] = None,
+                                     ellipsoid: str = None) -> None:
+    # Error Handling for CenterlineWidth()
     if csv_data is None:
         raise ValueError("[csv_data]: Requires csv_data location")
     else:
@@ -531,11 +553,10 @@ def errorHandlingRiverCenterlineClass(csv_data: str = None,
                 f"[csv_data]: Must be a str, current type = '{type(csv_data)}'"
             )
 
-    if optional_cutoff is not None:
-        if type(optional_cutoff) != int:
+    if cutoff is not None:
+        if type(cutoff) != int:
             raise ValueError(
-                f"[optional_cutoff]: Must be a int, current type = '{type(optional_cutoff)}'"
-            )
+                f"[cutoff]: Must be a int, current type = '{type(cutoff)}'")
 
     if type(interpolate_data) != bool:
         raise ValueError(
@@ -586,19 +607,18 @@ def errorHandlingRiverCenterlineClass(csv_data: str = None,
 
 
 ## Error Handling: riverFeatures.py
-def errorHandlingIncrementalSinuosity(
-        river_object: centerline_width.riverCenterline = None,
-        incremental_points: int = 10,
-        save_to_csv: str = None) -> None:
+def _error_handling_incremental_sinuosity(river_object=None,
+                                          incremental_points: int = 10,
+                                          save_to_csv: str = None) -> None:
     # Error Handling for incremental_sinuosity()
     if river_object is None:
         raise ValueError(
-            "[river_object]: Requires a river object (see: centerline_width.riverCenterline)"
+            "[river_object]: Requires a river object (see: centerline_width.CenterlineWidth)"
         )
     else:
-        if not isinstance(river_object, centerline_width.riverCenterline):
+        if not isinstance(river_object, centerline_width.CenterlineWidth):
             raise ValueError(
-                f"[river_object]: Must be a river object (see: centerline_width.riverCenterline), current type = '{type(river_object)}'"
+                f"[river_object]: Must be a river object (see: centerline_width.CenterlineWidth), current type = '{type(river_object)}'"
             )
 
     if type(incremental_points) != int:

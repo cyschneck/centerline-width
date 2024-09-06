@@ -4,28 +4,28 @@
 #      plotDiagrams.py plots river coordinates and width with Matplotlib                          #
 #                                                                                                 #
 #      This includes the functions for:                                                           #
-#                                       - plotCenterlineBackend: backend share                    #
+#                                       - _plot_centerline_backend: backend shared                #
 #                                              components for each plot                           #
-#                                              csv                                                #
 #                                                                                                 #
-#                                       - plotCenterline: plot centerline and                     #
+#                                       - plot_centerline: plot centerline and                    #
 #                                              river points/polygons                              #
 #                                                                                                 #
-#                                       - plotCenterlineWidth: plot centerline                    #
+#                                       - plot_centerline_width: plot centerline                  #
 #                                              and river with width lines                         #
 #                                                                                                 #
 #                                                                                                 #
 #                                                                                                 #
 
-# Built-in Python functions
-import math
+# Standard Library Imports
 import logging
+import math
+import warnings  # Pending Deprecation
 
-# External Python libraries
+# Related Third Party Imports
 import matplotlib.pyplot as plt
 from scipy.spatial import voronoi_plot_2d
 
-# Internal centerline_width reference to access functions, global variables, and error handling
+# Internal Local Imports
 import centerline_width
 
 ## Logging set up for .INFO
@@ -35,16 +35,15 @@ stream_handler = logging.StreamHandler()
 logger.addHandler(stream_handler)
 
 
-def plotCenterlineBackend(
-        river_object: centerline_width.riverCenterline = None,
-        display_true_centerline: bool = True,
-        centerline_type: str = "Voronoi",
-        marker_type: str = "line",
-        centerline_color: str = "black",
-        dark_mode: bool = False,
-        equal_axis: bool = False,
-        coordinate_unit: str = None):
-    # Shared components between plotCenterline and plotCenterlineWidth
+def _plot_centerline_backend(river_object=None,
+                             display_true_centerline: bool = True,
+                             centerline_type: str = "Voronoi",
+                             marker_type: str = "line",
+                             centerline_color: str = "black",
+                             dark_mode: bool = False,
+                             equal_axis: bool = False,
+                             coordinate_unit: str = None):
+    # Shared components between plot_centerline() and plotCenterlineWidth
     coordinate_unit = coordinate_unit.title()
 
     # set plot to dark background and alternate centerline color default
@@ -101,30 +100,30 @@ def plotCenterlineBackend(
     if centerline_type == "Voronoi":
         centerline_legend = "Voronoi Centerline Coordinates"
         if coordinate_unit == "Decimal Degrees":
-            centerline_coordinates_by_type = river_object.centerlineVoronoi
+            centerline_coordinates_by_type = river_object.centerline_voronoi
         if coordinate_unit == "Relative Distance":
-            centerline_coordinates_by_type = river_object.centerlineVoronoiRelative
+            centerline_coordinates_by_type = river_object.centerline_voronoi_relative
 
     if centerline_type == "Equal Distance":
         centerline_legend = "Equal Distance Centerline Coordinates"
         if coordinate_unit == "Decimal Degrees":
-            centerline_coordinates_by_type = river_object.centerlineEqualDistance
+            centerline_coordinates_by_type = river_object.centerline_equal_distance
         if coordinate_unit == "Relative Distance":
-            centerline_coordinates_by_type = river_object.centerlineEqualDistanceRelative
+            centerline_coordinates_by_type = river_object.centerline_equal_distance_relative
 
     if centerline_type == "Evenly Spaced":
         centerline_legend = "Evenly Spaced Centerline Coordinates"
         if coordinate_unit == "Decimal Degrees":
-            centerline_coordinates_by_type = river_object.centerlineEvenlySpaced
+            centerline_coordinates_by_type = river_object.centerline_evenly_spaced
         if coordinate_unit == "Relative Distance":
-            centerline_coordinates_by_type = river_object.centerlineEvenlySpacedRelative
+            centerline_coordinates_by_type = river_object.centerline_evenly_spaced_relative
 
     if centerline_type == "Smoothed":
         centerline_legend = "Smoothed Centerline Coordinates"
         if coordinate_unit == "Decimal Degrees":
-            centerline_coordinates_by_type = river_object.centerlineSmoothed
+            centerline_coordinates_by_type = river_object.centerline_smoothed
         if coordinate_unit == "Relative Distance":
-            centerline_coordinates_by_type = river_object.centerlineSmoothedRelative
+            centerline_coordinates_by_type = river_object.centerline_smoothed_relative
 
     # Plot the centerline coordinates
     if centerline_coordinates_by_type:
@@ -181,20 +180,28 @@ def plotCenterlineBackend(
     return fig, ax, valid_path_through
 
 
-def plotCenterline(river_object: centerline_width.riverCenterline = None,
-                   centerline_type: str = "Voronoi",
-                   marker_type: str = "line",
-                   centerline_color: str = "black",
-                   dark_mode: bool = False,
-                   equal_axis: bool = False,
-                   display_all_possible_paths: bool = False,
-                   plot_title: str = None,
-                   save_plot_name: str = None,
-                   display_voronoi: bool = False,
-                   show_plot: bool = True,
-                   coordinate_unit: str = "Decimal Degrees") -> None:
+def plot_centerline(river_object=None,
+                    centerline_type: str = "Voronoi",
+                    marker_type: str = "line",
+                    centerline_color: str = "black",
+                    dark_mode: bool = False,
+                    equal_axis: bool = False,
+                    display_all_possible_paths: bool = False,
+                    plot_title: str = None,
+                    save_plot_name: str = None,
+                    save_plot: str = None,
+                    display_voronoi: bool = False,
+                    show_plot: bool = True,
+                    coordinate_unit: str = "Decimal Degrees") -> None:
     # Plot Centerline of River
-    centerline_width.errorHandlingPlotCenterline(
+    if save_plot_name is not None and save_plot is None:
+        warnings.warn(
+            "save_plot_name has been replaced with save_plot and will be removed in the future",
+            FutureWarning,
+            stacklevel=2)
+        save_plot = save_plot_name
+
+    centerline_width._error_handling_plot_centerline(
         river_object=river_object,
         centerline_type=centerline_type,
         marker_type=marker_type,
@@ -203,12 +210,12 @@ def plotCenterline(river_object: centerline_width.riverCenterline = None,
         equal_axis=equal_axis,
         display_all_possible_paths=display_all_possible_paths,
         plot_title=plot_title,
-        save_plot_name=save_plot_name,
+        save_plot=save_plot,
         display_voronoi=display_voronoi,
         show_plot=show_plot,
         coordinate_unit=coordinate_unit)
 
-    fig, ax, valid_path_through = plotCenterlineBackend(
+    fig, ax, valid_path_through = _plot_centerline_backend(
         river_object=river_object,
         display_true_centerline=True,
         centerline_type=centerline_type,
@@ -272,27 +279,35 @@ def plotCenterline(river_object: centerline_width.riverCenterline = None,
     plt.legend(loc="upper right")
     if show_plot: plt.show()
     if not show_plot: plt.close()
-    if save_plot_name: fig.savefig(save_plot_name)
+    if save_plot: fig.savefig(save_plot)
 
 
-def plotCenterlineWidth(river_object: centerline_width.riverCenterline = None,
-                        plot_title: str = None,
-                        save_plot_name: str = None,
-                        display_true_centerline: bool = True,
-                        transect_span_distance: int = 3,
-                        transect_slope: str = "Average",
-                        apply_smoothing: bool = False,
-                        flag_intersections: bool = True,
-                        remove_intersections: bool = False,
-                        dark_mode: bool = False,
-                        equal_axis: bool = False,
-                        show_plot: bool = True,
-                        coordinate_unit: str = "Decimal Degrees") -> None:
+def plot_centerline_width(river_object=None,
+                          plot_title: str = None,
+                          save_plot_name: str = None,
+                          save_plot: str = None,
+                          display_true_centerline: bool = True,
+                          transect_span_distance: int = 3,
+                          transect_slope: str = "Average",
+                          apply_smoothing: bool = False,
+                          flag_intersections: bool = True,
+                          remove_intersections: bool = False,
+                          dark_mode: bool = False,
+                          equal_axis: bool = False,
+                          show_plot: bool = True,
+                          coordinate_unit: str = "Decimal Degrees") -> None:
     # Plot Width Lines based on Centerline
-    centerline_width.errorHandlingPlotCenterlineWidth(
+    if save_plot_name is not None and save_plot is None:
+        warnings.warn(
+            "save_plot_name has been replaced with save_plot and will be removed in the future",
+            FutureWarning,
+            stacklevel=2)
+        save_plot = save_plot_name
+
+    centerline_width._error_handling_plot_centerline_width(
         river_object=river_object,
         plot_title=plot_title,
-        save_plot_name=save_plot_name,
+        save_plot=save_plot,
         display_true_centerline=display_true_centerline,
         transect_span_distance=transect_span_distance,
         transect_slope=transect_slope,
@@ -304,7 +319,7 @@ def plotCenterlineWidth(river_object: centerline_width.riverCenterline = None,
         show_plot=show_plot,
         coordinate_unit=coordinate_unit)
 
-    fig, ax, valid_path_through = plotCenterlineBackend(
+    fig, ax, valid_path_through = _plot_centerline_backend(
         river_object=river_object,
         display_true_centerline=display_true_centerline,
         centerline_type="Voronoi",
@@ -320,15 +335,15 @@ def plotCenterlineWidth(river_object: centerline_width.riverCenterline = None,
     # Determine the Width of River
     number_of_evenly_spaced_points = ""
 
-    if river_object.centerlineVoronoi is not None:
+    if river_object.centerline_voronoi is not None:
         number_of_evenly_spaced_points = f"\nCenterline made of {river_object.interpolate_n_centerpoints} Fixed Points, width lines generated every {transect_span_distance} points"
         if river_object.starting_node is not None:  # error handling for when data is too small to generate centerline coordinates
 
             # if using smoothing, replace left/right coordinates with the smoothed variation
             if apply_smoothing:
-                right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(
+                right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width._width_from_centerline_coordinates(
                     river_object=river_object,
-                    centerline_coordinates=river_object.centerlineSmoothed,
+                    centerline_coordinates=river_object.centerline_smoothed,
                     transect_span_distance=transect_span_distance,
                     transect_slope=transect_slope,
                     remove_intersections=remove_intersections,
@@ -336,9 +351,9 @@ def plotCenterlineWidth(river_object: centerline_width.riverCenterline = None,
                 x = []
                 y = []
                 if coordinate_unit == "Decimal Degrees":
-                    smoothed_coords = river_object.centerlineSmoothed
+                    smoothed_coords = river_object.centerline_smoothed
                 if coordinate_unit == "Relative Distance":
-                    smoothed_coords = river_object.centerlineSmoothedRelative
+                    smoothed_coords = river_object.centerline_smoothed_relative
                 for k, v in smoothed_coords:
                     x.append(k)
                     y.append(v)
@@ -349,9 +364,10 @@ def plotCenterlineWidth(river_object: centerline_width.riverCenterline = None,
                             s=5)
             else:
                 # recreate the centerline with evenly spaced points
-                right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(
+                right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width._width_from_centerline_coordinates(
                     river_object=river_object,
-                    centerline_coordinates=river_object.centerlineEvenlySpaced,
+                    centerline_coordinates=river_object.
+                    centerline_evenly_spaced,
                     transect_span_distance=transect_span_distance,
                     transect_slope=transect_slope,
                     remove_intersections=remove_intersections,
@@ -420,4 +436,4 @@ def plotCenterlineWidth(river_object: centerline_width.riverCenterline = None,
     plt.legend(loc="upper right")
     if show_plot: plt.show()
     if not show_plot: plt.close()
-    if save_plot_name: fig.savefig(save_plot_name)
+    if save_plot: fig.savefig(save_plot)

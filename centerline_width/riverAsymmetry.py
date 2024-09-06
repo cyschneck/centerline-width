@@ -10,11 +10,11 @@
 #                                                                                                 #
 #                                                                                                 #
 
-# Built-in Python functions
+# Standard Library Imports
 import logging
 import math
 
-# External Python libraries
+# eRelated Third Party Imports
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.signal import savgol_filter

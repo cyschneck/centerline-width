@@ -6,13 +6,15 @@
 #      sinuosity                                                                                  #
 #                                                                                                 #
 #      This includes the functions for:                                                           #
-#                                       - calculateRiverArea: returns the area contains           #
-#                                              within the river polygon/coordinates               #
+#                                       - _calculate_river_area: backend function to              #
+#                                              calculate area within the river                    #
+#                                              polygon/coordinates                                #
 #                                                                                                 #
-#                                       - centerlineLength: returns the length of                 #
-#                                                centerline                                       #
+#                                       - _centerline_length: backend function to                 #
+#                                                calculate the length of a line                   #
 #                                                                                                 #
-#                                       - calculateSinuosity: returns the total sinuosity         #
+#                                       - _calculate_sinuosity: backend to calculate              #
+#                                                 the total sinuosity                             #
 #                                                                                                 #
 #                                       - incremental_sinuosity: returns the incremental          #
 #                                                 sinuosity along the length of the river         #
@@ -20,18 +22,19 @@
 #                                                                                                 #
 #                                                                                                 #
 
-# Built-in Python functions
+# Standard Library Imports
 import csv
 
-# External Python libraries
+# Related Third Party Imports
 from pyproj import Geod
 from shapely.geometry import Point, LineString
 
-# Internal centerline_width reference to access functions, global variables, and error handling
+# Internal Local Imports
 import centerline_width
 
 
-def calculateRiverArea(bank_polygon=None, ellipsoid: str = "WGS84") -> float:
+def _calculate_river_area(bank_polygon=None,
+                          ellipsoid: str = "WGS84") -> float:
     # Return the area contained within the river polygon (km^2)
     if bank_polygon is None:
         return 0
@@ -41,9 +44,9 @@ def calculateRiverArea(bank_polygon=None, ellipsoid: str = "WGS84") -> float:
     return abs(river_area) / 1000  # km
 
 
-def centerlineLength(centerline_coordinates: list = None,
-                     ellipsoid: str = "WGS84") -> float:
-    # Return the length/distance for all the centerline coordinates in km
+def _centerline_length(centerline_coordinates: list = None,
+                       ellipsoid: str = "WGS84") -> float:
+    # Return the length/distance for all the centerline coordinates (km)
     if centerline_coordinates is None:
         return 0
 
@@ -55,16 +58,16 @@ def centerlineLength(centerline_coordinates: list = None,
     return centerline_length_km
 
 
-def calculateSinuosity(centerline_evenlySpaced_coordinates: list = None,
-                       ellipsoid: str = "WGS84") -> float:
+def _calculate_sinuosity(centerline_evenlySpaced_coordinates: list = None,
+                         ellipsoid: str = "WGS84") -> float:
     # Return the sinuosity of the river in total
     if centerline_evenlySpaced_coordinates is None:
         return 0
 
     # sinuosity is the difference of length of first/last point to centerline
     sinuosity = 0
-    sinuosity = centerlineLength(
-        centerline_evenlySpaced_coordinates) / centerlineLength([
+    sinuosity = _centerline_length(
+        centerline_evenlySpaced_coordinates) / _centerline_length([
             centerline_evenlySpaced_coordinates[0],
             centerline_evenlySpaced_coordinates[-1]
         ], ellipsoid)
@@ -73,22 +76,22 @@ def calculateSinuosity(centerline_evenlySpaced_coordinates: list = None,
 
 
 def incremental_sinuosity(
-        river_object: centerline_width.riverCenterline = None,
+        river_object: centerline_width.CenterlineWidth = None,
         incremental_points: int = 100,
         save_to_csv: str = None) -> dict:
     # Return the sinuosity of the river in increments
     # (Centerline Coordinate Start, Centerline Coordinate End Longtiude, Sinuosity)
 
-    centerline_width.errorHandlingIncrementalSinuosity(
+    centerline_width._error_handling_incremental_sinuosity(
         river_object=river_object,
         incremental_points=incremental_points,
         save_to_csv=save_to_csv)
 
-    if river_object.centerlineEvenlySpaced is None:
+    if river_object.centerline_evenly_spaced is None:
         return {}
 
     # Ignore the first and last point in the coordinates
-    centerline_coordinates = river_object.centerlineEvenlySpaced[1:-1]
+    centerline_coordinates = river_object.centerline_evenly_spaced[1:-1]
 
     # Separate centerline in groups of incremental_points long
     centerline_groups = list(
@@ -98,7 +101,8 @@ def incremental_sinuosity(
     incremental_sinuosity_dict = {}
     for centerline_coords in centerline_groups:
         incremental_sinuosity_dict[(
-            centerline_coords[0], centerline_coords[-1])] = calculateSinuosity(
+            centerline_coords[0],
+            centerline_coords[-1])] = _calculate_sinuosity(
                 centerline_evenlySpaced_coordinates=centerline_coords,
                 ellipsoid=river_object.ellipsoid)
 

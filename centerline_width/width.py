@@ -6,31 +6,30 @@
 #      the width line intersects the banks                                                        #
 #                                                                                                 #
 #      This includes the functions for:                                                           #
-#                                       - riverWidthFromCenterlineCoordinates: backend for        #
+#                                       - _width_from_centerline_coordinates: backend for         #
 #                                              plotCenterlineWidth, returns the coordinates       #
 #                                              for the width intersection points                  #
 #                                                                                                 #
-#                                       - riverWidthFromCenterline: returns width dictionary      #
-#                                                and width at centerline where {[centerline       #
-#                                                latitude, centerline longitude] :                #
-#                                                 widthValue }                                    #
+#                                       - width: returns width dictionary and width at            #
+#                                                centerline where {[centerline latitude,          #
+#                                                centerline longitude] : widthValue }             #
 #                                                                                                 #
 #                                                                                                 #
 #                                                                                                 #
 
-# Built-in Python functions
-import logging
+# Standard Library Imports
 import csv
+import logging
 import math
 
-# External Python libraries
+# Related Third Party Imports
+import geopy.distance
 import numpy as np
+from pyproj import Geod
 from shapely.geometry import Point, LineString
 from shapely.ops import split
-import geopy.distance
-from pyproj import Geod
 
-# Internal centerline_width reference to access functions, global variables, and error handling
+# Internal Local Imports
 import centerline_width
 
 ## Logging set up for .INFO
@@ -40,8 +39,8 @@ stream_handler = logging.StreamHandler()
 logger.addHandler(stream_handler)
 
 
-def riverWidthFromCenterlineCoordinates(
-        river_object: centerline_width.riverCenterline = None,
+def _width_from_centerline_coordinates(
+        river_object: centerline_width.CenterlineWidth = None,
         centerline_coordinates: list = None,
         transect_span_distance: int = 3,
         transect_slope: str = "Average",
@@ -50,7 +49,7 @@ def riverWidthFromCenterlineCoordinates(
         save_to_csv: str = None) -> [dict, dict, dict]:
     # Return the left/right coordinates of width centerlines
     # Returns three dictionaries: right_width_coordinates, left_width_coordinates, num_intersection_coordinates
-    # Used in the backend to plot coordinates in plotCenterlineWidth()
+    # Used in the backend to plot coordinates in plot_centerline_width()
 
     # Group the centerline coordinates into groups of length n
     centerline_slope = {}
@@ -124,7 +123,7 @@ def riverWidthFromCenterlineCoordinates(
                     ) // 2  # set centerline point to be the middle point being averaged
                     centerline_slope[group_points[0]] = normal_of_slope
 
-    def intersectsTopOrBottomOfBank(point1, point2):
+    def _intersects_top_or_bottom_of_bank(point1, point2):
         # returns True/False if the points lie on the 'false' top/bottom of the river
         points_intersect_false_edges = False
 
@@ -167,7 +166,7 @@ def riverWidthFromCenterlineCoordinates(
         ) != "LINESTRING Z EMPTY":  # if linestring has intersect (not empty)
             if len(line_intersection_points.geoms) == 2:
                 # only save width lines that do not touch the artificial top/bottom
-                if not intersectsTopOrBottomOfBank(
+                if not _intersects_top_or_bottom_of_bank(
                         line_intersection_points.geoms[0],
                         line_intersection_points.geoms[1]):
                     left_width_coordinates[centerline_point] = (
@@ -198,7 +197,7 @@ def riverWidthFromCenterlineCoordinates(
                     # linestring contains the centerline, save coordinates
                     if left_point is not None and right_point is not None:
                         # only save width lines that do not touch the artificial top/bottom
-                        if not intersectsTopOrBottomOfBank(
+                        if not _intersects_top_or_bottom_of_bank(
                                 left_point, right_point):
                             left_width_coordinates[centerline_point] = (
                                 left_point.x, left_point.y)
@@ -312,33 +311,32 @@ def riverWidthFromCenterlineCoordinates(
 
     # if using Relative Distance, convert points from Decimal Degrees to Relative Distance
     if coordinate_unit == "Relative Distance":
-        right_width_coordinates = centerline_width.relativeWidthCoordinates(
+        right_width_coordinates = centerline_width._relative_width_coordinates(
             river_object.left_bank_coordinates[0], right_width_coordinates,
             river_object.ellipsoid)
-        left_width_coordinates = centerline_width.relativeWidthCoordinates(
+        left_width_coordinates = centerline_width._relative_width_coordinates(
             river_object.left_bank_coordinates[0], left_width_coordinates,
             river_object.ellipsoid)
-        num_intersection_coordinates = centerline_width.relativeWidthCoordinates(
+        num_intersection_coordinates = centerline_width._relative_width_coordinates(
             river_object.left_bank_coordinates[0],
             num_intersection_coordinates, river_object.ellipsoid)
 
     return right_width_coordinates, left_width_coordinates, num_intersection_coordinates
 
 
-def riverWidthFromCenterline(
-        river_object: centerline_width.riverCenterline = None,
-        transect_span_distance: int = 3,
-        transect_slope: str = "Average",
-        apply_smoothing: bool = True,
-        remove_intersections: bool = False,
-        coordinate_unit: str = "Decimal Degrees",
-        coordinate_reference: str = "Centerline",
-        save_to_csv: str = None) -> dict:
+def width(river_object: centerline_width.CenterlineWidth = None,
+          transect_span_distance: int = 3,
+          transect_slope: str = "Average",
+          apply_smoothing: bool = True,
+          remove_intersections: bool = False,
+          coordinate_unit: str = "Decimal Degrees",
+          coordinate_reference: str = "Centerline",
+          save_to_csv: str = None) -> dict:
     # Return river width: centerline and width at centerline
     # Width is measured to the bank, relative to the center point (normal of the centerline)
     # { [centerline latitude, centerline longitude] : widthValue }
 
-    centerline_width.errorHandlingRiverWidthFromCenterline(
+    centerline_width._error_handling_width(
         river_object=river_object,
         transect_span_distance=transect_span_distance,
         transect_slope=transect_slope,
@@ -354,7 +352,7 @@ def riverWidthFromCenterline(
     right_left_coords = {
     }  # used to track left/right bank coordinates when coordinate_reference=="Banks"
 
-    if river_object.centerlineVoronoi is None:
+    if river_object.centerline_voronoi is None:
         logger.critical(
             "\nCRITICAL ERROR, unable to find width without a valid centerline"
         )
@@ -365,14 +363,14 @@ def riverWidthFromCenterline(
         # if using smoothing, replace left/right coordinates with the smoothed variation
         right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(
             river_object=river_object,
-            centerline_coordinates=river_object.centerlineSmoothed,
+            centerline_coordinates=river_object.centerline_smoothed,
             transect_span_distance=transect_span_distance,
             remove_intersections=remove_intersections,
             coordinate_unit="Decimal Degrees")
     else:
-        right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width.riverWidthFromCenterlineCoordinates(
+        right_width_coordinates, left_width_coordinates, num_intersection_coordinates = centerline_width._width_from_centerline_coordinates(
             river_object=river_object,
-            centerline_coordinates=river_object.centerlineEvenlySpaced,
+            centerline_coordinates=river_object.centerline_evenly_spaced,
             transect_span_distance=transect_span_distance,
             remove_intersections=remove_intersections,
             coordinate_unit="Decimal Degrees")

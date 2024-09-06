@@ -1,8 +1,9 @@
 # Verify Outputs from width.py
 # centerline-width/: python -m pytest -v
-# python -m pytest -k test_verifyWidth -xv
+# python -m pytest -k test_verifyWidth.py -xv
 
 # Pytests to Compare and Verify Expected Outputs
+import re
 from io import StringIO
 
 # External Python libraries (installed via pip install)
@@ -35,19 +36,19 @@ def generate_testRiver():
     )
     csv_example.seek(0)
 
-    return centerline_width.riverCenterline(csv_data=csv_example)
+    return centerline_width.CenterlineWidth(csv_data=csv_example)
 
 
 def generate_expectedCenterline(span_distance=None):
     # group points inclusive of previous point: [A, B, C, D] = [A, B], [B, C], [C, D]
     groups_of_n_points = []
-    for i in range(0, len(test_river.centerlineEvenlySpaced), span_distance):
+    for i in range(0, len(test_river.centerline_evenly_spaced), span_distance):
         if i == 0:
             groups_of_n_points.append(
-                test_river.centerlineEvenlySpaced[0:span_distance])
+                test_river.centerline_evenly_spaced[0:span_distance])
         else:
             groups_of_n_points.append(
-                test_river.centerlineEvenlySpaced[i - 1:i + span_distance])
+                test_river.centerline_evenly_spaced[i - 1:i + span_distance])
 
     centerline_slope_expected = []
     for group_points in groups_of_n_points:
@@ -56,18 +57,17 @@ def generate_expectedCenterline(span_distance=None):
     return centerline_slope_expected
 
 
-## riverWidthFromCenterline #####################################################
+## width() #####################################################
 test_river = generate_testRiver()
 span_distance = 3
 centerline_slope_expected = generate_expectedCenterline(span_distance)
 
 
-def test_riverWidthFromCenterline_transectSlopeAverage_RelativeCenterline():
-    river_width_dict = test_river.riverWidthFromCenterline(
-        transect_slope="Average",
-        transect_span_distance=span_distance,
-        coordinate_reference="Centerline",
-        apply_smoothing=False)
+def test_width_transectSlopeAverage_RelativeCenterline():
+    river_width_dict = test_river.width(transect_slope="Average",
+                                        transect_span_distance=span_distance,
+                                        coordinate_reference="Centerline",
+                                        apply_smoothing=False)
     # Verify same keys are used
     assert list(
         river_width_dict.keys()) == pytest.approx(centerline_slope_expected)
@@ -80,12 +80,11 @@ def test_riverWidthFromCenterline_transectSlopeAverage_RelativeCenterline():
     })
 
 
-def test_riverWidthFromCenterline_transectSlopeDirect_RelativeCenterline():
-    river_width_dict = test_river.riverWidthFromCenterline(
-        transect_slope="Direct",
-        transect_span_distance=span_distance,
-        coordinate_reference="Centerline",
-        apply_smoothing=False)
+def test_width_transectSlopeDirect_RelativeCenterline():
+    river_width_dict = test_river.width(transect_slope="Direct",
+                                        transect_span_distance=span_distance,
+                                        coordinate_reference="Centerline",
+                                        apply_smoothing=False)
     # Verify same keys are used
     assert list(
         river_width_dict.keys()) == pytest.approx(centerline_slope_expected)
@@ -96,3 +95,27 @@ def test_riverWidthFromCenterline_transectSlopeDirect_RelativeCenterline():
         (-4.263272551474902, 48.281909175456114):
         0.47396221154877105
     })
+
+
+def test_width_futureWarning_functionName():
+    # Pending Deprecation: TO BE REMOVED
+    with pytest.warns(
+            FutureWarning,
+            match=re.escape(
+                "riverWidthFromCenterline() has been replaced with width() and will be removed in the future"
+            )):
+        river_width_dict = test_river.riverWidthFromCenterline(
+            transect_slope="Average",
+            transect_span_distance=span_distance,
+            coordinate_reference="Centerline",
+            apply_smoothing=False)
+        # Verify same keys are used
+        assert list(river_width_dict.keys()) == pytest.approx(
+            centerline_slope_expected)
+        # Verify output
+        assert river_width_dict == pytest.approx({
+            (-4.269872495291112, 48.28213146317461):
+            0.515263253111841,
+            (-4.263272551474902, 48.281909175456114):
+            0.47396221154877105
+        })

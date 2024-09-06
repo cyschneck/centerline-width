@@ -15,26 +15,26 @@
 Find the centerline and width of rivers based on the latitude and longitude positions from the right and left bank 
 
 * **Convert raw data from Google Earth Pro to CSV**
-    * extractPointsToTextFile()
-    * convertColumnsToCSV()
+    * kml_to_csv()
+    * txt_to_csv()
 * **Find centerline and width of river**
-    * plotCenterline()
-    * plotCenterlineWidth()
-    * riverWidthFromCenterline()
-    * centerlineVoronoi
-    * centerlineEqualDistance 
-    * centerlineEvenlySpaced
-    * centerlineSmoothed
-    * centerlineLength
+    * plot_centerline()
+    * plot_centerline_width()
+    * width()
+    * centerline_voronoi
+    * centerline_equal_distance
+    * centerline_evenly_spaced
+    * centerline_smoothed
 * **Return river features**
-    * rightBankLength
-    * leftBankLength
+    * centerline_length
+    * right_bank_length
+    * left_bank_length
     * area
     * sinuosity
     * incremental_sinuosity()
 * **Export centerline to .CSV and .MAT files**
-    * saveCenterlineCSV()
-    * saveCenterlineMAT()
+    * save_centerline_csv()
+    * save_centerline_mat()
 
 | River Outlined in Google Earth Pro | Generated Centerline for the Riverbank |
 | ------------- | ------------- |
@@ -56,34 +56,33 @@ The core of centerline-width works with a .csv file of the left and right bank l
 
 ```python
 import centerline_width
-centerline_width.extractPointsToTextFile(left_kml="left_bank.kml",
+centerline_width.kml_to_csv(left_kml="left_bank.kml",
                     right_kml="right_bank.kml",
-                    text_output_name="river_coordinates_output.txt")
-centerline_width.convertColumnsToCSV(text_file="river_coordinates_output.txt")
+                    text_output_name="river_coordinates_output.csv")
 ```
 Then once the .csv file is created, to run the centerline-width functions, generate a river object from the `river_coordinates_output.csv`
 
 ```python
-river_object = centerline_width.riverCenterline(csv_data="river_coordinates_output.csv")
+river_object = centerline_width.CenterlineWidth(csv_data="river_coordinates_output.csv")
 ```
 
-To plot the centerline, run the `plotCenterline()` function from `river_object` created. By default, will display with `Decimal Degrees` (latitude/longitude) coordinates
+To plot the centerline, run the `plot_centerline()` function from `river_object` created. By default, will display with `Decimal Degrees` (latitude/longitude) coordinates
 ```python
-river_object.plotCenterline()
+river_object.plot_centerline()
 ```
 ![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_centerline.png)
 
-To plot the width of the river at intervals along the bank, run `plotCenterlineWidth`
+To plot the width of the river at intervals along the bank, run `plot_centerline_width()`
 
 While `apply_smoothing`, `remove_intersections`, and `display_true_centerline` are optional, they are recommended to generate a minimal width diagram
 ```python
-river_object.plotCenterlineWidth(apply_smoothing=True, remove_intersections=True, display_true_centerline=False)
+river_object.plot_centerline_width(apply_smoothing=True, remove_intersections=True, display_true_centerline=False)
 ```
 ![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width.png)
 
 It is possible to also display all the coordinates as a `Relative Distance`, where all the coordinates are converted to a relative distance (in meters) from the first point on the left bank
 ```python
-river_object.plotCenterline(coordinate_unit="Relative Distance")
+river_object.plot_centerline(coordinate_unit="Relative Distance")
 ```
 ![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_relative_distance_coords_centerline.png)
 
@@ -108,46 +107,20 @@ Save the path to a .kml file by right clicking on the path in Places and selecti
 
 Repeat (1) and (2) for the right bank by starting a new path
 
-### Convert KML files to Text File
+### Convert KML files to CSV File
 
-Convert two .kml files from Google Earth Pro (for the left and right bank) and export the coordinates into a text file
+Convert two .kml files from Google Earth Pro (for the left and right bank) and export the coordinates into a csv file
 
 ```
-extractPointsToTextFile(left_kml=None,
-            right_kml=None,
-            text_output_name=None)
+kml_to_csv(left_kml: str = None,
+           right_kml: str = None,
+           flip_direction: bool = False,
+           csv_output: str = None)
 ```
 
 * **[REQUIRED]** left_kml (string): File location of the kml file for left bank
 * **[REQUIRED]** right_kml (string): File location of the kml file for right bank
-* **[REQUIRED]** text_output_name (string): Output file name (and location)
-
-```python
-import centerline_width
-centerline_width.extractPointsToTextFile(left_kml="leftbank.kml",
-                    right_kml="rightbank.kml",
-                    text_output_name="data/river_coords_output.txt")
-```
-Output: The text file `data/river_coords_output.txt` with the headers `llat, llon, rlat, rlon` (for the left latitude, left longitude, right latitude, and right longitude)
-
-Example:
-```
-     llat       llon      rlat       rlon
-30.037581 -92.868569 30.119804 -92.907933
-30.037613 -92.868549 30.119772 -92.907924
-30.037648 -92.868546 30.119746 -92.907917
-30.037674 -92.868536 30.119721 -92.907909
-30.037702 -92.868533 30.119706 -92.907905
-```
-
-### Converted Text File to CSV
-
-Convert a text file with coordinates for a left and right bank's latitude and longitude to a csv file with columns for the left bank latitude (llat), left bank longitude (llon), right bank latitude (rlat), right bank longitude (rlon)
-
-```
-convertColumnsToCSV(text_file=None, flip_direction=False)
-```
-* **[REQUIRED]** text_file (string): File location of the text file to convert
+* **[REQUIRED]** csv_output (string): Output file name (and location)
 * [OPTIONAL] flip_direction (boolean): If the latitude/longitude of the banks are generated in reverse order, flip the final values so left/right bank are in order
 
 Scripts expects data as a list of point for left and right banks:
@@ -155,7 +128,39 @@ Scripts expects data as a list of point for left and right banks:
 
 ```python
 import centerline_width
-centerline_width.convertColumnsToCSV(text_file="data/river_coords.txt",
+centerline_width.kml_to_csv(left_kml="leftbank.kml",
+                    right_kml="rightbank.kml",
+                    csv_output="data/river_coords_output.csv")
+```
+Example:
+```
+llat,llon,rlat,rlon
+30.037581,-92.868569,30.037441,-92.867476
+30.037613,-92.868549,30.037448,-92.867474
+30.037648,-92.868546,30.037482,-92.867449
+30.037674,-92.868536,30.037506,-92.867432
+30.037702,-92.868533,30.037525,-92.867430
+```
+Output: A csv file `data/river_coords.csv` with the headers `llat, llon, rlat, rlon`
+
+### Converted Text File to CSV
+
+Convert a text file with coordinates for a left and right bank's latitude and longitude to a csv file with columns for the left bank latitude (llat), left bank longitude (llon), right bank latitude (rlat), right bank longitude (rlon)
+
+```
+txt_to_csv(txt_input: str = None,
+           flip_direction: bool = False
+```
+
+* **[REQUIRED]** txt_input (string): File location of the text file to convert
+* [OPTIONAL] flip_direction (boolean): If the latitude/longitude of the banks are generated in reverse order, flip the final values so left/right bank are in order
+
+Scripts expects data as a list of point for left and right banks:
+- Header: llat, llon, rlat, rlon
+
+```python
+import centerline_width
+centerline_width.txt_to_csv(txt_input="data/river_coords.txt",
                 flip_direction=True)
 ```
 Converts text file:
@@ -182,8 +187,8 @@ Output: A csv file `data/river_coords.csv` with the headers `llat, llon, rlat, r
 ### River Object
 First, generate a river object to contain river data and available transformations
 ```
-centerline_width.riverCenterline(csv_data=None,
-                optional_cutoff=None,
+centerline_width.CenterlineWidth(csv_data=None,
+                cutoff=None,
                 interpolate_data=False,
                 interpolate_n=5,
                 interpolate_n_centerpoints=None,
@@ -191,7 +196,7 @@ centerline_width.riverCenterline(csv_data=None,
                 ellipsoid="WGS84")
 ```
 * **[REQUIRED]** csv_data (string): File location of the text file to convert
-* [OPTIONAL] optional_cutoff (int): Include only the first x number of the data to chart (useful for debugging)
+* [OPTIONAL] cutoff (int): Include only the first x number of the data to chart (useful for debugging)
 * [OPTIONAL] interpolate_data (boolean): Interpolate between existing data by adding additional points
 * [OPTIONAL] interpolate_n (int): Number of additional points to add between existing data, defaults to 5 (note: larger numbers will take exponentially longer to run, recommends less than 15)
 * [OPTIONAL] interpolate_n_centerpoints (int): Number of points used to interpolate the Voronoi centerline, defaults to the the length of the data frame (df_len)
@@ -220,19 +225,19 @@ The red pins represent the equal distance centerline coordinates produced by cen
 
 **Object (class) useful attributes:**
 
-* centerlineVoronoi (list of tuples): List of the latitude and longitude coordinates of the centerline generated by Voronoi diagrams
-* centerlineEqualDistance (list of tuples): List of the latitude and longitude coordinates of the centerline generated by equal distances between coordinates from the Voronoi diagrams
-* centerlineEvenlySpaced (list of tuples): List of the latitude and longitude coordinates of the centerline generated by evenly spacing out points generated by the Voronoi diagrams
-* centerlineSmoothed (list of tuples): List of the latitude and longitude coordinates of the centerline generated by smoothing out the evenly spaced-out points generated by the Voronoi diagrams
-* centerlineLength (float): Length of the centerline of the river (in km)
-* rightBankLength (float): Length of the right bank of the river (in km)
-* leftBankLength (float): Length of the left bank of the river (in km)
+* centerline_voronoi (list of tuples): List of the latitude and longitude coordinates of the centerline generated by Voronoi diagrams
+* centerline_equal_distance (list of tuples): List of the latitude and longitude coordinates of the centerline generated by equal distances between coordinates from the Voronoi diagrams
+* centerline_evenly_spaced (list of tuples): List of the latitude and longitude coordinates of the centerline generated by evenly spacing out points generated by the Voronoi diagrams
+* centerline_smoothed (list of tuples): List of the latitude and longitude coordinates of the centerline generated by smoothing out the evenly spaced-out points generated by the Voronoi diagrams
+* centerline_length (float): Length of the centerline of the river (in km)
+* right_bank_length (float): Length of the right bank of the river (in km)
+* left_bank_length (float): Length of the left bank of the river (in km)
 * area (float): Area contained within river bank polygon (in km^2)
 * sinuosity (float): Sinuosity of the river based on evenly spaced centerline coordinates
-* centerlineVoronoiRelative (list of tuples): List of the relative distance coordinates of the centerline generated by Voronoi diagrams
-* centerlineEqualDistanceRelative (list of tuples): List of the relative distance coordinates of the centerline generated by equal distances between coordinates from the Voronoi diagrams
-* centerlineEvenlySpacedRelative (list of tuples): List of the relative distance coordinates of the centerline generated by evenly spacing out points generated by the Voronoi diagrams
-* centerlineSmoothedRelative (list of tuples): List of the relative distance coordinates of the centerline generated by smoothing out the evenly spaced out points generated by the Voronoi diagrams
+* centerline_voronoi_relative (list of tuples): List of the relative distance coordinates of the centerline generated by Voronoi diagrams
+* centerline_equal_distance_relative (list of tuples): List of the relative distance coordinates of the centerline generated by equal distances between coordinates from the Voronoi diagrams
+* centerline_evenly_spaced_relative (list of tuples): List of the relative distance coordinates of the centerline generated by evenly spacing out points generated by the Voronoi diagrams
+* centerline_smoothed_relative (list of tuples): List of the relative distance coordinates of the centerline generated by smoothing out the evenly spaced out points generated by the Voronoi diagrams
 
 <details closed>
 <summary><b>Object (class) additional attributes:</b> (Click to view all)</summary>
@@ -242,9 +247,9 @@ The red pins represent the equal distance centerline coordinates produced by cen
 <li>right_bank_coordinates (list of tuples) list of latitude/longitude coordinates of the right bank generated from the csv file (`[(x, y), (x, y)]`)</li>
 <li>left_bank_relative_coordinates (list of tuples): list of relative distances coordinates of the left bank, measured as the distance in meters from the first point on the left bank (`[(x, y), (x, y)]`)</li>
 <li>right_bank_relative_coordinates (list of tuples): list of relative distances coordinates of the right bank, measured as the distance in meters from the first point on the left bank (`[(x, y), (x, y)]`)</li>
-<li>df_len (int): Length of the data frame of the csv data (spliced by the optional_cutoff)</li>
-<li>equal_distance (int): Distance between points (in meters) used in centerlineEqualDistance, defaults to points every 10 meters</li>
-<li>ellipsoid (string): Built-in ellipsoid definition of Earth to determine how degrees are converted to meters used by centerlineEqualDistance, defaults to "WGS84"</li>
+<li>df_len (int): Length of the data frame of the csv data (spliced by the cutoff)</li>
+<li>equal_distance (int): Distance between points (in meters) used in centerline_equal_distance, defaults to points every 10 meters</li>
+<li>ellipsoid (string): Built-in ellipsoid definition of Earth to determine how degrees are converted to meters used by centerline_equal_distance, defaults to "WGS84"</li>
 <li>bank_polygon (Shapley Polygon): Multi-sided polygon generated to encapsulate the latitude/longitude coordinate riverbank (used to define an inside and an outside of the river)</li>
 <li>bank_polygon_relative (Shapley Polygon): Multi-sided polygon generated to encapsulate the relative distance coordinate riverbank (used to define an inside and an outside of the river)</li>
 <li>top_bank (Shapley Linestring): Linestring that represents the top of the river/polygon for the latitude/longitude coordinate system</li>
@@ -269,7 +274,7 @@ The red pins represent the equal distance centerline coordinates produced by cen
 
 ```python
 import centerline_width
-river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
+river_object = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv")
 ```
 
 ### Coordinates of Centerline
@@ -292,41 +297,41 @@ By default, coordinates are formed in `Decimal Degrees`, but can be set to `Rela
 
 Centerline coordinates are formed by the Voronoi vertices
 ```
-river_object.centerlineVoronoi
+river_object.centerline_voronoi
 ```
-| river_object.centerlineVoronoi | river_object.centerlineVoronoiRelative |
+| river_object.centerline_voronoi | river_object.centerline_voronoi_relative |
 | ------------- | ------------- |
 | ![centerlineVoronoi+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/voronoi_centerline.png) | ![centerlineVoronoiRelative+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/voronoi_centerline_relative.png) |
 
 Centerline coordinates are formed by Equally Distanced vertices, set by `equal_distance`
 ```
-river_object.centerlineEqualDistance
+river_object.centerline_equal_distance
 ```
-| river_object.centerlineEqualDistance | river_object.centerlineEqualDistanceRelative |
+| river_object.centerline_equal_distance | river_object.centerline_equal_distance_relative |
 | ------------- | ------------- |
 | ![centerlineEqualDistance+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/equal_distance_centerline.png) | ![centerlineEqualDistanceRelative+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/equal_distance_centerline_relative.png) |
 
 Centerline coordinates are formed by Evenly Spaced vertices, set by `interpolate_n_centerpoints`
 ```
-river_object.centerlineEvenlySpaced
+river_object.centerline_evenly_spaced
 ```
-| river_object.centerlineEvenlySpaced | river_object.centerlineEvenlySpacedRelative |
+| river_object.centerline_evenly_spaced | river_object.centerline_evenly_spaced_relative |
 | ------------- | ------------- |
 | ![centerlineEvenlySpaced+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/evenly_spaced_centerline.png) | ![centerlineEvenlySpacedRelative+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/evenly_spaced_centerline_relative.png) |
 
 Centerline coordinates are formed from Smoothed vertices
 ```
-river_object.centerlineSmoothed
+river_object.centerline_smoothed
 ```
-| river_object.centerlineSmoothed | river_object.centerlineSmoothedRelative |
+| river_object.centerline_smoothed | river_object.centerline_smoothed_relative |
 | ------------- | ------------- |
 | ![centerlineEvenlySpaced+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/smoothed_centerline.png) | ![centerlineEvenlySpacedRelative+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/smoothed_centerline_relative.png) |
 
 Example:
 ```python
 import centerline_width
-river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
-river_centerline_coordinates = river_object.centerlineVoronoi
+river_object = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv")
+river_centerline_coordinates = river_object.centerline_voronoi
 ```
 Output is a list of tuples: (example) `[(-92.86788596499872, 30.03786596717931), (-92.86789573751797, 30.037834641974108), (-92.8679141386283, 30.037789636848878), (-92.8679251193248, 30.037756853899904), (-92.86796903819089, 30.03765423778148), (-92.86797335733262, 30.037643336049054), (-92.8679920356456, 30.037592224469797), (-92.86800576063828, 30.037555441489403), (-92.86800841510367, 30.037546512833107), (-92.8680119498663, 30.03753043193875)]`
 
@@ -334,7 +339,7 @@ Output is a list of tuples: (example) `[(-92.86788596499872, 30.03786596717931),
 Save the centerline coordinates to a csv file with columns for latitude and longitude. This is the file format for a table of (latitude,longitude) pairs accepted to import back into Google Earth Pro.
 
 ```
-saveCenterlineCSV(save_to_csv=None, centerline_type="Voronoi", coordinate_unit="Decimal Degrees")
+save_centerline_csv(save_to_csv=None, centerline_type="Voronoi", coordinate_unit="Decimal Degrees")
 ```
 * **[REQUIRED]** save_to_csv (string): CSV filename, requires a .csv extension
 * [OPTIONAL] centerline_type (string): Centerline type to save to CSV (not case-sensitive), options: ["Voronoi", "Evenly Spaced", "Smoothed", "Equal Distance"], defaults to "Voronoi"
@@ -344,19 +349,19 @@ saveCenterlineCSV(save_to_csv=None, centerline_type="Voronoi", coordinate_unit="
 
 ```python
 import centerline_width
-river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
-river_object.saveCenterlineCSV(save_to_csv="centerline_coordinates.csv", centerline_type="Smoothed")
+river_object = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv")
+river_object.save_centerline_csv(save_to_csv="centerline_coordinates.csv", centerline_type="Smoothed")
 ```
 Returns a csv with the Latitude and Longitude coordinates of the specified centerline with column headers with centerline type: `Smoothed Centerline Latitude (Deg), Smoothed Centerline Longitude (Deg)`
 
 > [!TIP]
-> It is best practice to plot the centerline with `plotCenterline()` to ensure that the results saved are as expected
+> It is best practice to plot the centerline with `plot_centerline()` to ensure that the results saved are as expected
 
 ### Save Centerline Coordinates to a .MAT File
 Save the centerline coordinates to a .mat file with columns for latitude and longitude
 
 ```
-saveCenterlineMAT(save_to_mat=None, centerline_type="Voronoi", coordinate_unit="Decimal Degrees")
+save_centerline_mat(save_to_mat=None, centerline_type="Voronoi", coordinate_unit="Decimal Degrees")
 ```
 * **[REQUIRED]** save_to_mat (string): MAT filename, requires a .mat extension
 * [OPTIONAL] centerline_type (string): Centerline type to save to MAT (not case-sensitive), options: ["Voronoi", "Evenly Spaced", "Smoothed", "Equal Distance"], defaults to "Voronoi"
@@ -366,24 +371,24 @@ saveCenterlineMAT(save_to_mat=None, centerline_type="Voronoi", coordinate_unit="
 
 ```python
 import centerline_width
-river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
-river_object.saveCenterlineMAT(save_to_mat="centerline_coordinates.mat", centerline_type="Smoothed")
+river_object = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv")
+river_object.save_centerline_mat(save_to_mat="centerline_coordinates.mat", centerline_type="Smoothed")
 ```
 Returns a .mat file with the Latitude and Longitude coordinates of the specified centerline with column headers with centerline type: `Smoothed_Centerline_Latitude_(Deg), Smoothed_Centerline_Longitude_(Deg)`
 
 > [!TIP]
-> It is best practice to plot the centerline with `plotCenterline()` to ensure that the results saved are as expected
+> It is best practice to plot the centerline with `plot_centerline()` to ensure that the results saved are as expected
 
 ### Length of Centerline
 Return the length of the centerline found between the left and right bank generated by the Voronoi diagram
 ```
-river_object.centerlineLength
+river_object.centerline_length
 ```
 Length returned in kilometers
 ```python
 import centerline_width
-river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
-river_centerline_length = river_object.centerlineLength
+river_object = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv")
+river_centerline_length = river_object.centerline_length
 ```
 The length of the river centerline returns `215.34700589636674` km
 
@@ -395,7 +400,7 @@ river_object.area
 Area returned in kilometers^2
 ```python
 import centerline_width
-river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
+river_object = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv")
 river_area = river_object.area
 ```
 The area of the river returns `334.0398585246558` km^2
@@ -420,7 +425,7 @@ Where sinuosity is broken in types:
 Sinuosity of river based on the evenly spaced centerline coordinates
 ```python
 import centerline_width
-river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
+river_object = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv")
 river_area = river_object.sinuosity
 ```
 The sinuosity of the river returns as a float `1.4593141841039725`
@@ -437,7 +442,7 @@ incremental_sinuosity(
 
 ```python
 import centerline_width
-river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
+river_object = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv")
 river_object.incremental_sinuosity()
 ```
 Returns a dictionary with the start and end centerline coordinates and associated sinuosity `{((-92.87803465419134, 30.04494734395193), (-92.87718084516158, 30.03944640478984)): 0.8164574107802118, ((-92.87714797109666, 30.03944945940497), (-92.87020323809925, 30.039886265891074)): 0.9810773013508994}`
@@ -446,14 +451,14 @@ Returns a dictionary with the start and end centerline coordinates and associate
 Plot the centerline created from a list of right and left banks
 
 ```
-plotCenterline(centerline_type="Voronoi",
+plot_centerline(centerline_type="Voronoi",
         marker_type="line",
         centerline_color="black",
         dark_mode=False,
         equal_axis=False,
         display_all_possible_paths=False, 
         plot_title=None, 
-        save_plot_name=None, 
+        save_plot=None, 
         display_voronoi=False,
         show_plot=True,
         coordinate_unit="Decimal Degrees")
@@ -465,15 +470,15 @@ plotCenterline(centerline_type="Voronoi",
 * [OPTIONAL] equal_axis (bool): Set x/y axes in plot to be equal, defaults to False
 * [OPTIONAL] display_all_possible_paths (boolean): Display all possible paths, not just the centerline (useful for debugging), defaults to False
 * [OPTIONAL] plot_title (string): Change plot title, defaults to "River Coordinates: Valid Centerline = True/False, Valid Polygon = True/False, Interpolated = True/False"
-* [OPTIONAL] save_plot_name (string): Save the plot with a given name and location
+* [OPTIONAL] save_plot (string): Save the plot with a given name and location
 * [OPTIONAL] display_voronoi (boolean): Overlay Voronoi diagram used to generate centerline, defaults to False
 * [OPTIONAL] show_plot (boolean): display and open plots (plt.show() in Matplotlib), defaults to True
 * [OPTIONAL] coordinate_unit (string): Coordinates of the river are return as "Decimal Degrees" (latitude/longitude) or converted to a distance from the first point on the left bank as "Relative Distance", defaults to "Decimal Degrees"
 
 ```python
 import centerline_width
-river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
-river_object.plotCenterline()
+river_object = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv")
+river_object.plot_centerline()
 ```
 ![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_centerline.png)
 
@@ -548,8 +553,8 @@ Plot as either "Decimal Degrees" and "Relative Distance". defaults to "Decimal D
 Plot the width of the river based on the centerline
 
 ```
-plotCenterlineWidth(plot_title=None, 
-        save_plot_name=None, 
+plot_centerline_width(plot_title=None, 
+        save_plot=None, 
         display_true_centerline=True,
         transect_span_distance=3,
         transect_slope="Average",
@@ -562,7 +567,7 @@ plotCenterlineWidth(plot_title=None,
         coordinate_unit="Decimal Degrees")
 ```
 * [OPTIONAL] plot_title (string): Change plot title, defaults to "River Width Coordinates: Valid Centerline = True/False, Valid Polygon = True/False, Centerline made of <interpolate_n_centerpoints> Fixed Points, width lines generated every <transect_span_distance> points, Interpolated = True/False"
-* [OPTIONAL] save_plot_name (string): Save the plot with a given name and location
+* [OPTIONAL] save_plot (string): Save the plot with a given name and location
 * [OPTIONAL] display_true_centerline (boolean): Display generated true centerline based on Voronoi diagrams, defaults to True
 * [OPTIONAL] transect_span_distance (int): Number n points around a center point to determine the slope (increase to decrease the impact of sudden changes), defaults to 3, must be greater than 1 (since the slope is found from the difference in position between two points)
 * [OPTIONAL] transect_slope (str): Determine how the width lines are generated, either by averaging all slopes "Average" or directly from the first to last point in the span distance as "Direct", defaults to "Average"
@@ -577,8 +582,8 @@ plotCenterlineWidth(plot_title=None,
 
 ```python
 import centerline_width
-river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
-river_object.plotCenterlineWidth(apply_smoothing=True, remove_intersections=True, display_true_centerline=False)
+river_object = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv")
+river_object.plot_centerline_width(apply_smoothing=True, remove_intersections=True, display_true_centerline=False)
 ```
 ![river_coords_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_coords_width.png)
 
@@ -661,7 +666,7 @@ Two options for measuring and displaying coordinates. The two options are "Decim
 Return the width of the river at each (evenly spaced or smoothed) with coordinates where width line intersects either the centerline, `(Centerline Longitude, Centerline Latitude) : width`, or riverbanks, `((Right Bank Longitude, Right Bank Latitude), (Left Bank Longitude, Left Bank Latitude)) : width` in kilometers
 
 ```
-riverWidthFromCenterline(transect_span_distance=3,
+width(transect_span_distance=3,
             transect_slope="Average",
             apply_smoothing=True,
             remove_intersections=False,
@@ -682,8 +687,8 @@ riverWidthFromCenterline(transect_span_distance=3,
 
 ```python
 import centerline_width
-river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv")
-river_width_dict = river_object.riverWidthFromCenterline(transect_span_distance=3,
+river_object = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv")
+river_width_dict = river_object.width(transect_span_distance=3,
                             apply_smoothing=True,
                             coordinate_reference="Centerline",
                             remove_intersections=True)
@@ -691,7 +696,7 @@ river_width_dict = river_object.riverWidthFromCenterline(transect_span_distance=
 Width dictionary = `{(-92.86792084788995, 30.037769672351182): 0.10969163557087018, (-92.86795038641004, 30.03769867854198): 0.10794219579997719}`
 
 > [!TIP]
-> It is best practice to plot the centerline and width with same arguments in `plotCenterlineWidth()` to ensure that the results when `save_to_csv=True` are as expected
+> It is best practice to plot the centerline and width with same arguments in `plot_centerline_width()` to ensure that the results when `save_to_csv=True` are as expected
 
 ## Documentation and Algorithm to Determine Centerline
 
@@ -772,11 +777,11 @@ This can be fixed by using the flip_direction optional argument `centerline_widt
 ![invalid_flipped_banks+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/invalid_flipped_banks.png)
 
 ### Invalid Smoothed Centerline
-The smoothed centerline (`river_object.centerlineSmoothed`) can end up lying outside the river if the centerline data points are sparse in a narrow river. If more than two points in the smoothed centerline lie outside the river, a warning will be thrown
+The smoothed centerline (`river_object.centerline_smoothed`) can end up lying outside the river if the centerline data points are sparse in a narrow river. If more than two points in the smoothed centerline lie outside the river, a warning will be thrown
 
-Example Error: `WARNING: Partially invalid smoothed centerline due to sparse centerline data (6 points lie outside the polygon), fix recommendation: rerun riverCenterline to create river object with interpolate_n_centerpoints set to 62+`
+Example Error: `WARNING: Partially invalid smoothed centerline due to sparse centerline data (6 points lie outside the polygon), fix recommendation: rerun CenterlineWidth to create river object with interpolate_n_centerpoints set to 62+`
 
-By default, `interpolate_n_centerpoints` is set to None and no additional points will be added between the existing points along the centerline. By adding additional points between the existing centerline, the smoothed centerline can be fixed to stay within the polygon. This fix is set by creating a river object, `centerline_width.riverCenterline`, with `interpolate_n_centerpoints=65` (with the recommended 62+) to fix for centerline coordinates that lie outside the polygon
+By default, `interpolate_n_centerpoints` is set to None and no additional points will be added between the existing points along the centerline. By adding additional points between the existing centerline, the smoothed centerline can be fixed to stay within the polygon. This fix is set by creating a river object, `centerline_width.CenterlineWidth`, with `interpolate_n_centerpoints=65` (with the recommended 62+) to fix for centerline coordinates that lie outside the polygon
 
 `interpolate_n_centerpoints = None` does not interpolate data points, so the size will be set to the number of fixed points when creating the evenly spaced coordinates (equal to the size of the data frame)
 
@@ -792,9 +797,9 @@ By increasing the interpolation between the centerline points, the smoothed cent
 ### Fixing Gaps and Jagged Centerlines
 Gaps formed can cause part of the centerline to be skipped due to sparse data. As a result, the start and end of the centerline can skip parts at the beginning or end of a river
 ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/interpolate_false_gaps_short_path.png)
-Set river object created by `centerline_width.riverCenterline` to `interpolate_data=True` to fix for jagged edges or gaps formed by the interaction of sparse data and narrow banks
+Set river object created by `centerline_width.CenterlineWidth` to `interpolate_data=True` to fix for jagged edges or gaps formed by the interaction of sparse data and narrow banks
 ```python
-river_object = centerline_width.riverCenterline(csv_data="data/river_coords.csv", interpolate_data=True)
+river_object = centerline_width.CenterlineWidth(csv_data="data/river_coords.csv", interpolate_data=True)
 ```
 | interpolate_data = False | interpolate_data = True |
 | ------------- | ------------- |
