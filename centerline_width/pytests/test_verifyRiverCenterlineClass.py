@@ -244,7 +244,7 @@ def test_CenterlineWidth_default():
         0.09705816897006408)
     assert river_class_example.left_bank_length == pytest.approx(
         0.10570962276643736)
-    assert river_class_example.area == pytest.approx(11.4030195647527)
+    assert river_class_example.area == pytest.approx(11403.0195647527)
     assert river_class_example.starting_node == pytest.approx(
         (-92.86781887353752, 30.03824341873465))
     assert river_class_example.ending_node == pytest.approx(
@@ -722,7 +722,7 @@ def test_CenterlineWidth_futureWarning_functionName():
         0.09705816897006408)
     assert river_class_example.left_bank_length == pytest.approx(
         0.10570962276643736)
-    assert river_class_example.area == pytest.approx(11.4030195647527)
+    assert river_class_example.area == pytest.approx(11403.0195647527)
     assert river_class_example.starting_node == pytest.approx(
         (-92.86781887353752, 30.03824341873465))
     assert river_class_example.ending_node == pytest.approx(
@@ -1124,7 +1124,7 @@ def test_CenterlineWidth_futureWarning_variableName():
         0.0291159670403472)
     assert river_class_example.left_bank_length == pytest.approx(
         0.03091855487702919)
-    assert river_class_example.area == pytest.approx(3.1320671725985596)
+    assert river_class_example.area == pytest.approx(3132.0671725985594)
     assert river_class_example.starting_node == pytest.approx(
         (-92.86792843577895, 30.037755468515407))
     assert river_class_example.ending_node == pytest.approx(
@@ -2223,7 +2223,7 @@ def test_CenterlineWidth_interpolateTrue():
         0.09705816897212159)
     assert river_class_example.left_bank_length == pytest.approx(
         0.1057096227682203)
-    assert river_class_example.area == pytest.approx(11.403019517285152)
+    assert river_class_example.area == pytest.approx(11403.019517285153)
     assert river_class_example.starting_node == pytest.approx(
         (-92.86782125207236, 30.03827120587997))
     assert river_class_example.ending_node == pytest.approx(

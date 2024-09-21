@@ -35,13 +35,13 @@ import centerline_width
 
 def _calculate_river_area(bank_polygon=None,
                           ellipsoid: str = "WGS84") -> float:
-    # Return the area contained within the river polygon (km^2)
+    # Return the area contained within the river polygon (m^2)
     if bank_polygon is None:
         return 0
     geodesic = Geod(ellps=ellipsoid)
     river_area, river_perimeter = geodesic.geometry_area_perimeter(
         bank_polygon)
-    return abs(river_area) / 1000  # km
+    return abs(river_area)  # m^2
 
 
 def _centerline_length(centerline_coordinates: list = None,

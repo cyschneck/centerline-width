@@ -55,7 +55,7 @@ if __name__ == "__main__":
     print(f"ellipsoid = {river.ellipsoid}")
     print(river.right_bank_relative_coordinates)
     print(river.left_bank_relative_coordinates)
-    print(f"area = {river.area} km^2")
+    print(f"area = {river.area} m^2")
     print(f"sinuosity  = {river.sinuosity}")
     incremental_sinuosity = river.incremental_sinuosity(incremental_points=215,
                                                         save_to_csv=None)

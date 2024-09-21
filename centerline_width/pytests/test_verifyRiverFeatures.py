@@ -126,7 +126,7 @@ def test_riverFeatures_leftBankLength():
 
 
 def test_riverFeatures_area():
-    assert river_class_example.area == pytest.approx(11.4030195647527)
+    assert river_class_example.area == pytest.approx(11403.0195647527)
 
 
 def test_riverFeatures_riverSinuosity():
