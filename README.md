@@ -25,14 +25,14 @@ Find the centerline and width of rivers based on the latitude and longitude posi
     * centerline_equal_distance
     * centerline_evenly_spaced
     * centerline_smoothed
-* **Return river features**
+* **Return additional river features**
     * centerline_length
     * right_bank_length
     * left_bank_length
     * area
     * sinuosity
     * incremental_sinuosity()
-* **Export centerline to .CSV and .MAT files**
+* **Export centerline and width information to .CSV and .MAT files**
     * save_centerline_csv()
     * save_centerline_mat()
 
