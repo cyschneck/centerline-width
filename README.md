@@ -52,7 +52,7 @@ pip install centerline-width
 
 ## Quickstart: centerline-width
 
-The core of centerline-width works with a .csv file of the left and right bank latitude/longitudes. So, if starting from Google Earth Pro, two .kml must first be translated to a single .csv file
+The core of `centerline-width` works with a .csv file of the left and right bank latitude/longitudes. So, if starting from Google Earth Pro, two .kml must first be translated to a single .csv file
 
 ```python
 import centerline_width
@@ -60,7 +60,7 @@ centerline_width.kml_to_csv(left_kml="left_bank.kml",
                     right_kml="right_bank.kml",
                     text_output_name="river_coordinates_output.csv")
 ```
-Then once the .csv file is created, to run the centerline-width functions, generate a river object from the `river_coordinates_output.csv`
+Then once the .csv file is created, to run the `centerline-width` functions, generate a river object from the `river_coordinates_output.csv`
 
 ```python
 river_object = centerline_width.CenterlineWidth(csv_data="river_coordinates_output.csv")
@@ -88,7 +88,7 @@ river_object.plot_centerline(coordinate_unit="Relative Distance")
 
 For more details to fix unexpected behavior or error code: [Debugging, Error Handling, and Edge Cases](#debugging-error-handling-and-edge-cases)
 
-For a complete example script to run centerline-width: [centerline_width_example_script.py](https://github.com/cyschneck/centerline-width/blob/main/data/example_script_outputs/centerline_width_example_script.py) with [example outputs](https://github.com/cyschneck/centerline-width/tree/main/data/example_script_outputs)
+For a complete example script to run `centerline-width`: [centerline_width_example_script.py](https://github.com/cyschneck/centerline-width/blob/main/data/example_script_outputs/centerline_width_example_script.py) with [example outputs](https://github.com/cyschneck/centerline-width/tree/main/data/example_script_outputs)
 
 ## Preprocessing
 ### Generating KML files from Google Earth Pro
@@ -211,7 +211,7 @@ centerline_width.CenterlineWidth(csv_data=None,
 | ------------- | ------------- |
 | ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/equal_distance_5_m.jpg) | ![example+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/equal_distance_20_m.jpg) |
 
-The red pins represent the equal distance centerline coordinates produced by centerline-width. The yellow line is the distance measured in Google Earth Pro between the points. The mapped river banks are in purple.
+The red pins represent the equal distance centerline coordinates produced by `centerline-width`. The yellow line is the distance measured in Google Earth Pro between the points. The mapped river banks are in purple.
 
 **Interpolation - A solution for sparse data**
 
@@ -852,7 +852,7 @@ These features are not included in pip install because they are still experiment
 - Calculate centerline migration rate
   
 ## Citations
-Originally, centerline-width was developed as a Python implementation of [R-Code CMGO](https://github.com/AntoniusGolly/cmgo) (Golly et al. 2017) but has since been extensively expanded and changed:
+Originally, `centerline-width` was developed as a Python implementation of [R-Code CMGO](https://github.com/AntoniusGolly/cmgo) (Golly et al. 2017) but has since been extensively expanded and changed:
 
 >Golly, A. and Turowski, J. M.: Deriving principal channel metrics from bank and long-profile geometry with the R package cmgo, Earth Surf. Dynam., 5, 557-570, https://doi.org/10.5194/esurf-5-557-2017, 2017.
 
