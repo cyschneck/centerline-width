@@ -9,7 +9,7 @@ authors = [
 description = "A Python package to find the centerline and width of rivers based on the latitude and longitude of the right and left bank"
 readme = "README.md"
 license = {file = "LICENSE"}
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 
 classifiers = [
     "Development Status :: 4 - Beta", "Intended Audience :: Developers",
