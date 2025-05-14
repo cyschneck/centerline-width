@@ -835,6 +835,11 @@ To run existing and new tests from the root directory:
 python -m pytest
 ```
 ## Beta :test_tube: Features
+
+Future development will be part of the upcoming parent package Nyami:
+
+[![Card](https://github-readme-stats.vercel.app/api/pin/?username=cyschneck&repo=nyami)](https://github.com/cyschneck/nyami)
+
 These features are not included in pip install because they are still experimental and being tested/debugged. For more information and getting them up and running, contact cyschneck@gmail.com or ugschneck@gmail.com or post a question as a [Github Issue](https://github.com/cyschneck/centerline-width/issues)
 
 - Calculate the dominant meander wavelength amd its variance
