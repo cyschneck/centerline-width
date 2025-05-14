@@ -41,7 +41,7 @@ Find the centerline and width of rivers based on the latitude and longitude posi
 | ![river_google_earth+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_example_google_earth.png) | ![river_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_example.png) |
 
 > [!NOTE]
-> This is Beta quality software that is being actively developed, use at your own risk. This project is not supported or endorsed by either JPL or NASA. The code is provided “as is”, use at your own risk.
+> This is Beta quality software that is being actively developed, use at your own risk. This project is not supported or endorsed by JPL, NASA, or NCAR. The code is provided “as is”, use at your own risk.
 
 ## Install
 PyPi pip install at [pypi.org/project/centerline-width/](https://pypi.org/project/centerline-width/)

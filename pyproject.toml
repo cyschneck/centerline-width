@@ -1,73 +1,81 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+
+requires = [ "setuptools" ]
+
 [project]
 name = "centerline-width"
 version = "v2.0.0"
-authors = [
-  { name="Cora Schneck", email="cyschneck@gmail.com" },
-  { name="Una Schneck", email="ugschneck@gmail.com" }
-]
-
 description = "A Python package to find the centerline and width of rivers based on the latitude and longitude of the right and left bank"
 readme = "README.md"
-license = {file = "LICENSE"}
+keywords = [
+  "centerline",
+  "centerline-detection",
+  "centerline-extraction",
+  "fluvial",
+  "geomorphology",
+  "geophysics",
+  "hydrology",
+  "limnology",
+  "networkx",
+  "python",
+  "river-bank",
+  "river-bank-length",
+  "rivers",
+  "voronoi",
+]
+
+license = { file = "LICENSE" }
+authors = [
+  { name = "Cora Schneck", email = "cyschneck@gmail.com" },
+  { name = "Una Schneck", email = "ugschneck@gmail.com" },
+]
+
 requires-python = ">=3.9"
 
 classifiers = [
-    "Development Status :: 4 - Beta", "Intended Audience :: Developers",
-    "Intended Audience :: Education",
-    "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.13",
-    "Intended Audience :: Education",
-    "Intended Audience :: Science/Research",
-    "Topic :: Scientific/Engineering :: Physics",
-    "Topic :: Scientific/Engineering :: Hydrology",
-    "Topic :: Scientific/Engineering :: Visualization"
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Education",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering :: Hydrology",
+  "Topic :: Scientific/Engineering :: Physics",
+  "Topic :: Scientific/Engineering :: Visualization",
 ]
-
-keywords = [
-        "geophysics", "python", "voronoi", "networkx", "centerline",
-        "centerline-extraction", "centerline-detection", "rivers",
-        "river-bank-length", "river-bank", "limnology", "hydrology", "fluvial",
-        "geomorphology"
-    ]
 
 dependencies = [
-    "geopy",
-    "haversine",
-    "networkx",
-    "numpy",
-    "pandas",
-    "pykml",
-    "pyproj",
-    "scipy",
-    "shapely",
-    "matplotlib",
+  "geopy",
+  "haversine",
+  "matplotlib",
+  "networkx",
+  "numpy",
+  "pandas",
+  "pykml",
+  "pyproj",
+  "scipy",
+  "shapely",
 ]
 
-[project.optional-dependencies]
-dev = [
-    "pytest",
-    "pytest-cov",
-    "pre-commit"
+optional-dependencies.dev = [
+  "pre-commit",
+  "pytest",
+  "pytest-cov",
 ]
-
-[project.urls]
-Repository = "https://github.com/cyschneck/centerline-width"
-Issues = "https://github.com/cyschneck/centerline-width/issues"
-
-[build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
+urls.Issues = "https://github.com/cyschneck/centerline-width/issues"
+urls.Repository = "https://github.com/cyschneck/centerline-width"
 
 [tool.setuptools]
 include-package-data = true
 
 [tool.setuptools.packages.find]
-where = ["."]
-include = ["centerline_width"]
-exclude = ["centerline_width/pytests*"]
+where = [ "." ]
+include = [ "centerline_width" ]
+exclude = [ "centerline_width/pytests*" ]
