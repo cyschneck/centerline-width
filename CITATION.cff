@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 title: "centerline-width: River analysis, centerline, and width extraction software"
-version: 2.0.0
+version: 2.0.1
 message: "Please acknowledge the use of this software in any publications by citing:"
 authors:
 - family-names: Schneck
