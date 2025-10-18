@@ -12,7 +12,7 @@
 [![pre-commit](https://github.com/cyschneck/centerline-width/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/cyschneck/centerline-width/actions/workflows/pre-commit.yml)
 [![codecov](https://codecov.io/gh/cyschneck/centerline-width/graph/badge.svg?token=V6Z2DC37MT)](https://codecov.io/gh/cyschneck/centerline-width)
 
-Find the centerline and width of rivers based on the latitude and longitude positions from the right and left bank 
+Find the centerline and width of rivers based on the latitude and longitude of the right and left bank 
 
 * **Convert raw data from Google Earth Pro to CSV**
     * kml_to_csv()
