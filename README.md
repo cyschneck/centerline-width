@@ -40,6 +40,9 @@ Find the centerline and width of rivers based on the latitude and longitude of t
 | ------------- | ------------- |
 | ![river_google_earth+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_example_google_earth.png) | ![river_centerline+png](https://raw.githubusercontent.com/cyschneck/centerline-width/main/data/doc_examples/river_example.png) |
 
+> [!IMPORTANT]
+> Future development will be part of the upcoming parent package [nyami](https://github.com/cyschneck/nyami)
+
 > [!NOTE]
 > This is Beta quality software that is being actively developed, use at your own risk. This project is not supported or endorsed by JPL, NASA, or NCAR. The code is provided “as is”, use at your own risk.
 
@@ -835,8 +838,6 @@ To run existing and new tests from the root directory:
 python -m pytest
 ```
 ## Beta :test_tube: Features
-
-Future development will be part of the upcoming parent package [nyami](https://github.com/cyschneck/nyami):
 
 These features are not included in pip install because they are still experimental and being tested/debugged. For more information and getting them up and running, contact cyschneck@gmail.com or ugschneck@gmail.com or post a question as a [Github Issue](https://github.com/cyschneck/centerline-width/issues)
 
